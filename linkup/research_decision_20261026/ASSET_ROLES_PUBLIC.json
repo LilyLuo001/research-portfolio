@@ -1,0 +1,81 @@
+{
+  "title": "既有结果版本与来源角色映射",
+  "date": "2026-10-26",
+  "purpose": "定位已发布结果的实际文件、适用范围及权重口径；仅复用现有产物，不产生新数值。相对路径均以本文件所在目录为基准。",
+  "entries": [
+    {
+      "version": "design_correction_20261024 / bounded_research_results_20261026",
+      "role": "主要",
+      "location": [
+        "../design_correction_20261024/results/CORE_Q1.csv",
+        "../design_correction_20261024/results/CORE_Q2.csv",
+        "../bounded_research_results_20261026/RESULTS_AND_LIMITS_ZH.md",
+        "../bounded_research_results_20261026/CLAIMS_AND_SCOPE_PUBLIC.json"
+      ],
+      "denominator_and_weights": "目标为原69单元技术筛选候选母框1,157,573条广告；使用原纳入概率及嵌套设计逆概率权重，不使用Formal800 w3。参考框为原Batch069连接的完整fixed10k（10,000条广告）。估计按SOC 11/13/15/17各0.25标准化；必要大类无已知分母时保留不可得，不重新归一化。",
+      "not_interchangeable_because": "这是母框设计校正估计，点值仅针对参考结果已知范围；近似设计区间和完整目标未知敏感性界限各有不同含义。不能与广告权重1的直接面板或Formal800有限框w3估计视为同一估计量，也不能解读为全美市场或因果结果。"
+    },
+    {
+      "version": "fixed10k_empirical_20261024 / full fixed10k direct panel",
+      "role": "补充",
+      "location": [
+        "../fixed10k_empirical_20261024/RESULTS_BRIEF_ZH.md",
+        "../fixed10k_empirical_20261024/results/T5_Q1_DIRECT_COMPARISONS.csv",
+        "../fixed10k_empirical_20261024/results/T5_Q2_DIRECT_COMPARISONS.csv",
+        "../fixed10k_empirical_20261024/results/T6_SENSITIVITY_BOUNDS_AND_CLAIMS.csv"
+      ],
+      "denominator_and_weights": "10,000条广告、7,617个上下文；广告直接权重1，四个SOC大类各0.25。原隔离上下文对应的16条广告保留在广告分母及字段状态核算中。报告字段已知分母和记录字段未知界限，不是抽样置信区间。",
+      "not_interchangeable_because": "这是固定参考面板的描述结果；未知界限只处理记录字段未知，不覆盖技术组成员未知或母框抽样不确定性。其结果不能替代母框逆概率加权主结果。"
+    },
+    {
+      "version": "fixed10k_empirical_20261024 / original9282 eligible direct panel",
+      "role": "历史敏感性",
+      "location": [
+        "../fixed10k_empirical_20261024/RESULTS_BRIEF_ZH.md",
+        "../fixed10k_empirical_20261024/results/T5_Q1_DIRECT_COMPARISONS.csv",
+        "../fixed10k_empirical_20261024/results/T5_Q2_DIRECT_COMPARISONS.csv",
+        "../fixed10k_empirical_20261024/ROOT_ACCEPTANCE_PUBLIC.json"
+      ],
+      "denominator_and_weights": "按Formal800原冻结排除规则从fixed10k恢复的eligible子集为9,282条广告、7,113个上下文；广告直接权重1，四个SOC大类各0.25。",
+      "not_interchangeable_because": "排除规则限定的子集范围不同于完整fixed10k及候选母框；与其他列的差异同时涉及纳入范围及已知结果分母，不能当作标签错误率、纠错幅度或历史变化。"
+    },
+    {
+      "version": "Formal800 original published result",
+      "role": "历史敏感性",
+      "location": [
+        "../fixed10k_empirical_20261024/results/published_Formal800_unchanged/COMPARISON_1_EXPERIENCE.csv",
+        "../fixed10k_empirical_20261024/results/published_Formal800_unchanged/COMPARISON_2_ENTRY_DUTY.csv",
+        "../fixed10k_empirical_20261024/results/published_Formal800_latest_unchanged/Q1_EQUAL_MAJOR_STANDARDIZED.csv",
+        "../fixed10k_empirical_20261024/results/published_Formal800_latest_unchanged/EXISTING_RESULTS_MANIFEST.json",
+        "../formal800_20261012/METHODS_ESTIMANDS.md",
+        "../formal800_20261012/RESULTS_ZH.md"
+      ],
+      "denominator_and_weights": "已发布Formal800分析为800条有限fixed10k eligible框抽样广告；主分析使用原第三阶段w3=1/pi3=N_h/n_h，并保留原抽样区间。技术经验共同支持结果实际含57条GenAI广告及247条传统软件广告；抽样语义上下文为719份最终正文。",
+      "not_interchangeable_because": "w3估计的是排除开发、复核及锁定评估上下文后的有限eligible fixed10k框；与9282/full10k直接权重1及母框嵌套设计权重的目标、支持范围和不确定性口径不同。引用的文件是原样保存的已发布结果，不应重新按未加权计数计算替代。"
+    },
+    {
+      "version": "metadata_research_20261026 common-company-by-SOC comparison",
+      "role": "补充",
+      "location": [
+        "../metadata_research_20261026/RESULTS_ZH.md",
+        "../metadata_research_20261026/results/comparison_public/Q1_Q2_DESCRIPTIVE_RESULTS.csv",
+        "../metadata_research_20261026/results/comparison_public/SUPPORT_AND_EXCLUSIONS.csv",
+        "../metadata_research_20261026/results/comparison_public/COMPARISON_RECEIPT_PUBLIC.json"
+      ],
+      "denominator_and_weights": "仅999条广告、693个规范输入、83个供应商公司标识、108个公司×SOC单元有A/B共同支持。广告直接权重1；先计算单元内两组比例，再在职业大类内按单元A+B广告数给予两组相同的单元权重，再令四个SOC大类各0.25。",
+      "not_interchangeable_because": "这是10k中的稀疏共同支持子集，SOC17仅15条广告却贡献25%权重；不适用原候选母框设计权重，不能外推至1,157,573条广告。对象也只是供应商公司×SOC，不等同同一职位或可完全比较的工作。Q2总体因必要大类缺失而不可得。"
+    },
+    {
+      "version": "全目标或全库精细语义结果",
+      "role": "不可用",
+      "location": [
+        "../bounded_research_results_20261026/CLAIMS_AND_SCOPE_PUBLIC.json",
+        "../bounded_research_results_20261026/RESULTS_AND_LIMITS_ZH.md",
+        "../AGENTS.md"
+      ],
+      "denominator_and_weights": "目前没有完成的全库精细语义结果，也没有支持全美招聘市场或全部2.048亿条广告的估计分母。母框完整目标的四项经验差异方向仍未确定；全目标未知包络不是置信区间。",
+      "not_interchangeable_because": "既有全库覆盖、旧规则或模型尝试不构成完成的细语义生产或可替代的全目标比较。当前已接受范围明确保留该目标为未完成并停止自动扩展。"
+    }
+  ],
+  "version_note": "旧T4缺公司、标题和精确日期的说明仅反映旧表生成时状态；metadata_research_20261026已为原10000广告补齐公司、标题、州、CREATED、LAST_CHECKED。旧T4不重算，正文版本日期限制仍有效。"
+}

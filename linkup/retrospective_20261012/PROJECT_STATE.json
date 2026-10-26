@@ -7,7 +7,7 @@
     "next_action": "Preserve completed results and closed failed fit. Do not launch the proposed QA model automatically; it remains a conditional unexecuted candidate with unresolved supervision, multiple-answer and scope issues."
   },
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "metadata_research_20261026_completed_stopped",
+  "phase": "research_decision_20261026_completed_stopped",
   "metadata_research_extension": {
     "authority": "Human approved original-key metadata append, common-support reporting and one fixed descriptive comparison: OK，开始吧.",
     "contract": "linkup/metadata_research_20261026/EXECUTION_CONTRACT_PUBLIC.json",
@@ -696,5 +696,17 @@
     "parent_ads": 1157573,
     "sample_ads": 10000,
     "new_reviews": 0
+  },
+  "research_decision_delivery": {
+    "authority": "Human approved the three-step result-role mapping, two-question interpretation and one research decision: OK，开始吧.",
+    "status": "COMPLETED_AND_STOPPED_EXISTING_RESULT_SYNTHESIS",
+    "report": "linkup/research_decision_20261026/RESEARCH_DECISION_ZH.md",
+    "decision": "linkup/research_decision_20261026/ROOT_DECISION_PUBLIC.json",
+    "source_check": "linkup/research_decision_20261026/EVIDENCE_CHECK_PUBLIC.json",
+    "new_estimation_or_semantic_review": false,
+    "new_cloud_jobs": 0,
+    "original_goal_changed": false,
+    "formal_whole_corpus_production": "UNFINISHED_AND_DEFERRED",
+    "next_action": "NONE. This authorized synthesis is complete. No new cleaning, labeling, model development, computation, procurement or final manuscript without a distinct task."
   }
 }

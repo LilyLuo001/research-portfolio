@@ -1,0 +1,414 @@
+{
+  "date_local": "2026-10-26",
+  "status": "PUBLIC_EXISTING_RESULT_EVIDENCE_MAP_ONLY",
+  "method": "Exact selectors and values copied from existing public CSV/JSON; no new estimation, variance computation, labels, training, or raw record reads.",
+  "primary_scope": {
+    "source": [
+      "linkup/design_correction_20261024/ROOT_ACCEPTANCE_PUBLIC.json",
+      "linkup/bounded_research_results_20261026/CLAIMS_AND_SCOPE_PUBLIC.json"
+    ],
+    "selector": [
+      "input_scope",
+      "q1_equal_major_decisions",
+      "q2_decisions",
+      "inference_limitations"
+    ],
+    "values": {
+      "fixed_reference_ads": 10000,
+      "parent_target_ads": 1157573,
+      "target": "69-cell technology-screened candidate frame, not all US vacancies",
+      "standardization": "SOC majors 11, 13, 15, 17 at 0.25 each",
+      "weights": "Original total inclusion probabilities and inverse nested design weights; not Formal800 w3.",
+      "reference": "Unchanged Batch069 Pro operational reference, not independent human truth"
+    },
+    "scope_and_limits": "The main target is the original 69-cell technology-screened candidate frame. Original direct9282/full10000 panels use ad weight 1; Formal800 retains w3 and is a separate estimand. The Pro reference is not independent human truth."
+  },
+  "Q1_four_measures": {
+    "experience_general_work": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_general_work",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": -0.0037996436383408,
+        "design_se": 0.0234497989958345,
+        "approximate_design_95": [
+          -0.049760405114879946,
+          0.04216111783819834
+        ],
+        "full_target_unknown_envelope": [
+          -0.1670745279753429,
+          0.8442782725497802
+        ],
+        "old_proxy_rate": 0.0768023026205598,
+        "old_comparator_status": "available_candidate_proxy",
+        "original_status": "available",
+        "point_available": true,
+        "interval_status": "approximate_normal_design_interval_unclipped"
+      },
+      "scope_and_limits": {
+        "point_scope": "difference_between_reference_known_domain_ratios",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_contrast_envelope_not_CI",
+        "notes": "Point and approximate design interval describe the Pro-reference-known domain. The full-target unknown envelope is a separate conservative sensitivity summary, not a confidence interval or sharp joint bound. No full-target sign is established."
+      }
+    },
+    "experience_occupation_task": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_occupation_task",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": 0.0996362784052697,
+        "design_se": 0.0207392302386736,
+        "approximate_design_95": [
+          0.05898813407038542,
+          0.14028442274015399
+        ],
+        "full_target_unknown_envelope": [
+          -0.7116892308304793,
+          0.21595009256123
+        ],
+        "old_proxy_rate": null,
+        "old_comparator_status": "no_old_comparator",
+        "original_status": "available",
+        "point_available": true,
+        "interval_status": "approximate_normal_design_interval_unclipped"
+      },
+      "scope_and_limits": {
+        "point_scope": "difference_between_reference_known_domain_ratios",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_contrast_envelope_not_CI",
+        "notes": "Point and approximate design interval describe the Pro-reference-known domain. The full-target unknown envelope is a separate conservative sensitivity summary, not a confidence interval or sharp joint bound. No full-target sign is established."
+      }
+    },
+    "experience_industry_domain": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_industry_domain",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": -0.016972664050384,
+        "design_se": 0.0499426645007694,
+        "approximate_design_95": [
+          -0.11485848776385911,
+          0.08091315966309111
+        ],
+        "full_target_unknown_envelope": [
+          -0.5046674220148099,
+          0.4581978605928422
+        ],
+        "old_proxy_rate": -0.011534037774503805,
+        "old_comparator_status": "available_candidate_proxy",
+        "original_status": "available",
+        "point_available": true,
+        "interval_status": "approximate_normal_design_interval_unclipped"
+      },
+      "scope_and_limits": {
+        "point_scope": "difference_between_reference_known_domain_ratios",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_contrast_envelope_not_CI",
+        "notes": "Point and approximate design interval describe the Pro-reference-known domain. The full-target unknown envelope is a separate conservative sensitivity summary, not a confidence interval or sharp joint bound. No full-target sign is established."
+      }
+    },
+    "experience_tool_specific": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_tool_specific",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": 0.2342166624012818,
+        "design_se": 0.0412055033578995,
+        "approximate_design_95": [
+          0.1534553598549545,
+          0.3149779649476091
+        ],
+        "full_target_unknown_envelope": [
+          -0.547042784062569,
+          0.3857342689084803
+        ],
+        "old_proxy_rate": -0.1660086316406253,
+        "old_comparator_status": "available_candidate_proxy",
+        "original_status": "available",
+        "point_available": true,
+        "interval_status": "approximate_normal_design_interval_unclipped"
+      },
+      "scope_and_limits": {
+        "point_scope": "difference_between_reference_known_domain_ratios",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_contrast_envelope_not_CI",
+        "notes": "Point and approximate design interval describe the Pro-reference-known domain. The full-target unknown envelope is a separate conservative sensitivity summary, not a confidence interval or sharp joint bound. No full-target sign is established."
+      }
+    }
+  },
+  "Q2": {
+    "entry_eligibility_current_duty_cooccurrence_equal_major": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "all_technology",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": 0.5108422773608033,
+        "design_se": 0.0860637915775592,
+        "approximate_design_95": [
+          0.3421603454958257,
+          0.6795242092257809
+        ],
+        "full_target_unknown_envelope": [
+          0.3967522003413253,
+          0.633739436700537
+        ],
+        "old_proxy_rate": null,
+        "old_comparator_status": "no_old_comparator",
+        "original_status": "reference_known_domain_only",
+        "point_available": true,
+        "interval_status": "approximate_normal_design_interval_unclipped",
+        "known_eligible_sample_ads_from_pooled_row": 186.0,
+        "duty_positive_sample_ads_from_pooled_row": 110.0
+      },
+      "scope_and_limits": {
+        "point_scope": "reference_known_domain",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_envelope_not_CI",
+        "notes": "Existing operational-Pro-reference results only. Unknown envelopes are separate sensitivity summaries, not CIs or sharp joint bounds. Sparse/missing required groups remain unavailable; no causal or market-wide claim follows."
+      }
+    },
+    "pooled_context": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "all_technology",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "original_pooled"
+      },
+      "values": {
+        "point": 0.5142220957696507,
+        "design_se": 0.0820429671647821,
+        "approximate_design_95": [
+          0.3534208349418756,
+          0.6750233565974258
+        ],
+        "full_target_unknown_envelope": [
+          0.3909812375513964,
+          0.7655950371254905
+        ],
+        "old_proxy_rate": null,
+        "old_comparator_status": "no_old_comparator",
+        "original_status": "reference_known_domain_only",
+        "point_available": true,
+        "interval_status": "approximate_normal_design_interval_unclipped"
+      },
+      "scope_and_limits": {
+        "point_scope": "reference_known_domain",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_envelope_not_CI",
+        "notes": "Existing operational-Pro-reference results only. Unknown envelopes are separate sensitivity summaries, not CIs or sharp joint bounds. Sparse/missing required groups remain unavailable; no causal or market-wide claim follows."
+      }
+    },
+    "GenAI_minus_software_equal_major_unavailable": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": null,
+        "design_se": null,
+        "approximate_design_95": [
+          null,
+          null
+        ],
+        "full_target_unknown_envelope": [
+          -0.656314321942426,
+          0.6208278944443548
+        ],
+        "old_proxy_rate": null,
+        "old_comparator_status": "no_old_comparator",
+        "original_status": "no_point",
+        "point_available": false,
+        "interval_status": "no_point"
+      },
+      "scope_and_limits": {
+        "point_scope": "difference_between_reference_known_domain_ratios",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_contrast_envelope_not_CI",
+        "notes": "Existing operational-Pro-reference results only. Unknown envelopes are separate sensitivity summaries, not CIs or sharp joint bounds. Sparse/missing required groups remain unavailable; no causal or market-wide claim follows."
+      }
+    },
+    "GenAI_equal_major_unavailable": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "genai_use_with_or_without_software",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": null,
+        "design_se": null,
+        "approximate_design_95": [
+          null,
+          null
+        ],
+        "full_target_unknown_envelope": [
+          0.0272882805244737,
+          1.0
+        ],
+        "old_proxy_rate": null,
+        "old_comparator_status": "no_old_comparator",
+        "original_status": "missing_required_major_no_renormalization",
+        "point_available": false,
+        "interval_status": "no_point"
+      },
+      "scope_and_limits": {
+        "point_scope": "reference_known_domain",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_envelope_not_CI",
+        "notes": "Existing operational-Pro-reference results only. Unknown envelopes are separate sensitivity summaries, not CIs or sharp joint bounds. Sparse/missing required groups remain unavailable; no causal or market-wide claim follows."
+      }
+    },
+    "software_equal_major_context": {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "traditional_software_use_no_ai",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "values": {
+        "point": 0.5260881648713738,
+        "design_se": 0.0988873344183891,
+        "approximate_design_95": [
+          0.3322725508841631,
+          0.7199037788585845
+        ],
+        "full_target_unknown_envelope": [
+          0.3791721055556452,
+          0.6836026024668997
+        ],
+        "old_proxy_rate": null,
+        "old_comparator_status": "no_old_comparator",
+        "original_status": "reference_known_domain_only",
+        "point_available": true,
+        "interval_status": "approximate_normal_design_interval_unclipped"
+      },
+      "scope_and_limits": {
+        "point_scope": "reference_known_domain",
+        "unknown_envelope_scope": "full_target_nonnegative_HT_reference_mass_envelope_not_CI",
+        "notes": "Existing operational-Pro-reference results only. Unknown envelopes are separate sensitivity summaries, not CIs or sharp joint bounds. Sparse/missing required groups remain unavailable; no causal or market-wide claim follows."
+      }
+    },
+    "decision": {
+      "source": "linkup/design_correction_20261024/ROOT_ACCEPTANCE_PUBLIC.json",
+      "selector": [
+        "q2_decisions"
+      ],
+      "values": {
+        "known_eligible_sample_ads": 186,
+        "duty_any_positive_sample_ads": 110,
+        "GenAI_known_eligible_duty_ads_pooled": 14,
+        "old_comparator": "Not available in selected frozen parent narrow source. Q2 uses explicitly named reference-only HT estimation, not an old-rule error-correction success. This does not assert that no richer historical artifact ever contained entry/duty evidence."
+      },
+      "scope_and_limits": "The selected frozen old narrow source has no compatible Q2 comparator. The equal-major GenAI versus software contrast has no point because the required SOC13 GenAI cell is absent (CORE_Q2 major_13 contrast row has no_point); do not renormalize. Current-duty cooccurrence does not identify duty requirement strength, historical seniorization, AI causality, or all entry-level market prevalence."
+    }
+  },
+  "metadata_999_company_SOC_common_support_supplement": {
+    "source": "linkup/metadata_research_20261026/ROOT_DECISION_PUBLIC.json",
+    "selector": [
+      "observed_structural_support",
+      "Q1",
+      "Q2"
+    ],
+    "values": {
+      "support": {
+        "ads": 999,
+        "normalized_inputs": 693,
+        "vendor_company_ids": 83,
+        "company_major_cells": 108,
+        "group_A_ads": 490,
+        "group_B_ads": 509,
+        "group_A_outcome_known": 489,
+        "group_B_outcome_known": 500,
+        "fixed_major_ads": {
+          "11": 322,
+          "13": 94,
+          "15": 568,
+          "17": 15
+        }
+      },
+      "Q1_equal_major_contrasts": [
+        {
+          "outcome": "experience_general_work",
+          "point": 0.12609763402947355,
+          "recorded_outcome_unknown_lower": 0.12128013953557693,
+          "recorded_outcome_unknown_upper": 0.1345440444924929
+        },
+        {
+          "outcome": "experience_occupation_task",
+          "point": 0.12246371608983743,
+          "recorded_outcome_unknown_lower": 0.11507641046173753,
+          "recorded_outcome_unknown_upper": 0.1283403154186535
+        },
+        {
+          "outcome": "experience_industry_domain",
+          "point": 0.12442868667460086,
+          "recorded_outcome_unknown_lower": 0.11868841215182688,
+          "recorded_outcome_unknown_upper": 0.13195231710874283
+        },
+        {
+          "outcome": "experience_tool_specific",
+          "point": 0.2974009585788492,
+          "recorded_outcome_unknown_lower": 0.2893870939873563,
+          "recorded_outcome_unknown_upper": 0.3026509989442723
+        }
+      ],
+      "Q2": {
+        "decision": "STANDARDIZED_OVERALL_UNAVAILABLE_SUPPORT_INSUFFICIENT",
+        "usable_eligibility_positive_ads": 10,
+        "major13": 1,
+        "major15": 9,
+        "missing_required_majors": [
+          "11",
+          "17"
+        ],
+        "renormalized": false,
+        "new_two_group_contrast": false
+      }
+    },
+    "scope_and_limits": "Observed company/SOC-major common support only: 999 ads, 693 normalized inputs, 83 vendor company IDs, 108 company-major cells. Q1 contrasts are exploratory at fixed weights; recorded-outcome-unknown bounds are neither confidence intervals nor full-target bounds. SOC17 has only 15 ads/3 cells despite 25% weight. Q2 overall is unavailable because only 10 eligible ads occupy majors 13 and 15. Different support and weighting basis from the fixed10k design-corrected main results; do not combine point estimates or treat the observed-support positives as parent-target directions."
+  },
+  "research_claim_boundary": {
+    "source": "linkup/bounded_research_results_20261026/CLAIMS_AND_SCOPE_PUBLIC.json",
+    "selector": [
+      "claims",
+      "not_established",
+      "population_and_weights",
+      "uncertainty"
+    ],
+    "values": {
+      "Q1_full_target_sign": "UNIDENTIFIED for all four measures",
+      "Q2_group_difference": "UNAVAILABLE_REQUIRED_MAJOR_MISSING",
+      "whole_corpus_fine_semantics": "UNFINISHED_AND_DEFERRED"
+    },
+    "scope_and_limits": "The bounded research release reuses existing results only. Full-corpus semantic production remains unfinished. No causal, historical, or all-US prevalence conclusion follows."
+  },
+  "source_column_note": "In Q1 contrast rows the source column old_proxy_rate contains the old A-minus-B contrast, not a level prevalence."
+}

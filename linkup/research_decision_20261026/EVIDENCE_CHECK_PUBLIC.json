@@ -1,0 +1,135 @@
+{
+  "date_local": "2026-10-26",
+  "status": "PASS_EXISTING_PUBLIC_RESULT_CORRESPONDENCE",
+  "checks": [
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_general_work",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_occupation_task",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_industry_domain",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "all_ads",
+        "measure": "experience_tool_specific",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "all_technology",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "all_technology",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "original_pooled"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "GenAI_minus_software_contrast",
+        "domain": "GenAI_minus_traditional_software",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "genai_use_with_or_without_software",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    },
+    {
+      "source": "linkup/design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {
+        "row_type": "domain_proportion",
+        "domain": "traditional_software_use_no_ai",
+        "eligibility": "graduate_or_noexperience",
+        "measure": "duty_any",
+        "scope": "equal_0.25_major_standardization"
+      },
+      "status": "pass"
+    }
+  ],
+  "metadata_support_and_contrasts_exact_match": true,
+  "asset_locations_exist": true,
+  "source_sha256": {
+    "linkup/design_correction_20261024/results/CORE_Q1.csv": "e4ab19ec7622e355d07401d6521d97eb9a2edcd40ae5bf8de313abf2936ba9b7",
+    "linkup/design_correction_20261024/results/CORE_Q2.csv": "9169ca80cefd00fcf5e0bbc76bed47228f67e06a1ddd3c5d62680cdf20736e82",
+    "linkup/metadata_research_20261026/ROOT_DECISION_PUBLIC.json": "9894c08cbe340d10856a697284d4d5f885f3e06a730feafd8325a989b40f809b",
+    "linkup/bounded_research_results_20261026/RESULTS_AND_LIMITS_ZH.md": "418b725320fcf2a1e40fbc8ea31a140c400464e41c95a5ac5ce7d0f80e7e0f29",
+    "linkup/bounded_research_results_20261026/CLAIMS_AND_SCOPE_PUBLIC.json": "4f45d65407ecb2e52fa25f519b437f3774d9a8aa5618c595e152f763cb6d8fad",
+    "linkup/fixed10k_empirical_20261024/RESULTS_BRIEF_ZH.md": "bec037dc016c2e2342626d1f7165416cba631dbb71dd45fbc13e28527a3c562d",
+    "linkup/fixed10k_empirical_20261024/results/T5_Q1_DIRECT_COMPARISONS.csv": "fac71349d23c2b7f75720dceb5e18d2be4da4adef5cf3b3d8c49706047a41fb8",
+    "linkup/fixed10k_empirical_20261024/results/T5_Q2_DIRECT_COMPARISONS.csv": "242aa1adb5a91378ef779d582f2da35d5f23e345f8ae133875cd11d590cc2561",
+    "linkup/fixed10k_empirical_20261024/results/T6_SENSITIVITY_BOUNDS_AND_CLAIMS.csv": "edf11ebbdff6361aa865698533041a1bd93f5780077c87974c4cce7f341e8a46",
+    "linkup/fixed10k_empirical_20261024/ROOT_ACCEPTANCE_PUBLIC.json": "8da1ce4c9574c49c482c0ffdaf1893aef1bd4df2b5fc2ba1898bcbb6d07020a4",
+    "linkup/fixed10k_empirical_20261024/results/published_Formal800_unchanged/COMPARISON_1_EXPERIENCE.csv": "f813954b8e367701efd1a02dcffc59e3afa5523ecd3aff2a4922ee681acfc176",
+    "linkup/fixed10k_empirical_20261024/results/published_Formal800_unchanged/COMPARISON_2_ENTRY_DUTY.csv": "17593beee17b418c6e12727c56869370b885c6d28083331e25db43ac0ff8a979",
+    "linkup/fixed10k_empirical_20261024/results/published_Formal800_latest_unchanged/Q1_EQUAL_MAJOR_STANDARDIZED.csv": "0231e0e0d7b2186d7f66eb4bb7edb3c0cced032148e7234bed7b8946c98fbf63",
+    "linkup/fixed10k_empirical_20261024/results/published_Formal800_latest_unchanged/EXISTING_RESULTS_MANIFEST.json": "9bc15e220d9011f1a142770a2cc6b0f8ad24703b5cfa74299cc1a5257854b3c2",
+    "linkup/formal800_20261012/METHODS_ESTIMANDS.md": "df01ff3d4ef9b5c4bc0ef3f750505207fb8a04e476178c4b4001c0504000bbbb",
+    "linkup/formal800_20261012/RESULTS_ZH.md": "22f80bb5dfec60a355ed1f90030f972fdf2192110eaa1af2bfd994fc51ce98d9",
+    "linkup/metadata_research_20261026/RESULTS_ZH.md": "48a9d51e28fb81bd69236206f0e9672fc2548fbad63f2a3e5e7c4d2e3e1094b1",
+    "linkup/metadata_research_20261026/results/comparison_public/Q1_Q2_DESCRIPTIVE_RESULTS.csv": "17c65fc0d19b685fd7e711e02d1630237115b1ea138ee5f499558fcd0acb988c",
+    "linkup/metadata_research_20261026/results/comparison_public/SUPPORT_AND_EXCLUSIONS.csv": "00f4172550e1aadf4fb4cd7953a39be8807c2004cf343cd98ba063f97b63664c",
+    "linkup/metadata_research_20261026/results/comparison_public/COMPARISON_RECEIPT_PUBLIC.json": "ec120d223d25cdcf152f39a714fff2f355acdef43f2a755283129f8d1540574b",
+    "linkup/AGENTS.md": "19748d8854c15119b84388fc3aa850e227bf5057f4180ae8a58aa1861e997caf"
+  },
+  "independent_report_review": "Sol/medium PASS, no must-fix. Public sources only.",
+  "new_estimation": false,
+  "semantic_accuracy_certified": false,
+  "new_cloud_jobs": 0,
+  "policy_entry_hash_after_completion_guard_update": true
+}
