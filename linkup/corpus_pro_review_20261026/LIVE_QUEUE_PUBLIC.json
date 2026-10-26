@@ -74,8 +74,11 @@
         "shard_ordinal": 0,
         "row_offset": 905
       },
-      "primary_contexts_saved_lower_bound": 270,
-      "lower_bound_source": "Primary reports A60/B90/C120; not yet an accepted full-batch checkpoint."
+      "primary_contexts_saved_lower_bound": 480,
+      "lower_bound_source": "Primary reports A120/B150/C210; full-batch validation still pending.",
+      "exact_prior_reuse_ad_keys": 2,
+      "pending_prior_reuse_ad_keys": 0,
+      "reuse_job": "125714721"
     },
     "batch008": {
       "state": "prepared_not_yet_read",
@@ -94,7 +97,7 @@
   "resume": "Inspect saved PRIMARY and validation receipts; do not reread completed contexts. Main preparation cursor1:544 and recovered-shard preparation cursor0:905 are separate; these are preparation frontiers, not semantic completion. Resume lowest incomplete packet. After recovered shard0 is exhausted resume main at1:544.",
   "waiting_for_API": false,
   "new_paid_channel_or_model_deployment": false,
-  "as_of_utc": "2026-10-26T13:21:29.499427+00:00",
+  "as_of_utc": "2026-10-26T14:11:55.093056+00:00",
   "accepted_totals_through_batch006": {
     "new_contexts_processed": 720,
     "complete_source_contexts": 673,
@@ -107,5 +110,7 @@
     "claim": "Source/format/evidence acceptance only, not independent semantic-accuracy certification.",
     "unknown_count_definition": "59 counts contexts whose four experience, entry, responsibility outcome statuses or technology inventory status include unknown. Unresolved clause strength, object, relation or technology-role values remain preserved separately and are not included by this top-level outcome counter.",
     "complete_source_definition": "reviewed_full describes completeness of the available normalized input, not certainty of every semantic field."
-  }
+  },
+  "continuation_baseline_accepted_contexts": 180,
+  "newly_accepted_since_continuation_authorization_through_batch006": 540
 }
