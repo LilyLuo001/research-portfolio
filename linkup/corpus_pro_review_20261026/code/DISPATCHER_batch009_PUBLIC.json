@@ -7,12 +7,6 @@
     {
       "agent_id": "/root/corpus_read_001_a",
       "packets": [
-        "packet_0001",
-        "packet_0002",
-        "packet_0003",
-        "packet_0004",
-        "packet_0005",
-        "packet_0006",
         "packet_0007",
         "packet_0008",
         "packet_0009",
@@ -162,6 +156,19 @@
         "packet_0143",
         "packet_0144"
       ]
+    },
+    {
+      "agent_id": "/root",
+      "packets": [
+        "packet_0001",
+        "packet_0002",
+        "packet_0003",
+        "packet_0004",
+        "packet_0005",
+        "packet_0006"
+      ],
+      "model": "parent current Pro model",
+      "reason": "user requested fourth actual reading lane"
     }
   ],
   "authority": "PRO_CONTINUATION_AUTHORIZATION_PUBLIC.json",

@@ -23,9 +23,9 @@ shopt -s nullglob
 patches=("$R/reviews_private/${B}_packet_"*"_PRIMARY_correction.jsonl")
 if [[ ${#patches[@]} -gt 0 ]]; then
   E="$R/reviews_effective_${B}_${SLURM_JOB_ID}_private"
-  preserve=()
-  if [[ -n "${PRIOR_REVIEWS_DIR:-}" ]]; then preserve+=(--prior-checkpoint "${PRIOR_CHECKPOINT:?}" --prior-effective-reviews-dir "$PRIOR_REVIEWS_DIR"); fi
-  python "$R/code/apply_declared_patches.py" --batch-dir "$R/$B" --reviews-dir "$R/reviews_private" --patches "${patches[@]}" --output-dir "$E" "${preserve[@]}"
+  patch_args=(--batch-dir "$R/$B" --reviews-dir "$R/reviews_private" --patches "${patches[@]}" --output-dir "$E")
+  if [[ -n "${PRIOR_REVIEWS_DIR:-}" ]]; then patch_args+=(--prior-checkpoint "${PRIOR_CHECKPOINT:?}" --prior-effective-reviews-dir "$PRIOR_REVIEWS_DIR"); fi
+  python "$R/code/apply_declared_patches.py" "${patch_args[@]}"
 fi
 args=(--batch-dir "$R/$B" --reviews-dir "$E" --output-root "$R/checkpoints/$SLURM_JOB_ID" --dispatcher-file "$R/code/DISPATCHER_${B}_PUBLIC.json")
 if [[ -n "${PRIOR_CHECKPOINT:-}" ]]; then args+=(--prior-checkpoint "$PRIOR_CHECKPOINT"); fi

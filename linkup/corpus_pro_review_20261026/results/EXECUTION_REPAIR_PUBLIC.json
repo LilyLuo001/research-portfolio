@@ -7,5 +7,30 @@
   "reused_accepted_packets": 31,
   "new_model_readings_due_to_repair": 0,
   "source_reference_changes": "Only six previously declared patch operations in five unaccepted packets; original PRIMARY files preserved.",
-  "semantic_quality_claim": false
+  "semantic_quality_claim": false,
+  "additional_repairs": [
+    {
+      "failed_job": "125722059",
+      "failure": "Cluster Bash with nounset rejects expansion of an empty optional array before patch application.",
+      "minimal_fix": "Use one nonempty patch argument array, appending optional preservation flags only when present. nounset and immutable-input guards remain enabled.",
+      "new_model_readings_due_to_repair": 0,
+      "reference_values_changed_by_execution_fix": 0
+    },
+    {
+      "failed_job": "125723024",
+      "failure": "One author correction named its primary_file using an absolute path, contrary to frozen basename transport contract. Original primary SHA was correct.",
+      "minimal_fix": "Author archived invalid patch and explicitly selected a basename-only correction; no semantic old/new values or input guards changed.",
+      "new_model_readings_due_to_repair": 0,
+      "successful_recovery_with_final_specific_format_patches": "125727693"
+    },
+    {
+      "checkpoint_job": "125725508",
+      "accepted_contexts": 690,
+      "failed_packets": 6,
+      "minimal_fix": "15 at_least year upper bounds set to null; one quoted initial letter made identical to source. Originals preserved with declared patches.",
+      "successful_recovery_job": "125727693",
+      "reused_accepted_packets": 138,
+      "new_model_readings_due_to_repair": 0
+    }
+  ]
 }

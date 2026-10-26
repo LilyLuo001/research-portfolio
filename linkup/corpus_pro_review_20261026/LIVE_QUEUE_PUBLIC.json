@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-26",
+  "as_of": "2026-10-27",
   "model_channel": "Pro gpt-6-sol medium",
   "completion_unit": "canonical advertisement; complete normalized inputs read once with exact bindings",
   "batches": {
@@ -64,7 +64,7 @@
       "reuse_job": "125712638"
     },
     "batch007": {
-      "state": "prepared_actual_reading_in_progress",
+      "state": "validated_saved",
       "job": "125706036",
       "capacity": 720,
       "prepared_contexts": 720,
@@ -74,16 +74,28 @@
         "shard_ordinal": 0,
         "row_offset": 905
       },
-      "primary_contexts_saved_lower_bound": 630,
-      "lower_bound_source": "Primary reports A180/B210/C240; full-batch acceptance pending.",
+      "primary_contexts_saved_lower_bound": 720,
+      "lower_bound_source": "All three primary agents reported240 each; full-batch acceptance pending.",
       "exact_prior_reuse_ad_keys": 2,
       "pending_prior_reuse_ad_keys": 0,
       "reuse_job": "125714721",
       "last_agent_reported_packet_by_lane": {
-        "a": "packet_0036",
-        "b": "packet_0090",
+        "a": "packet_0048",
+        "b": "packet_0096",
         "c": "packet_0144"
-      }
+      },
+      "primary_contexts_saved": 720,
+      "final_validation_job": "125727693",
+      "mechanically_accepted_contexts": 720,
+      "reviewed_full_contexts": 676,
+      "reviewed_partial_contexts": 36,
+      "unresolved_document_contexts": 8,
+      "contexts_with_any_unknown_outcome": 45,
+      "accepted_new_context_ad_keys": 722,
+      "public_receipt": "results/BATCH007_FINAL_125727693_PUBLIC.json",
+      "reused_accepted_packets": 138,
+      "failed_packets": 0,
+      "pending_packets": 0
     },
     "batch008": {
       "state": "actual_reading_in_progress",
@@ -97,13 +109,18 @@
         "shard_ordinal": 0
       },
       "active_lanes": [
+        "a",
+        "b",
         "c"
       ],
-      "primary_contexts_saved_lower_bound": 30,
-      "lower_bound_source": "C reports packet0097–0102 saved; A/B still finish007."
+      "primary_contexts_saved_lower_bound": 650,
+      "lower_bound_source": "Cloud immutable PRIMARY file inventory130 expected5-record packages, pending full batch acceptance.",
+      "exact_prior_reuse_ad_keys": 9,
+      "reuse_job": "125728262",
+      "pending_prior_reuse_ad_keys": 0
     },
     "batch009": {
-      "state": "prepared_not_yet_read",
+      "state": "actual_reading_in_progress",
       "preparation_job": "125717395",
       "prepared_contexts": 720,
       "prepared_new_context_adkeys": 725,
@@ -111,14 +128,37 @@
       "next_cursor": {
         "row_offset": 2378,
         "shard_ordinal": 0
-      }
+      },
+      "root_reserved_packets": [
+        "packet_0001",
+        "packet_0002",
+        "packet_0003",
+        "packet_0004",
+        "packet_0005",
+        "packet_0006"
+      ],
+      "root_primary_contexts_saved": 30,
+      "primary_saved_package_snapshot": 51,
+      "root_validation_job": "125730365",
+      "root_schema_quote_validated": 30
+    },
+    "batch012": {
+      "state": "prepared_parent_owned",
+      "preparation_job": "125730344",
+      "start_cursor": {
+        "shard_ordinal": 0,
+        "row_offset": 3860
+      },
+      "capacity": 720,
+      "primary_dispatch": "code/DISPATCHER_batch012_PUBLIC.json",
+      "count": 720
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
   "resume": "Inspect saved PRIMARY and validation receipts; do not reread completed contexts. Main preparation cursor1:544 and recovered-shard preparation cursor0:2378 are separate; preparation frontiers are not semantic completion. Resume lowest incomplete packet. After recovered shard0 is exhausted resume main at1:544.",
   "waiting_for_API": false,
   "new_paid_channel_or_model_deployment": false,
-  "as_of_utc": "2026-10-26T14:43:23.154054+00:00",
+  "as_of_utc": "2026-10-26T16:39:58.850867+00:00",
   "accepted_totals_through_batch006": {
     "new_contexts_processed": 720,
     "complete_source_contexts": 673,
@@ -133,5 +173,21 @@
     "complete_source_definition": "reviewed_full describes completeness of the available normalized input, not certainty of every semantic field."
   },
   "continuation_baseline_accepted_contexts": 180,
-  "newly_accepted_since_continuation_authorization_through_batch006": 540
+  "newly_accepted_since_continuation_authorization_through_batch006": 540,
+  "accepted_totals_through_batch007": {
+    "new_contexts_processed": 1440,
+    "complete_source_contexts": 1349,
+    "partial_source_contexts": 82,
+    "unresolved_source_contexts": 9,
+    "new_context_canonical_ad_keys": 1444,
+    "additional_exact_prior_reuse_ad_keys": 5,
+    "total_bound_ad_keys": 1449,
+    "contexts_with_any_top_level_unknown_outcome": 104,
+    "ad_keys_with_any_top_level_unknown_outcome_including_reuse": 106,
+    "claim": "Source/format/evidence checks; no independent accuracy certification."
+  },
+  "newly_accepted_since_continuation_authorization_through_batch007": 1260,
+  "independent_threads_dispatch": "THREAD_DISPATCH_PUBLIC.json",
+  "independent_parallel_state": "Two new explicitly authorized active app chats;010 four actual reading lanes and011 three actual reading lanes, separate from parent three continuing readers plus parent30 now saved.",
+  "save_snapshot": "results/ACCELERATION_SAVE_SNAPSHOT_PUBLIC.json"
 }

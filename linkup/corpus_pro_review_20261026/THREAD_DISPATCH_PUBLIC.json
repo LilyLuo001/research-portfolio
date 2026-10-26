@@ -1,0 +1,47 @@
+{
+  "authority": "User explicitly requested multiple independent chats/windows on 2026-10-27 to increase Pro reading parallelism.",
+  "no_paid_api": true,
+  "no_reset": true,
+  "shared_account_allowance": true,
+  "parent_owned_batches": [
+    "batch001",
+    "batch002",
+    "batch003",
+    "batch004",
+    "batch005",
+    "batch006",
+    "batch007",
+    "batch008",
+    "batch009",
+    "batch012"
+  ],
+  "new_thread_reservations": {
+    "lane_d": {
+      "batch": "batch010",
+      "start_cursor": {
+        "shard_ordinal": 0,
+        "row_offset": 2378
+      },
+      "count": 720,
+      "status": "four_lanes_actually_reading",
+      "thread_id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "preparation_job": "125726991"
+    },
+    "lane_e": {
+      "batch": "batch011",
+      "start_cursor": "Read actual batch010 preparation receipt next_cursor after preparation; do not guess.",
+      "count": 720,
+      "status": "three_lanes_actually_reading",
+      "thread_id": "01a17909-9995-7b41-a496-52bac348af59",
+      "preparation_job": "125727455"
+    }
+  },
+  "rules": [
+    "Each thread owns only its named batch and scoped public files; no shared Git commit/push, LIVE_QUEUE or PROJECT_STATE mutation.",
+    "Prepare batches with unchanged existing scheduled prepare_packets.py and all prior manifests.",
+    "Read each complete context through Pro and save evidence-bearing immutable PRIMARY JSONL; exact reuse only.",
+    "Delegate disjoint packet ranges if actual capacity permits; no paid API, new model/software, coarse rerun or new taxonomy.",
+    "If named batch finishes do not steal parent or other lane queues; preserve own receipt for parent aggregation.",
+    "Do not create recurring automations or restart old chains."
+  ]
+}

@@ -728,7 +728,7 @@
     "scope_shards": 2464,
     "channel": "Pro agents gpt-6-sol/medium, not cluster CLI or paid API",
     "first_packet_capacity_contexts": 60,
-    "completed_new_reads": 720,
+    "completed_new_reads": 1440,
     "old_reference_preserved": true,
     "scope_not_reduced_to_batch": true,
     "user_target": "All400-million-plus delivery, exact full count not yet verified; existing attached204774035-US-ad catalog is only a subset.",
@@ -736,9 +736,9 @@
     "scope_and_scale_record": "linkup/corpus_pro_review_20261026/SCOPE_AND_SCALE_PUBLIC.json",
     "actual_channel_scale_sufficient": false,
     "independent_API_resource_clarification_pending": false,
-    "reviewed_full": 673,
-    "reviewed_partial": 46,
-    "contexts_with_final_unknown_outcomes": 59,
+    "reviewed_full": 1349,
+    "reviewed_partial": 82,
+    "contexts_with_final_unknown_outcomes": 104,
     "final_merged_job": "125703514",
     "final_cloud_private_ledger": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/merged_checkpoints/125703514/private/CONTEXT_LEDGER_PRIVATE.jsonl",
     "public_final_receipt": "linkup/corpus_pro_review_20261026/results/MERGED_125703514_PUBLIC.json",
@@ -747,27 +747,33 @@
     "independent_API_available": false,
     "available_model_resource": "Pro subscription only, explicitly confirmed by human on2026-10-26.",
     "next_action_boundary": "Continue actual unread Pro packets with frozen definitions; completed work not reopened. No paid API/newmodel/software/reset; no promise of months-to-completion or replacement of full target by USsubset.",
-    "active_batch": "batch007",
+    "active_batch": "batch008_and_batch009_with_independent_batch010_011",
     "continuation_authority": "linkup/corpus_pro_review_20261026/PRO_CONTINUATION_AUTHORIZATION_PUBLIC.json",
-    "last_complete_batch_job": "125711916",
+    "last_complete_batch_job": "125727693",
     "live_queue": "linkup/corpus_pro_review_20261026/LIVE_QUEUE_PUBLIC.json",
-    "completed_count_definition": "Accepted processed contexts through Batch006:673full/46partial/1unresolved. Exact prior-context reuse is separate. Full read does not certify semantic accuracy.",
-    "exact_prior_reused_ad_keys": 3,
+    "completed_count_definition": "Mechanically accepted processed contexts through Batch007:1349full/82partial/9unresolved. Current live queue separates saved but not yet validated readings. Exact prior-context reuse is separate; source/quote acceptance is not semantic accuracy certification.",
+    "exact_prior_reused_ad_keys": 14,
     "reuse_job": "125709529",
-    "accepted_new_context_ad_keys": 722,
-    "ad_keys_with_final_unknown_outcomes_excluding_prior_reuse": 60,
+    "accepted_new_context_ad_keys": 1444,
+    "ad_keys_with_final_unknown_outcomes_excluding_prior_reuse": 105,
     "final_cloud_private_ledger_scope": "Batch001–003 only; use accepted_reference_checkpoints for all accepted batches.",
     "accepted_reference_checkpoints": [
       "/public/home/lilysharp/linkup_corpus_pro_review_20261026/merged_checkpoints/125703514",
       "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125707992",
       "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125711177",
-      "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125711916"
+      "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125711916",
+      "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125727693"
     ],
-    "unresolved_document_contexts": 1,
+    "unresolved_document_contexts": 9,
     "reuse_jobs": [
       "125709529",
-      "125712638"
+      "125712638",
+      "125714721",
+      "125728262"
     ],
-    "new_context_and_reuse_canonical_ad_keys": 725
+    "new_context_and_reuse_canonical_ad_keys": 1458,
+    "mechanically_accepted_contexts": 1440,
+    "additional_exact_prior_reuse_ad_keys": 14,
+    "additional_exact_reuse_scope": "14 attached ad keys total:5 throughBatch007 plus9 from preparedBatch008; no new reading."
   }
 }

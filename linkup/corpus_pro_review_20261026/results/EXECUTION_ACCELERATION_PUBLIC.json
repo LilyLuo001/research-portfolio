@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-27",
+  "diagnosis": "Actual Pro semantic reading/generation concurrency and orchestration overhead limited throughput; SCNet preparation and mechanical checking already finish in seconds. More CPU-only jobs do not add Pro readers.",
+  "observed_cloud_jobs": {
+    "125726991": {
+      "purpose": "batch010 input preparation",
+      "elapsed_seconds": 15,
+      "cpus": 2,
+      "state": "COMPLETED"
+    },
+    "125727455": {
+      "purpose": "batch011 input preparation",
+      "elapsed_seconds": 8,
+      "cpus": 2,
+      "state": "COMPLETED"
+    },
+    "125727693": {
+      "purpose": "batch007 final binding/evidence checks",
+      "scheduler_elapsed_seconds": 42,
+      "checkpoint_function_elapsed_seconds": 27.928,
+      "cpus": 2,
+      "state": "COMPLETED",
+      "accepted_contexts": 720,
+      "reused_accepted_packets": 138
+    },
+    "125730344": {
+      "purpose": "batch012 next parent input preparation",
+      "elapsed_seconds": 15,
+      "cpus": 2,
+      "state": "COMPLETED"
+    },
+    "125730365": {
+      "purpose": "root30 inbatch009 evidence/schema checks, not semantic accuracy certification",
+      "elapsed_seconds": 9,
+      "cpus": 2,
+      "state": "COMPLETED",
+      "valid_records": 30
+    }
+  },
+  "actual_parallelism": {
+    "parent": "three existing Sol readers plus root on30 separate contexts",
+    "batch010_thread": "root reader plus three disjoint Sol readers, actual saving reported",
+    "batch011_thread": "three disjoint Sol readers, actual saving reported",
+    "configured_maximum_actual_reading_lanes": 11,
+    "always_running_all11_not_guaranteed": true
+  },
+  "changes_executed": [
+    "Two explicitly requested independent app chats created and active, each with exclusive prepared batch.",
+    "Queued batch012 before current parent batches finish, using unchanged frozen parser/schema.",
+    "Preserve batch007138 accepted packet outputs; repair only6 format/quote-failing packets.",
+    "Root completed30 actual full-schema reference records; frozen validator passed all30.",
+    "No paid API/newmodel/software/reset/oldchain/automation activation."
+  ],
+  "quota": "Shared account allowance; no claim that new windows create extra allowance or guarantee exhausting it within2hours.",
+  "quality": "Exact quotes/identity/schema checks do not establish semantic accuracy; partial, unknown and unresolved states remain separate."
+}
