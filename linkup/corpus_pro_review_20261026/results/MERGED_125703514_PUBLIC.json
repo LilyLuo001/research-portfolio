@@ -1,0 +1,221 @@
+{
+  "actual_model_token_usage": "unavailable",
+  "claim_boundary": "mechanical merged checkpoint only; no semantic accuracy certification or inference throughput claim",
+  "counts": {
+    "accepted_packets": 36,
+    "ad_keys_with_any_unknown_outcome": 9,
+    "audit_adjudication_records_verified": 5,
+    "audit_patch_values_verified": 7,
+    "audit_retained_values_verified": 8,
+    "contexts_with_any_unknown_outcome": 9,
+    "failed_packets": 0,
+    "independent_blind_audit_rereads": 12,
+    "new_primary_ad_keys": 180,
+    "new_primary_contexts": 180,
+    "pending_packets": 0,
+    "reviewed_full_contexts": 174,
+    "reviewed_partial_contexts": 6,
+    "unresolved_document_contexts": 0
+  },
+  "created_utc": "2026-10-26T11:06:26.217027+00:00",
+  "inputs": {
+    "audit_overlay_sha256": "c2a2a1c01b9569c656a1593fd58b7a06f9ee5ffddf7ace4278ec9b6e7c52b1e8",
+    "blind_audit_files": [
+      {
+        "name": "batch001_AUDIT_01.jsonl",
+        "sha256": "aee07733062366eedd15b7d895f8032e73c1fe74060491d2dfd42a9cdc84b679"
+      },
+      {
+        "name": "batch001_AUDIT_02.jsonl",
+        "sha256": "4a306d8c8f396dbbb231d06cb1bd6b9647fac158ff27ecd61ba0dc9a71f4e226"
+      },
+      {
+        "name": "batch001_AUDIT_03.jsonl",
+        "sha256": "b03c860b518fcdb191bd608827ba7bc3873929cb09a985c64239ad11a596e3ee"
+      }
+    ],
+    "mechanical_patch_provenance_sha256": "9183982a4472ea8f1bf03f558d39beb9df60cec951629b6ca91f9ad587f5ca93",
+    "merge_code_sha256": "11bc8f1a583378a04410a2b68f119e22ca365f79d19a91dcec1b0d544e5b0874",
+    "per_batch_checkpoints": [
+      {
+        "ad_reference_sha256": "3e918b6e2ca2bd0d31418ea17644a311b0d93fd57dda5989f9bfa2b4d7e53f92",
+        "checkpoint_job_id": "125703347",
+        "ledger_sha256": "3f8c94c03a8f8fe3963f4edcd21afe74440c2f9bc893d6138b4d8506a551e220",
+        "receipt_sha256": "992e910452746459b5abd099d6f657a45c415c976ef5bd8e35e64de55c5fe380"
+      },
+      {
+        "ad_reference_sha256": "2d4d93f2f4e31373bf61ae3daa74a24480e514fa1758a74d3a8a0b844fd6e8a7",
+        "checkpoint_job_id": "125702926",
+        "ledger_sha256": "49501b14bcd792575d4f8aeee90234bda5056b20664906c9d8a6124dccaecdc9",
+        "receipt_sha256": "e65c6c78093a9f97f44929b1345e8939152e1cd224847f91b70600e0366d8b47"
+      },
+      {
+        "ad_reference_sha256": "231b283e0929c5c5e44cbf76756125a5d0358d9c2cc5ea200b53c2146e0c3d7e",
+        "checkpoint_job_id": "125702928",
+        "ledger_sha256": "0bc5675ee094b549f41bfe8c12542d108c63814822b2c202a323c9bca96f324d",
+        "receipt_sha256": "07c7d77d73bda7a229dc8cf2240ddd702aa224f28eb4ac6df84afbe6761b0bb4"
+      }
+    ]
+  },
+  "merge_job_elapsed_seconds": 1.768,
+  "original_primary_authoring_window": {
+    "file_count": 36,
+    "file_sha256": [
+      {
+        "name": "batch001_packet_0001_PRIMARY.jsonl",
+        "sha256": "5427cd8219ff8b42beef85885b31abc9c28f5eefbb2d99a34fed947eedc9ee46"
+      },
+      {
+        "name": "batch001_packet_0002_PRIMARY.jsonl",
+        "sha256": "2e5ddd70c09c0aaa9be02e21d1427fa1129392886f975b4a2084d6ba347c62ce"
+      },
+      {
+        "name": "batch001_packet_0003_PRIMARY.jsonl",
+        "sha256": "6af2d7266d0712d8dcc01574897e7b9a6f8379ddab0f1fd48ccecbfa213f7c95"
+      },
+      {
+        "name": "batch001_packet_0004_PRIMARY.jsonl",
+        "sha256": "d660639acbf546ed43b8086c773d1dc771a349261b6cf6a4b0e519ce09d1e159"
+      },
+      {
+        "name": "batch001_packet_0005_PRIMARY.jsonl",
+        "sha256": "85752a49fa19c011767e7b08c39fa73688da15ec29fe84a08e39fa59649a5a86"
+      },
+      {
+        "name": "batch001_packet_0006_PRIMARY.jsonl",
+        "sha256": "6fc2c4f5aedbe2ed1ba9e8e30b373e4db898629de55ccd7bcdaa1b7a04eacb31"
+      },
+      {
+        "name": "batch001_packet_0007_PRIMARY.jsonl",
+        "sha256": "daea8604788d983a9335c3c38fc6854221baf94ca47a3d184d864964927576e3"
+      },
+      {
+        "name": "batch001_packet_0008_PRIMARY.jsonl",
+        "sha256": "dcb5e55525e4d7a3c4e72511adb14a719b317c85b6f30abf0c6fc8a611085f61"
+      },
+      {
+        "name": "batch001_packet_0009_PRIMARY.jsonl",
+        "sha256": "692ba7ab1ed6a7b3646f2d53054c8f7811a605947c16e821dfdf9c357083482d"
+      },
+      {
+        "name": "batch001_packet_0010_PRIMARY.jsonl",
+        "sha256": "d79794666501001990f4814794e065ec8dcc06317f95486206ae2c62a615211e"
+      },
+      {
+        "name": "batch001_packet_0011_PRIMARY.jsonl",
+        "sha256": "9092f58d09152bf53a3880ef92c6e89030187519b3d800edc8361809bfc27513"
+      },
+      {
+        "name": "batch001_packet_0012_PRIMARY.jsonl",
+        "sha256": "198e9f21c279205885bbc93a2885f6c4d31b18275153d7af8c2b92ba2fb45621"
+      },
+      {
+        "name": "batch002_packet_0001_PRIMARY.jsonl",
+        "sha256": "39884a7e948fdf72394864254e89b2105838f65fc525832bb7a9dfa6c1f3c945"
+      },
+      {
+        "name": "batch002_packet_0002_PRIMARY.jsonl",
+        "sha256": "17290ec0e2d1b435bc24e838e05cd269ff169fc2c3647df87387d6c90c6618f9"
+      },
+      {
+        "name": "batch002_packet_0003_PRIMARY.jsonl",
+        "sha256": "7236233a45b3e44efbcc2aa9f24455f36fdf7745c097cb3702b60e861b0fe728"
+      },
+      {
+        "name": "batch002_packet_0004_PRIMARY.jsonl",
+        "sha256": "70fb32621be6e817be4db4d16ab7307c7328ef29059057dcdacd1f33ae35b82c"
+      },
+      {
+        "name": "batch002_packet_0005_PRIMARY.jsonl",
+        "sha256": "22c1df63ddb2d90a9e04882514a34f46c1c1542e72063ee3c7c52ca4ac8d8ffe"
+      },
+      {
+        "name": "batch002_packet_0006_PRIMARY.jsonl",
+        "sha256": "407ceae04d74a4fa9b8590db558a72aed5eadad0a365a1b4ea39e573dfdb1a35"
+      },
+      {
+        "name": "batch002_packet_0007_PRIMARY.jsonl",
+        "sha256": "528ac81a26d9fdb2580d555001006dba8274db2348c25431379b676b5dc8c02f"
+      },
+      {
+        "name": "batch002_packet_0008_PRIMARY.jsonl",
+        "sha256": "635ed1bffcbe68dda918a815195a1a0d0623a71abfb64a76d2663e0fc542c7ee"
+      },
+      {
+        "name": "batch002_packet_0009_PRIMARY.jsonl",
+        "sha256": "a20d137b6e78066cae789af721a5012f56923e4940067762569d2b3e814b36b0"
+      },
+      {
+        "name": "batch002_packet_0010_PRIMARY.jsonl",
+        "sha256": "45e5ce154d46518ef4919c02006d463c72684b227315f7a94c1dad6a59c9e466"
+      },
+      {
+        "name": "batch002_packet_0011_PRIMARY.jsonl",
+        "sha256": "2afb57e1fb251937829330b6ad203d0e91e79ace9f267d7a572fd19233537896"
+      },
+      {
+        "name": "batch002_packet_0012_PRIMARY.jsonl",
+        "sha256": "80f5c5623ba4c06c45a0264a97b0d571fca5884318d9ce08e062fdfb67862345"
+      },
+      {
+        "name": "batch003_packet_0001_PRIMARY.jsonl",
+        "sha256": "0b0bd77462503436f2bb06183b4117bc1e2e4c7b78442f7d597cd3dba3f0adb9"
+      },
+      {
+        "name": "batch003_packet_0002_PRIMARY.jsonl",
+        "sha256": "b26abdebf465f97518246f427757e018bcaaf544d4ae53c68564b98453a9ceb4"
+      },
+      {
+        "name": "batch003_packet_0003_PRIMARY.jsonl",
+        "sha256": "15293c7a821b44ab55cdaf14e49a23c3ae91417f985ff06becccd9195caa0d61"
+      },
+      {
+        "name": "batch003_packet_0004_PRIMARY.jsonl",
+        "sha256": "b764c788d73b5eda9ccd64dc1836da0770e7afe05701ec5cde2ae8546708eb02"
+      },
+      {
+        "name": "batch003_packet_0005_PRIMARY.jsonl",
+        "sha256": "6a96a4a899a177317f606ed34896a885b547a3704edf74191eed2d69cc31d244"
+      },
+      {
+        "name": "batch003_packet_0006_PRIMARY.jsonl",
+        "sha256": "9ce54f02eda419f683eaa85b1ac52ac27575e707a0996762dca8e3840dee25be"
+      },
+      {
+        "name": "batch003_packet_0007_PRIMARY.jsonl",
+        "sha256": "02eb6528f0f049bef46ee39f2815bed3ae7cef94692f4434ccadb69682b01615"
+      },
+      {
+        "name": "batch003_packet_0008_PRIMARY.jsonl",
+        "sha256": "1c40417af3bfc20d2060e08ee12b6e367b0ca4f256c6c2f07ddeaff560d724d2"
+      },
+      {
+        "name": "batch003_packet_0009_PRIMARY.jsonl",
+        "sha256": "355456f6f055b07561b9794de5c158bbf5e01056604f634027c83e9174d57700"
+      },
+      {
+        "name": "batch003_packet_0010_PRIMARY.jsonl",
+        "sha256": "3d6ecdd9775b711841d5a0a873187f991dace05327d4c69f142d4510271f1260"
+      },
+      {
+        "name": "batch003_packet_0011_PRIMARY.jsonl",
+        "sha256": "b1326f560d0b1463efb1fe95358a60d0bc8d2bc7c37c7922c3b3399b3bfef596"
+      },
+      {
+        "name": "batch003_packet_0012_PRIMARY.jsonl",
+        "sha256": "c06e64a8337ea8eabfa7d0b864b109c481ae1d292a49ba3ceb00c9e6af6e9de7"
+      }
+    ],
+    "first_saved_utc": "2026-10-26T08:08:19+00:00",
+    "last_saved_utc": "2026-10-26T10:00:58+00:00",
+    "meaning": "file save-time window only; not steady-state inference throughput",
+    "span_seconds": 6759.0
+  },
+  "outputs": {
+    "ad_level_reference_sha256": "a6425d18db145eaca98886f5378dc3ac87ff04b41f23e0b5f5b3a47a12ad8142",
+    "context_ledger_sha256": "c1c3bda2eab9b50b744ec4b82da29eaf05a3ecf5776a28a3b641ce2f2537c726"
+  },
+  "slurm_job_id": "125703514",
+  "status": "complete",
+  "version": "corpus-pro-merged-checkpoint-v1"
+}

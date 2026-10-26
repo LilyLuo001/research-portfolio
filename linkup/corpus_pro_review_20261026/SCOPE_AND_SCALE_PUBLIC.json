@@ -52,7 +52,23 @@
   "batch001_final_adjudicated_checkpoint": "125703347",
   "final_merged_checkpoint_job": {
     "job": "125703514",
-    "last_observed_state": "PENDING",
-    "receipt_not_yet_available": true
+    "last_observed_state": "COMPLETED",
+    "public_receipt_sha256": "ffeaf3355f0439427ef8d7780611052bb80482b6a4946b954647756cd4580778",
+    "counts": {
+      "accepted_packets": 36,
+      "ad_keys_with_any_unknown_outcome": 9,
+      "audit_adjudication_records_verified": 5,
+      "audit_patch_values_verified": 7,
+      "audit_retained_values_verified": 8,
+      "contexts_with_any_unknown_outcome": 9,
+      "failed_packets": 0,
+      "independent_blind_audit_rereads": 12,
+      "new_primary_ad_keys": 180,
+      "new_primary_contexts": 180,
+      "pending_packets": 0,
+      "reviewed_full_contexts": 174,
+      "reviewed_partial_contexts": 6,
+      "unresolved_document_contexts": 0
+    }
   }
 }
