@@ -752,7 +752,7 @@
     "last_complete_batch_job": "125711916",
     "live_queue": "linkup/corpus_pro_review_20261026/LIVE_QUEUE_PUBLIC.json",
     "completed_count_definition": "Accepted processed contexts through Batch006:673full/46partial/1unresolved. Exact prior-context reuse is separate. Full read does not certify semantic accuracy.",
-    "exact_prior_reused_ad_keys": 2,
+    "exact_prior_reused_ad_keys": 3,
     "reuse_job": "125709529",
     "accepted_new_context_ad_keys": 722,
     "ad_keys_with_final_unknown_outcomes_excluding_prior_reuse": 60,
@@ -763,6 +763,11 @@
       "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125711177",
       "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125711916"
     ],
-    "unresolved_document_contexts": 1
+    "unresolved_document_contexts": 1,
+    "reuse_jobs": [
+      "125709529",
+      "125712638"
+    ],
+    "new_context_and_reuse_canonical_ad_keys": 725
   }
 }

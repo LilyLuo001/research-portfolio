@@ -59,7 +59,9 @@
       "reviewed_partial_contexts": 13,
       "unresolved_document_contexts": 1,
       "contexts_with_any_unknown_outcome": 15,
-      "public_receipt": "results/BATCH006_FINAL_125711916_PUBLIC.json"
+      "public_receipt": "results/BATCH006_FINAL_125711916_PUBLIC.json",
+      "exact_prior_reuse_ad_keys": 1,
+      "reuse_job": "125712638"
     },
     "batch007": {
       "state": "prepared_actual_reading_in_progress",
@@ -72,8 +74,8 @@
         "shard_ordinal": 0,
         "row_offset": 905
       },
-      "primary_contexts_saved_lower_bound": 150,
-      "lower_bound_source": "Primary agents reported A30/B60/C60; later writes may exist. Not an accepted checkpoint."
+      "primary_contexts_saved_lower_bound": 270,
+      "lower_bound_source": "Primary reports A60/B90/C120; not yet an accepted full-batch checkpoint."
     },
     "batch008": {
       "state": "prepared_not_yet_read",
@@ -92,5 +94,18 @@
   "resume": "Inspect saved PRIMARY and validation receipts; do not reread completed contexts. Main preparation cursor1:544 and recovered-shard preparation cursor0:905 are separate; these are preparation frontiers, not semantic completion. Resume lowest incomplete packet. After recovered shard0 is exhausted resume main at1:544.",
   "waiting_for_API": false,
   "new_paid_channel_or_model_deployment": false,
-  "as_of_utc": "2026-10-26T13:21:29.499427+00:00"
+  "as_of_utc": "2026-10-26T13:21:29.499427+00:00",
+  "accepted_totals_through_batch006": {
+    "new_contexts_processed": 720,
+    "complete_source_contexts": 673,
+    "partial_source_contexts": 46,
+    "unresolved_source_contexts": 1,
+    "new_context_canonical_ad_keys": 722,
+    "additional_exact_prior_reuse_ad_keys": 3,
+    "contexts_with_any_unknown_field": 59,
+    "ad_keys_with_any_unknown_field_including_reuse": 61,
+    "claim": "Source/format/evidence acceptance only, not independent semantic-accuracy certification.",
+    "unknown_count_definition": "59 counts contexts whose four experience, entry, responsibility outcome statuses or technology inventory status include unknown. Unresolved clause strength, object, relation or technology-role values remain preserved separately and are not included by this top-level outcome counter.",
+    "complete_source_definition": "reviewed_full describes completeness of the available normalized input, not certainty of every semantic field."
+  }
 }
