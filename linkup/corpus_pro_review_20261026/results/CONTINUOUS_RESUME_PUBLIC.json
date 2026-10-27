@@ -1,0 +1,171 @@
+{
+  "as_of_utc": "2026-10-27T09:33:24.251716+00:00",
+  "authority": "Direct user: continue all production chats until all batches complete",
+  "six_existing_threads_resumed": true,
+  "model": "gpt-6-sol",
+  "effort": "medium",
+  "lanes": [
+    {
+      "thread_id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "first_batch": 25,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17909-9995-7b41-a496-52bac348af59",
+      "first_batch": 26,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "first_batch": 27,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+      "first_batch": 28,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "first_batch": 29,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "first_batch": 30,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a099c3-c4ed-7122-ac5a-71c8aa96ea07",
+      "first_batch": 31,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "parent_preparing"
+    }
+  ],
+  "new_contexts_at_dispatch": 0,
+  "preparation": "actual first wave pending job receipt",
+  "no_batch_endpoint": true,
+  "no_automation_created": true,
+  "actual_allowance_used_percent_at_dispatch": 73,
+  "no_reset_or_paid_channel": true,
+  "first_preparation_job": {
+    "job_id": "125841336",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 57,
+    "new_semantic_judgments": 0
+  },
+  "next_preparation_job": {
+    "job_id": "125841737",
+    "through_batch": 45,
+    "submission_confirmed": true
+  },
+  "prepared_batches": [
+    {
+      "batch": "batch025",
+      "prepared_contexts": 720,
+      "start_cursor": {
+        "row_offset": 13682,
+        "shard_ordinal": 0
+      },
+      "next_cursor": {
+        "row_offset": 14448,
+        "shard_ordinal": 0
+      },
+      "receipt_sha256": "47b71df7e281bfd54fe9228eca46bc5badf40a5062be48a7d047ef05775e6e0d"
+    },
+    {
+      "batch": "batch026",
+      "prepared_contexts": 720,
+      "start_cursor": {
+        "row_offset": 14448,
+        "shard_ordinal": 0
+      },
+      "next_cursor": {
+        "row_offset": 15217,
+        "shard_ordinal": 0
+      },
+      "receipt_sha256": "6c63c7424217a16e34d4f88f7c374d309a699d050113ab53a98e38658ac27ba5"
+    },
+    {
+      "batch": "batch027",
+      "prepared_contexts": 720,
+      "start_cursor": {
+        "row_offset": 15217,
+        "shard_ordinal": 0
+      },
+      "next_cursor": {
+        "row_offset": 15998,
+        "shard_ordinal": 0
+      },
+      "receipt_sha256": "1f2d2638c5e24724bdcbc932069178cd971772422674a9a6c1660b065921c90e"
+    },
+    {
+      "batch": "batch028",
+      "prepared_contexts": 720,
+      "start_cursor": {
+        "row_offset": 15998,
+        "shard_ordinal": 0
+      },
+      "next_cursor": {
+        "row_offset": 16767,
+        "shard_ordinal": 0
+      },
+      "receipt_sha256": "a519fb1155d9e625963d465a84f994fede8a573daa5cb82c2a3531c715cec855"
+    },
+    {
+      "batch": "batch029",
+      "prepared_contexts": 720,
+      "start_cursor": {
+        "row_offset": 16767,
+        "shard_ordinal": 0
+      },
+      "next_cursor": {
+        "row_offset": 17542,
+        "shard_ordinal": 0
+      },
+      "receipt_sha256": "cf97e4ce69b24890012b7b40951e33602ff28b8764cc64ed1aac9058df43b43f"
+    },
+    {
+      "batch": "batch030",
+      "prepared_contexts": 720,
+      "start_cursor": {
+        "row_offset": 17542,
+        "shard_ordinal": 0
+      },
+      "next_cursor": {
+        "row_offset": 18317,
+        "shard_ordinal": 0
+      },
+      "receipt_sha256": "444bd65121d967170ac65af9781aa123cc41165e711de215f4f4f13e7c4a0299"
+    },
+    {
+      "batch": "batch031",
+      "prepared_contexts": 720,
+      "start_cursor": {
+        "row_offset": 18317,
+        "shard_ordinal": 0
+      },
+      "next_cursor": {
+        "row_offset": 19089,
+        "shard_ordinal": 0
+      },
+      "receipt_sha256": "14d23ae7af0c16af72cbd7f5759e247aaf4b8f01fb02e3a1ce2b6d42714a4811"
+    }
+  ],
+  "prepared_not_read_count": 5040,
+  "actual_reading": "Agent activity began; newly saved counts will be reported from cloud persistence, not preparation."
+}

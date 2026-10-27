@@ -57,14 +57,14 @@
     "Prepare batches with unchanged existing scheduled prepare_packets.py and all prior manifests.",
     "Read each complete context through Pro and save evidence-bearing immutable PRIMARY JSONL; exact reuse only.",
     "Delegate disjoint packet ranges if actual capacity permits; no paid API, new model/software, coarse rerun or new taxonomy.",
-    "If named batch finishes do not steal parent or other lane queues; preserve own receipt for parent aggregation.",
-    "Do not create recurring automations or restart old chains."
+    "Do not create recurring automations or restart old chains.",
+    "Follow continuous_lanes exclusive whole-batch ownership; prepare with existing serialized SCNet wrapper and actual cursors, no overlapping reading. Do not end simply because720 finished."
   ],
-  "successor_rule": "Superseded by explicit independent-chat correction: existing chats finish current assigned017/018/019, parent finishes020; new chats each own021/022/023 in full and end. Preparation cursors only avoid duplicate source input; semantic execution is independent.",
+  "successor_rule": "Each save batch completed independently; immediately continue own+7 successor until entire attached queue exhausted or actual blocker. Latest human explicitly supersedes prior stop-after-batch rule.",
   "latest_user_correction": {
-    "as_of": "2026-10-27T05:54:00.202322+00:00",
-    "mode": "independent_end_to_end_chats",
-    "rule": "Each chat completes its entire assigned batch, including its own cloud validation and persistence, then ends. No A-to-B-to-C handoff, automatic successor, or cross-chat dependency on review outputs."
+    "as_of": "2026-10-27T09:33:24.251716+00:00",
+    "mode": "continuous_independent_chats",
+    "rule": "Each save batch completed independently; immediately continue own+7 successor until entire attached queue exhausted or actual blocker. Latest human explicitly supersedes prior stop-after-batch rule."
   },
   "independent_whole_batch_chats": [
     {
@@ -103,5 +103,57 @@
     "completion": "independent end-to-end, then end",
     "model_target": "gpt-6-sol/medium"
   },
-  "model_efficiency_decision": "results/MODEL_EFFICIENCY_AND_RESTART_PUBLIC.json"
+  "model_efficiency_decision": "results/MODEL_EFFICIENCY_AND_RESTART_PUBLIC.json",
+  "as_of_utc": "2026-10-27T09:33:24.251716+00:00",
+  "continuous_lanes": [
+    {
+      "thread_id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "first_batch": 25,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17909-9995-7b41-a496-52bac348af59",
+      "first_batch": 26,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "first_batch": 27,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+      "first_batch": 28,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "first_batch": 29,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "first_batch": 30,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "resume_message_delivered"
+    },
+    {
+      "thread_id": "01a099c3-c4ed-7122-ac5a-71c8aa96ea07",
+      "first_batch": 31,
+      "batch_increment": 7,
+      "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
+      "state": "parent_preparing"
+    }
+  ]
 }
