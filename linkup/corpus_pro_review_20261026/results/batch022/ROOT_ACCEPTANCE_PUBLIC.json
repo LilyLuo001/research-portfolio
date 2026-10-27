@@ -1,0 +1,96 @@
+{
+  "batch": "batch022",
+  "claim_boundary": "Frozen schema, identity and exact quote validation only; no independent semantic accuracy or whole-corpus completion claim.",
+  "corrections": {
+    "explicit_patch_operations": 183,
+    "frozen_validator_schema_taxonomy_changes": 0,
+    "original_primary_overwrites": 0,
+    "strict_sidecar_files": 47
+  },
+  "created_utc": "2026-10-27T07:56:29.944928+00:00",
+  "exact_reuse": {
+    "attached_ad_keys": 35,
+    "attached_with_unknown": 2,
+    "pending_ad_keys": 7,
+    "pending_policy": "No unsupported reference payload inferred or newly reviewed.",
+    "prepared_bindings": 42
+  },
+  "execution_boundary": {
+    "batch_only": "batch022",
+    "git_commit_or_push": false,
+    "local_private_downloads": 0,
+    "other_batches_changed": false,
+    "successor_batch_started": false
+  },
+  "inputs": {
+    "checkpoint_code_sha256": "42baf5fb4c312b3bc5f4a537646a67312f4c68c92b0d55285d9a320a91fabda7",
+    "dispatcher_sha256": "89839be7d38d0ea36268919b7e7916986d3402a13ea7b59b4f54b8eab6930ffa",
+    "packet_manifest_sha256": "ab1021405b1ef6dae90cad167db6accc2bfd2630994423c21d4d63fe8148619b",
+    "packet_manifest_sha_source": {
+      "kind": "prepared_public_receipt",
+      "source_sha256": "ab8b2a6cfbe64e424c443acc58bdb284f19352e6334d833d0920716193be025a"
+    },
+    "prepared_receipt_sha256": "ab8b2a6cfbe64e424c443acc58bdb284f19352e6334d833d0920716193be025a",
+    "prior_checkpoint_receipt_sha256": "24e7900ad17f4784260f691e556cc3e0c24b113850b0ec532142b1b7b18b295e",
+    "schema_sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+    "validator_sha256": "f7737143004374f9391a16ad2d1bab2fa47950c589232510045d1eee93bc2c20"
+  },
+  "outputs": {
+    "checkpoint_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125829001/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+    "checkpoint_receipt_sha256": "6bbd0453af0d30345d7819728e012001879cb8b43000c86606f0cecfb983b91f",
+    "exact_reuse_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/reuse_bindings/batch022/125829903/public/EXACT_REUSE_RECEIPT_PUBLIC.json",
+    "exact_reuse_receipt_sha256": "5d72ebbfa42a09cb6898ff5857112be8837fdd3ea24fafa0ce54670401e14887",
+    "private_ad_level_reference_sha256": "eba67647631e0281c3000a396ae56535c09b65d036ce7bd54172f14f6d7a3e8a",
+    "private_context_ledger_sha256": "c9d0f45130353ddc09a5d0ed35042a5b422488c9d89a7989e2347fcf4e81355f",
+    "private_exact_reuse_attached_sha256": "ee4a2c89c864f32bc8bf5b2030d1dea68bb5f3905d9b15bcfe51a13e367c72f7",
+    "private_exact_reuse_pending_sha256": "e4a57024454691caf66e2c64dbaf13d33ef19fd8e473a18f9c98d0ecec1945ec"
+  },
+  "ownership": {
+    "contexts_per_owner": 180,
+    "lane_a": "0037-0072",
+    "lane_b": "0073-0108",
+    "lane_c": "0109-0144",
+    "packets_per_owner": 36,
+    "root": "0001-0036"
+  },
+  "reading": {
+    "accepted_canonical_ad_keys": 722,
+    "accepted_contexts": 720,
+    "contexts_with_any_unknown_outcome": 65,
+    "failed_packets": 0,
+    "new_contexts": 720,
+    "packets": 144,
+    "pending_packets": 0,
+    "reviewed_full_contexts": 667,
+    "reviewed_partial_contexts": 53,
+    "unread_contexts": 0,
+    "unresolved_document_contexts": 0
+  },
+  "status": "new_contexts_complete_prior_reuse_pending",
+  "validation_attempts": [
+    {
+      "accepted_packets": 108,
+      "failed_packets": 36,
+      "job_id": "125825132",
+      "receipt_status": "in_progress"
+    },
+    {
+      "accepted_packets": 140,
+      "failed_packets": 4,
+      "job_id": "125827462",
+      "receipt_status": "in_progress"
+    },
+    {
+      "accepted_packets": 144,
+      "failed_packets": 0,
+      "job_id": "125829001",
+      "receipt_status": "complete"
+    }
+  ],
+  "wall_time": {
+    "basis": "Dispatcher freeze to final checkpoint receipt; includes reading, queue, transport and correction time. Parallel owner durations are not added.",
+    "elapsed_seconds": 6556.839,
+    "end_utc": "2026-10-27T07:46:15.598023+00:00",
+    "start_utc": "2026-10-27T05:56:58.758579+00:00"
+  }
+}

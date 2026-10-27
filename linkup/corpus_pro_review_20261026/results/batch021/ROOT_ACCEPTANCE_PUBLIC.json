@@ -1,0 +1,113 @@
+{
+  "batch": "batch021",
+  "claim_boundary": "Frozen mechanical schema, identity, binding and exact-quote validation; no independent semantic accuracy or whole-corpus completion claim.",
+  "corrections": {
+    "explicit_patch_operations": 11,
+    "frozen_validator_schema_taxonomy_changes": 0,
+    "original_primary_overwrites": 0,
+    "strict_sidecar_files": 10,
+    "targeted_final_packets": [
+      54,
+      62,
+      86,
+      105,
+      116
+    ]
+  },
+  "created_utc": "2026-10-27T07:46:21.203682+00:00",
+  "execution_boundary": {
+    "batch_only": "batch021",
+    "git_commit_or_push": false,
+    "local_private_downloads": 0,
+    "other_batches_changed": false,
+    "successor_batch_started": false
+  },
+  "inputs": {
+    "checkpoint_code_sha256": "42baf5fb4c312b3bc5f4a537646a67312f4c68c92b0d55285d9a320a91fabda7",
+    "dispatcher_sha256": "2bdbb0c6bc5e2b3c4ea8c57dbf05e08d21d4800b2ef7d4f70896158593c1df82",
+    "packet_manifest_sha256": "352284d3bcfbfa50082b078f44b494f72db90450236b0c81ef4c1a5bcbe347ef",
+    "packet_manifest_sha_source": {
+      "kind": "prepared_public_receipt",
+      "source_sha256": "2a2553d8040545d42e5b220cfba706d7b04eef270ea559eefec3b553e65af802"
+    },
+    "prepared_receipt_sha256": "2a2553d8040545d42e5b220cfba706d7b04eef270ea559eefec3b553e65af802",
+    "prior_checkpoint_receipt_sha256": "52d3771d1b2966301632dc642c533d6fa2f8b461b76980c0138a66de1eda08cf",
+    "schema_sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+    "validator_sha256": "f7737143004374f9391a16ad2d1bab2fa47950c589232510045d1eee93bc2c20"
+  },
+  "model_provenance": {
+    "authoritative_erratum": "MODEL_EXECUTION_PROVENANCE_CORRECTION_PUBLIC.json",
+    "old_turn_root_actual": "gpt-6.1-sol/xhigh for PRIMARY0001-0036 and prior control work",
+    "prior_incorrect_public_file": "MODEL_EXECUTION_PROVENANCE_PUBLIC.json",
+    "resumed_turn_request": "gpt-6-sol/medium",
+    "resumed_turn_runtime_attestation": "not externally machine-verified",
+    "three_reading_agents_actual": "gpt-6-sol/medium"
+  },
+  "new_reading": {
+    "accepted_canonical_ad_keys": 722,
+    "accepted_contexts": 720,
+    "contexts": 720,
+    "contexts_with_any_unknown_outcome": 52,
+    "failed_packets": 0,
+    "packets": 144,
+    "pending_packets": 0,
+    "reviewed_full_contexts": 684,
+    "reviewed_partial_contexts": 33,
+    "unread_contexts": 0,
+    "unresolved_document_contexts": 3
+  },
+  "outputs": {
+    "exact_reuse_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/reuse_bindings/batch021/125824178/public/EXACT_REUSE_RECEIPT_PUBLIC.json",
+    "exact_reuse_receipt_sha256": "1ff0435f7c260c53f3133ebf3aedb73949d6b9b605ab7a2116eeee2050dec563",
+    "final_checkpoint_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/125828114/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+    "final_checkpoint_receipt_sha256": "0db572c02df79ad948e554687cc2edbfacfc38e7d4be0eb7ba8b06e25f9f57d8",
+    "private_ad_level_reference_sha256": "79887c9a8ab5027b6964592aa076edbb3d24ea4520cba72f48ba0d76f932f4cc",
+    "private_context_ledger_sha256": "3aa5afd3e2e4e9ce2bca32858a8232b98dd843a903854abdceddac532b075920",
+    "private_exact_reuse_attached_sha256": "161b70efbc4a74a37724317b56344a852b27f8688630cf63e9bbda365da472d0",
+    "private_exact_reuse_pending_sha256": "0b31c72573402569ffff5967a849b7e8ad4b550a4d7426daccbbc86f3a32e8bc"
+  },
+  "prepared_scope": {
+    "new_ad_keys": 722,
+    "prior_reuse_attached_ad_keys": 27,
+    "prior_reuse_pending_ad_keys": 10,
+    "scanned_canonical_ad_keys": 759
+  },
+  "prior_exact_reuse": {
+    "attached_ad_keys": 27,
+    "attached_with_unknown": 2,
+    "pending_ad_keys": 10,
+    "pending_policy": "No unsupported reference payload was inferred or newly reviewed.",
+    "prepared_bindings": 37
+  },
+  "status": "new_contexts_complete_prior_reuse_pending",
+  "validation_attempts": [
+    {
+      "job_id": "125824028",
+      "reason": "strict sidecar routing path; archived and repaired without changing PRIMARY",
+      "state": "FAILED"
+    },
+    {
+      "accepted_packets": 139,
+      "failed_packets": 5,
+      "job_id": "125825063",
+      "receipt_status": "in_progress",
+      "state": "COMPLETED"
+    },
+    {
+      "accepted_packets": 144,
+      "checkpoint_elapsed_seconds": 17.79,
+      "failed_packets": 0,
+      "job_id": "125828114",
+      "receipt_status": "complete",
+      "reused_accepted_packets": 139,
+      "slurm_elapsed_seconds": 24,
+      "state": "COMPLETED"
+    }
+  ],
+  "wall_time": {
+    "basis": "Dispatcher freeze to final checkpoint receipt; includes human Pro review, SSH/queue time and targeted correction. Parallel owner durations are not added.",
+    "elapsed_seconds": 6152.927,
+    "end_utc": "2026-10-27T07:39:00.807104+00:00",
+    "start_utc": "2026-10-27T05:56:27.880428+00:00"
+  }
+}

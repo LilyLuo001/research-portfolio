@@ -1,0 +1,52 @@
+{
+  "batch": "batch023",
+  "status": "primary_review_complete_with_pending_exact_reuse_references",
+  "created_utc": "2026-10-27T07:37:07.728873+00:00",
+  "authoritative_public_receipt": true,
+  "source_public_receipts": {
+    "BATCH_COMPLETION_PUBLIC.json": {
+      "sha256": "9fecd543b5b1f2f1ef90fb24f65e151c7fe7651b53a809f1f64852a9d0dfda26"
+    },
+    "EXECUTION_MODEL_TRACE_CORRECTION_PUBLIC.json": {
+      "sha256": "94dd1199473d2d536cfdf28af1a0a3426c3b16cc1853118313f342e02e3356d6"
+    },
+    "EXACT_REUSE_RECEIPT_PUBLIC.json": {
+      "sha256": "555ce75112cc8aaf58571db14e46ff78e79f294c469ed2d8a4330b4c5186dfdd"
+    }
+  },
+  "review": {
+    "prepared_contexts_read": 720,
+    "accepted_packets": 144,
+    "full": 695,
+    "partial": 25,
+    "contexts_with_any_final_unknown": 43,
+    "unread": 0,
+    "final_checkpoint_job": "125825789"
+  },
+  "exact_reuse": {
+    "final_job": "125826456",
+    "attached_prior_ad_keys": 44,
+    "pending_prior_reference_ad_keys": 5,
+    "pending_reason": "Supported completed prior-reference payloads unavailable; pending bindings are neither unread among the 720 nor reviewed unknown."
+  },
+  "model_provenance": {
+    "authoritative_correction": "EXECUTION_MODEL_TRACE_CORRECTION_PUBLIC.json",
+    "supersedes_claims_in": "EXECUTION_MODEL_TRACE_PUBLIC.json",
+    "root_review_and_original_receipt_turn": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "packets": "0001-0036"
+    },
+    "three_readers": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "medium"
+    },
+    "note": "The requested root downshift applied after the prior turn. No claim is made here about runtime introspection of this continuation turn."
+  },
+  "timing": {
+    "review_execution_wall_seconds_including_transport": 4290.53,
+    "primary_authoring_window_seconds": 4076.0
+  },
+  "claim_boundary": "Mechanical validation passed. This does not certify semantic gold-standard accuracy or whole-corpus accuracy. No new reading or judgment was performed during public receipt synchronization.",
+  "termination": "Batch ends with this receipt. No new batch, waiting for other chats, commit, push, or automation."
+}

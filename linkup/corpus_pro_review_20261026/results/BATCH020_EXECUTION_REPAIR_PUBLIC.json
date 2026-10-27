@@ -1,0 +1,13 @@
+{
+  "failed_job": "125833066",
+  "failure": "Required dispatcher file absent; frozen checkpoint guard stopped before validation.",
+  "completed_before_stop": {
+    "primary_files": 144,
+    "explicit_strict_patch_operations": 46
+  },
+  "accepted_records_from_failed_job": 0,
+  "repair": "Materialize actual original disjoint assignments; rerun existing checkpoint with unchanged primary, patches, schema and validator.",
+  "new_semantic_readings": 0,
+  "guard_relaxed": false,
+  "prior_failure_preserved": true
+}
