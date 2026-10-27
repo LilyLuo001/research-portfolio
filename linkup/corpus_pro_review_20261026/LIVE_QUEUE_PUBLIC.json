@@ -133,7 +133,7 @@
       "public_receipt": "results/BATCH008_FINAL_125735019_PUBLIC.json"
     },
     "batch009": {
-      "state": "actual_reading_in_progress",
+      "state": "validated_saved",
       "preparation_job": "125717395",
       "prepared_contexts": 720,
       "prepared_new_context_adkeys": 725,
@@ -159,7 +159,21 @@
       "lane_a_state": "reading_from_packet0007",
       "lane_b_primary_contexts_saved": 240,
       "lane_a_primary_contexts_saved_lower_bound": 130,
-      "exact_reuse_job": "125738561"
+      "exact_reuse_job": "125738561",
+      "primary_contexts_saved": 720,
+      "final_validation_job": "125740198",
+      "mechanically_accepted_contexts": 720,
+      "reviewed_full_contexts": 668,
+      "reviewed_partial_contexts": 51,
+      "unresolved_document_contexts": 1,
+      "contexts_with_any_unknown_outcome": 66,
+      "ad_keys_with_any_unknown_outcome": 66,
+      "accepted_new_context_ad_keys": 725,
+      "failed_packets": 0,
+      "pending_packets": 0,
+      "exact_prior_reuse_ad_keys": 16,
+      "reuse_job": "125738561",
+      "public_receipt": "results/BATCH009_FINAL_125740198_PUBLIC.json"
     },
     "batch012": {
       "state": "actual_reading_in_progress",
@@ -170,20 +184,35 @@
       },
       "capacity": 720,
       "primary_dispatch": "code/DISPATCHER_batch012_PUBLIC.json",
-      "count": 720
+      "count": 720,
+      "root_primary_contexts_saved": 40,
+      "root_validation_job": "125739740",
+      "root_initial_validated_records": 29,
+      "root_specific_branch_correction_saved": true
     },
     "batch013": {
       "state": "actual_reading_in_independent_thread",
       "preparation_job": "125732122",
       "owner_thread": "01a17939-17c4-7811-963f-e48ab4f4b843",
       "capacity": 720
+    },
+    "batch017": {
+      "state": "actual_reading_in_progress",
+      "preparation_job": "125740037",
+      "root_packets": "0001–0006",
+      "root_primary_contexts_saved": 30,
+      "other_packets_owner": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "other_packets": "0007–0144",
+      "count": 720,
+      "root_validation_job": "125741848",
+      "root_validated_contexts": 30
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
-  "resume": "Inspect saved PRIMARY and validation receipts; do not reread completed contexts. Main preparation cursor1:544 and recovered-shard preparation cursor0:2378 are separate; preparation frontiers are not semantic completion. Resume lowest incomplete packet. After recovered shard0 is exhausted resume main at1:544.",
+  "resume": "Resume only unread disjoint packets; parent012 root1–6 saved, A7–36, C37–48+97–144, B49–96. Independent owner010→014→017(excludingroot1–6),011→015→018,013→016→019. Preparation frontier is not semantic completion. Use each own actual receipts; preserve main cursor1:544 after recovered shard0 exhausted.",
   "waiting_for_API": false,
   "new_paid_channel_or_model_deployment": false,
-  "as_of_utc": "2026-10-26T16:39:58.850867+00:00",
+  "as_of_utc": "2026-10-27T05:27:23.023186+00:00",
   "accepted_totals_through_batch006": {
     "new_contexts_processed": 720,
     "complete_source_contexts": 673,
@@ -251,5 +280,19 @@
     "observed_recent_rows_per_hour": 2080,
     "mechanical_acceptance_separate": true,
     "claim": "File timestamp window; reference quality and partial/unknown acceptance remain separate. Not a whole-target duration guarantee."
-  }
+  },
+  "accepted_totals_through_batch009": {
+    "new_contexts_processed": 2880,
+    "complete_source_contexts": 2690,
+    "partial_source_contexts": 178,
+    "unresolved_source_contexts": 12,
+    "new_context_canonical_ad_keys": 2892,
+    "additional_exact_prior_reuse_ad_keys": 30,
+    "total_bound_ad_keys": 2922,
+    "contexts_with_any_top_level_unknown_outcome": 219,
+    "ad_keys_with_any_top_level_unknown_outcome_including_reuse": 225,
+    "claim": "Mechanical/evidence acceptance only, not independent semantic accuracy; independent chats additional accepted outputs tracked separately pending aggregation."
+  },
+  "allowance_block_removed": true,
+  "resumption_receipt": "results/ALLOWANCE_RESUMPTION_PUBLIC.json"
 }
