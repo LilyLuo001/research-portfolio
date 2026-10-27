@@ -57,7 +57,7 @@
     "Prepare batches with unchanged existing scheduled prepare_packets.py and all prior manifests.",
     "Read each complete context through Pro and save evidence-bearing immutable PRIMARY JSONL; exact reuse only.",
     "Delegate disjoint packet ranges if actual capacity permits; no paid API, new model/software, coarse rerun or new taxonomy.",
-    "Do not create recurring automations or restart old chains.",
+    "Only parent maintains the single existing LinkUp continuation heartbeat; do not create duplicate lane automations or restart old chains.",
     "Follow continuous_lanes exclusive whole-batch ownership; prepare with existing serialized SCNet wrapper and actual cursors, no overlapping reading. Do not end simply because720 finished."
   ],
   "successor_rule": "Each save batch completed independently; immediately continue own+7 successor until entire attached queue exhausted or actual blocker. Latest human explicitly supersedes prior stop-after-batch rule.",
@@ -155,5 +155,11 @@
       "ownership": "entire batch0001–0144, independent actual reading + cloud validation + persistence",
       "state": "parent_preparing"
     }
-  ]
+  ],
+  "unified_continuation_followup": {
+    "automation_id": "linkup",
+    "state": "ACTIVE",
+    "cadence_description": "hourly",
+    "no_per_lane_automation_duplicates": true
+  }
 }
