@@ -1,5 +1,9 @@
 # LinkUp project execution rules
 
+## Independent chat execution — explicit user correction (2026-10-27)
+
+The human explicitly requested three ADDITIONAL independent app chats, not an A-to-B-to-C pipeline. Read `corpus_pro_review_20261026/results/INDEPENDENT_CHATS_021_023_PUBLIC.json`. New chats independently own all144 packets/720 contexts of021,022,023 respectively, perform their own Pro reading, cloud validation and persistence, then end. Internal disjoint parallel agents are allowed; no cross-chat handoff or automatic successor. Existing owners finish current017/018/019, and parent finishes020; no completed judgment is reread. Parent preparation job125813393 only prepares three nonoverlapping inputs using actual cursors and frozen code; it is not semantic reading. Preserve original definitions, unknowns, private evidence, no paid channel/model/deployment/reset, and no whole-corpus quality claim. This supersedes earlier continuous successor routing only.
+
 ## Pro continuation explicitly approved (2026-10-26)
 
 The human accepts incremental Pro-only reading and will replenish allowance if needed. Read `linkup/corpus_pro_review_20261026/PRO_CONTINUATION_AUTHORIZATION_PUBLIC.json`. Read `linkup/corpus_pro_review_20261026/LIVE_QUEUE_PUBLIC.json` and the referenced cloud receipts; resume only actually unread packets using the same schema and deterministic cursor. Preserve all completed judgments and unknowns; continue saving batches without treating them as final scope. Do not wait for an API or restart proposals/development. No paid service, new model/software, automatic reset, or completion-date guarantee. The400-million-plus full target is not replaced by the attached204774035-US-ad catalog. Report actual newly read, reused, partial/unknown, remaining and checkpoints; no claim of background reading after a turn ends. This explicit continuation supersedes the prior instruction to stop issuing new Pro packets for throughput reasons only.

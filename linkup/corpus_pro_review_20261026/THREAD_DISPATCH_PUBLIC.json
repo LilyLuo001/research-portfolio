@@ -60,5 +60,37 @@
     "If named batch finishes do not steal parent or other lane queues; preserve own receipt for parent aggregation.",
     "Do not create recurring automations or restart old chains."
   ],
-  "successor_rule": "Each named owner may prepare only its explicitly reserved successor from the actual previous preparation receipt next_cursor with all prior manifests. Begin successor only after own current PRIMARY/checkpoint saved; no stealing other batches. Continue actual Pro work until genuine allowance unavailable, checkpoint before stop; no auto-reset."
+  "successor_rule": "Superseded by explicit independent-chat correction: existing chats finish current assigned017/018/019, parent finishes020; new chats each own021/022/023 in full and end. Preparation cursors only avoid duplicate source input; semantic execution is independent.",
+  "latest_user_correction": {
+    "as_of": "2026-10-27T05:54:00.202322+00:00",
+    "mode": "independent_end_to_end_chats",
+    "rule": "Each chat completes its entire assigned batch, including its own cloud validation and persistence, then ends. No A-to-B-to-C handoff, automatic successor, or cross-chat dependency on review outputs."
+  },
+  "independent_whole_batch_chats": [
+    {
+      "batch": "batch021",
+      "thread_id": "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+      "title": "LinkUp 独立任务一 · Batch021",
+      "count": 720,
+      "scope": "all0001–0144",
+      "completion": "own reading, own validation, own cloud persistence, then end"
+    },
+    {
+      "batch": "batch022",
+      "thread_id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "title": "LinkUp 独立任务二 · Batch022",
+      "count": 720,
+      "scope": "all0001–0144",
+      "completion": "own reading, own validation, own cloud persistence, then end"
+    },
+    {
+      "batch": "batch023",
+      "thread_id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "title": "LinkUp 独立任务三 · Batch023",
+      "count": 720,
+      "scope": "all0001–0144",
+      "completion": "own reading, own validation, own cloud persistence, then end"
+    }
+  ],
+  "independent_inputs_preparation_job": "125813393"
 }
