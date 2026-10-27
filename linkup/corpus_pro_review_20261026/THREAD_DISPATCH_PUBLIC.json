@@ -92,5 +92,16 @@
       "completion": "own reading, own validation, own cloud persistence, then end"
     }
   ],
-  "independent_inputs_preparation_job": "125813393"
+  "independent_inputs_preparation_job": "125813393",
+  "independent_restart_024": {
+    "thread_id": "01a17908-dbb4-7953-8029-96b600f388a4",
+    "batch": "batch024",
+    "owned_packets": "0001–0144",
+    "contexts": 720,
+    "preparation_job": "125820719",
+    "status": "prepared_new_turn_active",
+    "completion": "independent end-to-end, then end",
+    "model_target": "gpt-6-sol/medium"
+  },
+  "model_efficiency_decision": "results/MODEL_EFFICIENCY_AND_RESTART_PUBLIC.json"
 }

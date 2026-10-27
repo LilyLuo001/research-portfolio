@@ -1,0 +1,36 @@
+{
+  "as_of_utc": "2026-10-27T06:50:22.820774+00:00",
+  "user_request": "Evaluate model/effort efficiency, avoid excessive model use, consider5.6, and reassign completed idle chat.",
+  "decision": {
+    "routine_controller_target": "gpt-6-sol/medium",
+    "existing_readers": "gpt-6-sol/medium preserved",
+    "routine_xhigh": "remove; no measured benefit established for routine dispatch/JSON/cloud bookkeeping",
+    "code_checks": "schema, exact quotes, identities, SHA, numeric constraints handled by existing code",
+    "gpt_5_6_sol": "Documented flagship; possible fixed-framework reader, but no task-specific semantic-equivalence or Pro-quota savings evidence. Not automatically substituted merely for older version number.",
+    "new_model_search_or_reannotation": false
+  },
+  "official_sources": [
+    "https://developers.openai.com/api/docs/guides/reasoning#reasoning-effort",
+    "https://developers.openai.com/api/docs/models/gpt-5.6-sol"
+  ],
+  "overrides_requested_for": [
+    "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+    "01a17beb-989b-73a3-a901-b0eb3563020a",
+    "01a17beb-99d3-7f21-a085-33fd51118803"
+  ],
+  "execution_verification": "Batch022 turn log confirmedgpt-6-sol medium;021/023 current turn logs still6.1-sol xhigh at last inspection, both acknowledged applying future work at safe checkpoint. Do not claim all effective before verification.",
+  "independent_restart": {
+    "thread_id": "01a17908-dbb4-7953-8029-96b600f388a4",
+    "prior_task_status": "017 completed,010 two identity anomalies retained; normal end, not failure",
+    "new_batch": "batch024",
+    "owned_packets": "0001–0144",
+    "contexts": 720,
+    "preparation_job": "125820719",
+    "preparation_status": "complete",
+    "new_semantic_reading_from_preparation": 0,
+    "model_override_requested": "gpt-6-sol/medium",
+    "semantic_start_status": "new turn active, no new read count claimed yet",
+    "completion": "own complete reading+validation+private persistence, then end; no successor"
+  },
+  "paid_services_or_reset": false
+}
