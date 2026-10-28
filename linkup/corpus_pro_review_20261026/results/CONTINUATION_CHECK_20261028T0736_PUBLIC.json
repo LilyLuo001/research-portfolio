@@ -1,0 +1,167 @@
+{
+  "checked_at_utc": "2026-10-28T07:52:51.377Z",
+  "allowance": {
+    "ordinaryUsageAllowed": true,
+    "usedPercent_observed": 4
+  },
+  "initial_thread_states": [
+    {
+      "batch": 25,
+      "id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "status": "active",
+      "error": null,
+      "phase": "commentary",
+      "text": "续跑已生效：A 到 0025、B 到 0076、C 到 0118，合计 75 包落盘。当前按原独占区段继续，尚未触发完整校验。",
+      "cursor": "13d9a7d9-fd28-4ec5-b210-da4e5d221e93:21"
+    },
+    {
+      "batch": 26,
+      "id": "01a17909-9995-7b41-a496-52bac348af59",
+      "status": "active",
+      "error": null,
+      "phase": "commentary",
+      "text": "续跑后又有 4 包保存成功，batch026 现为 78 包、390 条。仍按原区段推进；全批校验要等剩余文件齐备。",
+      "cursor": "0810273b-2a8e-4767-ad1f-e6349b99ba5b:21"
+    },
+    {
+      "batch": 27,
+      "id": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "status": "active",
+      "error": null,
+      "phase": "commentary",
+      "text": "batch027 的 PRIMARY 已增至 106/144 包。三段都在推进；接下来继续等读者完成各自范围，再做整批的正式合并与验收。",
+      "cursor": "c12b07db-a4e1-48b6-a0f5-ba014c41c26a:21"
+    },
+    {
+      "batch": 28,
+      "id": "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+      "status": "systemError",
+      "error": {
+        "message": "Selected model is at capacity. Please try a different model."
+      },
+      "phase": "commentary",
+      "text": "我会从 batch028 的现有落盘位置恢复：先核对共享额度、三位代理状态和缺失包号，只继续未保存的包。144 包及修正全部齐备后再运行正式验收。",
+      "cursor": "c2126543-23b3-46ce-8ec8-4d80d28e0f99:25"
+    },
+    {
+      "batch": 29,
+      "id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "status": "systemError",
+      "error": {
+        "message": "Selected model is at capacity. Please try a different model."
+      },
+      "phase": "commentary",
+      "text": "I’m resuming batch029 from the saved cloud reviews. I’ll check which packets each reader completed, then continue only the unread packets before running the batch acceptance.",
+      "cursor": "0c35cefe-47f1-4fbc-a1a6-33426aadb8bc:20"
+    },
+    {
+      "batch": 30,
+      "id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "status": "systemError",
+      "error": {
+        "message": "Selected model is at capacity. Please try a different model."
+      },
+      "phase": "commentary",
+      "text": "额度接口现显示可继续使用。云端核对出 batch030 已保存 96/144 包，剩余 48 包分别为 0033–0048、0085–0096、0125–0144；三名读者已从这些断点恢复。现有更正文件保留，未重读前 96 包。",
+      "cursor": "1ba61b05-e615-41c9-9758-e3de302c1f15:27"
+    }
+  ],
+  "bounded_retry_thread_states": [
+    {
+      "id": "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+      "status": "active",
+      "error": null
+    },
+    {
+      "id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "status": "active",
+      "error": null,
+      "message": "Cloud inventory confirms 66 packets were saved before the pause. Reader B has resumed and saved through packet0076. Reader C hit a model-capacity error on its single retry, so its next unread packet remains0122; I’m keeping that checkpoint intact while the other active readers continue."
+    },
+    {
+      "id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "status": "active",
+      "error": null,
+      "message": "恢复后已有实际新增：前段到 0036，中段到 0090，末段到 0126，合计至少 108/144 包。三名读者都在原区段运行；我会等余下 36 包全部落盘后再运行正式验收。"
+    }
+  ],
+  "parent_readers": "three running; no duplicate restart",
+  "cloud_snapshot": {
+    "batches": [
+      {
+        "saved_packages": 84,
+        "latest_mtime": 1793173761,
+        "batch": "batch025",
+        "next_by_range": [
+          28,
+          82,
+          121
+        ]
+      },
+      {
+        "saved_packages": 89,
+        "latest_mtime": 1793173772,
+        "batch": "batch026",
+        "next_by_range": [
+          34,
+          80,
+          122
+        ]
+      },
+      {
+        "saved_packages": 111,
+        "latest_mtime": 1793173775,
+        "batch": "batch027",
+        "next_by_range": [
+          34,
+          85,
+          139
+        ]
+      },
+      {
+        "saved_packages": 90,
+        "latest_mtime": 1793096265,
+        "batch": "batch028",
+        "next_by_range": [
+          29,
+          81,
+          127
+        ]
+      },
+      {
+        "saved_packages": 77,
+        "latest_mtime": 1793172492,
+        "batch": "batch029",
+        "next_by_range": [
+          23,
+          77,
+          124
+        ]
+      },
+      {
+        "saved_packages": 111,
+        "latest_mtime": 1793173780,
+        "batch": "batch030",
+        "next_by_range": [
+          38,
+          90,
+          130
+        ]
+      },
+      {
+        "saved_packages": 77,
+        "latest_mtime": 1793173774,
+        "batch": "batch031",
+        "next_by_range": [
+          31,
+          67,
+          126
+        ]
+      }
+    ],
+    "as_of_unix": 1793173782.416878
+  },
+  "full_batch_acceptance": "still pending; file counts are operational progress only",
+  "no_semantic_reread_or_scope_change": true,
+  "new_paid_api_or_reset": false
+}
