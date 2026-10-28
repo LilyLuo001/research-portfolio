@@ -334,9 +334,88 @@
       "scope": "Engineering acceptance, not independent semantic accuracy"
     },
     "batch029": {
-      "state": "all_primary_saved_specific_correction_and_revalidation_pending",
-      "last_observed_checkpoint": "126044488",
-      "full_acceptance": false
+      "state": "validated_saved",
+      "checkpoint_job": "126051319",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 685,
+        "reviewed_partial_contexts": 29,
+        "unresolved_document_contexts": 6,
+        "ad_keys_with_any_unknown_outcome": 38,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 93,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 38
+      },
+      "public_receipt_sha256": "38e8c2650ce06c4d291f18c4a6fb1fb6e5fe2e5fc09cc92a38563100dad336db",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch032": {
+      "state": "validated_saved",
+      "checkpoint_job": "126055680",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 680,
+        "reviewed_partial_contexts": 38,
+        "unresolved_document_contexts": 2,
+        "ad_keys_with_any_unknown_outcome": 44,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 0,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 44
+      },
+      "public_receipt_sha256": "0525bd99a51069ed2b0159b545902113170c40706743dcdec5b6e3a90ec5137b",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch033": {
+      "state": "validated_saved",
+      "checkpoint_job": "126054727",
+      "counts": {
+        "accepted_ad_keys": 721,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 657,
+        "reviewed_partial_contexts": 51,
+        "unresolved_document_contexts": 12,
+        "ad_keys_with_any_unknown_outcome": 67,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 135,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 67
+      },
+      "public_receipt_sha256": "db0abcb156928f961b0ecd57e1c5fec94d3a49ac4ad34b232a6a7ac0cd1ff4d4",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch034": {
+      "state": "validated_saved",
+      "checkpoint_job": "126052361",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 681,
+        "reviewed_partial_contexts": 37,
+        "unresolved_document_contexts": 2,
+        "ad_keys_with_any_unknown_outcome": 42,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 131,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 42
+      },
+      "public_receipt_sha256": "8d3618eb87c4e5f0f25f4b08f6520ed404bb48af13abab09df416abed19f3ef1",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
@@ -511,19 +590,47 @@
     "provider_capacity_failure_handling": "one bounded same-model retry; existing active readers left running",
     "whole_delivery_complete": false
   },
-  "latest_accepted_batch_release": "results/ACCEPTED_026_028_030_031_20261028_PUBLIC.json",
+  "latest_accepted_batch_release": "results/ACCEPTED_029_032_033_034_20261028_PUBLIC.json",
   "successor_input_job": {
-    "job_id": "126050712",
-    "through_batch": 52,
-    "state": "submitted_not_yet_verified_ready"
+    "job": "126057513",
+    "through_batch": 59,
+    "state": "submitted_not_verified_ready",
+    "restored_shard0_ad_rows": 85376,
+    "main_anchor": "1:544 unchanged"
   },
   "current_continuous_reading": {
-    "25_lane": "batch032",
-    "26_lane": "batch033",
-    "27_lane": "batch034",
-    "28_lane": "batch035",
-    "29_lane": "batch036; preserve029 pending repair",
-    "30_lane": "batch037",
-    "parent_lane": "batch038 and045 disjoint internal ranges"
+    "25_lane": "batch039",
+    "26_lane": "batch040",
+    "27_lane": "batch041 (144 saved) then048",
+    "28_lane": "035 blocked at unprocessed143–144; no bypass",
+    "29_lane": "batch043 after036 finalizer",
+    "30_lane": "batch037 remaining checkpoint resumed",
+    "parent_lane": "038 and045/052 disjoint ranges"
+  },
+  "provider_output_guard_blockers": [
+    {
+      "thread_id": "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+      "batch": "batch035",
+      "kind": "platform_output_guard",
+      "exact_error": "stream disconnected before completion: regurg plugin blocked the output stream.",
+      "one_same_channel_recovery_attempt_failed": true,
+      "saved_primary_packages": 142,
+      "remaining_unprocessed_packets": [
+        143,
+        144
+      ],
+      "remaining_expected_contexts": 10,
+      "unprocessed_not_reviewed_unknown": true,
+      "preserve_original_scope": true,
+      "action": "No repeated unchanged-guard retries, rerouting, obfuscation or bypass; preserve checkpoint and continue other authorized lanes. Recheck controller status; resume only after material provider-state change or human-supported compliant resolution."
+    }
+  ],
+  "current_wave_complete_counts": {
+    "accepted_contexts": 7200,
+    "accepted_ad_keys": 7203,
+    "reviewed_full_contexts": 6739,
+    "reviewed_partial_contexts": 421,
+    "unresolved_document_contexts": 40,
+    "contexts_with_any_unknown_outcome": 497
   }
 }
