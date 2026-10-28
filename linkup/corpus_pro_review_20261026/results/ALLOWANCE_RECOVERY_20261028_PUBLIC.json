@@ -1,0 +1,240 @@
+{
+  "as_of_utc": "2026-10-28T07:11:15.109Z",
+  "allowance_observed": {
+    "ordinaryUsageAllowed": true,
+    "usedPercent": 0,
+    "no_reset_invoked": true
+  },
+  "six_existing_threads_resumed": [
+    {
+      "batch": 25,
+      "thread_id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "status": "active",
+      "phase": "commentary",
+      "text": "我从 batch025 的保存断点恢复，先核对云端已落盘包和当前额度，再只分配尚未读取的包。已有 PRIMARY、未知判断和修正文件会保留；144 包齐备后再做正式合并与严格校验。",
+      "cursor": "13d9a7d9-fd28-4ec5-b210-da4e5d221e93:20",
+      "error": null
+    },
+    {
+      "batch": 26,
+      "thread_id": "01a17909-9995-7b41-a496-52bac348af59",
+      "status": "active",
+      "phase": "commentary",
+      "text": "额度恢复后，我会从 batch026 已保存的云端文件清单接续，只把未保存的包交回原来的三个区段。先核对独占归属、已声明修正和实际断点，再继续逐条阅读。",
+      "cursor": "0810273b-2a8e-4767-ad1f-e6349b99ba5b:20",
+      "error": null
+    },
+    {
+      "batch": 27,
+      "thread_id": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "status": "active",
+      "phase": "commentary",
+      "text": "我会先核对 batch027 已落盘的 PRIMARY 和各读者断点，再从未保存的包继续。整批完成后运行正式验收，随后按本路顺序推进下一批。",
+      "cursor": "c12b07db-a4e1-48b6-a0f5-ba014c41c26a:20",
+      "error": null
+    },
+    {
+      "batch": 28,
+      "thread_id": "01a17beb-973b-74e2-adbb-20f8d004b1fc",
+      "status": "active",
+      "phase": "commentary",
+      "text": "我会从 batch028 的现有落盘位置恢复：先核对共享额度、三位代理状态和缺失包号，只继续未保存的包。144 包及修正全部齐备后再运行正式验收。",
+      "cursor": "c2126543-23b3-46ce-8ec8-4d80d28e0f99:24",
+      "error": null
+    },
+    {
+      "batch": 29,
+      "thread_id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "status": "active",
+      "phase": "commentary",
+      "text": "I’m resuming batch029 from the saved cloud reviews. I’ll check which packets each reader completed, then continue only the unread packets before running the batch acceptance.",
+      "cursor": "0c35cefe-47f1-4fbc-a1a6-33426aadb8bc:19",
+      "error": null
+    },
+    {
+      "batch": 30,
+      "thread_id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "status": "active",
+      "phase": "commentary",
+      "text": "我从 batch030 的云端断点继续：先核对已保存的 PRIMARY 与更正文件，再把实际未读包交回原区段读者。已完成的判断不会重读或覆盖。",
+      "cursor": "1ba61b05-e615-41c9-9758-e3de302c1f15:26",
+      "error": null
+    }
+  ],
+  "parent_readers_resumed": 3,
+  "initial_cloud_metadata_snapshot": {
+    "batches": [
+      {
+        "ranges": [
+          {
+            "start": 1,
+            "end": 48,
+            "next_missing_packet": 25
+          },
+          {
+            "start": 49,
+            "end": 96,
+            "next_missing_packet": 75
+          },
+          {
+            "start": 97,
+            "end": 144,
+            "next_missing_packet": 118
+          }
+        ],
+        "saved_packages": 71,
+        "batch": "batch025"
+      },
+      {
+        "ranges": [
+          {
+            "start": 1,
+            "end": 48,
+            "next_missing_packet": 27
+          },
+          {
+            "start": 49,
+            "end": 96,
+            "next_missing_packet": 76
+          },
+          {
+            "start": 97,
+            "end": 144,
+            "next_missing_packet": 118
+          }
+        ],
+        "saved_packages": 74,
+        "batch": "batch026"
+      },
+      {
+        "ranges": [
+          {
+            "start": 1,
+            "end": 48,
+            "next_missing_packet": 28
+          },
+          {
+            "start": 49,
+            "end": 96,
+            "next_missing_packet": 78
+          },
+          {
+            "start": 97,
+            "end": 144,
+            "next_missing_packet": 132
+          }
+        ],
+        "saved_packages": 91,
+        "batch": "batch027"
+      },
+      {
+        "ranges": [
+          {
+            "start": 1,
+            "end": 48,
+            "next_missing_packet": 29
+          },
+          {
+            "start": 49,
+            "end": 96,
+            "next_missing_packet": 81
+          },
+          {
+            "start": 97,
+            "end": 144,
+            "next_missing_packet": 127
+          }
+        ],
+        "saved_packages": 90,
+        "batch": "batch028"
+      },
+      {
+        "ranges": [
+          {
+            "start": 1,
+            "end": 48,
+            "next_missing_packet": 19
+          },
+          {
+            "start": 49,
+            "end": 96,
+            "next_missing_packet": 72
+          },
+          {
+            "start": 97,
+            "end": 144,
+            "next_missing_packet": 122
+          }
+        ],
+        "saved_packages": 66,
+        "batch": "batch029"
+      },
+      {
+        "ranges": [
+          {
+            "start": 1,
+            "end": 48,
+            "next_missing_packet": 33
+          },
+          {
+            "start": 49,
+            "end": 96,
+            "next_missing_packet": 85
+          },
+          {
+            "start": 97,
+            "end": 144,
+            "next_missing_packet": 125
+          }
+        ],
+        "saved_packages": 96,
+        "batch": "batch030"
+      },
+      {
+        "ranges": [
+          {
+            "start": 1,
+            "end": 48,
+            "next_missing_packet": 28
+          },
+          {
+            "start": 49,
+            "end": 96,
+            "next_missing_packet": 64
+          },
+          {
+            "start": 97,
+            "end": 144,
+            "next_missing_packet": 121
+          }
+        ],
+        "saved_packages": 66,
+        "batch": "batch031"
+      }
+    ],
+    "as_of_unix": 1793170258.219509,
+    "prepared45": true
+  },
+  "proven_new_contexts_saved_after_recovery": 10,
+  "proof": [
+    {
+      "batch": "batch031",
+      "packet": "0028",
+      "records": 5,
+      "sha256": "92bba1ea739203c3d29e5e464a8d4e15516d70cc42e48a7274e51e1c09df3909"
+    },
+    {
+      "batch": "batch031",
+      "packet": "0121",
+      "records": 5,
+      "sha256": "d3f7c29c5ffd9ed71fddc7e42533ddb902693ecfd65852cb093bcfb084c02c89"
+    }
+  ],
+  "mechanical_final_acceptance": "pending full batch",
+  "final_unknown_count": "not yet finalized; preserve existing per-field unknowns",
+  "no_old_judgment_reread": true,
+  "no_research_or_model_changes": true,
+  "whole_delivery_complete": false,
+  "prepared_inputs_through_batch": 45,
+  "production_continues": true
+}
