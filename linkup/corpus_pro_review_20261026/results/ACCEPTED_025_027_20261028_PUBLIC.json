@@ -1,0 +1,104 @@
+{
+  "checked_at_utc": "2026-10-28T08:38:10.760Z",
+  "allowance_used_percent_observed": 26,
+  "accepted_batches": [
+    {
+      "status": "complete",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126039644/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "created_utc": "2026-10-28T08:24:11.408462+00:00",
+      "batch": "batch027",
+      "job": "126039644",
+      "counts": {
+        "accepted_ad_keys": 721,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 667,
+        "reviewed_partial_contexts": 53,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 58,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 124,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 58
+      },
+      "receipt_sha256": "06a12097237946a174f57e3dd107793428170116eeb1bfa5eab08a628f86395f"
+    },
+    {
+      "status": "complete",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126040452/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "created_utc": "2026-10-28T08:36:29.470855+00:00",
+      "batch": "batch025",
+      "job": "126040452",
+      "counts": {
+        "accepted_ad_keys": 721,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 677,
+        "reviewed_partial_contexts": 41,
+        "unresolved_document_contexts": 2,
+        "ad_keys_with_any_unknown_outcome": 45,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 0,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 45
+      },
+      "receipt_sha256": "3fadf3a47685b38f3bf879e238a76d760259e2325af5c5c59b72c05f37b11574"
+    }
+  ],
+  "scope": "Existing actual Pro readings, mechanically accepted; no independent semantic-accuracy certification",
+  "whole_delivery_complete": false,
+  "followup": "Owners continue fixed +7 lanes; two capacity-paused owners received one same-model resume",
+  "known_incomplete_checkpoints": [
+    {
+      "status": "in_progress",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126040504/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "created_utc": "2026-10-28T08:35:53.188418+00:00",
+      "batch": "batch028",
+      "job": "126040504",
+      "counts": {
+        "accepted_ad_keys": 685,
+        "accepted_contexts": 685,
+        "accepted_packets": 137,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 647,
+        "reviewed_partial_contexts": 32,
+        "unresolved_document_contexts": 6,
+        "ad_keys_with_any_unknown_outcome": 38,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 117,
+        "pending_packets": 0,
+        "failed_packets": 7,
+        "contexts_with_any_unknown_outcome": 38
+      },
+      "receipt_sha256": "48cf92c04c88e3e78b3fee33db07189a7f880b79a42a32edbf9e3ffe292ac5fe"
+    },
+    {
+      "status": "in_progress",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126041310/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "created_utc": "2026-10-28T08:35:23.001941+00:00",
+      "batch": "batch026",
+      "job": "126041310",
+      "counts": {
+        "accepted_ad_keys": 715,
+        "accepted_contexts": 715,
+        "accepted_packets": 143,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 674,
+        "reviewed_partial_contexts": 33,
+        "unresolved_document_contexts": 8,
+        "ad_keys_with_any_unknown_outcome": 45,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 119,
+        "pending_packets": 0,
+        "failed_packets": 1,
+        "contexts_with_any_unknown_outcome": 45
+      },
+      "receipt_sha256": "8dcd797c37072a42c44c2220c3d8cf32289638a820f8460f827bcda62e14df12"
+    }
+  ],
+  "current_saved_packet_snapshot": "{\"batches\": [{\"saved_packages\": 144, \"latest_mtime\": 1793175373.0, \"batch\": \"batch025\", \"next_by_range\": [null, null, null]}, {\"saved_packages\": 144, \"latest_mtime\": 1793175435.0, \"batch\": \"batch026\", \"next_by_range\": [null, null, null]}, {\"saved_packages\": 144, \"latest_mtime\": 1793174888.0, \"batch\": \"batch027\", \"next_by_range\": [null, null, null]}, {\"saved_packages\": 144, \"latest_mtime\": 1793175180.0, \"batch\": \"batch028\", \"next_by_range\": [null, null, null]}, {\"saved_packages\": 124, \"latest_mtime\": 1793176528.0, \"batch\": \"batch029\", \"next_by_range\": [null, null, 125]}, {\"saved_packages\": 143, \"latest_mtime\": 1793174491.0, \"batch\": \"batch030\", \"next_by_range\": [null, null, 144]}, {\"saved_packages\": 135, \"latest_mtime\": 1793176516.0, \"batch\": \"batch031\", \"next_by_range\": [null, 88, null]}, {\"saved_packages\": 9, \"latest_mtime\": 1793176535.0, \"batch\": \"batch032\", \"next_by_range\": [6, 52, 98]}, {\"saved_packages\": 35, \"latest_mtime\": 1793176527.0, \"batch\": \"batch034\", \"next_by_range\": [14, 61, 107]}, {\"saved_packages\": 35, \"latest_mtime\": 1793176550.0, \"batch\": \"batch038\", \"next_by_range\": [21, 49, 112]}], \"as_of_unix\": 1793176552.666876}"
+}

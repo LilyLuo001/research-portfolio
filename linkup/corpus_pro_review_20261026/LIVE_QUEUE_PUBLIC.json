@@ -206,6 +206,48 @@
       "count": 720,
       "root_validation_job": "125741848",
       "root_validated_contexts": 30
+    },
+    "batch027": {
+      "state": "validated_saved",
+      "checkpoint_job": "126039644",
+      "counts": {
+        "accepted_ad_keys": 721,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 667,
+        "reviewed_partial_contexts": 53,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 58,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 124,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 58
+      },
+      "public_receipt_sha256": "06a12097237946a174f57e3dd107793428170116eeb1bfa5eab08a628f86395f",
+      "scope": "Engineering acceptance, not independent semantic accuracy"
+    },
+    "batch025": {
+      "state": "validated_saved",
+      "checkpoint_job": "126040452",
+      "counts": {
+        "accepted_ad_keys": 721,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 677,
+        "reviewed_partial_contexts": 41,
+        "unresolved_document_contexts": 2,
+        "ad_keys_with_any_unknown_outcome": 45,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 0,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 45
+      },
+      "public_receipt_sha256": "3fadf3a47685b38f3bf879e238a76d760259e2325af5c5c59b72c05f37b11574",
+      "scope": "Engineering acceptance, not independent semantic accuracy"
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
@@ -379,5 +421,6 @@
     "current_saved_packages_025_to031": 639,
     "provider_capacity_failure_handling": "one bounded same-model retry; existing active readers left running",
     "whole_delivery_complete": false
-  }
+  },
+  "latest_accepted_batch_release": "results/ACCEPTED_025_027_20261028_PUBLIC.json"
 }
