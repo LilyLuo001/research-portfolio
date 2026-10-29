@@ -667,17 +667,18 @@
     "new_contexts_saved_lower_bound": 15
   },
   "latest_continuation_check": {
-    "receipt": "results/CONTINUATION_CHECK_20261028T0736_PUBLIC.json",
+    "receipt": "results/CONTINUATION_CHECK_20261029T1934_PUBLIC.json",
     "ordinary_usage_allowed": true,
-    "current_saved_packages_025_to031": 639,
-    "provider_capacity_failure_handling": "one bounded same-model retry; existing active readers left running",
+    "unblocked_chats_active": 5,
+    "parent_readers_active": 3,
+    "specific_capacity_retry_recovered": true,
     "whole_delivery_complete": false
   },
   "latest_accepted_batch_release": "results/RECOVERY_AND_ACCEPTED_036_038_040_041_20261029_PUBLIC.json",
   "successor_input_job": {
-    "job": "126271078",
-    "through_batch": 66,
-    "state": "submitted_pending_actual_receipt"
+    "job_id": "126280723",
+    "through_batch": 73,
+    "state": "submitted_not_verified_ready"
   },
   "current_continuous_reading": {
     "25_lane": "batch039",
@@ -721,5 +722,6 @@
     "reviewed_partial_contexts": 646,
     "unresolved_document_contexts": 49,
     "contexts_with_any_unknown_outcome": 736
-  }
+  },
+  "known_prepared_through_batch": 66
 }

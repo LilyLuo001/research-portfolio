@@ -1,0 +1,208 @@
+{
+  "checked_at_utc": "2026-10-29T19:40:06.788Z",
+  "heartbeat_trigger_utc": "2026-10-29T19:34:25.272Z",
+  "ordinary_usage_allowed": true,
+  "used_percent_observed": 83,
+  "unblocked_chat_states": [
+    {
+      "id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "first_batch": 25,
+      "status": "active",
+      "error": null,
+      "text": "batch053 已保存 86/144 包，batch060 已开始保存 2 包。batch039、046 的验收作业仍排队，已提交的作业没有重复投递。"
+    },
+    {
+      "id": "01a17909-9995-7b41-a496-52bac348af59",
+      "first_batch": 26,
+      "status": "active",
+      "error": null,
+      "text": "A、B 已完成 054 的原始区段，正分别处理 C 明确转交的尾包。C 仍处理 0130–0136；047 的校验作业继续等待调度。"
+    },
+    {
+      "id": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "first_batch": 27,
+      "status": "active",
+      "error": null,
+      "text": "batch055 已保存 113 包，A、B、C 分别到 0034、0088、0135。验收队列仍未返回 batch048；两条线继续并行跟进。"
+    },
+    {
+      "id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "first_batch": 29,
+      "status": "active",
+      "error": null,
+      "text": "Batch057 has reached 61 saved packets. Batch064’s prepared input and dispatcher are already present for this lane, so the next +7 step is available after batch057 reading completes."
+    },
+    {
+      "id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "first_batch": 30,
+      "status": "active",
+      "error": null,
+      "text": "batch051 末段的格式问题已用 45 个严格 sidecar 声明具体更正，原 PRIMARY 均保留。读者做了只读模拟，枚举、结构和引文子串检查未再发现该区段错误；最终仍以冻结校验器回执为准。"
+    }
+  ],
+  "parent_capacity_retry": "one same-model retry; C resumed and confirmed0660001–0012 saved",
+  "other_running_readers_not_restarted": true,
+  "provider_output_guard035": "unchanged; metadata-only;143–144 still unprocessed",
+  "cloud_control_snapshot": {
+    "prepared073": false,
+    "saved_packages": {
+      "batch036": 144,
+      "batch057": 74,
+      "batch050": 144,
+      "batch035": 142,
+      "batch055": 135,
+      "batch066": 19,
+      "batch054": 141,
+      "batch053": 94,
+      "batch052": 114,
+      "batch039": 144,
+      "batch038": 144,
+      "batch060": 6,
+      "batch061": 2,
+      "batch048": 144,
+      "batch051": 132,
+      "batch059": 96,
+      "batch058": 8,
+      "batch044": 144,
+      "batch045": 144,
+      "batch046": 144,
+      "batch047": 144,
+      "batch040": 144,
+      "batch041": 144,
+      "batch037": 144,
+      "batch043": 144
+    },
+    "latest_checkpoints": {
+      "batch038": {
+        "status": "complete",
+        "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126057992/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+        "batch": "batch038",
+        "job": "126057992",
+        "counts": {
+          "accepted_ad_keys": 720,
+          "accepted_contexts": 720,
+          "accepted_packets": 144,
+          "prepared_contexts": 720,
+          "reviewed_full_contexts": 651,
+          "reviewed_partial_contexts": 69,
+          "unresolved_document_contexts": 0,
+          "ad_keys_with_any_unknown_outcome": 70,
+          "prepared_packets": 144,
+          "reused_accepted_packets": 0,
+          "pending_packets": 0,
+          "failed_packets": 0,
+          "contexts_with_any_unknown_outcome": 70
+        },
+        "receipt_sha256": "5a05951efbb5e84fb7afc06770db92363ea57b54d877bd29a149f1f4c2dfbd96"
+      },
+      "batch040": {
+        "status": "complete",
+        "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126059369/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+        "batch": "batch040",
+        "job": "126059369",
+        "counts": {
+          "accepted_ad_keys": 720,
+          "accepted_contexts": 720,
+          "accepted_packets": 144,
+          "prepared_contexts": 720,
+          "reviewed_full_contexts": 659,
+          "reviewed_partial_contexts": 52,
+          "unresolved_document_contexts": 9,
+          "ad_keys_with_any_unknown_outcome": 63,
+          "prepared_packets": 144,
+          "reused_accepted_packets": 142,
+          "pending_packets": 0,
+          "failed_packets": 0,
+          "contexts_with_any_unknown_outcome": 63
+        },
+        "receipt_sha256": "e2d9d6c5f63b3570d0797e719d99fbab523d80fce4741828006b6eb0d67aff82"
+      },
+      "batch041": {
+        "status": "complete",
+        "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126058997/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+        "batch": "batch041",
+        "job": "126058997",
+        "counts": {
+          "accepted_ad_keys": 720,
+          "accepted_contexts": 720,
+          "accepted_packets": 144,
+          "prepared_contexts": 720,
+          "reviewed_full_contexts": 684,
+          "reviewed_partial_contexts": 36,
+          "unresolved_document_contexts": 0,
+          "ad_keys_with_any_unknown_outcome": 38,
+          "prepared_packets": 144,
+          "reused_accepted_packets": 143,
+          "pending_packets": 0,
+          "failed_packets": 0,
+          "contexts_with_any_unknown_outcome": 38
+        },
+        "receipt_sha256": "8ca64074f01dd7d97bd5c339ff65bfae49b91c2db2326c3f891896ad1418eea4"
+      },
+      "batch037": {
+        "status": "in_progress",
+        "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126271280/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+        "batch": "batch037",
+        "job": "126271280",
+        "counts": {
+          "accepted_ad_keys": 715,
+          "accepted_contexts": 715,
+          "accepted_packets": 143,
+          "prepared_contexts": 720,
+          "reviewed_full_contexts": 666,
+          "reviewed_partial_contexts": 49,
+          "unresolved_document_contexts": 0,
+          "ad_keys_with_any_unknown_outcome": 51,
+          "prepared_packets": 144,
+          "reused_accepted_packets": 112,
+          "pending_packets": 0,
+          "failed_packets": 1,
+          "contexts_with_any_unknown_outcome": 51
+        },
+        "receipt_sha256": "fd1c032c3e22c341badae690c5dcc6dba4a7ba23ab8fec77cda39a238a045db0"
+      },
+      "batch036": {
+        "status": "complete",
+        "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126058135/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+        "batch": "batch036",
+        "job": "126058135",
+        "counts": {
+          "accepted_ad_keys": 720,
+          "accepted_contexts": 720,
+          "accepted_packets": 144,
+          "prepared_contexts": 720,
+          "reviewed_full_contexts": 652,
+          "reviewed_partial_contexts": 68,
+          "unresolved_document_contexts": 0,
+          "ad_keys_with_any_unknown_outcome": 68,
+          "prepared_packets": 144,
+          "reused_accepted_packets": 124,
+          "pending_packets": 0,
+          "failed_packets": 0,
+          "contexts_with_any_unknown_outcome": 68
+        },
+        "receipt_sha256": "7afa35acd7372f880131955ed8448649df88bfda102ea9c4ddd35900f1aded21"
+      }
+    },
+    "as_of_unix": 1793302609.436691
+  },
+  "pending_jobs_observed": [
+    "126279838|lk-pro-checkpo|PENDING|(Priority)",
+    "126278053|lk-pro-checkpo|PENDING|(Priority)",
+    "126277007|lk-pro-checkpo|PENDING|(Priority)",
+    "126275698|lk-pro-checkpo|PENDING|(Priority)",
+    "126275625|lk-pro-checkpo|PENDING|(Priority)",
+    "126275482|lk-pro-checkpo|PENDING|(Priority)",
+    "126273774|lk-pro-checkpo|PENDING|(Priority)",
+    "126273334|lk-pro-b037-id|PENDING|(Priority)",
+    "126273021|lk-pro-checkpo|PENDING|(Priority)"
+  ],
+  "new_completed_checkpoints_since_last_release": 0,
+  "successor_preparation": {
+    "job_id": "126280723",
+    "through_batch": 73,
+    "state": "submitted_not_verified_ready"
+  },
+  "new_api_models_software_reset": false,
+  "whole_delivery_complete": false
+}
