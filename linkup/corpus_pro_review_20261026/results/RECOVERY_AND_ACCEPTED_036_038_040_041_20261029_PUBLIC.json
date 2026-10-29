@@ -1,0 +1,185 @@
+{
+  "checked_at_utc": "2026-10-29T18:12:23.726Z",
+  "heartbeat_trigger_utc": "2026-10-29T17:28:21.514Z",
+  "allowance": {
+    "ordinaryUsageAllowed": true,
+    "usedPercent_observed": 50,
+    "no_reset_invoked": true
+  },
+  "five_unblocked_production_chats_resumed": [
+    {
+      "id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "status": "active",
+      "error": null,
+      "text": "云端核对显示 batch039 当前为 A 组保存到 0043、B 组全部 48 包完成、C 组保存到 0128。已恢复 A、C 两位原阅读者，从 0044 和 0129 开始；B 组等待严格验证回执。下一批 batch046 的所有权也已确认。"
+    },
+    {
+      "id": "01a17909-9995-7b41-a496-52bac348af59",
+      "status": "active",
+      "error": null,
+      "text": "040 的恢复校验回执确认 144 包、720 条全部接受，失败和待处理均为零。047 已保存 19 包：A 到 0008、B 到 0051、C 到 0104。我会从各自下一包恢复，不重写已有文件。"
+    },
+    {
+      "id": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "status": "active",
+      "error": null
+    },
+    {
+      "id": "01a17beb-989b-73a3-a901-b0eb3563020a",
+      "status": "active",
+      "error": null,
+      "text": "Batch043’s cloud checkpoint is 64 of 144 packets: A through0026, B through0065, and C through0117. I’ve restarted each reader at its first missing packet, preserving all "
+    },
+    {
+      "id": "01a17beb-99d3-7f21-a085-33fd51118803",
+      "status": "active",
+      "error": null,
+      "text": "云端确认 batch037 的严格更正文件已齐，原始 PRIMARY 仍保留；batch044 的读者已从各自断点继续。接下来用已接受的 112 包作为基线跑第二次冻结校验，核实剩余错误。"
+    }
+  ],
+  "parent_readers_resumed": 3,
+  "proven_new_contexts_lower_bound": 15,
+  "new_primary_proof": [
+    {
+      "batch": "batch045",
+      "packet": "0057",
+      "records": 5,
+      "sha256": "f240909a75a85dacc7be9e40880ea20c19a1cd7888a2a0b73852cee4c5617f76"
+    },
+    {
+      "batch": "batch052",
+      "packet": "0118",
+      "records": 5,
+      "sha256": "3501453254c8db15df76c84e26ccbb4621448ae7f8d493f10842ac8714fbb508"
+    },
+    {
+      "batch": "batch059",
+      "packet": "0008",
+      "records": 5,
+      "sha256": "c200d18439f7b88dede892f927749a69f4171693cef660f0928631753a96ca6a"
+    }
+  ],
+  "newly_published_complete_checkpoints": [
+    {
+      "status": "complete",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126058135/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "batch": "batch036",
+      "job": "126058135",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 652,
+        "reviewed_partial_contexts": 68,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 68,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 124,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 68
+      },
+      "receipt_sha256": "7afa35acd7372f880131955ed8448649df88bfda102ea9c4ddd35900f1aded21"
+    },
+    {
+      "status": "complete",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126057992/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "batch": "batch038",
+      "job": "126057992",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 651,
+        "reviewed_partial_contexts": 69,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 70,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 0,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 70
+      },
+      "receipt_sha256": "5a05951efbb5e84fb7afc06770db92363ea57b54d877bd29a149f1f4c2dfbd96"
+    },
+    {
+      "status": "complete",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126059369/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "batch": "batch040",
+      "job": "126059369",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 659,
+        "reviewed_partial_contexts": 52,
+        "unresolved_document_contexts": 9,
+        "ad_keys_with_any_unknown_outcome": 63,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 142,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 63
+      },
+      "receipt_sha256": "e2d9d6c5f63b3570d0797e719d99fbab523d80fce4741828006b6eb0d67aff82"
+    },
+    {
+      "status": "complete",
+      "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126058997/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+      "batch": "batch041",
+      "job": "126058997",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 684,
+        "reviewed_partial_contexts": 36,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 38,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 143,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 38
+      },
+      "receipt_sha256": "8ca64074f01dd7d97bd5c339ff65bfae49b91c2db2326c3f891896ad1418eea4"
+    }
+  ],
+  "known_complete_batches": [
+    "batch025",
+    "batch026",
+    "batch027",
+    "batch028",
+    "batch029",
+    "batch030",
+    "batch031",
+    "batch032",
+    "batch033",
+    "batch034",
+    "batch036",
+    "batch038",
+    "batch040",
+    "batch041"
+  ],
+  "known_complete_batch_counts": {
+    "accepted_contexts": 10080,
+    "accepted_ad_keys": 10083,
+    "reviewed_full_contexts": 9385,
+    "reviewed_partial_contexts": 646,
+    "unresolved_document_contexts": 49,
+    "contexts_with_any_unknown_outcome": 736
+  },
+  "scope": "025 onward published checkpoints, not complete delivery or independent semantic accuracy; earlier001–024 assets remain unchanged",
+  "provider_output_guard_035": "unchanged, not resumed;143–144 remain unprocessed and not reviewed unknown",
+  "successor_preparation": {
+    "job": "126271078",
+    "through_batch": 66,
+    "state": "submitted_pending_actual_receipt"
+  },
+  "whole_delivery_complete": false,
+  "no_method_model_scope_change": true
+}

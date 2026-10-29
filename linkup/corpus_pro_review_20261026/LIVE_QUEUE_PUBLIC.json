@@ -416,6 +416,90 @@
       },
       "public_receipt_sha256": "8d3618eb87c4e5f0f25f4b08f6520ed404bb48af13abab09df416abed19f3ef1",
       "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch036": {
+      "state": "validated_saved",
+      "checkpoint_job": "126058135",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 652,
+        "reviewed_partial_contexts": 68,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 68,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 124,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 68
+      },
+      "public_receipt_sha256": "7afa35acd7372f880131955ed8448649df88bfda102ea9c4ddd35900f1aded21",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch038": {
+      "state": "validated_saved",
+      "checkpoint_job": "126057992",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 651,
+        "reviewed_partial_contexts": 69,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 70,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 0,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 70
+      },
+      "public_receipt_sha256": "5a05951efbb5e84fb7afc06770db92363ea57b54d877bd29a149f1f4c2dfbd96",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch040": {
+      "state": "validated_saved",
+      "checkpoint_job": "126059369",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 659,
+        "reviewed_partial_contexts": 52,
+        "unresolved_document_contexts": 9,
+        "ad_keys_with_any_unknown_outcome": 63,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 142,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 63
+      },
+      "public_receipt_sha256": "e2d9d6c5f63b3570d0797e719d99fbab523d80fce4741828006b6eb0d67aff82",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch041": {
+      "state": "validated_saved",
+      "checkpoint_job": "126058997",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 684,
+        "reviewed_partial_contexts": 36,
+        "unresolved_document_contexts": 0,
+        "ad_keys_with_any_unknown_outcome": 38,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 143,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 38
+      },
+      "public_receipt_sha256": "8ca64074f01dd7d97bd5c339ff65bfae49b91c2db2326c3f891896ad1418eea4",
+      "scope": "Engineering acceptance; no independent semantic accuracy"
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
@@ -575,13 +659,12 @@
     "last_observed_used_percent": 96
   },
   "latest_allowance_recovery": {
-    "receipt": "results/ALLOWANCE_RECOVERY_20261028_PUBLIC.json",
+    "receipt": "results/RECOVERY_AND_ACCEPTED_036_038_040_041_20261029_PUBLIC.json",
     "ordinary_usage_allowed": true,
-    "used_percent_observed": 0,
-    "six_independent_chats_active": true,
+    "used_percent_observed": 50,
+    "five_unblocked_chats_resumed": true,
     "parent_readers_resumed": 3,
-    "proven_new_contexts_lower_bound": 10,
-    "whole_delivery_complete": false
+    "new_contexts_saved_lower_bound": 15
   },
   "latest_continuation_check": {
     "receipt": "results/CONTINUATION_CHECK_20261028T0736_PUBLIC.json",
@@ -590,13 +673,11 @@
     "provider_capacity_failure_handling": "one bounded same-model retry; existing active readers left running",
     "whole_delivery_complete": false
   },
-  "latest_accepted_batch_release": "results/ACCEPTED_029_032_033_034_20261028_PUBLIC.json",
+  "latest_accepted_batch_release": "results/RECOVERY_AND_ACCEPTED_036_038_040_041_20261029_PUBLIC.json",
   "successor_input_job": {
-    "job": "126057513",
-    "through_batch": 59,
-    "state": "submitted_not_verified_ready",
-    "restored_shard0_ad_rows": 85376,
-    "main_anchor": "1:544 unchanged"
+    "job": "126271078",
+    "through_batch": 66,
+    "state": "submitted_pending_actual_receipt"
   },
   "current_continuous_reading": {
     "25_lane": "batch039",
@@ -632,5 +713,13 @@
     "reviewed_partial_contexts": 421,
     "unresolved_document_contexts": 40,
     "contexts_with_any_unknown_outcome": 497
+  },
+  "known_complete_post025_counts": {
+    "accepted_contexts": 10080,
+    "accepted_ad_keys": 10083,
+    "reviewed_full_contexts": 9385,
+    "reviewed_partial_contexts": 646,
+    "unresolved_document_contexts": 49,
+    "contexts_with_any_unknown_outcome": 736
   }
 }
