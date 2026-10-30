@@ -500,6 +500,27 @@
       },
       "public_receipt_sha256": "8ca64074f01dd7d97bd5c339ff65bfae49b91c2db2326c3f891896ad1418eea4",
       "scope": "Engineering acceptance; no independent semantic accuracy"
+    },
+    "batch045": {
+      "state": "validated_saved",
+      "checkpoint_job": "126277007",
+      "counts": {
+        "accepted_ad_keys": 720,
+        "accepted_contexts": 720,
+        "accepted_packets": 144,
+        "prepared_contexts": 720,
+        "reviewed_full_contexts": 666,
+        "reviewed_partial_contexts": 53,
+        "unresolved_document_contexts": 1,
+        "ad_keys_with_any_unknown_outcome": 59,
+        "prepared_packets": 144,
+        "reused_accepted_packets": 0,
+        "pending_packets": 0,
+        "failed_packets": 0,
+        "contexts_with_any_unknown_outcome": 59
+      },
+      "public_receipt_sha256": "8d7e2aadca9f0bb5f388090f825676faaea72abb2943b2c8a6846c38d9975901",
+      "scope": "Engineering acceptance; not independent semantic accuracy"
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
@@ -674,7 +695,7 @@
     "specific_capacity_retry_recovered": true,
     "whole_delivery_complete": false
   },
-  "latest_accepted_batch_release": "results/RECOVERY_AND_ACCEPTED_036_038_040_041_20261029_PUBLIC.json",
+  "latest_accepted_batch_release": "results/ACCEPTED045_CONNECTION_CHECKPOINT_20261029T2047_PUBLIC.json",
   "successor_input_job": {
     "job_id": "126280723",
     "through_batch": 73,
@@ -723,5 +744,23 @@
     "unresolved_document_contexts": 49,
     "contexts_with_any_unknown_outcome": 736
   },
-  "known_prepared_through_batch": 66
+  "known_prepared_through_batch": 66,
+  "connection_checkpoints": {
+    "parent_reader_c": {
+      "reader": "parent C",
+      "batch": "batch066",
+      "owned_range": "0001–0048",
+      "saved_packages": 32,
+      "saved_contexts": 160,
+      "last_saved_packet": "0032",
+      "last_saved_sha256": "83d4765c2d6e0061c415b5300b1ed055b814acd72ca7690dd7f2bb03be0ced6e",
+      "next_unprocessed_packet": "0033",
+      "failure": "SSH exit255; no source body obtained for0033",
+      "bounded_recovery": "root control probe succeeded; previously-read0032 draft persisted without rereading; subsequent0033 connection failed",
+      "newly_persisted_previous_draft_records": 5,
+      "new_semantic_reading_claimed_for_draft_recovery": 0,
+      "state": "reader_saved_checkpoint_after_connection_block; no further same-turn retries",
+      "unknown_not_assigned_to_unprocessed": true
+    }
+  }
 }

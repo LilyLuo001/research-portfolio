@@ -1,0 +1,53 @@
+{
+  "checked_at_utc": "2026-10-30T02:06:28.572Z",
+  "heartbeat_trigger_utc": "2026-10-29T20:47:56.747Z",
+  "batch045_complete_receipt": {
+    "status": "complete",
+    "manifest_matches": true,
+    "public_receipt": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/checkpoints/126277007/public/CHECKPOINT_RECEIPT_PUBLIC.json",
+    "batch": "batch045",
+    "job": "126277007",
+    "counts": {
+      "accepted_ad_keys": 720,
+      "accepted_contexts": 720,
+      "accepted_packets": 144,
+      "prepared_contexts": 720,
+      "reviewed_full_contexts": 666,
+      "reviewed_partial_contexts": 53,
+      "unresolved_document_contexts": 1,
+      "ad_keys_with_any_unknown_outcome": 59,
+      "prepared_packets": 144,
+      "reused_accepted_packets": 0,
+      "pending_packets": 0,
+      "failed_packets": 0,
+      "contexts_with_any_unknown_outcome": 59
+    },
+    "receipt_sha256": "8d7e2aadca9f0bb5f388090f825676faaea72abb2943b2c8a6846c38d9975901",
+    "receipt_exists": true
+  },
+  "claim": "Actual earlier Pro readings accepted by frozen engineering checks, not independent semantic accuracy",
+  "allowance_observed": {
+    "ordinaryUsageAllowed": true,
+    "usedPercent": 94
+  },
+  "connection_checkpoint": {
+    "reader": "parent C",
+    "batch": "batch066",
+    "owned_range": "0001–0048",
+    "saved_packages": 32,
+    "saved_contexts": 160,
+    "last_saved_packet": "0032",
+    "last_saved_sha256": "83d4765c2d6e0061c415b5300b1ed055b814acd72ca7690dd7f2bb03be0ced6e",
+    "next_unprocessed_packet": "0033",
+    "failure": "SSH exit255; no source body obtained for0033",
+    "bounded_recovery": "root control probe succeeded; previously-read0032 draft persisted without rereading; subsequent0033 connection failed",
+    "newly_persisted_previous_draft_records": 5,
+    "new_semantic_reading_claimed_for_draft_recovery": 0,
+    "state": "reader_saved_checkpoint_after_connection_block; no further same-turn retries",
+    "unknown_not_assigned_to_unprocessed": true
+  },
+  "other_channels_continue": true,
+  "provider_output_guard035_unchanged": true,
+  "no_reset_new_api_model_or_environment": true,
+  "whole_delivery_complete": false
+}
