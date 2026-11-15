@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "frozen_at_utc": "2026-11-15T17:39:13.126933+00:00",
+  "scope": "Single 500-input qualification attempt; 200 development and 300 heldout cases. Historical prepared-context strata, not full-corpus generalization certification.",
+  "candidate": {
+    "model": "gpt-6-luna",
+    "reasoning_effort": "none",
+    "max_unique_inputs": 500,
+    "max_physical_attempts": 600,
+    "max_nominal_reserved_usd": 15,
+    "schema_prompt_and_input_SHA_pinned": true,
+    "no_prompt_tuning_or_replacement_based_on_results": true
+  },
+  "reference": {
+    "existing_independent_Kimi": 150,
+    "new_Kimi_max": 350,
+    "route": "existing OpenCode -> Azure Kimi; not started or silently substituted",
+    "no_access_to_candidate_answers": true,
+    "max_nominal_reserved_usd": 135
+  },
+  "GPT_audit": {
+    "max_inputs": 50,
+    "max_nominal_reserved_usd": 100,
+    "selection": "30 deterministic hash-ranked heldout cases plus up to20 hash-ranked nonduplicate disagreement cases after comparison; never filtered/refused sources",
+    "judgment": "independent source reading; not human gold"
+  },
+  "field_gate": {
+    "heldout_only": true,
+    "precision_min": 0.9,
+    "recall_min": 0.8,
+    "macro_f1_min": 0.85,
+    "known_reference_coverage_min": 0.8,
+    "minimum_known_cases_per_field": 50,
+    "minimum_positive_cases_per_field": 20,
+    "minimum_negative_cases_per_field": 20,
+    "insufficient_support": "not qualified; no replacement sample",
+    "unknown_reference": "never a negative; report separately and in coverage denominator",
+    "candidate_unknown_failure_or_missing": "abstention, counts as missed reference positive; report failure and all-case coverage",
+    "outcome_metrics": "Per frozen outcome dimension multiclass confusion matrix and classwise macro-F1, plus explicit-positive one-vs-rest precision/recall. All predeclared heldout cases remain in accounting.",
+    "relation_metrics": "One-to-one set matching of complete frozen-schema semantic relation tuples, including object/role, strength, year/bounds and alternatives; evidence must pass exact source quotation checks. Quotes, arbitrary local item IDs and explanatory notes are not semantic tuple equality. Field only qualifies when both outcome and complete-relation gates pass where applicable.",
+    "conditional_result": "fields may pass independently; accepted historical values and unknowns never overwritten",
+    "machine_reference_not_truth": true
+  },
+  "negative_controls": "Retain no-hit, unknown and ordinary failed-output strata; prior20 and all protected/retry-forbidden contexts excluded.",
+  "production_gate": "Step4 remains locked until field qualification AND a provably nonduplicate missing-field queue. Neither schema pass nor agreement alone equals population accuracy.",
+  "resource_policy": {
+    "total_stage3_cap_usd": 250,
+    "shared_project_tpm": 1000000,
+    "Luna_scheduled_tpm": 80000,
+    "Luna_actual_tpm": 100000,
+    "Kimi_actual_tpm": 300000,
+    "Astra_actual_tpm": 1000000,
+    "legs_serial_not_concurrent": true,
+    "no_new_resources": true,
+    "paper_paused": true
+  }
+}

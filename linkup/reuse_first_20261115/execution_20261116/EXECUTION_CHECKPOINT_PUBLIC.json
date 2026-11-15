@@ -1,0 +1,53 @@
+{
+  "at_utc": "2026-11-15T17:42:03.663419+00:00",
+  "status": "reuse_overlay_and_qualification_inputs_checkpointed",
+  "database_sha256": "0594d18bfb27a9a5f9069aec5065e0b03557965f9631f82ab9742ae525f57925",
+  "archive_blob_key": "reuse-execution/20261116/run001/REUSE_AND_QUALIFICATION_INPUT_CHECKPOINT_PRIVATE.tar.gz",
+  "archive_bytes": 129231010,
+  "archive_sha256": "c330fa58b4eb82844f47a2d750ce60f67b5b45aee5636e0072adb14b11c4e6d4",
+  "archive_full_readback_SHA_verified": true,
+  "original_status_index_unchanged": true,
+  "original_values_preserved": true,
+  "no_protected_payloads_in_value_overlay": true,
+  "accepted_original_contexts_reused": 39298,
+  "saved_unverified_contexts_attached": 6412,
+  "Records_source_dedup": {
+    "raw_source_key": "filename + bytes + footer_rows; derived skinny schema is not a new raw source",
+    "unique_Records_sources": 269,
+    "source_footer_rows_once": 356449214,
+    "raw_source_bytes_once": 63291244154,
+    "per_source_reports": 542,
+    "derived_schema_versions_per_source": {
+      "2": 269
+    },
+    "source_row_count_not_unique_ad_count": true
+  },
+  "qualification_candidate_live_snapshot": {
+    "status": "running",
+    "started_at_utc": "2026-11-15T17:40:18.765142+00:00",
+    "pid": 135089,
+    "model": "gpt-6-luna",
+    "deployment": "linkup-gpt-6-luna-benchmark",
+    "selected": 500,
+    "completed": 4,
+    "engineering_pass": 0,
+    "new_production_accepted": 0,
+    "exceptions": {
+      "frozen_validation_failed_preserve_output": 4
+    },
+    "physical_attempts": 4,
+    "reserved_usd": 0.0333961,
+    "public_price_estimated_usage_usd": 0.0028478,
+    "input_tokens": 16793,
+    "output_tokens": 2337,
+    "no_human_gold_claim": true,
+    "updated_at_utc": "2026-11-15T17:41:33.722898+00:00",
+    "elapsed_seconds": 74.958,
+    "process_alive_observed": true
+  },
+  "stage4_locked": true,
+  "paper_paused": true,
+  "new_production_accepted": 0,
+  "infrastructure_incremental_invoice_cost_usd": null,
+  "infrastructure_cost_note": "Existing VM and storage only; per-job bill not yet available. Stage1/2 each has a $25 risk allowance, not a claim of zero actual infrastructure cost."
+}

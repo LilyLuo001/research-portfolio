@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-15T16:57:26.359598+00:00",
+  "created_utc": "2026-11-15T17:50:12.927720+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -86,13 +86,13 @@
     },
     {
       "file": "PUBLIC_COPY_MANIFEST.json",
-      "bytes": 30211,
-      "sha256": "a34210b3e14dbddb903be92756a27f31bb15338e89dd462128ba64119fa18c65"
+      "bytes": 63574,
+      "sha256": "eb7a8a86265e0d4b8e9f8e836f9458918ff6ac8826af024bc03b0494acd50b84"
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 8992,
-      "sha256": "9639cbbc3c990031cd4e6b486cf9323190b57794555f8075b0c07ba6b94c10ee"
+      "bytes": 12996,
+      "sha256": "11a53f007841546b967af324ec376c403da6752e712b05d30932699e1e2694b7"
     },
     {
       "file": "README.md",
@@ -213,6 +213,291 @@
       "file": "code/test_cloud_prepare_benchmark.py",
       "bytes": 11290,
       "sha256": "355171b4191d79ee950d90edfd76159cbb62277c9d1cda3f5ef1fbc5d3dc086e"
+    },
+    {
+      "file": "execution_20261116/ALL_SHARD_ACCOUNTING_PUBLIC.json",
+      "bytes": 1469,
+      "sha256": "03d656512249bfb960ddaabd246ae321aaeb0a1007d10157ada62709bcc0ca93"
+    },
+    {
+      "file": "execution_20261116/EXECUTION_AUTHORIZATION_PUBLIC.json",
+      "bytes": 981,
+      "sha256": "19f75095fc0db88dd19574b17084e4fd3b89ebad8a8b51fc568f76bf4680ed70"
+    },
+    {
+      "file": "execution_20261116/EXECUTION_CHECKPOINT_PUBLIC.json",
+      "bytes": 2156,
+      "sha256": "41eff9530573c0cd877dacadb00c3afdbe800e60f60afb7350cc2a467f65ffa6"
+    },
+    {
+      "file": "execution_20261116/EXECUTION_NOTE_ZH.md",
+      "bytes": 5237,
+      "sha256": "b0ee3e7d518c71d1978d48e6847e1cab1f3e84e071356088c808a6bdb2a9cd4b"
+    },
+    {
+      "file": "execution_20261116/EXECUTION_STATE_PUBLIC.json",
+      "bytes": 2121,
+      "sha256": "41b754be7e09d77008cdafa4040f291231d880bf6d796bf8d12c19b603a10063"
+    },
+    {
+      "file": "execution_20261116/FIELD_COVERAGE_REGISTER_PUBLIC.json",
+      "bytes": 9111,
+      "sha256": "50ecc0e1819450538d51d981ce796659736e5db5e45d77a96e1e209796e89e3a"
+    },
+    {
+      "file": "execution_20261116/GAP_REGISTER_PUBLIC.json",
+      "bytes": 1664,
+      "sha256": "7a3cba305f74821b7308d9c9bfbcab57b2591c78b808abe8824687f325a2b3d8"
+    },
+    {
+      "file": "execution_20261116/LATEST_QUALIFICATION_STATUS_PUBLIC.json",
+      "bytes": 1222,
+      "sha256": "69d3efeb3aa7cbf1664593a9732bf00217ec93fe654a7b4fdf50cf400b27796e"
+    },
+    {
+      "file": "execution_20261116/MANIFEST_CONTENT_READ_COMPACT_PUBLIC.json",
+      "bytes": 616,
+      "sha256": "e03d800b30770e4f2cf949513d136cd5b1c6968bedfbd351e76c6ab9b0d546a7"
+    },
+    {
+      "file": "execution_20261116/PACKAGING_FAULT_STOP_PUBLIC.json",
+      "bytes": 753,
+      "sha256": "b117c7b19eac461b85ec4de0bdd5fdbb6a9c22dc82b21a3d62395b858f7b7072"
+    },
+    {
+      "file": "execution_20261116/PACKAGING_REPAIR_CHECKPOINT_PUBLIC.json",
+      "bytes": 1319,
+      "sha256": "ef2eee061368375206b5a8cef97683ac421d5755feb8ca0a6add150ad2b01480"
+    },
+    {
+      "file": "execution_20261116/PACKAGING_REPAIR_RESUME_PUBLIC.json",
+      "bytes": 1537,
+      "sha256": "1c90ec905a29486bc6e2cc959457e5e815b295cfd303d82d7903b3bd8eab1f5c"
+    },
+    {
+      "file": "execution_20261116/PUBLIC_ACCOUNTING_CHECKS_PUBLIC.json",
+      "bytes": 2173,
+      "sha256": "cfec83ab5b507a3dadc0c1554662cc9f34c218839a528b299c494522f2d0f0fa"
+    },
+    {
+      "file": "execution_20261116/QUALIFICATION_DRAFT_REJECTION_PUBLIC.json",
+      "bytes": 773,
+      "sha256": "8938b16e71ffc9d2ecd00534236936852033901a4c5e8c0a601605df14e3c7f4"
+    },
+    {
+      "file": "execution_20261116/QUALIFICATION_FRAME_PUBLIC.json",
+      "bytes": 1771,
+      "sha256": "019d321e8ca81b69430382f17541eb6f0033e5efbad4d53e1d39d354c478c32a"
+    },
+    {
+      "file": "execution_20261116/QUALIFICATION_INPUT_PREPARATION_PUBLIC.json",
+      "bytes": 709,
+      "sha256": "6156caabe97f7df8017564d46733c1c9e45f0a3ca9387d8d44a52a52599f8541"
+    },
+    {
+      "file": "execution_20261116/QUALIFICATION_LAUNCH_PUBLIC.json",
+      "bytes": 986,
+      "sha256": "a7872d01f443ad887e8457ebf602ebd59a5b2510ffa311c5694e8ac3b619c4a6"
+    },
+    {
+      "file": "execution_20261116/QUALIFICATION_LUNA_CONFIG_PUBLIC.json",
+      "bytes": 1619,
+      "sha256": "2ed4145138cf4d31b21052c1abb72bf76cb9542ae17d173edd1720c116e91007"
+    },
+    {
+      "file": "execution_20261116/QUALIFICATION_PROTOCOL_V1_PUBLIC.json",
+      "bytes": 3103,
+      "sha256": "72ba85ed62220275679b9a5f51d19054dca91919723ae66f1aacd830e57e07de"
+    },
+    {
+      "file": "execution_20261116/REAL_PACKET_CONTRACT_TEST_PUBLIC.json",
+      "bytes": 535,
+      "sha256": "f36777c692137f6bd6120889993aa4dcb6c3d2be2e97dc86dadf0b038561c32e"
+    },
+    {
+      "file": "execution_20261116/RECORDS_SOURCE_DEDUP_PUBLIC.json",
+      "bytes": 354,
+      "sha256": "f87c3db4e69e20cca64560523c457198b412ee4532ef4a73746f770db8ebc816"
+    },
+    {
+      "file": "execution_20261116/REMAINING_DISCOVERY_PUBLIC.json",
+      "bytes": 787,
+      "sha256": "c41103d101e04b6075bea2e742a8038996a0c99d42a1899a599d137ca4cf284a"
+    },
+    {
+      "file": "execution_20261116/REUSE_CLOSURE_PUBLIC.json",
+      "bytes": 1439,
+      "sha256": "4f52c2053f3ab47c96deb15136c53a9aaf29a9ccf179141d5d142192919afb56"
+    },
+    {
+      "file": "execution_20261116/SAVED_OUTPUT_VERIFICATION_PUBLIC.json",
+      "bytes": 1306,
+      "sha256": "f3450f18348115eb30dd6fc0c0663e94ea55d6effeb4fac5af3b36d7b0d2627f"
+    },
+    {
+      "file": "execution_20261116/SCOPE_RECONCILIATION_PUBLIC.json",
+      "bytes": 7311,
+      "sha256": "aed3f14ecc3b010437cf3ed9b4bc07459f4632e641e95d8273414e709b32ef10"
+    },
+    {
+      "file": "execution_20261116/SYNTHETIC_CONFIG_PUBLIC.json",
+      "bytes": 1354,
+      "sha256": "17a76513d920c80de09eecacf286fbb4568fef8612ded948c599b9692c16a06f"
+    },
+    {
+      "file": "execution_20261116/VALUES_ATTACHMENT_PUBLIC.json",
+      "bytes": 1477,
+      "sha256": "4eb9a1b21703bbf2ca5a5dac09682f076b829a51c04d388f6a74fb85f19cb303"
+    },
+    {
+      "file": "execution_20261116/WORKER_SYNTHETIC_TEST_PUBLIC.json",
+      "bytes": 669,
+      "sha256": "4170f831c2aa7e7cccb5d1434a4f463956c457e04abc17b8ff4b15350693f0e2"
+    },
+    {
+      "file": "execution_20261116/WORKER_V2_SYNTHETIC_TEST_PUBLIC.json",
+      "bytes": 669,
+      "sha256": "4170f831c2aa7e7cccb5d1434a4f463956c457e04abc17b8ff4b15350693f0e2"
+    },
+    {
+      "file": "execution_20261116/code/cloud_checkpoint_execution.py",
+      "bytes": 9832,
+      "sha256": "53bb72f8bc2e0450aa28506b7553fb1410c08e100f9e8fa5c0a4f5ed2cc060a9"
+    },
+    {
+      "file": "execution_20261116/code/cloud_checkpoint_packaging_repair.py",
+      "bytes": 2837,
+      "sha256": "7c19d9d9768062de6306d4dcce28f56010e3bcad1076b3b7e950ae4042cbb597"
+    },
+    {
+      "file": "execution_20261116/code/cloud_export_execution_status.py",
+      "bytes": 1970,
+      "sha256": "8e3f4fa0a698c8e841ed6551af7f65cd7b4c93dfd5c97224ea960624e54b1ced"
+    },
+    {
+      "file": "execution_20261116/code/cloud_export_execution_status_v2.py",
+      "bytes": 1982,
+      "sha256": "4142adc408f773bbcd014e2b12acf98e2e0a08e14dca60da77efa71a26aec9c7"
+    },
+    {
+      "file": "execution_20261116/code/cloud_freeze_qualification_frame.py",
+      "bytes": 5132,
+      "sha256": "9f2f6248e1c94b9a974d4080243fd24252a2b12bc72c3d47a0a235ddf255d959"
+    },
+    {
+      "file": "execution_20261116/code/cloud_launch_luna_qualification.py",
+      "bytes": 4630,
+      "sha256": "32b86e81d8fb7c26b4fb072fabab9f7a6fe1dd8d065042fcb4c04d02c170e7ff"
+    },
+    {
+      "file": "execution_20261116/code/cloud_preflight.py",
+      "bytes": 3244,
+      "sha256": "0d0dc1f167e1bae17a8aee460b5c7043eb97a4aebc0076bc92b07746cb1f7582"
+    },
+    {
+      "file": "execution_20261116/code/cloud_prepare_qualification_inputs.py",
+      "bytes": 8658,
+      "sha256": "729f7dc4ddff80f202297f93aeffacd45b50d3e4abe3d9f5041a8589431d87d0"
+    },
+    {
+      "file": "execution_20261116/code/cloud_probe_base_receipts.py",
+      "bytes": 1926,
+      "sha256": "d710f6a186c2b2dc9f5fb1003aed4d9cb532691833061e7d45b0532d46778945"
+    },
+    {
+      "file": "execution_20261116/code/cloud_qualification_luna_worker.py",
+      "bytes": 15742,
+      "sha256": "6b1acfb78540078b44cdcaa37cc188c22ecd4552a960299940b40e07bc3e3eb8"
+    },
+    {
+      "file": "execution_20261116/code/cloud_qualification_luna_worker_v2.py",
+      "bytes": 16120,
+      "sha256": "3eeec9b034774bed85a20becf847a1c1e06c6a6da9046b25d33c37867ede3624"
+    },
+    {
+      "file": "execution_20261116/code/cloud_repair_packaging_and_resume.py",
+      "bytes": 7764,
+      "sha256": "e0e18664fd5b59c4bb7e170046aad4dd3baf2b2f5d8e34aa6a9d99d47904cd42"
+    },
+    {
+      "file": "execution_20261116/code/cloud_shapes2.py",
+      "bytes": 922,
+      "sha256": "423073daebcaedee49603f8551d29634af12ba34e8bfe399103927a28ab02cb7"
+    },
+    {
+      "file": "execution_20261116/code/cloud_shapes2_compact.py",
+      "bytes": 989,
+      "sha256": "39c19d09cfe9104444c1f4885f5c584c11defb2e590834161fb3e217645cc064"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage1_all_shard_receipts.py",
+      "bytes": 5480,
+      "sha256": "62984a07fa00f91a3001f7d1a6456f82ea95d5a883687a54ca4410bdab3737d0"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage1_all_shard_receipts_v2.py",
+      "bytes": 5783,
+      "sha256": "fee61c33e11a4e7c19f4172aec3c47b5c1ba09760ee5c250c27b9716f19d173f"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage1_interpret.py",
+      "bytes": 5588,
+      "sha256": "ae12188fbebdd971a3bb289c6c150d18b6ea4faeef210a4e1ffd01cf8aa4f02d"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage1_inventory.py",
+      "bytes": 4135,
+      "sha256": "3c8b6252af82289a51386031d2c37473cffda7dc3eff9fd7a8ffaec59da6fa87"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage2_close.py",
+      "bytes": 6511,
+      "sha256": "5e371733fd9b9c60a8c6715e3e1945f8a7d88c41c04e6cb43f35e2e25d29d836"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage2_discover_remaining.py",
+      "bytes": 3723,
+      "sha256": "c5afa115eea123ef4f0ad72fe3165cd922dc3866be34ea8acb2fcec2109bb60e"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage2_values.py",
+      "bytes": 8797,
+      "sha256": "ccfcd2185fed17f447d8710c34fed77fdbc3e7388c7863243c94501e238bd169"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stage2_verify_saved.py",
+      "bytes": 9471,
+      "sha256": "d5aa695e972d4285cfa39867e59afed346023b7323b476dbaeed672abde81cd3"
+    },
+    {
+      "file": "execution_20261116/code/cloud_stop_packaging_fault.py",
+      "bytes": 2235,
+      "sha256": "f264240b2edb74a7304ea98c7168700c4bad26ade1d0cfa73d1d3b5e0d0c6745"
+    },
+    {
+      "file": "execution_20261116/code/cloud_trace_upstream_receipts.py",
+      "bytes": 2335,
+      "sha256": "6cd6137cb868e5da6f5cc8ace4223c46144e44671acdb69c64d069314080e305"
+    },
+    {
+      "file": "execution_20261116/code/cloud_trace_upstream_receipts_v2.py",
+      "bytes": 2475,
+      "sha256": "5d3c4e368d84ee4963587c76f453c6333814838cd1dba4cb43981ff64ab73eb9"
+    },
+    {
+      "file": "execution_20261116/code/publish_execution.py",
+      "bytes": 3146,
+      "sha256": "79cca1dc4ad00392b70f67d40be923c06ee94b9a9564f28e2a1a144265dd4e8d"
+    },
+    {
+      "file": "execution_20261116/code/test_qualification_worker_synthetic.py",
+      "bytes": 9424,
+      "sha256": "3bbed055f26fab9a8589d7f89cc5286f5bcd352ef11bd564565a239531f5ba4e"
+    },
+    {
+      "file": "execution_20261116/code/test_qualification_worker_v2_synthetic.py",
+      "bytes": 9549,
+      "sha256": "e48b3e086645179044ebd76d4872ea13a74388085ae160ba11f7b2310a98d6ac"
     },
     {
       "file": "integration_20261116/DELIVERY_ZH.md",
@@ -380,10 +665,10 @@
       "sha256": "6479a4b70deb1891c111f5d297fbc14d3b4d792ee34ffc2963611daffbea3df3"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 75,
+  "checked_file_count_excluding_this_receipt": 132,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 10,
+  "staged_file_count": 60,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,
@@ -439,6 +724,14 @@
       "review_reason": "Synthetic test uses a fixed public schema file already in this repository; no private inputs or credential file."
     },
     {
+      "file": "execution_20261116/code/publish_execution.py",
+      "file_sha256": "79cca1dc4ad00392b70f67d40be923c06ee94b9a9564f28e2a1a144265dd4e8d",
+      "rule": "machine_private_absolute_path",
+      "line": 10,
+      "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
+      "review_reason": "Known Azure workspace prefix used only to sanitize output artifact paths into an azure_workspace alias. Not a credential, personal record or raw data locator."
+    },
+    {
       "file": "integration_20261116/code/cloud_discover.py",
       "file_sha256": "86b294517658c75978536f6278eba64039212a4770110461434af4e2e5a3543b",
       "rule": "uuid_identifier",
@@ -469,6 +762,14 @@
       "line": 12,
       "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
       "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
+    },
+    {
+      "file": "execution_20261116/code/publish_execution.py",
+      "file_sha256": "79cca1dc4ad00392b70f67d40be923c06ee94b9a9564f28e2a1a144265dd4e8d",
+      "rule": "machine_private_absolute_path",
+      "line": 10,
+      "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
+      "review_reason": "Known Azure workspace prefix used only to sanitize output artifact paths into an azure_workspace alias. Not a credential, personal record or raw data locator."
     }
   ],
   "credential_or_record_payload_exemptions_permitted": false,

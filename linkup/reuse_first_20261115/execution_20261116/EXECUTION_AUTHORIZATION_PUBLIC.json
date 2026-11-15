@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "authorized_at_utc": "2026-11-15T17:04:09.505366+00:00",
+  "source": "latest_direct_user_instruction",
+  "phase": "execute_steps1_to4_with_conditional_gates",
+  "step_caps_usd": {
+    "1": 25,
+    "2": 25,
+    "3": 250,
+    "4": 150,
+    "5": 0
+  },
+  "total_new_spend_cap_usd": 450,
+  "paper_growth_paused": true,
+  "step6_budget_released": false,
+  "step3_max_contexts": 500,
+  "step4_max_new_eligible_contexts": 10000,
+  "step4_requires_field_qualification": true,
+  "no_human_review": true,
+  "no_training_or_new_resources": true,
+  "old_primary_schema_and_accepted_results_immutable": true,
+  "protected_inputs_never_rerouted": true,
+  "no_full_corpus_text_rescan_for_reconciliation": true,
+  "shared_tpm_ceiling": 1000000,
+  "effective_model_tpm": {
+    "Luna": 100000,
+    "Kimi": 300000,
+    "Astra": 1000000
+  },
+  "timers_or_automations_started": false,
+  "previous_policy_sha256": "49ddfa99b26c344284c0a38e59e075f6dc41b706af30349bd91d294f22a00348"
+}

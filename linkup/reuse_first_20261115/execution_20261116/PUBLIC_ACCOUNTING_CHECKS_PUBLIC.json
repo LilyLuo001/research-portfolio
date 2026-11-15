@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "checks": {
+    "all_2464_existing_shards_accounted": true,
+    "US_total_unchanged": true,
+    "source_delivery_bytes_match": true,
+    "context_state_partition_conserved": true,
+    "original_accepted_partition": true,
+    "saved_partition": true,
+    "quarantines_preserved": true,
+    "no_old_production_promotion": true,
+    "500_unique_inputs": true,
+    "all_retry_forbidden_excluded": true,
+    "150_old_Kimi_references_reused": true,
+    "stage3_allocation_bounded": true,
+    "authorized_phase_total_450_no_paper": true,
+    "Luna_headroom": true,
+    "all_source_code_syntax_valid": true
+  },
+  "executed_code_sha256": {
+    "cloud_stage1_inventory.py": "3c8b6252af82289a51386031d2c37473cffda7dc3eff9fd7a8ffaec59da6fa87",
+    "cloud_stage1_interpret.py": "ae12188fbebdd971a3bb289c6c150d18b6ea4faeef210a4e1ffd01cf8aa4f02d",
+    "cloud_stage1_all_shard_receipts.py": "62984a07fa00f91a3001f7d1a6456f82ea95d5a883687a54ca4410bdab3737d0",
+    "cloud_stage1_all_shard_receipts_v2.py": "fee61c33e11a4e7c19f4172aec3c47b5c1ba09760ee5c250c27b9716f19d173f",
+    "cloud_stage2_values.py": "ccfcd2185fed17f447d8710c34fed77fdbc3e7388c7863243c94501e238bd169",
+    "cloud_stage2_discover_remaining.py": "c5afa115eea123ef4f0ad72fe3165cd922dc3866be34ea8acb2fcec2109bb60e",
+    "cloud_stage2_verify_saved.py": "d5aa695e972d4285cfa39867e59afed346023b7323b476dbaeed672abde81cd3",
+    "cloud_stage2_close.py": "5e371733fd9b9c60a8c6715e3e1945f8a7d88c41c04e6cb43f35e2e25d29d836",
+    "cloud_freeze_qualification_frame.py": "9f2f6248e1c94b9a974d4080243fd24252a2b12bc72c3d47a0a235ddf255d959",
+    "cloud_prepare_qualification_inputs.py": "729f7dc4ddff80f202297f93aeffacd45b50d3e4abe3d9f5041a8589431d87d0",
+    "cloud_qualification_luna_worker.py": "6b1acfb78540078b44cdcaa37cc188c22ecd4552a960299940b40e07bc3e3eb8",
+    "cloud_launch_luna_qualification.py": "32b86e81d8fb7c26b4fb072fabab9f7a6fe1dd8d065042fcb4c04d02c170e7ff",
+    "cloud_checkpoint_execution.py": "53bb72f8bc2e0450aa28506b7553fb1410c08e100f9e8fa5c0a4f5ed2cc060a9"
+  },
+  "local_work": "synthetic code tests and public aggregate arithmetic only; no raw research records processed on local machine"
+}

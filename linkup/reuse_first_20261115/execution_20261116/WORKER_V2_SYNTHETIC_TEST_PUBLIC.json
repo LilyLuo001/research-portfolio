@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "scenario_count": 12,
+  "scenarios": [
+    "success_and_restart_no_duplicate",
+    "retries_and_restart_no_duplicate",
+    "filter_and_restart_no_duplicate",
+    "refusal_and_restart_no_duplicate",
+    "transport_and_restart_no_duplicate",
+    "invalid_and_restart_no_duplicate",
+    "identity_failure_zero_model_calls",
+    "interrupted_attempt_not_resubmitted",
+    "existing_protected_task_never_forwarded",
+    "persisted_cost_reservation_blocks_new_calls",
+    "runtime_hash_mismatch_zero_calls",
+    "duplicate_json_keys_rejected"
+  ],
+  "real_model_calls": 0,
+  "VM_calls": 0,
+  "real_identity_calls": 0,
+  "raw_source_records_read": 0
+}

@@ -1,0 +1,50 @@
+{
+  "at_utc": "2026-11-15T17:34:26.543854+00:00",
+  "status": "all_existing_shard_receipts_accounted",
+  "target_shards": 2464,
+  "verified_shards": 2464,
+  "missing_shards": 0,
+  "analysis_receipts_verified": 2464,
+  "publication_receipts_verified": 2464,
+  "totals": {
+    "accounting.canonical_usa_rows": 204774035,
+    "accounting.raw_rows": 298673078,
+    "accounting.sidecar_rows": 298673078,
+    "accounting.source_bytes": 652027698428,
+    "lean.wall_seconds": 227498.17253873916,
+    "lean.experience_rows": 421992351,
+    "lean.technology_rows": 82379739,
+    "lean.v6_audit_rows": 260639343,
+    "lean.description_empty_rows": 845,
+    "lean.parse_errors": 0,
+    "lean.truncated_rows": 4438,
+    "lean.enrichment_incomplete_rows": 4438,
+    "allocated_worker_seconds_proxy_not_measured_cpu_time": 7279905.552608229
+  },
+  "worker_count_distribution": {
+    "32": 2457,
+    "1": 6,
+    "29": 1
+  },
+  "downloaded_bytes_this_trace": 316801573,
+  "errors": [],
+  "source_raw_bytes_match_Job_Descriptions_delivery": true,
+  "canonical_US_count_match": true,
+  "raw_rows_are_not_unique_advertisements": true,
+  "raw_advertisement_files_read": 0,
+  "new_model_calls": 0,
+  "receipt_phase_sizes": [
+    {
+      "files": 2464,
+      "bytes": 4074596,
+      "max_file_bytes": 1655
+    },
+    {
+      "files": 2464,
+      "bytes": 317184716,
+      "max_file_bytes": 132049
+    }
+  ],
+  "elapsed_seconds": 157.66839553497266,
+  "full_delivery_unique_contexts": null
+}

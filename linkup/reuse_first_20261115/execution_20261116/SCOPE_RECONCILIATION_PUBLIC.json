@@ -1,0 +1,222 @@
+{
+  "at_utc": "2026-11-15T17:12:04.825503+00:00",
+  "status": "available_delivery_metadata_reconciled_full_unique_ad_denominator_unresolved",
+  "delivery_and_other_scope_reports": [
+    {
+      "source_sha256": "0e1b6c14134f49d27ff7ce70ca72053dab7ec487568745457587b8ef6f6d789a",
+      "dataset_name": "Extracted Salary",
+      "dataset_version_timestamp": "2026-09-06T04:57:24.018000+00:00",
+      "unloaded_at": "2026-09-06T07:45:03.156750+00:00",
+      "snapshot_at": "2026-09-24T06:15:40.161980+00:00",
+      "files_listed": 32,
+      "total_files": 32,
+      "total_size": 1791630082,
+      "files_total_pages": 1,
+      "migration_matching": {
+        "listed_file_with_verified_name_size_match": 32
+      },
+      "multiple_distinct_verified_content_sha_for_same_name_size": 0,
+      "matching_is_file_inventory_not_ad_identity": true
+    },
+    {
+      "source_sha256": "f50801a2ce49414e29c07afdd94ae6f3eab011cf00857d812eaa8c9853246c33",
+      "dataset_name": "Full Time / Part Time",
+      "dataset_version_timestamp": "2026-09-06T04:55:46.790000+00:00",
+      "unloaded_at": "2026-09-06T07:40:22.242534+00:00",
+      "snapshot_at": "2026-09-24T06:19:31.228662+00:00",
+      "files_listed": 27,
+      "total_files": 27,
+      "total_size": 3012054508,
+      "files_total_pages": 1,
+      "migration_matching": {
+        "listed_file_with_verified_name_size_match": 27
+      },
+      "multiple_distinct_verified_content_sha_for_same_name_size": 0,
+      "matching_is_file_inventory_not_ad_identity": true
+    },
+    {
+      "source_sha256": "e9b80c3b59337202b7ee05380f32de9d0cb8d07cf664e0809609cc366625eee3",
+      "dataset_name": "Job Descriptions",
+      "dataset_version_timestamp": "2026-09-06T04:57:24.018000+00:00",
+      "unloaded_at": "2026-09-06T08:11:37.798870+00:00",
+      "snapshot_at": "2026-09-24T06:37:33.678577+00:00",
+      "files_listed": 2464,
+      "total_files": 2464,
+      "total_size": 652027698428,
+      "files_total_pages": 50,
+      "migration_matching": {
+        "listed_file_with_verified_name_size_match": 2464
+      },
+      "multiple_distinct_verified_content_sha_for_same_name_size": 0,
+      "matching_is_file_inventory_not_ad_identity": true
+    },
+    {
+      "source_sha256": "05cf0d4d2fa1a02119e796e6ab75c838adb21fbed1bf90cd55df825d625f05bd",
+      "dataset_name": "Job Records",
+      "dataset_version_timestamp": "2026-09-06T04:57:24.018000+00:00",
+      "unloaded_at": "2026-09-06T07:44:32.250330+00:00",
+      "snapshot_at": "2026-09-24T06:13:17.686243+00:00",
+      "files_listed": 269,
+      "total_files": 269,
+      "total_size": 63291244154,
+      "files_total_pages": 6,
+      "migration_matching": {
+        "listed_file_with_verified_name_size_match": 269
+      },
+      "multiple_distinct_verified_content_sha_for_same_name_size": 0,
+      "matching_is_file_inventory_not_ad_identity": true
+    },
+    {
+      "description_file_union": {
+        "wuzhen_count": 1106,
+        "kunshan_count": 1358,
+        "union_count": 2464,
+        "union_bytes": 652027698428,
+        "dedup_rule": "one raw file per provider basename and verified SHA256; retain Kunshan for 10 identical overlaps",
+        "source_record_dedup_note": "file allocation dedup only; JOB_HASH/BASE_HASH/identical text are separate measurement units",
+        "source_sha256": "c13c3f339be4c1f7e4d9e54e28d0fa5393d94449d02efa14a083b53b8aeb07f7"
+      }
+    },
+    {
+      "records_inventory": {
+        "source_sha256": "93cbc6efc2c152e7680fa786ca3dc8efac6dafcc6e0594e8070876947165e82f",
+        "files": 1160,
+        "rows": 356449214,
+        "bytes": 15415146010,
+        "kind": "records",
+        "note": "index/shard inventory; possible overlap with source Records, not additive"
+      }
+    }
+  ],
+  "records_footer_manifests_distinct_logical_contents": [
+    {
+      "source_sha256": "b8c82d39bbc45c7d9298d809390e9239d324ac70e5cdacedbcdda5c0fbdfb4e4",
+      "files": 269,
+      "rows": 356449214,
+      "bytes": 63291244154,
+      "unit": "source_file_footer_rows_not_unique_ads"
+    }
+  ],
+  "record_index_reports": [
+    {
+      "status": "pilot_complete",
+      "rows": 3045097,
+      "source_files": 2,
+      "available_source_files": 269,
+      "output_footer_rows": 3045097,
+      "input_manifest_sha256": "83fa946ab09b9a96cecd0b92f7b844fd94a9efa70308ffd78da735e40e03ea78",
+      "columns": [
+        "JOB_HASH",
+        "COMPANY_ID",
+        "COUNTRY",
+        "STATE",
+        "CREATED",
+        "LAST_UPDATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "RECORD_SOURCE_ROW"
+      ],
+      "output_bytes": 132986335
+    },
+    {
+      "status": "complete",
+      "rows": 356449214,
+      "source_files": 269,
+      "available_source_files": 269,
+      "output_footer_rows": 356449214,
+      "input_manifest_sha256": "83fa946ab09b9a96cecd0b92f7b844fd94a9efa70308ffd78da735e40e03ea78",
+      "columns": [
+        "JOB_HASH",
+        "COMPANY_ID",
+        "COUNTRY",
+        "STATE",
+        "CREATED",
+        "LAST_UPDATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "RECORD_SOURCE_ROW"
+      ],
+      "output_bytes": 15415414453
+    },
+    {
+      "status": "complete",
+      "rows": 356449214,
+      "source_files": 269,
+      "available_source_files": 269,
+      "output_footer_rows": 356449214,
+      "input_manifest_sha256": "83fa946ab09b9a96cecd0b92f7b844fd94a9efa70308ffd78da735e40e03ea78",
+      "columns": [
+        "JOB_HASH",
+        "COMPANY_ID",
+        "COUNTRY",
+        "STATE",
+        "CREATED",
+        "LAST_UPDATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "RECORD_SOURCE_ROW"
+      ],
+      "output_bytes": 15254381704
+    },
+    {
+      "status": "pilot_complete",
+      "rows": 3045097,
+      "source_files": 2,
+      "available_source_files": 269,
+      "output_footer_rows": 3045097,
+      "input_manifest_sha256": "70723a65428c63b13359a88480c899453dc7d344e56f75b7563348b7a46562b2",
+      "columns": [
+        "JOB_HASH",
+        "COMPANY_ID",
+        "COUNTRY",
+        "STATE",
+        "CREATED",
+        "LAST_UPDATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "RECORD_SOURCE_ROW"
+      ],
+      "output_bytes": 131528287
+    }
+  ],
+  "per_source_record_shard_reports": {
+    "unique_source_file_size_rows_schema_keys": 538,
+    "source_footer_rows_sum": 712898428,
+    "duplicate_version_rows": 4,
+    "all_preserve_row_count": true,
+    "not_canonical_ad_dedup": true
+  },
+  "frozen_US_catalog": {
+    "keys": [
+      "ad_bytes",
+      "ad_path",
+      "ad_rows",
+      "ad_sha256_from_original_receipt",
+      "duration_bytes",
+      "duration_path",
+      "duration_rows",
+      "duration_sha256_from_original_receipt",
+      "original_receipt_path",
+      "original_receipt_sha256",
+      "shard_id"
+    ],
+    "numeric_sums": {
+      "ad_bytes": 7364262618,
+      "ad_rows": 204774035,
+      "duration_bytes": 2198211906,
+      "duration_rows": 131286035
+    },
+    "numeric_field_nonmissing_file_counts": {
+      "ad_bytes": 2464,
+      "ad_rows": 2464,
+      "duration_bytes": 2464,
+      "duration_rows": 2464
+    },
+    "sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e"
+  },
+  "catalog_linkup_names": [],
+  "global_unique_ads": null,
+  "global_missing_semantic_contexts": null,
+  "no_new_model_calls": true,
+  "no_advertisement_files_read": true
+}

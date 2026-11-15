@@ -1,0 +1,37 @@
+{
+  "at_utc": "2026-11-15T17:47:24.498511+00:00",
+  "status": "packaging_repair_checkpoint_readback_verified",
+  "archive_blob_key": "reuse-execution/20261116/run001/QUALIFICATION_PACKAGING_REPAIR_PRIVATE.tar.gz",
+  "archive_bytes": 788464,
+  "archive_sha256": "405c1924cc9d7392c95f0e667f939b82815d260a57d4650887a9fdb0cf4e10bf",
+  "full_readback_SHA_verified": true,
+  "original_reuse_checkpoint_retained": true,
+  "model_requests_by_checkpoint": 0,
+  "reused_old_calls": 10,
+  "same_model_messages_and_500_contexts": true,
+  "old_failure_revision_retained": true,
+  "latest_qualification_status": {
+    "status": "running",
+    "started_at_utc": "2026-11-15T17:46:22.761821+00:00",
+    "pid": 135263,
+    "model": "gpt-6-luna",
+    "deployment": "linkup-gpt-6-luna-benchmark",
+    "selected": 500,
+    "completed": 12,
+    "engineering_pass": 9,
+    "new_production_accepted": 0,
+    "exceptions": {
+      "frozen_validation_failed_preserve_output": 3
+    },
+    "physical_attempts": 13,
+    "reserved_usd": 0.1084804,
+    "public_price_estimated_usage_usd": 0.008507299999999999,
+    "input_tokens": 50188,
+    "output_tokens": 6977,
+    "no_human_gold_claim": true,
+    "updated_at_utc": "2026-11-15T17:47:22.863664+00:00",
+    "elapsed_seconds": 60.102
+  },
+  "new_production_accepted": 0,
+  "paper_paused": true
+}

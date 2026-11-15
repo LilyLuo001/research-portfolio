@@ -1,0 +1,33 @@
+{
+  "at_utc": "2026-11-15T17:41:44.026554+00:00",
+  "scope_units": {
+    "delivery_Description_raw_rows": 298673078,
+    "delivery_Records_raw_rows": 356449214,
+    "canonical_US_base_ads": 204774035,
+    "existing_newer_rule_delta_ads_overlapping_base": 5804936,
+    "fine_semantic_context_union": 55882,
+    "full_delivery_unique_ads": null,
+    "full_delivery_unique_missing_field_model_inputs": null
+  },
+  "fine_semantic_states": {
+    "accepted_original_scope_values_attached": 39298,
+    "accepted_original_scope_missing_carrier": 10,
+    "saved_unverified_values_attached": 6412,
+    "saved_unverified_missing_carrier": 94,
+    "status_not_reconciled": 10012,
+    "protected_quarantined": 56
+  },
+  "action_by_gap": {
+    "10_original_accepted_missing_carriers": "Recover the two existing checkpoint carriers; do not rerun ads.",
+    "94_saved_missing_carriers": "Locate existing saved output by receipt; absence is not proof of never processed.",
+    "10012_status_unreconciled": "Resolve original receipts and identity bindings before assigning work.",
+    "56_quarantined": "Keep excluded from all models, training and retries.",
+    "67_multiple_PRIMARY_versions": "Retain every version, no newest-wins overwrite.",
+    "CREATED_join": "Not materialized in the value overlay; reuse existing fixed10k metadata and two identified Pro base shards.",
+    "full_delivery_unique_missing_fields": "Unresolved; never subtract unlike row/context units or quote full production from 500M assumption."
+  },
+  "known_qualified_new_production_fields": 0,
+  "new_production_queue_released": false,
+  "no_old_advertisement_recleaning": true,
+  "paper_paused": true
+}

@@ -1,0 +1,38 @@
+{
+  "at_utc": "2026-11-15T17:29:45.866932+00:00",
+  "status": "available_old_values_attached_with_explicit_gaps_and_no_promotion",
+  "old_database_preserved_sha256": "2a20391e28f6552a6e18927e94a47c99dff326535e217b4df5c8504f45b32e97",
+  "Astra_original_accepted_additional_Blob_recovery": 1,
+  "Astra_Blob_read_errors": [],
+  "accepted_original_contexts_with_values": 39298,
+  "accepted_ad_keys_with_values": 45592,
+  "covered_contexts_by_original_state": {
+    "accepted_original_scope": 39298,
+    "saved_unverified": 6412
+  },
+  "unattached_contexts_by_original_state": {
+    "quarantined": 56,
+    "not_reconciled": 10012,
+    "accepted_original_scope": 10,
+    "saved_unverified": 94
+  },
+  "PRIMARY_error_entry_categories_not_unique_records": {
+    "schema": 1288,
+    "cross_field_or_relation_rule": 290,
+    "exact_quote_missing": 25,
+    "input_identity_mismatch": 8,
+    "missing_review": 8
+  },
+  "contexts_with_multiple_distinct_PRIMARY_payloads": 67,
+  "Pro_accepted_first_context_shards_for_metadata_join": 2,
+  "CREATED_join_materialized": false,
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "protected_payloads_absent": true,
+  "integrity_pass": true,
+  "source_schema_rules_changed": false,
+  "raw_ads_rescanned": false,
+  "known_base_model_budget_spent_usd": 0,
+  "independent_machine_qualification_not_started": true,
+  "database_sha256": "0594d18bfb27a9a5f9069aec5065e0b03557965f9631f82ab9742ae525f57925"
+}

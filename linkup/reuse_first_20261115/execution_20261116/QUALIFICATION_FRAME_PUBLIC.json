@@ -1,0 +1,37 @@
+{
+  "status": "metadata_frame_frozen_inputs_and_runtime_not_yet_admitted",
+  "selected_contexts": 500,
+  "split": {
+    "development": 200,
+    "heldout": 300
+  },
+  "strata": {
+    "original_accepted_Pro": 200,
+    "existing_Kimi_saved": 150,
+    "ordinary_Pro_frozen_error": 100,
+    "ordinary_Pro_saved_pass": 50
+  },
+  "stratum_eligible_counts_before_selection": {
+    "original_accepted_Pro": 31690,
+    "existing_Kimi_saved": 1117,
+    "ordinary_Pro_frozen_error": 674,
+    "ordinary_Pro_saved_pass": 3755
+  },
+  "previous20_and_all_known_protection_excluded": true,
+  "unknown_and_no_hit_not_filtered_out": true,
+  "new_Luna_calls_max": 500,
+  "new_Kimi_reference_calls_max": 350,
+  "existing_Kimi_reference_reuses": 150,
+  "new_Astra_audit_calls_max": 50,
+  "total_stage_cap_usd": 250,
+  "no_human_review": true,
+  "inputs_require_full_SHA_validation_before_admission": true,
+  "new_production_accepted": 0,
+  "model_calls_this_preparation": 0,
+  "scope": "known historical prepared contexts; tests passed, unknown/no-hit and ordinary failed-output strata, but does not certify unseen full-corpus sources",
+  "prior_frozen_error_handling": "New independent qualification references are separate from failed original Pro outputs; not a retry of their production task and no old result is replaced. Provider blocks and Kimi retry-forbidden cases are excluded.",
+  "gate": "Per-field machine-reference P>=.90 R>=.80 MacroF1>=.85 with support and source-evidence checks; absent/failed/unknown outcomes remain explicit. Not human ground truth. Step4 also needs a confirmed nonduplicate missing-field queue.",
+  "paper_paused": true,
+  "frame_sha256": "28821e74712ce7d102044cc6a002d25f9cae9218c089897150bda38085ce2ab8",
+  "at_utc": "2026-11-15T17:30:29.328508+00:00"
+}

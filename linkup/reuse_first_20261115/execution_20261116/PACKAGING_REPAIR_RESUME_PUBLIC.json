@@ -1,0 +1,44 @@
+{
+  "at_utc": "2026-11-15T17:46:21.130286+00:00",
+  "status": "trusted_assignment_repaired_saved_responses_revalidated",
+  "complete_inputs_preflighted_with_actual_frozen_validator": 500,
+  "prior_attempts_inherited": 10,
+  "prior_cases_not_resubmitted": 10,
+  "reused_response_outcomes": {
+    "frozen_validator_pass_candidate_only": 8,
+    "frozen_validation_failed_preserve_output": 2
+  },
+  "old_revision_unchanged": true,
+  "model_message_schema_prompt_and_contexts_unchanged": true,
+  "research_definition_changed": false,
+  "inference_requests_during_repair": 0,
+  "old_reservation_usd_inherited": 0.08338580000000001,
+  "same_candidate_cap_usd": 15,
+  "same_stage3_cap_usd": 250,
+  "new_production_accepted": 0,
+  "worker_sha256": "3eeec9b034774bed85a20becf847a1c1e06c6a6da9046b25d33c37867ede3624",
+  "resumed_pid": 135263,
+  "resumed_process_alive": true,
+  "live_snapshot": {
+    "status": "running",
+    "started_at_utc": "2026-11-15T17:46:22.761821+00:00",
+    "pid": 135263,
+    "model": "gpt-6-luna",
+    "deployment": "linkup-gpt-6-luna-benchmark",
+    "selected": 500,
+    "completed": 10,
+    "engineering_pass": 8,
+    "new_production_accepted": 0,
+    "exceptions": {
+      "frozen_validation_failed_preserve_output": 2
+    },
+    "physical_attempts": 11,
+    "reserved_usd": 0.0918611,
+    "public_price_estimated_usage_usd": 0.0070868,
+    "input_tokens": 41973,
+    "output_tokens": 5779,
+    "no_human_gold_claim": true,
+    "updated_at_utc": "2026-11-15T17:46:22.804789+00:00",
+    "elapsed_seconds": 0.043
+  }
+}
