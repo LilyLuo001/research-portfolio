@@ -1,0 +1,37 @@
+{
+  "observed_at_utc": "2026-11-15T15:30:04.817697+00:00",
+  "status_sha256": "7c842f70cd3651d7df87f5f5b01c733c74a63a62c86970c83ebac0c295e21b31",
+  "worker_process_exists": true,
+  "run": {
+    "status": "running",
+    "started_at_utc": "2026-11-15T15:29:14.765578+00:00",
+    "pid": 133335,
+    "model": "gpt-6-luna",
+    "deployment": "linkup-gpt-6-luna-benchmark",
+    "selected": 20,
+    "completed": 2,
+    "engineering_pass": 1,
+    "new_production_accepted": 0,
+    "exceptions": {
+      "frozen_validation_failed_preserve_output": 1
+    },
+    "physical_attempts": 2,
+    "reserved_usd": 0.0170017,
+    "public_price_estimated_usage_usd": 0.0022141,
+    "input_tokens": 8881,
+    "output_tokens": 2652,
+    "no_human_gold_claim": true,
+    "updated_at_utc": "2026-11-15T15:29:31.616819+00:00",
+    "elapsed_seconds": 16.851
+  },
+  "http_status_counts": {
+    "200": 2
+  },
+  "actual_models": [
+    "gpt-6-luna-2026-09-22"
+  ],
+  "effective_token_limits": [
+    "100000"
+  ],
+  "validator_error_codes": {}
+}

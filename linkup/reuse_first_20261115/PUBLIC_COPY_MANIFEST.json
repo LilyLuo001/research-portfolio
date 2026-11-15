@@ -25,9 +25,170 @@
       "published_sha256": "d7ef16a30f661ca48dd641df273a46005ddc4e95b6294d194a8f5e552e2f2dfd",
       "source_modified": false,
       "transform": "Replace machine-specific absolute public-artifact paths with repository: or external_public: aliases; preserve all values, source SHA digests, counts, assumptions and conclusions."
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/ENVIRONMENT_PREFLIGHT_PUBLIC.json",
+      "source_sha256": "ecfc7a5d4fdc31d951fe7950af00905b62a1273e70b3798c32a96ba469652942",
+      "published_file": "ENVIRONMENT_PREFLIGHT_PUBLIC.json",
+      "published_sha256": "7d9fed4e5a5dacd6e08092db83fca38eeb34d56469706eb325ad6e85d82ac1ba",
+      "source_modified": false,
+      "transform": "Public JSON only; machine paths aliased, Azure identity identifiers and private locators omitted; aggregate values and paired source SHA retained.",
+      "redactions": []
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/BENCHMARK_PREPARATION_CLOUD_PUBLIC.json",
+      "source_sha256": "d671c3e59c37e74567399ba246925b914081605a9b090e63e065618305085630",
+      "published_file": "BENCHMARK_PREPARATION_CLOUD_PUBLIC.json",
+      "published_sha256": "691a9f8bdf2b427b845d17c29d09e34dbe3a02945de3d19d8b3587c8c16eb3ab",
+      "source_modified": false,
+      "transform": "Public JSON only; machine paths aliased, Azure identity identifiers and private locators omitted; aggregate values and paired source SHA retained.",
+      "redactions": []
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/DEPLOYMENT_CREATED_PUBLIC.json",
+      "source_sha256": "5113209ea82cd36484e4edf5710a4de4b5249ab00d88c9929526bac74564244b",
+      "published_file": "DEPLOYMENT_CREATED_PUBLIC.json",
+      "published_sha256": "5113209ea82cd36484e4edf5710a4de4b5249ab00d88c9929526bac74564244b",
+      "source_modified": false,
+      "transform": "Public JSON only; machine paths aliased, Azure identity identifiers and private locators omitted; aggregate values and paired source SHA retained.",
+      "redactions": []
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/MODEL_CHANNEL_PREFLIGHT_PUBLIC.json",
+      "source_sha256": "32b627f49263dfddcdd78d1a3b3a04358f90e75b6cedbb68d2ebbd717d58e12b",
+      "published_file": "MODEL_CHANNEL_PREFLIGHT_PUBLIC.json",
+      "published_sha256": "ffcc8b66639eda516eab1122c41924f92402643698dd7ae2e9e635810c897aae",
+      "source_modified": false,
+      "transform": "Public JSON only; machine paths aliased, Azure identity identifiers and private locators omitted; aggregate values and paired source SHA retained.",
+      "redactions": [
+        {
+          "json_path": "$.VM_managed_identity.principalId",
+          "reason": "selected-record or identity identifier omitted"
+        },
+        {
+          "json_path": "$.VM_managed_identity.roleDefinitionId",
+          "reason": "selected-record or identity identifier omitted"
+        },
+        {
+          "json_path": "$.VM_managed_identity.real_metadata_GET_probe.token_claims_selected_only.oid",
+          "reason": "selected-record or identity identifier omitted"
+        },
+        {
+          "json_path": "$.initial_state.opencode_config_path",
+          "reason": "Machine-specific configuration locator replaced with public configuration alias."
+        }
+      ]
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/BENCHMARK_PREPARATION_OFFLINE_TEST_PUBLIC.json",
+      "source_sha256": "844814fc57bdf35175f9a35a626aae677b329854dd1536b913f8101436c76da0",
+      "published_file": "BENCHMARK_PREPARATION_OFFLINE_TEST_PUBLIC.json",
+      "published_sha256": "844814fc57bdf35175f9a35a626aae677b329854dd1536b913f8101436c76da0",
+      "source_modified": false,
+      "transform": "Public JSON only; machine paths aliased, Azure identity identifiers and private locators omitted; aggregate values and paired source SHA retained.",
+      "redactions": []
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/REUSE_BOUNDARY_PREFLIGHT_PUBLIC.json",
+      "source_sha256": "0c8e57edf7db8d1f5ce53261d730798daf8651819915a2cb7f988fef0ed3424a",
+      "published_file": "REUSE_BOUNDARY_PREFLIGHT_PUBLIC.json",
+      "published_sha256": "c95d8aeb036b794586a3a9ae2a0b7121d5bb8aa04f7840583f543078ed91644d",
+      "source_modified": false,
+      "transform": "Public JSON only; machine paths aliased, Azure identity identifiers and private locators omitted; aggregate values and paired source SHA retained.",
+      "redactions": [
+        {
+          "json_path": "$.verified_entrypoints[0].path",
+          "reason": "private source locator omitted; paired artifact SHA retained where supplied"
+        },
+        {
+          "json_path": "$.verified_entrypoints[1].path",
+          "reason": "private source locator omitted; paired artifact SHA retained where supplied"
+        },
+        {
+          "json_path": "$.verified_entrypoints[2].path",
+          "reason": "private source locator omitted; paired artifact SHA retained where supplied"
+        },
+        {
+          "json_path": "$.verified_entrypoints[3].path",
+          "reason": "private source locator omitted; paired artifact SHA retained where supplied"
+        },
+        {
+          "json_path": "$.verified_entrypoints[4].path",
+          "reason": "private source locator omitted; paired artifact SHA retained where supplied"
+        }
+      ]
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/LAUNCH_PAYLOAD_SHA_PUBLIC.json",
+      "source_sha256": "a9eaf80527b023f600681fd0875d6e8992785129266944387cc3def12fff8bcc",
+      "published_file": "LAUNCH_PAYLOAD_SHA_PUBLIC.json",
+      "published_sha256": "a9eaf80527b023f600681fd0875d6e8992785129266944387cc3def12fff8bcc",
+      "source_modified": false,
+      "transform": "Public JSON only; machine paths aliased, Azure identity identifiers and private locators omitted; aggregate values and paired source SHA retained.",
+      "redactions": []
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/cloud_prepare_benchmark.py",
+      "source_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
+      "published_file": "code/cloud_prepare_benchmark.py",
+      "published_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
+      "source_modified": false,
+      "transform": "Byte-identical public source code copy; no execution in this publication step."
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/cloud_prepare_benchmark_executed_v1.py",
+      "source_sha256": "91f3bce462c70f5cbc6982bd831a1042b78a0dc849153d014e73e6a97f7f0371",
+      "published_file": "code/cloud_prepare_benchmark_executed_v1.py",
+      "published_sha256": "91f3bce462c70f5cbc6982bd831a1042b78a0dc849153d014e73e6a97f7f0371",
+      "source_modified": false,
+      "transform": "Byte-identical public source code copy; no execution in this publication step."
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/test_cloud_prepare_benchmark.py",
+      "source_sha256": "355171b4191d79ee950d90edfd76159cbb62277c9d1cda3f5ef1fbc5d3dc086e",
+      "published_file": "code/test_cloud_prepare_benchmark.py",
+      "published_sha256": "355171b4191d79ee950d90edfd76159cbb62277c9d1cda3f5ef1fbc5d3dc086e",
+      "source_modified": false,
+      "transform": "Byte-identical public source code copy; no execution in this publication step."
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/LAUNCH_PUBLIC.json",
+      "source_sha256": "ae6b7774167c9a9fde2736841de450ffe5d7350bdfb4697c1851dbdfe19dda59",
+      "published_file": "LAUNCH_PUBLIC.json",
+      "published_sha256": "ae6b7774167c9a9fde2736841de450ffe5d7350bdfb4697c1851dbdfe19dda59",
+      "source_modified": false,
+      "transform": "Public aggregate launch/status only; machine paths aliased and infrastructure identifiers omitted where applicable."
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/STATUS_001_PUBLIC.json",
+      "source_sha256": "6b47e5c123f28961159e689a14b5709fd4d85bd86105ed3e1e84a72a7f9f1928",
+      "published_file": "STATUS_001_PUBLIC.json",
+      "published_sha256": "6b47e5c123f28961159e689a14b5709fd4d85bd86105ed3e1e84a72a7f9f1928",
+      "source_modified": false,
+      "transform": "Public aggregate launch/status only; machine paths aliased and infrastructure identifiers omitted where applicable."
+    },
+    {
+      "source_label": "external_public:reuse_first_20261115/read_benchmark_status_cloud.py",
+      "source_sha256": "9ac8ac1f4d35f38525bd8eaab754d84f822ff7a2e183451cc80c54700412728c",
+      "published_file": "code/read_benchmark_status_cloud.py",
+      "published_sha256": "9ac8ac1f4d35f38525bd8eaab754d84f822ff7a2e183451cc80c54700412728c",
+      "source_modified": false,
+      "transform": "Byte-identical public metadata/status inspection source; no execution during publication."
     }
   ],
   "sensitive_source_data_copied": false,
   "raw_advertisement_or_model_output_copied": false,
-  "scope": "Three existing aggregate public budget-reconciliation reports only."
+  "scope": "Existing public budget, finite-run control-plane receipts and byte-identical public source code only; no private selection maps or row outputs.",
+  "updated_utc": "2026-11-15T15:33:23.975314+00:00",
+  "execution_version_distinction": {
+    "actual_preparation_source": "code/cloud_prepare_benchmark_executed_v1.py",
+    "actual_preparation_sha256": "91f3bce462c70f5cbc6982bd831a1042b78a0dc849153d014e73e6a97f7f0371",
+    "later_final_source": "code/cloud_prepare_benchmark.py",
+    "later_final_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
+    "differences": [
+      "Later final version lowercases task strings before fixed protected-marker matching.",
+      "Later final version adds an explicit 20-distinct-context check."
+    ],
+    "later_final_was_actual_preparation_code": false
+  }
 }

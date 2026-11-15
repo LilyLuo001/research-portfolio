@@ -20,6 +20,7 @@ ALLOWLIST_NAME = "PUBLIC_GIT_ALLOWLIST.json"
 RECEIPT_NAME = "PUBLIC_GIT_SCAN_RECEIPT.json"
 ROOT_RELATIVE = "linkup/reuse_first_20261115"
 MAX_BYTES = 500_000
+EXEMPTIBLE_RULES = {"uuid_identifier", "machine_private_absolute_path"}
 RULES = {
     "private_key_material": r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
     "api_secret_shape": r"\b(?:sk-[A-Za-z0-9_-]{16,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})\b",
@@ -42,7 +43,10 @@ def scan_text(text: str) -> list[dict]:
     findings = []
     for rule, pattern in RULES.items():
         for match in re.finditer(pattern, text):
-            findings.append({"rule": rule, "line": text.count("\n", 0, match.start()) + 1})
+            finding={"rule": rule, "line": text.count("\n", 0, match.start()) + 1}
+            if rule in EXEMPTIBLE_RULES:
+                finding["literal_sha256"]=hashlib.sha256(match.group().encode()).hexdigest()
+            findings.append(finding)
     return findings
 
 
@@ -104,7 +108,21 @@ def main() -> int:
     allowed = set(names)
     if not {ALLOWLIST_NAME, RECEIPT_NAME, Path(__file__).name} <= allowed:
         raise SystemExit("Allowlist omits required checker artifacts")
-    findings, checked = [], []
+    exemptions=config.get("reviewed_literal_exemptions",[])
+    for item in exemptions:
+        if item.get("file") not in allowed or not item["file"].endswith(".py") or item.get("rule") not in EXEMPTIBLE_RULES:
+            raise SystemExit("Only reviewed public-source UUID/operation-path literals may be exempted")
+        if not all(re.fullmatch(r"[0-9a-f]{64}",item.get(key,"")) for key in ("file_sha256","literal_sha256")) or not item.get("review_reason"):
+            raise SystemExit("Literal exemption must be bound to exact file and literal SHA digests with a review reason")
+    findings, checked, exemptions_used = [], [], []
+    def reviewed_findings(name,digest,items):
+        retained=[]
+        for item in items:
+            matching=next((e for e in exemptions if e["file"]==name and e["file_sha256"]==digest and e["rule"]==item["rule"] and e["literal_sha256"]==item.get("literal_sha256") and e.get("line")==item.get("line")),None)
+            if matching:
+                exemptions_used.append({"file":name,"file_sha256":digest,**item,"review_reason":matching["review_reason"]})
+            else:retained.append(item)
+        return retained
     test_results = self_tests()
     if not test_results["all_passed"]:
         raise SystemExit("Publication checker self-tests failed")
@@ -132,7 +150,8 @@ def main() -> int:
             continue
         if "\x00" in text:
             findings.append({"file": name, "rule": "nul_byte_rejected"})
-        findings.extend({"file": name, **item} for item in scan_text(text))
+        digest=hashlib.sha256(data).hexdigest()
+        findings.extend({"file": name, **item} for item in reviewed_findings(name,digest,scan_text(text)))
         if path.suffix == ".json":
             try:
                 payload = json.loads(text)
@@ -151,7 +170,7 @@ def main() -> int:
             data = git(repo, "show", f":{path}")
             try:
                 staged_text = data.decode("utf-8")
-                findings.extend({"file": path[len(ROOT_RELATIVE) + 1:], "index": True, **item} for item in scan_text(staged_text))
+                findings.extend({"file": path[len(ROOT_RELATIVE) + 1:], "index": True, **item} for item in reviewed_findings(path[len(ROOT_RELATIVE) + 1:],hashlib.sha256(data).hexdigest(),scan_text(staged_text)))
                 if path.endswith(".json"):
                     findings.extend({"file": path[len(ROOT_RELATIVE) + 1:], "index": True, **item} for item in scan_json_values(json.loads(staged_text)))
             except (UnicodeDecodeError, json.JSONDecodeError):
@@ -167,6 +186,8 @@ def main() -> int:
         "staged_check_requested": args.check_staged,
         "staged_file_count": len(staged_paths),
         "synthetic_detector_self_tests": test_results,
+        "reviewed_literal_exemptions_used": exemptions_used,
+        "credential_or_record_payload_exemptions_permitted": False,
         "findings": findings,
         "staging_committing_or_pushing_performed": False,
         "limitations": "Lightweight pattern/schema screen plus an explicitly reviewed allowlist; not a guarantee against arbitrary secrets or semantic errors.",

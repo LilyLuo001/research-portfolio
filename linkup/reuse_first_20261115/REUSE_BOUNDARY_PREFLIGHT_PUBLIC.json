@@ -1,0 +1,115 @@
+{
+  "status": "offline_boundary_preflight_pass_cloud_preparation_not_executed_by_this_agent",
+  "prepared_at_utc": "2026-11-15T15:25:11.406875+00:00",
+  "authority": "Parent confirms user-approved reuse framework and existing low-cost model route; bounded independent candidate benchmark, not accepted production rerun.",
+  "scope": {
+    "full_delivery_goal_rows_user_stated": 500000000,
+    "final_sample_substitution": false,
+    "global_unique_context_count": null,
+    "global_unprocessed_count": null,
+    "new_production_queue_verified": false,
+    "old1309_unprocessed_remaining": 0,
+    "benchmark_is_production_increment": false
+  },
+  "target_benchmark": {
+    "fixed_n": 20,
+    "original_audit_frame_n": 200,
+    "protected_in_original_frame": 4,
+    "allowed_audit_frame_n_before_unknown_and_candidate_filters": 196,
+    "selected_real_n": null,
+    "cloud_prepare_required": true,
+    "source_order": "original BLIND-0001..BLIND-0200 order",
+    "selection": "first20 saved-unverified frozen-validator-pass candidates with reviewed_full, no enum unknown/unresolved and no unresolved_notes; skip protected hashes/tasks, accepted, all prior exceptions and partials; do not replace after seeing benchmark results",
+    "fewer_than20": "fail closed without resampling",
+    "machine_judge": "new low-cost candidate sees only frozen input and schema/instructions; Kimi reference hidden until output saved and locked",
+    "evaluation": "relative model-reference compatibility; not human truth, population accuracy or automatic release"
+  },
+  "state_rules": {
+    "eligible_for_new_production": "explicit authoritative unprocessed, never mere absence from an incomplete ledger; requires exclusive claim",
+    "eligible_for_this_benchmark": "ordinary saved_unverified, original frozen validation passed, full review and no final unknown; separate QA receipt only",
+    "deny": [
+      "accepted",
+      "reviewed_unknown",
+      "quarantined",
+      "provider_content_filter",
+      "saved_unknown",
+      "partial",
+      "unresolved",
+      "any prior execution exception",
+      "in_flight_or_claimed_elsewhere",
+      "not_reconciled"
+    ],
+    "protected_aliases": "deny exact complete context hash too, not only task id",
+    "metadata_conflicts": "fail closed"
+  },
+  "verified_entrypoints": [
+    {
+      "path_omitted": true,
+      "role": "existing frozen 200-source audit form; selected lines only are parsed",
+      "sha256": "95e7c79dc5edff1bb8d3b37907b1db17430f37c61090083748d8bf7fd5bd3c25"
+    },
+    {
+      "path_omitted": true,
+      "role": "existing identity/status bridge, not supplied to candidate model"
+    },
+    {
+      "path_omitted": true,
+      "role": "completed source candidates and exceptions; latest full-run primary status"
+    },
+    {
+      "path_omitted": true,
+      "role": "verified 2464-shard 204774035-US-ad catalog for later full source queue; not all500M denominator",
+      "sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e"
+    },
+    {
+      "path_omitted": true,
+      "role": "1320-row bounded identity map, not global completed/remaining truth"
+    }
+  ],
+  "cloud_output_directory": "azure_workspace:reuse_first_20261115/run01/benchmark20",
+  "cloud_preparation_code": "external_public:reuse_first_20261115/cloud_prepare_benchmark.py",
+  "cloud_preparation_code_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
+  "output_contract": {
+    "INPUTS_PRIVATE.jsonl": "{audit_id,task,row:{record_id,context_sha256,full_document,assignment}}",
+    "REFERENCES_PRIVATE.jsonl": "{audit_id,review}; never read by inference dispatcher",
+    "SCHEMA.json": "unchanged frozen schema bytes",
+    "INSTRUCTIONS.md": "unchanged frozen instruction bytes",
+    "PREPARATION_PUBLIC.json": "selected_n,input_sha256,schema_sha256,instructions_sha256,pins,selection/exclusion counts,source and output SHA,old-ledger before/after checks"
+  },
+  "mechanical_regression_tests": {
+    "status": "pass",
+    "synthetic_tests_run": 15,
+    "failures": 0,
+    "errors": 0,
+    "private_advertisements_read": 0,
+    "model_calls": 0,
+    "cloud_jobs": 0,
+    "production_changes": 0
+  },
+  "source_reconciliation_boundary": "Local global ledger mirror observed2026-11-15T07:30Z is stale for bulk progress; FINAL_CLOUD_PUBLIC completed10:23Z overrides it. Catalog availability source is12:04Z preflight receipt. Cloud prep independently rechecks live source pins.",
+  "source_file_sha256": {
+    "external_public:CURRENT_RESEARCH_POLICY_PUBLIC.json": "ba39c07e1917a11dda82e2252f8054b1dce480380c10e64e20e33ca85f7c5d32",
+    "external_public:research_policy_20261115_ai_review/POLICY_V4_ECONOMICS_FIRST_PUBLIC.json": "7a3416c5cd8e515526f59c1f159e914b6d691f191aa11a82a2556637e4a09df7",
+    "external_public:azure_gpu_launch_20261115/FULL_SCOPE_CATALOG_PREFLIGHT_PUBLIC.json": "569a26a242eadc05e1b4f7776d85d525337a62b87da35b0b4e629ce9739ceb1e",
+    "external_public:opencode_bulk_20261115/FINAL_CLOUD_PUBLIC.json": "841ee535eaa772f76027b475305516a85499473200d65986ee904f842fbbb566",
+    "external_public:AZURE_RESEARCH_STATE.json": "974ec46d40eef83223462fef2d5ba3666dce3f0e45e8b172eaec4a6899ff9921",
+    "external_public:reuse_first_20261115/cloud_prepare_benchmark.py": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
+    "external_public:reuse_first_20261115/test_cloud_prepare_benchmark.py": "355171b4191d79ee950d90edfd76159cbb62277c9d1cda3f5ef1fbc5d3dc086e",
+    "external_public:reuse_first_20261115/BENCHMARK_PREPARATION_OFFLINE_TEST_PUBLIC.json": "844814fc57bdf35175f9a35a626aae677b329854dd1536b913f8101436c76da0"
+  },
+  "actions": {
+    "local_private_advertisement_reading": false,
+    "protected_source_parsed": 0,
+    "model_calls": 0,
+    "cloud_jobs_started": 0,
+    "production_scripts_modified": 0,
+    "old_primary_or_ledgers_modified": 0,
+    "new_paid_resources": 0
+  },
+  "remaining": [
+    "Parent must synchronize exactV4 cloud policy if absent, then run preparation via existing serialized VM execution.",
+    "Actual selection and eligibility counts are emitted by real cloud prep, not asserted from synthetic tests.",
+    "Low-cost model account access/rate and schema support still need real bounded benchmark.",
+    "Global source denominator, historical accepted union and full-context distinct count remain incomplete; not needed to fake a new production queue."
+  ]
+}

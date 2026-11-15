@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-15T15:27:49.706919+00:00",
+  "status": "bounded_independent_mechanical_audit_pass_not_semantic_accuracy",
+  "worker": {
+    "file": "code/cloud_benchmark_worker.py",
+    "sha256": "615efb4a31e24476d52250d615dd8e4a2a0503161177a7028e39b98349321f16"
+  },
+  "synthetic_test": {
+    "file": "code/test_cloud_benchmark_worker_synthetic.py",
+    "sha256": "b524455965ef60ec4ab15064218ddc6000405266b430936473deb363e963c9ed",
+    "scenario_count": 11,
+    "status": "pass",
+    "scenarios": [
+      "success_and_restart_no_duplicate",
+      "retries_and_restart_no_duplicate",
+      "filter_and_restart_no_duplicate",
+      "refusal_and_restart_no_duplicate",
+      "transport_and_restart_no_duplicate",
+      "invalid_and_restart_no_duplicate",
+      "identity_failure_zero_model_calls",
+      "interrupted_attempt_not_resubmitted",
+      "existing_protected_task_never_forwarded",
+      "persisted_cost_reservation_blocks_new_calls",
+      "runtime_hash_mismatch_zero_calls"
+    ],
+    "assertions": "Each applicable scenario asserts physical-attempt and dollar ceilings, rolling 60-second token reservations, unchanged original ledger hashes, zero production promotion, no human-gold claim and closed response handles."
+  },
+  "config_sha256": "f290676e846b211aae0b2226f37ae3a837f434b1d9c0f73e84e1c4ee29dab749",
+  "config_changed_by_auditor": false,
+  "prompt_schema_selection_changed_by_auditor": false,
+  "concurrency_or_budget_changed_by_auditor": false,
+  "repairs": [
+    "Pin and verify frozen validator/runtime SHA before model calls.",
+    "Preserve immutable per-attempt private HTTP responses before interpretation, including errors, filters and malformed responses; close response handles.",
+    "Catch identity-token acquisition/contract failures into a precise no-model-call status rather than leaving running as the final state.",
+    "Add provider message.refusal to the local protected set without retry or rerouting.",
+    "Skip already protected records with quarantined_no_call on restart instead of aborting all remaining records after the local exclusion file grows. Existing result files and historical ledgers remain unchanged."
+  ],
+  "token_interface_audit": {
+    "source_label": "repository:linkup/azure_migration_20261104/workflow.py",
+    "function": "token(resource) -> str",
+    "line_span": [
+      24,
+      37
+    ],
+    "compatible": true,
+    "real_identity_call_made": false
+  },
+  "actual_access": {
+    "model_calls": 0,
+    "VM_calls": 0,
+    "real_identity_calls": 0,
+    "raw_research_records_read": 0
+  },
+  "resource_and_correctness_limits": [
+    "This is bounded synthetic/structural QA, not a claim that the real deployment has run or that outputs are accurate.",
+    "HTTP status retry allowlist and frozen request/token/cost/attempt bounds are unchanged.",
+    "Arbitrary malicious local filesystem tampering and every possible provider failure are not exhaustively tested.",
+    "Run receipts may finish with candidate-only engineering checks; promotion and semantic accuracy are not inferred."
+  ],
+  "cleanup": {
+    "only_matching_ensure_benchmark_deployment_bytecode_removed": true,
+    "empty_cache_directory_removed_if_empty": true,
+    "other_user_files_untouched": true
+  },
+  "Git": {
+    "staged_by_auditor": false,
+    "committed_by_auditor": false,
+    "pushed_by_auditor": false,
+    "new_public_receipt_requires_allowlist_update": true
+  }
+}

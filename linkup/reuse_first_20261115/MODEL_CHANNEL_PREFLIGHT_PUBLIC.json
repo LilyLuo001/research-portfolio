@@ -1,0 +1,254 @@
+{
+  "at_utc": "2026-11-15T15:25:29.925193+00:00",
+  "status": "read_only_preflight_complete_existing_MI_authorized_new_root_created_Luna_benchmark_deployment_not_inference_tested_by_this_agent",
+  "agent_actions": {
+    "paid_inference_calls": 0,
+    "deployments_created": 0,
+    "RBAC_network_or_key_changes": 0,
+    "run_policy_changes": 0,
+    "VM_readonly_probes": 2,
+    "source_ads_or_model_outputs_read": 0,
+    "secrets_emitted": false
+  },
+  "scope": "existing_LinkUp_rg-linkup_AI_account_and_local_OpenCode_configuration; not_an_all_tenants_inventory",
+  "initial_state": {
+    "observed_at_utc": "2026-11-15T15:17:28.298577+00:00",
+    "existing_deployments": [
+      {
+        "name": "linkup-gpt-6-astra",
+        "model": {
+          "format": "OpenAI",
+          "name": "gpt-6-astra",
+          "version": "2026-09-03"
+        },
+        "sku": {
+          "name": "GlobalStandard",
+          "capacity": 1000
+        },
+        "state": "Succeeded",
+        "rateLimits": [
+          {
+            "key": "request",
+            "renewalPeriod": 60,
+            "count": 1000
+          },
+          {
+            "key": "token",
+            "renewalPeriod": 60,
+            "count": 1000000
+          }
+        ]
+      },
+      {
+        "name": "linkup-kimi-k3-1-pro",
+        "model": {
+          "format": "MoonshotAI",
+          "name": "Kimi-K3.1-Pro",
+          "version": "2026-11-04"
+        },
+        "sku": {
+          "name": "GlobalStandard",
+          "capacity": 300
+        },
+        "state": "Succeeded",
+        "rateLimits": [
+          {
+            "key": "request",
+            "renewalPeriod": 60,
+            "count": 300
+          },
+          {
+            "key": "token",
+            "renewalPeriod": 60,
+            "count": 300000
+          }
+        ]
+      }
+    ],
+    "existing_low_cost_deployment_found": false,
+    "account_deployment_listing_complete": true,
+    "subscription_account_listing_not_exhaustive": true,
+    "opencode_config_path": "local_config:opencode/opencode.json",
+    "configured_provider_models": [
+      "azure-linkup/linkup-gpt-6-astra",
+      "azure-kimi/linkup-kimi-k3-1-pro"
+    ],
+    "opencode_credential_file_reference_exists": true,
+    "credential_value_not_in_report": true
+  },
+  "low_cost_candidate": {
+    "model": "gpt-6-luna",
+    "format": "OpenAI",
+    "version": "2026-09-22",
+    "lifecycleStatus": "GenerallyAvailable",
+    "catalog_observed_at_utc": "2026-11-15T15:19:58.228282+00:00",
+    "chatCompletion": "true",
+    "responses": "true",
+    "SKU": "GlobalStandard",
+    "catalog_capacity": {
+      "maximum": 10000000,
+      "default": 10
+    },
+    "minimum_capacity_proven": null,
+    "minimum_note": "Catalog does not report a minimum; default10 is not proof minimum1 or minimum10. Do not infer deployment capacity from legacy maxCapacity field.",
+    "rate_limits_per_capacity_unit": [
+      {
+        "key": "request",
+        "renewalPeriod": 60,
+        "count": 1
+      },
+      {
+        "key": "token",
+        "renewalPeriod": 60,
+        "count": 1000
+      }
+    ],
+    "quota_before_new_deployment": {
+      "usageName": "OpenAI.GlobalStandard.gpt-6-luna",
+      "used_capacity_units": 0,
+      "limit_capacity_units": 250,
+      "unit_explanation": "One Thousand Tokens Per Minute - gpt-6-luna - GlobalStandard",
+      "equivalent_TPM_limit": 250000
+    },
+    "catalog_listing_or_quota_does_not_mean_preexisting_deployment": true
+  },
+  "root_subsequent_action": {
+    "at_utc": "2026-11-15T15:22:19.196692+00:00",
+    "deployment": "linkup-gpt-6-luna-benchmark",
+    "model": {
+      "format": "OpenAI",
+      "name": "gpt-6-luna",
+      "version": "2026-09-22"
+    },
+    "provisioning_state": "Succeeded",
+    "sku": {
+      "name": "GlobalStandard",
+      "capacity": 100
+    },
+    "rate_limits": [
+      {
+        "key": "request",
+        "renewalPeriod": 60,
+        "count": 100
+      },
+      {
+        "key": "token",
+        "renewalPeriod": 60,
+        "count": 100000
+      }
+    ],
+    "source": "DEPLOYMENT_CREATED_PUBLIC.json",
+    "created_by_root_not_this_readonly_agent": true,
+    "old_deployments_unchanged": true,
+    "no_new_VM_GPU_PTU_RBAC_network_or_keys": true,
+    "deployment_success_is_not_semantic_quality_or_inference_completion": true
+  },
+  "Azure_price_evidence": {
+    "source_url": "https://azure.microsoft.com/en-us/blog/gpt-6-astra-sol-and-luna-for-production-agents-in-microsoft-foundry/",
+    "source_http_status": 200,
+    "source_sha256": "8643181a4b3847eee5e25df0a7448a9e0db811b498f6cd0e9232ef4c394def58",
+    "billing_provider": "Microsoft_Azure_Foundry_GlobalStandard_not_OpenAI_direct",
+    "USD_per_million_tokens_short_context": {
+      "input": 0.1,
+      "cache_hit_input": 0.01,
+      "cache_write_input": 0.125,
+      "output": 0.5
+    },
+    "USD_per_million_tokens_long_context": {
+      "input": 0.2,
+      "cache_hit_input": 0.02,
+      "cache_write_input": 0.25,
+      "output": 0.75
+    },
+    "price_is_public_rate_not_current_subscription_invoice": true,
+    "context_cutoff_not_assumed_without_config_evidence": true,
+    "GlobalBatch_price_or_availability_not_verified_here": true,
+    "fixed20_calls_with12000_output_tokens_each_output_component_upper_arithmetic_USD_short_context": 0.12,
+    "input_retry_cache_and_actual_meter_need_separate_reservation": true
+  },
+  "VM_managed_identity": {
+    "type": "SystemAssigned",
+    "existing_account_scoped_role": "Cognitive Services OpenAI User",
+    "scope": "/subscriptions/[identifier-omitted]/resourceGroups/rg-linkup-migration/providers/Microsoft.CognitiveServices/accounts/rg-linkup",
+    "new_role_assignment_needed_for_metadata_probe": false,
+    "real_metadata_GET_probe": {
+      "at_utc": "2026-11-15T15:23:45.869909+00:00",
+      "identity_type": "existing_VM_system_assigned_managed_identity",
+      "source_token_function": "azure_workspace:code/workflow.py",
+      "source_sha256": "cab03b7672cb0ef204f0ce334aee1e9ff7b70d7eedc3a1b8b756b528b643b1e6",
+      "workflow_module_imported": false,
+      "operation": "GET_models_metadata_no_model_inference",
+      "inference_calls": 0,
+      "redirects_allowed": false,
+      "token_or_key_emitted": false,
+      "token_claims_selected_only": {
+        "aud": "https://cognitiveservices.azure.com/",
+        "idtyp": "app"
+      },
+      "http_status": 200,
+      "metadata_model_count": 498,
+      "luna_model_ids": [
+        "gpt-6-luna-2026-09-22",
+        "gpt-6-luna"
+      ],
+      "status": "MI_metadata_GET_authorized_inference_not_tested"
+    },
+    "inference_POST_not_tested_by_this_agent": true
+  },
+  "auth_and_call_entrypoints": {
+    "resource_audience": "https://cognitiveservices.azure.com/",
+    "baseURL": "https://rg-linkup.openai.azure.com/openai/v1",
+    "future_model_field": "linkup-gpt-6-luna-benchmark",
+    "chat_completion_endpoint": "https://rg-linkup.openai.azure.com/openai/v1/chat/completions",
+    "responses_endpoint": "https://rg-linkup.openai.azure.com/openai/v1/responses",
+    "preferred_auth": "existing_VM_MI_bearer_in_memory",
+    "workflow_source": "azure_workspace:code/workflow.py",
+    "workflow_sha256": "cab03b7672cb0ef204f0ce334aee1e9ff7b70d7eedc3a1b8b756b528b643b1e6",
+    "token_signature": "token(resource)",
+    "call_signature": "call(url, resource, method='GET', body=None, headers=None)",
+    "token_network_timeout_seconds": 30,
+    "token_refresh_buffer_seconds": 300,
+    "call_network_timeout_seconds": 90,
+    "call_has_explicit_retry_loop": false,
+    "call_automatically_retries_POST": false,
+    "call_default_urllib_redirects_not_explicitly_disabled": true,
+    "worker_recommendation": "Use existing token(resource), NoRedirect opener, one physical POST per ledger attempt and explicit bounded retry policy. Never use generic hidden-retry client without counting actual requests.",
+    "new_bounded_worker_local_path": "repository:linkup/reuse_first_20261115/code/cloud_benchmark_worker.py",
+    "new_bounded_worker_exists": true,
+    "worker_execution_status_not_asserted_here": true,
+    "legacy_bulk_gateway_must_not_be_restarted": "external_public:opencode_bulk_20261115/quota_gateway_300k.py"
+  },
+  "limits_and_result_interpretation": [
+    "The account originally had only Astra and Kimi; the new Luna deployment was created later by the root agent, not discovered as an old low-cost deployment.",
+    "Both existing OpenCode-key metadata GET and VM-MI metadata GET succeeded; GET /models is catalog authorization, not inference quality proof.",
+    "No protected original content, raw ads, output bodies, private key, API key or access token was emitted by this preflight.",
+    "Current root benchmark must use its own record/physical-attempt/token/dollar reservation limits; deployment TPM is not a spending cap.",
+    "No old accepted output, running policy, timer, schema, PRIMARY or migration task was changed by this audit."
+  ],
+  "sources": [
+    {
+      "path": "external_public:reuse_first_20261115/MODEL_DEPLOYMENTS_READONLY_PUBLIC.json",
+      "sha256": "09eafd262a0a23110b66ac24757a0af4f0ff6fad45c0e5048c6cadf868b7a217"
+    },
+    {
+      "path": "external_public:reuse_first_20261115/MODEL_CATALOG_QUOTA_MI_READONLY_PUBLIC.json",
+      "sha256": "c0288417b2d41ab3e3a85a5174553c975dcbc09d757b08d83b2ead95efb278af"
+    },
+    {
+      "path": "external_public:reuse_first_20261115/MODEL_AUTH_METADATA_RESOLVED_PROBE_PUBLIC.json",
+      "sha256": "25c703d0ac3347f19dea5797ecbe769c7aef11670f12a880e415c83318e7f956"
+    },
+    {
+      "path": "external_public:reuse_first_20261115/MI_MODEL_AUTH_PUBLIC.json",
+      "sha256": "9fdb932c2a8afa4a64ae5bc768dde5ab1488563745a0e12cad20fc6f55f6c07f"
+    },
+    {
+      "path": "external_public:reuse_first_20261115/LUNA_AZURE_PRICE_READONLY_PUBLIC.json",
+      "sha256": "b9e3bd111c7e1fd42132819a904c5e3dd1515a498e94b9c68a1eaa4b522d9485"
+    },
+    {
+      "path": "external_public:reuse_first_20261115/DEPLOYMENT_CREATED_PUBLIC.json",
+      "sha256": "5113209ea82cd36484e4edf5710a4de4b5249ab00d88c9929526bac74564244b"
+    }
+  ]
+}

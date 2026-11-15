@@ -1,0 +1,106 @@
+{
+  "observed_at_utc": "2026-11-15T15:17:16.962513+00:00",
+  "unix_user": "linkup",
+  "transport": "existing Azure VM Agent RunCommand",
+  "model_calls": 0,
+  "raw_advertisements_read": 0,
+  "new_paid_resources": 0,
+  "old_state_changed": false,
+  "known_worker_processes": [],
+  "legacy_units": {
+    "linkup-astra.timer": {
+      "ActiveState": "inactive"
+    },
+    "linkup-extract.timer": {
+      "ActiveState": "inactive"
+    },
+    "linkup-astra.service": {
+      "MainPID": "0",
+      "ActiveState": "inactive"
+    },
+    "linkup-extract.service": {
+      "MainPID": "0",
+      "ActiveState": "inactive"
+    }
+  },
+  "metadata_files": {
+    "AZURE_RESEARCH_STATE.json": {
+      "exists": true,
+      "bytes": 48509,
+      "sha256": "176960f3ddc61f49b69d2845ccf77f78a768d1750a9174beb25101c2f620cb90",
+      "top_level_keys": [
+        "schema_version",
+        "status",
+        "created_at_utc",
+        "scope",
+        "state_model",
+        "assets",
+        "quarantine_register",
+        "deduplication",
+        "coverage_gaps",
+        "provenance",
+        "action_audit",
+        "azure_observed_at_utc",
+        "parent_allowlist",
+        "azure_transport_current",
+        "azure_file_metadata_inventory",
+        "azure_source_provenance",
+        "private_record_index",
+        "target_path",
+        "metadata_updated_at_utc",
+        "parent_allowlist_initial_snapshot",
+        "current_lane_overlay",
+        "macro_records_A_completion"
+      ]
+    },
+    "AZURE_RESEARCH_IDENTITIES_PRIVATE.json": {
+      "exists": true,
+      "bytes": 570697,
+      "sha256": "4fd0db1835405e9010b64b9358cbacfe80255e654474573147089321bf893bba",
+      "top_level_keys": [
+        "created_at_utc",
+        "scope",
+        "rows",
+        "source_sha256",
+        "global_reconciled"
+      ]
+    },
+    "AZURE_PRO_BATCH_METADATA_PUBLIC.json": {
+      "exists": true,
+      "bytes": 195534,
+      "sha256": "35d17af69ba59c0c84a56467422b6d5c0ac0b3764a6d595e993898d08158e62c",
+      "top_level_keys": [
+        "source_kind",
+        "scope",
+        "metadata_manifest_count",
+        "prepared_context_rows",
+        "unique_prepared_context_hashes",
+        "manifest_contexts_disjoint_within_checked_scope",
+        "matched_latest_checkpoint_manifests",
+        "accepted_contexts_reported_in_latest_matched_receipts",
+        "accepted_contexts_with_any_unknown_reported",
+        "not_a_global_total",
+        "record_level_accepted_key_union_complete",
+        "batches",
+        "saved_PRIMARY_file_counts_are_not_record_acceptance"
+      ]
+    },
+    "opencode_kimi_20261115/run01/results/bulk1309/FINAL_PUBLIC.json": {
+      "exists": false
+    },
+    "opencode_kimi_20261115/run01/results/bulk1309/RUN_STATUS_PUBLIC.json": {
+      "exists": false
+    }
+  },
+  "existing_catalog_receipts": [
+    {
+      "receipt_path": "azure_workspace:full_scope_catalog_preflight_20261115/20261115T120402Z/FULL_SCOPE_CATALOG_PREFLIGHT_PUBLIC.json",
+      "verified_blob_contents": true,
+      "shards": 2464,
+      "canonical_US_ads": 204774035,
+      "sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e"
+    }
+  ],
+  "bulk_directory_entries": [],
+  "status": "live_preflight_completed_no_inference"
+}

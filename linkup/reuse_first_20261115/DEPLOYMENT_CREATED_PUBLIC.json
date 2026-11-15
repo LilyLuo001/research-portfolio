@@ -1,0 +1,33 @@
+{
+  "at_utc": "2026-11-15T15:22:19.196692+00:00",
+  "config_sha256": "f290676e846b211aae0b2226f37ae3a837f434b1d9c0f73e84e1c4ee29dab749",
+  "account": "rg-linkup",
+  "deployment": "linkup-gpt-6-luna-benchmark",
+  "model": {
+    "format": "OpenAI",
+    "name": "gpt-6-luna",
+    "version": "2026-09-22"
+  },
+  "action": "created_pay_per_token_benchmark_deployment",
+  "model_calls": 0,
+  "new_vm_gpu_ptu_resources": 0,
+  "role_network_or_keys_changed": false,
+  "provisioning_state": "Succeeded",
+  "sku": {
+    "name": "GlobalStandard",
+    "capacity": 100
+  },
+  "rate_limits": [
+    {
+      "key": "request",
+      "renewalPeriod": 60,
+      "count": 100
+    },
+    {
+      "key": "token",
+      "renewalPeriod": 60,
+      "count": 100000
+    }
+  ],
+  "old_deployments_unchanged": true
+}

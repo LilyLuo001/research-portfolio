@@ -12,7 +12,31 @@
     "PUBLIC_GIT_ALLOWLIST.json",
     "scan_public_git.py",
     "PUBLIC_GIT_SCAN_RECEIPT.json",
-    "BENCHMARK_CONFIG_PUBLIC.json"
+    "BENCHMARK_CONFIG_PUBLIC.json",
+    "ENVIRONMENT_PREFLIGHT_PUBLIC.json",
+    "BENCHMARK_PREPARATION_CLOUD_PUBLIC.json",
+    "DEPLOYMENT_CREATED_PUBLIC.json",
+    "MODEL_CHANNEL_PREFLIGHT_PUBLIC.json",
+    "BENCHMARK_PREPARATION_OFFLINE_TEST_PUBLIC.json",
+    "REUSE_BOUNDARY_PREFLIGHT_PUBLIC.json",
+    "LAUNCH_PAYLOAD_SHA_PUBLIC.json",
+    "code/cloud_prepare_benchmark.py",
+    "code/cloud_prepare_benchmark_executed_v1.py",
+    "code/test_cloud_prepare_benchmark.py",
+    "code/cloud_launch.py",
+    "code/cloud_benchmark_worker.py",
+    "code/ensure_benchmark_deployment.py",
+    "code/test_cloud_benchmark_worker_synthetic.py",
+    "code/cloud_compare_benchmark.py",
+    "WORKER_MECHANICAL_AUDIT_PUBLIC.json",
+    "POLICY_V5_PUBLIC.json",
+    "LAUNCH_PUBLIC.json",
+    "STATUS_001_PUBLIC.json",
+    "code/test_cloud_compare_benchmark.py",
+    "BENCHMARK_COMPARISON_OFFLINE_TEST_PUBLIC.json",
+    "code/cloud_finalize.py",
+    "code/read_benchmark_status_cloud.py",
+    "RUN_LOG_ZH.md"
   ],
   "not_authorized": [
     "private records",
@@ -20,5 +44,56 @@
     "model raw outputs",
     "credentials",
     "private sampling maps"
-  ]
+  ],
+  "reviewed_literal_exemptions": [
+    {
+      "file": "code/cloud_prepare_benchmark.py",
+      "file_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
+      "rule": "uuid_identifier",
+      "line": 23,
+      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
+      "review_reason": "Fixed provider-protected thread identifier in deny-only marker list; never a record ID or permission to open its contents."
+    },
+    {
+      "file": "code/cloud_prepare_benchmark_executed_v1.py",
+      "file_sha256": "91f3bce462c70f5cbc6982bd831a1042b78a0dc849153d014e73e6a97f7f0371",
+      "rule": "uuid_identifier",
+      "line": 23,
+      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
+      "review_reason": "Same fixed deny-only protected-thread literal in byte-identical historical execution source."
+    },
+    {
+      "file": "code/cloud_compare_benchmark.py",
+      "file_sha256": "380c1ba59783ccb41a68d7c452951c237ce090caa5481aac3fe2e435d420516e",
+      "rule": "uuid_identifier",
+      "line": 133,
+      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
+      "review_reason": "Fixed protected-thread marker used only to skip protected reference/body parsing."
+    },
+    {
+      "file": "code/cloud_prepare_benchmark.py",
+      "file_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
+      "rule": "machine_private_absolute_path",
+      "line": 251,
+      "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
+      "review_reason": "Already public fixed Azure workspace operating directory; no credentials or per-record locator."
+    },
+    {
+      "file": "code/cloud_prepare_benchmark_executed_v1.py",
+      "file_sha256": "91f3bce462c70f5cbc6982bd831a1042b78a0dc849153d014e73e6a97f7f0371",
+      "rule": "machine_private_absolute_path",
+      "line": 250,
+      "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
+      "review_reason": "Already public fixed Azure workspace operating directory in exact execution version."
+    },
+    {
+      "file": "code/test_cloud_prepare_benchmark.py",
+      "file_sha256": "355171b4191d79ee950d90edfd76159cbb62277c9d1cda3f5ef1fbc5d3dc086e",
+      "rule": "machine_private_absolute_path",
+      "line": 14,
+      "literal_sha256": "f3e0cb76a056bf6f33999ce12787ad02e5c9ca4ac12d5975a4a8374321291afb",
+      "review_reason": "Synthetic test uses a fixed public schema file already in this repository; no private inputs or credential file."
+    }
+  ],
+  "literal_exemption_policy": "Only reviewed .py source fixed deny-marker UUIDs and public operating paths may be exempted by exact file SHA + rule + line + literal SHA. Credential, raw payload and record identifier rules remain non-exemptible."
 }
