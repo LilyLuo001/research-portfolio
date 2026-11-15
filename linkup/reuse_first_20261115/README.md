@@ -35,3 +35,7 @@
 实际云端准备使用 `code/cloud_prepare_benchmark_executed_v1.py`；稍后的 `code/cloud_prepare_benchmark.py` 新增保护标记小写匹配和 20 个 context 唯一性断言。两版本原字节及 SHA 都保留，不能把稍后版本冒称为此前实际执行源码。原始公共回执、公开去标识副本和字节相同代码的来源对应关系见 `PUBLIC_COPY_MANIFEST.json`。私有 selection IDs、逐条路径映射和原始模型输出不发布。
 
 扫描器只允许已审读的固定保护线程 UUID 与公开操作路径假阳性使用豁免；每条必须同时匹配文件 SHA、规则、行号和 literal SHA，代码改变后自动失效。凭据、原始记录标识和正文/模型载荷规则不允许豁免。
+
+## First actual benchmark result
+
+The fixed run finished: 20 physical requests, 14 frozen-engineering passes, 6 preserved failures; 565.424 seconds; public-rate token estimate USD 0.0165363, not an invoice. It is not population-quality certification or 20 new accepted production records. The worker is stopped. See FINAL_SUMMARY_PUBLIC.json, FAILURE_DIAGNOSTIC_PUBLIC.json and RUN_LOG_ZH.md. Private evidence was archived to existing Azure Blob and its SHA read back. No historical result was overwritten.

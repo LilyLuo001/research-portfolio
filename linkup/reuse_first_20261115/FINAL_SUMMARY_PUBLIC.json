@@ -1,0 +1,104 @@
+{
+  "observed_at_utc": "2026-11-15T15:39:00.259641+00:00",
+  "run": {
+    "status": "finite_benchmark_completed",
+    "started_at_utc": "2026-11-15T15:29:14.765578+00:00",
+    "pid": 133335,
+    "model": "gpt-6-luna",
+    "deployment": "linkup-gpt-6-luna-benchmark",
+    "selected": 20,
+    "completed": 20,
+    "engineering_pass": 14,
+    "new_production_accepted": 0,
+    "exceptions": {
+      "frozen_validation_failed_preserve_output": 6
+    },
+    "physical_attempts": 20,
+    "reserved_usd": 0.1683505,
+    "public_price_estimated_usage_usd": 0.016536300000000004,
+    "input_tokens": 86953,
+    "output_tokens": 15682,
+    "no_human_gold_claim": true,
+    "updated_at_utc": "2026-11-15T15:38:40.189497+00:00",
+    "elapsed_seconds": 565.424,
+    "original_ledgers_unchanged": true,
+    "finished_at_utc": "2026-11-15T15:38:40.188342+00:00"
+  },
+  "relative_comparison": {
+    "engineering_pass_records": 14,
+    "paired_review_records": 14,
+    "new_unknown_records": 0,
+    "full_business_exact_records": 2,
+    "full_business_without_quotes_exact_records": 2,
+    "categorical_exact": {
+      "experience_outcomes.general_work": {
+        "paired": 14,
+        "exact": 14
+      },
+      "experience_outcomes.occupation_task": {
+        "paired": 14,
+        "exact": 12
+      },
+      "experience_outcomes.industry_domain": {
+        "paired": 14,
+        "exact": 12
+      },
+      "experience_outcomes.tool_specific": {
+        "paired": 14,
+        "exact": 13
+      },
+      "entry_outcomes.explicit_no_experience": {
+        "paired": 14,
+        "exact": 12
+      },
+      "entry_outcomes.explicit_new_graduate": {
+        "paired": 14,
+        "exact": 14
+      },
+      "entry_outcomes.current_student_internship": {
+        "paired": 14,
+        "exact": 14
+      },
+      "entry_outcomes.explicit_junior_or_entry_label": {
+        "paired": 14,
+        "exact": 14
+      },
+      "responsibility_outcomes.independent_judgment": {
+        "paired": 14,
+        "exact": 10
+      },
+      "responsibility_outcomes.client_ownership": {
+        "paired": 14,
+        "exact": 14
+      },
+      "responsibility_outcomes.people_supervision": {
+        "paired": 14,
+        "exact": 13
+      },
+      "responsibility_outcomes.training_mentoring": {
+        "paired": 14,
+        "exact": 14
+      },
+      "document_status": {
+        "paired": 14,
+        "exact": 14
+      },
+      "technology_inventory_status": {
+        "paired": 14,
+        "exact": 12
+      }
+    }
+  },
+  "full_comparison_sha256": "d39c183845009327d82595922f205ed84d8d20129d7bea18d9b6d28ea5bfc0bd",
+  "input_sha256": "1a24109c44c6fd619101b65ba2fd5f71043ed49cc16fde90bbefcd097fc6a96e",
+  "worker_sha256": "615efb4a31e24476d52250d615dd8e4a2a0503161177a7028e39b98349321f16",
+  "archive": {
+    "bytes": 186328,
+    "sha256": "280c6ffe70311eb74f938e323cb6dba94e56a2def2016e51395af0baadfaea0e",
+    "blob_key": "reuse-first/20261115/benchmark20/BENCHMARK20_EVIDENCE_PRIVATE.tar.gz",
+    "readback_sha256_verified": true
+  },
+  "quality_certified": false,
+  "new_production_accepted": 0,
+  "limits": "Fixed known-full candidate subset; Kimi comparison is not ground truth; no population accuracy or full-corpus cost extrapolation."
+}

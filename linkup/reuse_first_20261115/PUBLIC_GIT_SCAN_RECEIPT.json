@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-15T15:34:07.748230+00:00",
+  "created_utc": "2026-11-15T15:41:28.282814+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
     {
       "file": "README.md",
-      "bytes": 4367,
-      "sha256": "58bd4d4eb0d0c8dce9fcdd438f37f3f70f44aa1f65ab2a438d95ebbcd8f02d8c"
+      "bytes": 4875,
+      "sha256": "b443bd75dfe091f281a3066d5c70364e9265bc36d2090383ba4e56caed1bda8d"
     },
     {
       "file": "AUTHORIZATION_AND_BOUNDARIES_PUBLIC.json",
@@ -36,8 +36,8 @@
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 4602,
-      "sha256": "79bfd1f6ecfbbab473ff43ed9f0afe0ad73eba880a058af7257d8f23dede519f"
+      "bytes": 4712,
+      "sha256": "49a66aca1ede94603c0f4977d2fb32eca2f49c2c741138b26c7b4f89cf13d7ab"
     },
     {
       "file": "scan_public_git.py",
@@ -166,14 +166,29 @@
     },
     {
       "file": "RUN_LOG_ZH.md",
-      "bytes": 2749,
-      "sha256": "0da0dc9de89f22b2c969a34d5c75207d4a4cb8926100ba9f62bfb11feb03eadc"
+      "bytes": 3737,
+      "sha256": "ff1d6de1ac7461b2aeb044cad5dc7c08955fd6760615294a145000e9ae75acea"
+    },
+    {
+      "file": "FINAL_SUMMARY_PUBLIC.json",
+      "bytes": 3217,
+      "sha256": "dfab506daedf21229ca765560130256c2491279df3b63b3999c1ca0abdf7005e"
+    },
+    {
+      "file": "FAILURE_DIAGNOSTIC_PUBLIC.json",
+      "bytes": 710,
+      "sha256": "a3669629e41b83d809c0bcd31f7d2505938acffad39a29456775efa035200f8f"
+    },
+    {
+      "file": "code/cloud_diagnose_failures.py",
+      "bytes": 2970,
+      "sha256": "83065ad8e31491646d876a0a4a23e717b07c8ae2b4ce485e391e56406bad2380"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 33,
+  "checked_file_count_excluding_this_receipt": 36,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 29,
+  "staged_file_count": 7,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,
@@ -227,54 +242,6 @@
       "line": 133,
       "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
       "review_reason": "Fixed protected-thread marker used only to skip protected reference/body parsing."
-    },
-    {
-      "file": "code/cloud_compare_benchmark.py",
-      "file_sha256": "380c1ba59783ccb41a68d7c452951c237ce090caa5481aac3fe2e435d420516e",
-      "rule": "uuid_identifier",
-      "line": 133,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Fixed protected-thread marker used only to skip protected reference/body parsing."
-    },
-    {
-      "file": "code/cloud_prepare_benchmark.py",
-      "file_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
-      "rule": "uuid_identifier",
-      "line": 23,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Fixed provider-protected thread identifier in deny-only marker list; never a record ID or permission to open its contents."
-    },
-    {
-      "file": "code/cloud_prepare_benchmark.py",
-      "file_sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a",
-      "rule": "machine_private_absolute_path",
-      "line": 251,
-      "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
-      "review_reason": "Already public fixed Azure workspace operating directory; no credentials or per-record locator."
-    },
-    {
-      "file": "code/cloud_prepare_benchmark_executed_v1.py",
-      "file_sha256": "91f3bce462c70f5cbc6982bd831a1042b78a0dc849153d014e73e6a97f7f0371",
-      "rule": "uuid_identifier",
-      "line": 23,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Same fixed deny-only protected-thread literal in byte-identical historical execution source."
-    },
-    {
-      "file": "code/cloud_prepare_benchmark_executed_v1.py",
-      "file_sha256": "91f3bce462c70f5cbc6982bd831a1042b78a0dc849153d014e73e6a97f7f0371",
-      "rule": "machine_private_absolute_path",
-      "line": 250,
-      "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
-      "review_reason": "Already public fixed Azure workspace operating directory in exact execution version."
-    },
-    {
-      "file": "code/test_cloud_prepare_benchmark.py",
-      "file_sha256": "355171b4191d79ee950d90edfd76159cbb62277c9d1cda3f5ef1fbc5d3dc086e",
-      "rule": "machine_private_absolute_path",
-      "line": 14,
-      "literal_sha256": "f3e0cb76a056bf6f33999ce12787ad02e5c9ca4ac12d5975a4a8374321291afb",
-      "review_reason": "Synthetic test uses a fixed public schema file already in this repository; no private inputs or credential file."
     }
   ],
   "credential_or_record_payload_exemptions_permitted": false,
