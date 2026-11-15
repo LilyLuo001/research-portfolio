@@ -39,6 +39,28 @@
     "code/test_cloud_benchmark_worker_synthetic.py",
     "code/test_cloud_compare_benchmark.py",
     "code/test_cloud_prepare_benchmark.py",
+    "integration_20261116/DELIVERY_ZH.md",
+    "integration_20261116/EXECUTION_LOG_ZH.md",
+    "integration_20261116/FIELD_STATUS_COUNTS_PUBLIC.json",
+    "integration_20261116/FINALIZE_CODE_PINS_PUBLIC.json",
+    "integration_20261116/FINAL_EXECUTION_PUBLIC.json",
+    "integration_20261116/INDEX_CONTRACT_TEST_PUBLIC.json",
+    "integration_20261116/INTEGRATION_COMPACT_PUBLIC.json",
+    "integration_20261116/INTEGRATION_FINAL_COMPACT_PUBLIC.json",
+    "integration_20261116/PACKET_RECOVERY_PUBLIC.json",
+    "integration_20261116/PAPER_DRAFT_EN.md",
+    "integration_20261116/PAPER_EVIDENCE_REGISTER_PUBLIC.json",
+    "integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+    "integration_20261116/code/cloud_compact_discovery.py",
+    "integration_20261116/code/cloud_discover.py",
+    "integration_20261116/code/cloud_export_field_counts.py",
+    "integration_20261116/code/cloud_export_macro.py",
+    "integration_20261116/code/cloud_finalize.py",
+    "integration_20261116/code/cloud_get_shapes.py",
+    "integration_20261116/code/cloud_integrate.py",
+    "integration_20261116/code/cloud_recover_packet_metadata.py",
+    "integration_20261116/code/cloud_refine_index.py",
+    "integration_20261116/code/test_index_contract.py",
     "reuse_audit_20261116/BENCHMARK_TIMING_PUBLIC.json",
     "reuse_audit_20261116/COST_TIME_SCOPE_CORRECTION_PUBLIC.json",
     "reuse_audit_20261116/DEPLOYMENT_LIMIT_READONLY_PUBLIC.json",
@@ -106,6 +128,38 @@
       "line": 14,
       "literal_sha256": "f3e0cb76a056bf6f33999ce12787ad02e5c9ca4ac12d5975a4a8374321291afb",
       "review_reason": "Synthetic test uses a fixed public schema file already in this repository; no private inputs or credential file."
+    },
+    {
+      "file": "integration_20261116/code/cloud_discover.py",
+      "file_sha256": "86b294517658c75978536f6278eba64039212a4770110461434af4e2e5a3543b",
+      "rule": "uuid_identifier",
+      "line": 13,
+      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
+      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
+    },
+    {
+      "file": "integration_20261116/code/cloud_integrate.py",
+      "file_sha256": "1a4c29e144a68dd154f1ffc8b703e3ec79d39f2099189ff6a710134660a7c905",
+      "rule": "uuid_identifier",
+      "line": 28,
+      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
+      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
+    },
+    {
+      "file": "integration_20261116/code/cloud_refine_index.py",
+      "file_sha256": "a64b558ccd0dbce8a33e9fdc7f1316eb45106dff34f63ebef5582a46acf2f850",
+      "rule": "uuid_identifier",
+      "line": 12,
+      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
+      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
+    },
+    {
+      "file": "integration_20261116/code/cloud_recover_packet_metadata.py",
+      "file_sha256": "ba098eeb3528fa689969af1d9afb29d32e6b932a3b95d631c6a2fe5fda36300a",
+      "rule": "uuid_identifier",
+      "line": 12,
+      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
+      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
     }
   ],
   "literal_exemption_policy": "Only reviewed .py source fixed deny-marker UUIDs and public operating paths may be exempted by exact file SHA + rule + line + literal SHA. Credential, raw payload and record identifier rules remain non-exemptible."

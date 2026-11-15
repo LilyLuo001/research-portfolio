@@ -1,0 +1,45 @@
+{
+  "revision": 3,
+  "context_state_partition": {
+    "accepted_original_scope": 39308,
+    "not_reconciled": 10012,
+    "quarantined": 56,
+    "saved_unverified": 6506
+  },
+  "packet_status_recovery": [
+    {
+      "receipt_sha256": "6dd3431401b0c6c260df3621801c8876f7f036bf2c51cdc79af6155d89c00c99",
+      "expected_contexts": 720,
+      "status_contexts_recovered_from_original_accepted_packets": 715,
+      "complete": false
+    },
+    {
+      "receipt_sha256": "d0955aa3df41b271d8f4e70647d1e7049ea6c041ce938a98352e855d975e4920",
+      "expected_contexts": 710,
+      "status_contexts_recovered_from_original_accepted_packets": 705,
+      "complete": false
+    }
+  ],
+  "packet_artifacts_verified": 284,
+  "packet_artifact_bytes_read": 6074203,
+  "accepted_Pro_status_contexts_projected_after_recovery": 31690,
+  "reviewed_unknown_or_partial_contexts_overlapping_states": 3383,
+  "database_sha256": "0344e94b9f2b75af74652a2f517c4e5c535d8090e1db62eec84b55afced1523a",
+  "metadata_gaps": [
+    {
+      "kind": "accepted_context_ledger_missing",
+      "receipt_sha256": "6dd3431401b0c6c260df3621801c8876f7f036bf2c51cdc79af6155d89c00c99",
+      "alternative_ad_reference_sha256": "490466e66db84521528e1c08662e7abf5fa4497caf65a806ffc5ee8af10ecb25",
+      "alternative_inventory_status_counts": {},
+      "status_contexts_still_unprojected": 5
+    },
+    {
+      "kind": "accepted_context_ledger_missing",
+      "receipt_sha256": "d0955aa3df41b271d8f4e70647d1e7049ea6c041ce938a98352e855d975e4920",
+      "alternative_ad_reference_sha256": "c068277e018476a29a73c690abfd807130473a01e7f56f58a89eda641b115b80",
+      "alternative_inventory_status_counts": {},
+      "status_contexts_still_unprojected": 5
+    }
+  ],
+  "report_sha256": "2c2a4c6b2f93f032f90fcf8ccac2b8eb43088c76a02dd94b42b18f8445eb7ead"
+}

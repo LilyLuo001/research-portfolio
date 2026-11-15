@@ -1,0 +1,68 @@
+{
+  "created_at_utc": "2026-11-15T16:23:43.074697+00:00",
+  "status": "existing_results_written_and_key_numbers_crosschecked",
+  "draft_sha256": "b8352ccae5c2502e02a1ec971277fd25e530ad19251b394851186b4f39e34748",
+  "sources": {
+    "micro_acceptance": {
+      "location": "repository:linkup/design_correction_20261024/ROOT_ACCEPTANCE_PUBLIC.json",
+      "sha256": "c931af0f27295ae313305b5e93f9862abe016551c97aac3f119b018d5da30461"
+    },
+    "micro_synthesis": {
+      "location": "repository:linkup/research_decision_20261026/RESEARCH_DECISION_ZH.md",
+      "sha256": "9653a4c3a5f1b2c10b3aa58bb1cb6d6a08ca3917e9517c38dcf82bb929eb259f"
+    },
+    "macro_verification": {
+      "location": "external_public:macro_records_20261115/FINAL_VERIFICATION_PUBLIC.json",
+      "sha256": "5460d9f518fb36660590104ef5de9cea67a40451551bb5f0c39ab99c99932bce"
+    },
+    "macro_series": {
+      "location": "external_public:integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+      "sha256": "2ab2854c18c3e44874131ccb23fdfe5e5fe2e3c769fd803e3776a02d02917ede"
+    },
+    "base_release": {
+      "location": "repository:linkup/corpus_release_20261012/results/CORPUS_RELEASE_RECEIPT.json",
+      "sha256": "75e3afd8720ff8b174d0fe3a3b52fb7f8367c45305edecbcef78cc115181c921"
+    },
+    "base_schema": {
+      "location": "repository:linkup/corpus_release_20261012/results/SCHEMA_PUBLIC.json",
+      "sha256": "a779d31376c1774a5b3c6be5963ea37ea1f8d35a016eb0ffe042282cf73fb2e0"
+    }
+  },
+  "claims": [
+    {
+      "id": "macro_volume",
+      "source": "macro_verification",
+      "pointer": "/prepost",
+      "scope": "USA first-observed advertisements; equal-length descriptive windows, not causal"
+    },
+    {
+      "id": "micro_experience",
+      "source": "micro_acceptance",
+      "pointer": "/q1_equal_major_decisions",
+      "scope": "reference-known domains in original technology-screened frame; full-target signs unidentified"
+    },
+    {
+      "id": "entry_duty",
+      "source": "micro_acceptance",
+      "pointer": "/q2_decisions",
+      "scope": "graduate/no-experience eligibility; weighted and occupation-standardized, not national entry share"
+    }
+  ],
+  "mechanical_draft_checks": {
+    "q1_general_work": true,
+    "q1_industry_domain": true,
+    "q1_tool_specific": true,
+    "q1_occupation_task": true,
+    "q2_main": true,
+    "q2_counts": true,
+    "macro_pre": true,
+    "macro_post": true,
+    "created_proxy_disclosed": true,
+    "noncausal_disclosed": true,
+    "no_human_gold_claim": true,
+    "revelio_not_claimed": true
+  },
+  "new_research_estimation": false,
+  "new_model_judgments": 0,
+  "literature_and_causal_design_complete": false
+}
