@@ -1,0 +1,43 @@
+{
+  "at_utc": "2026-11-15T23:46:13.246647+00:00",
+  "before_new_Kimi_or_Astra_inference": true,
+  "no_changed_research_schema_prompt_or_thresholds": true,
+  "patches": [
+    {
+      "component": "cloud_reference_lease",
+      "reason": "original full exclusion registry compresses to 10492 bytes, exceeding ARM stdout cap",
+      "fix": "lossless SHA-pinned queue positions plus original complete exclusion snapshot",
+      "worst_case_test_bytes": 1140,
+      "provider_calls_before_fix": 0
+    },
+    {
+      "component": "Astra_transport",
+      "reason": "reuse project-proven Responses endpoint, rather than an untested Chat API draft",
+      "fix": "tested transport-only envelope adapter; exact visible review text unchanged",
+      "synthetic_tests": 7,
+      "Astra_calls_before_fix": 0
+    },
+    {
+      "component": "Kimi_attempt_accounting",
+      "reason": "reservations and HTTP forwarding are different events",
+      "fix": "report both admission attempts and forwarded physical attempts; preserve conservative reservations; stop on systemic authorization or malformed-request errors"
+    },
+    {
+      "component": "reuse_availability_aggregate",
+      "reason": "empty context-only keys were counted as one ad; multiple source files do not imply multiple review versions",
+      "fix": "exclude blank ad keys and rename source-file multiplicity; original database untouched; initial report retained"
+    }
+  ],
+  "code_sha256": {
+    "cloud_astra_audit_worker.py": "5bcc15414f5ad464a750b0b2a50db1c93cb2c4218728764d96a0631da4d2dcd8",
+    "cloud_reference_lease.py": "cdec6bb5b1a431f581011b28f9596afe2a57da2eabc7e33dbf3c109ad68e2e7a",
+    "kimi_worker.py": "9e4f6c59643a76047a8526dfbc378d32045bdb39651344915d0ca33a5ab6566a",
+    "test_astra_transport.py": "ed6f56139a3886d57dbc00ee57b36ef97813fa35fbac31775e0dead63cd35389",
+    "cloud_verify_held_gaps.py": "eaa3ec2b6530f944b453372de29aebea3a3f5ef4541003dcd2d53af20ad4ef77",
+    "cloud_reuse_availability.py": "8164b2347088eaa51a9a4058ad7dab8ba42a606af83e58ec4d104f776c22a93f",
+    "cloud_reuse_availability_v2.py": "29fd5e9cd2ec09ef316bb557123e7768ae30143fd7afa92a3e169f0ff6f002c5",
+    "publish_public.py": "592145ddab04b34bdc0a364dfaf8673091b928124c0762218c8611da96bb5e93"
+  },
+  "paper_paused": true,
+  "new_production_accepted": 0
+}

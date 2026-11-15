@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-11-15T19:24:52.826583+00:00",
+  "missing_accepted_carrier_probe": [
+    {
+      "checkpoint": "125737131",
+      "packet": "packet_0133",
+      "migration_state": "held",
+      "migration_hold_reason": "credential_content_review",
+      "expected_bytes": 40743,
+      "identity": "existing_VM_system_managed_identity",
+      "operation": "HEAD_exact_expected_Blob_no_content_read",
+      "new_role_requested": false,
+      "http_status": 404,
+      "azure_error_code": "BlobNotFound"
+    },
+    {
+      "checkpoint": "125740198",
+      "packet": "packet_0080",
+      "migration_state": "held",
+      "migration_hold_reason": "credential_content_review",
+      "expected_bytes": 15826,
+      "identity": "existing_VM_system_managed_identity",
+      "operation": "HEAD_exact_expected_Blob_no_content_read",
+      "new_role_requested": false,
+      "http_status": 404,
+      "azure_error_code": "BlobNotFound"
+    }
+  ],
+  "SCNet_connections": 0,
+  "new_model_calls": 0,
+  "held_files_not_bypassed": true
+}

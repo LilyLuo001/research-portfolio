@@ -1,0 +1,929 @@
+{
+  "at_utc": "2026-11-15T19:34:15.192178+00:00",
+  "scope": "known_semantic_ledger_only_not_full_US_population",
+  "aggregation_correction": "empty context-only keys excluded from directly bound ad counts; multiple source files are not called multiple review versions; original data unchanged",
+  "field_masks": [
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "original_status": "candidate_only",
+      "unique_contexts": 12,
+      "unique_directly_bound_ad_keys": 12,
+      "context_only_mask_rows": 0,
+      "mask_rows": 12
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "original_status": "known",
+      "unique_contexts": 6692,
+      "unique_directly_bound_ad_keys": 8718,
+      "context_only_mask_rows": 0,
+      "mask_rows": 8718
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "original_status": "not_applicable",
+      "unique_contexts": 825,
+      "unique_directly_bound_ad_keys": 916,
+      "context_only_mask_rows": 0,
+      "mask_rows": 916
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "original_status": "unknown_or_conflict",
+      "unique_contexts": 88,
+      "unique_directly_bound_ad_keys": 354,
+      "context_only_mask_rows": 0,
+      "mask_rows": 354
+    },
+    {
+      "family": "document_status",
+      "original_status": "reviewed_full",
+      "unique_contexts": 29671,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 29671,
+      "mask_rows": 29671
+    },
+    {
+      "family": "document_status",
+      "original_status": "reviewed_partial",
+      "unique_contexts": 1911,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1911,
+      "mask_rows": 1911
+    },
+    {
+      "family": "document_status",
+      "original_status": "unresolved",
+      "unique_contexts": 108,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 108,
+      "mask_rows": 108
+    },
+    {
+      "family": "entry_outcomes.current_student_internship",
+      "original_status": "not_mentioned",
+      "unique_contexts": 29061,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 29235,
+      "mask_rows": 29235
+    },
+    {
+      "family": "entry_outcomes.current_student_internship",
+      "original_status": "present",
+      "unique_contexts": 620,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 620,
+      "mask_rows": 620
+    },
+    {
+      "family": "entry_outcomes.current_student_internship",
+      "original_status": "unknown",
+      "unique_contexts": 2009,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 2015,
+      "mask_rows": 2015
+    },
+    {
+      "family": "entry_outcomes.explicit_junior_or_entry_label",
+      "original_status": "not_mentioned",
+      "unique_contexts": 28734,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 28905,
+      "mask_rows": 28905
+    },
+    {
+      "family": "entry_outcomes.explicit_junior_or_entry_label",
+      "original_status": "present",
+      "unique_contexts": 956,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 959,
+      "mask_rows": 959
+    },
+    {
+      "family": "entry_outcomes.explicit_junior_or_entry_label",
+      "original_status": "unknown",
+      "unique_contexts": 2000,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 2006,
+      "mask_rows": 2006
+    },
+    {
+      "family": "entry_outcomes.explicit_new_graduate",
+      "original_status": "not_mentioned",
+      "unique_contexts": 29256,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 29430,
+      "mask_rows": 29430
+    },
+    {
+      "family": "entry_outcomes.explicit_new_graduate",
+      "original_status": "present",
+      "unique_contexts": 415,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 415,
+      "mask_rows": 415
+    },
+    {
+      "family": "entry_outcomes.explicit_new_graduate",
+      "original_status": "unknown",
+      "unique_contexts": 2019,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 2025,
+      "mask_rows": 2025
+    },
+    {
+      "family": "entry_outcomes.explicit_no_experience",
+      "original_status": "not_mentioned",
+      "unique_contexts": 28115,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 28280,
+      "mask_rows": 28280
+    },
+    {
+      "family": "entry_outcomes.explicit_no_experience",
+      "original_status": "present",
+      "unique_contexts": 1563,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1572,
+      "mask_rows": 1572
+    },
+    {
+      "family": "entry_outcomes.explicit_no_experience",
+      "original_status": "unknown",
+      "unique_contexts": 2012,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 2018,
+      "mask_rows": 2018
+    },
+    {
+      "family": "entry_wording_and_scope",
+      "original_status": "candidate_only",
+      "unique_contexts": 12,
+      "unique_directly_bound_ad_keys": 12,
+      "context_only_mask_rows": 0,
+      "mask_rows": 12
+    },
+    {
+      "family": "entry_wording_and_scope",
+      "original_status": "known",
+      "unique_contexts": 559,
+      "unique_directly_bound_ad_keys": 587,
+      "context_only_mask_rows": 0,
+      "mask_rows": 587
+    },
+    {
+      "family": "entry_wording_and_scope",
+      "original_status": "not_applicable",
+      "unique_contexts": 7035,
+      "unique_directly_bound_ad_keys": 9387,
+      "context_only_mask_rows": 0,
+      "mask_rows": 9387
+    },
+    {
+      "family": "entry_wording_and_scope",
+      "original_status": "unknown_or_conflict",
+      "unique_contexts": 11,
+      "unique_directly_bound_ad_keys": 14,
+      "context_only_mask_rows": 0,
+      "mask_rows": 14
+    },
+    {
+      "family": "experience_literal_years",
+      "original_status": "candidate_only",
+      "unique_contexts": 12,
+      "unique_directly_bound_ad_keys": 12,
+      "context_only_mask_rows": 0,
+      "mask_rows": 12
+    },
+    {
+      "family": "experience_literal_years",
+      "original_status": "known",
+      "unique_contexts": 7252,
+      "unique_directly_bound_ad_keys": 9241,
+      "context_only_mask_rows": 0,
+      "mask_rows": 9241
+    },
+    {
+      "family": "experience_literal_years",
+      "original_status": "not_applicable",
+      "unique_contexts": 118,
+      "unique_directly_bound_ad_keys": 124,
+      "context_only_mask_rows": 0,
+      "mask_rows": 124
+    },
+    {
+      "family": "experience_literal_years",
+      "original_status": "unknown_or_conflict",
+      "unique_contexts": 235,
+      "unique_directly_bound_ad_keys": 623,
+      "context_only_mask_rows": 0,
+      "mask_rows": 623
+    },
+    {
+      "family": "experience_object",
+      "original_status": "candidate_only",
+      "unique_contexts": 12,
+      "unique_directly_bound_ad_keys": 12,
+      "context_only_mask_rows": 0,
+      "mask_rows": 12
+    },
+    {
+      "family": "experience_object",
+      "original_status": "known",
+      "unique_contexts": 7369,
+      "unique_directly_bound_ad_keys": 9418,
+      "context_only_mask_rows": 0,
+      "mask_rows": 9418
+    },
+    {
+      "family": "experience_object",
+      "original_status": "not_applicable",
+      "unique_contexts": 117,
+      "unique_directly_bound_ad_keys": 123,
+      "context_only_mask_rows": 0,
+      "mask_rows": 123
+    },
+    {
+      "family": "experience_object",
+      "original_status": "unknown_or_conflict",
+      "unique_contexts": 119,
+      "unique_directly_bound_ad_keys": 447,
+      "context_only_mask_rows": 0,
+      "mask_rows": 447
+    },
+    {
+      "family": "experience_outcomes.general_work",
+      "original_status": "not_mentioned",
+      "unique_contexts": 26769,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 26925,
+      "mask_rows": 26925
+    },
+    {
+      "family": "experience_outcomes.general_work",
+      "original_status": "present",
+      "unique_contexts": 2824,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 2841,
+      "mask_rows": 2841
+    },
+    {
+      "family": "experience_outcomes.general_work",
+      "original_status": "unknown",
+      "unique_contexts": 2097,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 2104,
+      "mask_rows": 2104
+    },
+    {
+      "family": "experience_outcomes.industry_domain",
+      "original_status": "not_mentioned",
+      "unique_contexts": 18916,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 19025,
+      "mask_rows": 19025
+    },
+    {
+      "family": "experience_outcomes.industry_domain",
+      "original_status": "present",
+      "unique_contexts": 10852,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 10916,
+      "mask_rows": 10916
+    },
+    {
+      "family": "experience_outcomes.industry_domain",
+      "original_status": "unknown",
+      "unique_contexts": 1922,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1929,
+      "mask_rows": 1929
+    },
+    {
+      "family": "experience_outcomes.occupation_task",
+      "original_status": "not_mentioned",
+      "unique_contexts": 10783,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 10859,
+      "mask_rows": 10859
+    },
+    {
+      "family": "experience_outcomes.occupation_task",
+      "original_status": "present",
+      "unique_contexts": 19123,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 19221,
+      "mask_rows": 19221
+    },
+    {
+      "family": "experience_outcomes.occupation_task",
+      "original_status": "unknown",
+      "unique_contexts": 1784,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1790,
+      "mask_rows": 1790
+    },
+    {
+      "family": "experience_outcomes.tool_specific",
+      "original_status": "not_mentioned",
+      "unique_contexts": 25384,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 25531,
+      "mask_rows": 25531
+    },
+    {
+      "family": "experience_outcomes.tool_specific",
+      "original_status": "present",
+      "unique_contexts": 4270,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 4296,
+      "mask_rows": 4296
+    },
+    {
+      "family": "experience_outcomes.tool_specific",
+      "original_status": "unknown",
+      "unique_contexts": 2036,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 2043,
+      "mask_rows": 2043
+    },
+    {
+      "family": "experience_strength",
+      "original_status": "candidate_only",
+      "unique_contexts": 12,
+      "unique_directly_bound_ad_keys": 12,
+      "context_only_mask_rows": 0,
+      "mask_rows": 12
+    },
+    {
+      "family": "experience_strength",
+      "original_status": "known",
+      "unique_contexts": 7316,
+      "unique_directly_bound_ad_keys": 9343,
+      "context_only_mask_rows": 0,
+      "mask_rows": 9343
+    },
+    {
+      "family": "experience_strength",
+      "original_status": "not_applicable",
+      "unique_contexts": 117,
+      "unique_directly_bound_ad_keys": 123,
+      "context_only_mask_rows": 0,
+      "mask_rows": 123
+    },
+    {
+      "family": "experience_strength",
+      "original_status": "unknown_or_conflict",
+      "unique_contexts": 172,
+      "unique_directly_bound_ad_keys": 522,
+      "context_only_mask_rows": 0,
+      "mask_rows": 522
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "original_status": "candidate_only",
+      "unique_contexts": 12,
+      "unique_directly_bound_ad_keys": 12,
+      "context_only_mask_rows": 0,
+      "mask_rows": 12
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "original_status": "known",
+      "unique_contexts": 7288,
+      "unique_directly_bound_ad_keys": 9308,
+      "context_only_mask_rows": 0,
+      "mask_rows": 9308
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "original_status": "not_applicable",
+      "unique_contexts": 117,
+      "unique_directly_bound_ad_keys": 123,
+      "context_only_mask_rows": 0,
+      "mask_rows": 123
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "original_status": "unknown_or_conflict",
+      "unique_contexts": 200,
+      "unique_directly_bound_ad_keys": 557,
+      "context_only_mask_rows": 0,
+      "mask_rows": 557
+    },
+    {
+      "family": "responsibility_outcomes.client_ownership",
+      "original_status": "not_mentioned",
+      "unique_contexts": 24365,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 24517,
+      "mask_rows": 24517
+    },
+    {
+      "family": "responsibility_outcomes.client_ownership",
+      "original_status": "present",
+      "unique_contexts": 5443,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 5465,
+      "mask_rows": 5465
+    },
+    {
+      "family": "responsibility_outcomes.client_ownership",
+      "original_status": "unknown",
+      "unique_contexts": 1882,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1888,
+      "mask_rows": 1888
+    },
+    {
+      "family": "responsibility_outcomes.independent_judgment",
+      "original_status": "not_mentioned",
+      "unique_contexts": 16430,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 16514,
+      "mask_rows": 16514
+    },
+    {
+      "family": "responsibility_outcomes.independent_judgment",
+      "original_status": "present",
+      "unique_contexts": 13540,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 13630,
+      "mask_rows": 13630
+    },
+    {
+      "family": "responsibility_outcomes.independent_judgment",
+      "original_status": "unknown",
+      "unique_contexts": 1720,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1726,
+      "mask_rows": 1726
+    },
+    {
+      "family": "responsibility_outcomes.people_supervision",
+      "original_status": "not_mentioned",
+      "unique_contexts": 23082,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 23217,
+      "mask_rows": 23217
+    },
+    {
+      "family": "responsibility_outcomes.people_supervision",
+      "original_status": "present",
+      "unique_contexts": 6737,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 6777,
+      "mask_rows": 6777
+    },
+    {
+      "family": "responsibility_outcomes.people_supervision",
+      "original_status": "unknown",
+      "unique_contexts": 1871,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1876,
+      "mask_rows": 1876
+    },
+    {
+      "family": "responsibility_outcomes.training_mentoring",
+      "original_status": "not_mentioned",
+      "unique_contexts": 20921,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 21044,
+      "mask_rows": 21044
+    },
+    {
+      "family": "responsibility_outcomes.training_mentoring",
+      "original_status": "present",
+      "unique_contexts": 8927,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 8978,
+      "mask_rows": 8978
+    },
+    {
+      "family": "responsibility_outcomes.training_mentoring",
+      "original_status": "unknown",
+      "unique_contexts": 1842,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1848,
+      "mask_rows": 1848
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "candidate_only",
+      "unique_contexts": 12,
+      "unique_directly_bound_ad_keys": 12,
+      "context_only_mask_rows": 0,
+      "mask_rows": 12
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "known",
+      "unique_contexts": 6800,
+      "unique_directly_bound_ad_keys": 8482,
+      "context_only_mask_rows": 0,
+      "mask_rows": 8482
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "not_applicable",
+      "unique_contexts": 29,
+      "unique_directly_bound_ad_keys": 32,
+      "context_only_mask_rows": 0,
+      "mask_rows": 32
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "partial",
+      "unique_contexts": 2,
+      "unique_directly_bound_ad_keys": 4,
+      "context_only_mask_rows": 0,
+      "mask_rows": 4
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "unknown_or_conflict",
+      "unique_contexts": 774,
+      "unique_directly_bound_ad_keys": 1470,
+      "context_only_mask_rows": 0,
+      "mask_rows": 1470
+    },
+    {
+      "family": "technology_inventory_status",
+      "original_status": "explicit_mentions_recorded",
+      "unique_contexts": 14503,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 14503,
+      "mask_rows": 14503
+    },
+    {
+      "family": "technology_inventory_status",
+      "original_status": "not_mentioned_after_full_review",
+      "unique_contexts": 15509,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 15509,
+      "mask_rows": 15509
+    },
+    {
+      "family": "technology_inventory_status",
+      "original_status": "unknown",
+      "unique_contexts": 1678,
+      "unique_directly_bound_ad_keys": 0,
+      "context_only_mask_rows": 1678,
+      "mask_rows": 1678
+    }
+  ],
+  "attached_value_versions": [
+    {
+      "asset": "Astra_original_accepted",
+      "original_accepted": true,
+      "documents": 5,
+      "unique_contexts": 5
+    },
+    {
+      "asset": "Kimi_initial_saved_unverified",
+      "original_accepted": false,
+      "documents": 5,
+      "unique_contexts": 5
+    },
+    {
+      "asset": "Kimi_saved_failed_frozen_validation",
+      "original_accepted": false,
+      "documents": 83,
+      "unique_contexts": 83
+    },
+    {
+      "asset": "Kimi_saved_unverified",
+      "original_accepted": false,
+      "documents": 1137,
+      "unique_contexts": 1137
+    },
+    {
+      "asset": "Pro",
+      "original_accepted": true,
+      "documents": 31690,
+      "unique_contexts": 31690
+    },
+    {
+      "asset": "Pro_PRIMARY_saved_unverified",
+      "original_accepted": false,
+      "documents": 5392,
+      "unique_contexts": 5275
+    },
+    {
+      "asset": "Pro_merged",
+      "original_accepted": true,
+      "documents": 180,
+      "unique_contexts": 180
+    },
+    {
+      "asset": "fixed10k",
+      "original_accepted": true,
+      "documents": 69888,
+      "unique_contexts": 7603
+    }
+  ],
+  "stored_value_families": [
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "original_status": "known",
+      "rows": 8718
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "original_status": "not_applicable",
+      "rows": 916
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "original_status": "unknown_or_conflict",
+      "rows": 350
+    },
+    {
+      "family": "document_status",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "document_status",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "document_status",
+      "original_status": "reviewed_full",
+      "rows": 30974
+    },
+    {
+      "family": "document_status",
+      "original_status": "reviewed_partial",
+      "rows": 1924
+    },
+    {
+      "family": "document_status",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    },
+    {
+      "family": "document_status",
+      "original_status": "unresolved",
+      "rows": 109
+    },
+    {
+      "family": "entry",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "entry",
+      "original_status": "original_outcome_mask",
+      "rows": 33007
+    },
+    {
+      "family": "entry",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "entry",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    },
+    {
+      "family": "entry_wording_and_scope",
+      "original_status": "known",
+      "rows": 587
+    },
+    {
+      "family": "entry_wording_and_scope",
+      "original_status": "not_applicable",
+      "rows": 9387
+    },
+    {
+      "family": "entry_wording_and_scope",
+      "original_status": "unknown_or_conflict",
+      "rows": 10
+    },
+    {
+      "family": "evidence_resolution",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "evidence_resolution",
+      "original_status": "original_document_scope",
+      "rows": 33007
+    },
+    {
+      "family": "evidence_resolution",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "evidence_resolution",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    },
+    {
+      "family": "experience",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "experience",
+      "original_status": "original_outcome_mask",
+      "rows": 33007
+    },
+    {
+      "family": "experience",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "experience",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    },
+    {
+      "family": "experience_literal_years",
+      "original_status": "known",
+      "rows": 9241
+    },
+    {
+      "family": "experience_literal_years",
+      "original_status": "not_applicable",
+      "rows": 124
+    },
+    {
+      "family": "experience_literal_years",
+      "original_status": "unknown_or_conflict",
+      "rows": 619
+    },
+    {
+      "family": "experience_object",
+      "original_status": "known",
+      "rows": 9418
+    },
+    {
+      "family": "experience_object",
+      "original_status": "not_applicable",
+      "rows": 123
+    },
+    {
+      "family": "experience_object",
+      "original_status": "unknown_or_conflict",
+      "rows": 443
+    },
+    {
+      "family": "experience_strength",
+      "original_status": "known",
+      "rows": 9343
+    },
+    {
+      "family": "experience_strength",
+      "original_status": "not_applicable",
+      "rows": 123
+    },
+    {
+      "family": "experience_strength",
+      "original_status": "unknown_or_conflict",
+      "rows": 518
+    },
+    {
+      "family": "qualification_alternatives",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "qualification_alternatives",
+      "original_status": "original_document_scope",
+      "rows": 33007
+    },
+    {
+      "family": "qualification_alternatives",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "qualification_alternatives",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "original_status": "known",
+      "rows": 9308
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "original_status": "not_applicable",
+      "rows": 123
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "original_status": "unknown_or_conflict",
+      "rows": 553
+    },
+    {
+      "family": "responsibility",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "responsibility",
+      "original_status": "original_outcome_mask",
+      "rows": 33007
+    },
+    {
+      "family": "responsibility",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "responsibility",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    },
+    {
+      "family": "technology",
+      "original_status": "explicit_mentions_recorded",
+      "rows": 15346
+    },
+    {
+      "family": "technology",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "technology",
+      "original_status": "not_mentioned_after_full_review",
+      "rows": 15975
+    },
+    {
+      "family": "technology",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "technology",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    },
+    {
+      "family": "technology",
+      "original_status": "unknown",
+      "rows": 1686
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "known",
+      "rows": 8482
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "not_applicable",
+      "rows": 32
+    },
+    {
+      "family": "technology_category_and_role",
+      "original_status": "unknown_or_conflict",
+      "rows": 1470
+    },
+    {
+      "family": "unresolved_notes",
+      "original_status": "failed_frozen_validation_not_usable",
+      "rows": 83
+    },
+    {
+      "family": "unresolved_notes",
+      "original_status": "original_scope",
+      "rows": 5
+    },
+    {
+      "family": "unresolved_notes",
+      "original_status": "retained_unknowns",
+      "rows": 33007
+    },
+    {
+      "family": "unresolved_notes",
+      "original_status": "saved_unverified",
+      "rows": 5397
+    }
+  ],
+  "known_ad_keys": 62414,
+  "created_join_states": {
+    "matched_consistent": 62414
+  },
+  "original_accepted_ad_keys_with_values": 45592,
+  "missing_value_carriers_by_issue": {
+    "attached_original_failed_validation": 83,
+    "no_value_carrier_attached_yet": 10028,
+    "primary_binding_mismatch": 8
+  },
+  "contexts_with_multiple_original_accepted_source_files_not_version_count": 180,
+  "new_inference_calls": 0,
+  "newly_accepted_records": 0,
+  "rules_or_outputs_modified": false,
+  "paper_analysis_started": false,
+  "input_database_sha256": "fdcdfc86270c0391fef512dcdd641438606ec9ad2f00b0554c8bc9b1353f49a5",
+  "elapsed_seconds": 5.667
+}

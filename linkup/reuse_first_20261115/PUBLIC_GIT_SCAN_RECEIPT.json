@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-15T19:25:49.180890+00:00",
+  "created_utc": "2026-11-15T23:46:59.476609+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -86,13 +86,13 @@
     },
     {
       "file": "PUBLIC_COPY_MANIFEST.json",
-      "bytes": 93641,
-      "sha256": "33884d0b711418add4dda720470463584009c182f4083e64342bdb60b6de1d71"
+      "bytes": 102053,
+      "sha256": "ff0d310bc878ac9beb7dec5c7994b9b0d340f583bafe44b1f8d9d5e33ef0c0fe"
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 17004,
-      "sha256": "ca1d457686908a15baeddbd6669cbff60fcfc08b1ffdf81a730fe0cdde186efc"
+      "bytes": 18122,
+      "sha256": "8c1e2c72048b78c0d7c9843cef437d5c0c1c60c15378214f1ac451671a07cce9"
     },
     {
       "file": "README.md",
@@ -760,6 +760,76 @@
       "sha256": "812f59618d806e90ab070310724f187618adf04b507c14eafe1308a614eb64c6"
     },
     {
+      "file": "execution_20261116/continuation02/runtime/ASTRA_TRANSPORT_TEST_PUBLIC.json",
+      "bytes": 378,
+      "sha256": "ce3afcca1e514b5e7c090af3cf7d84cf4624d7d84bb93d220110dde94cc7527f"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/ENGINEERING_PATCHES_PUBLIC.json",
+      "bytes": 2306,
+      "sha256": "e13fd6da738f4b61f1352013b994185bfc03fa4d52e02501f4b0f33b3a03f3ff"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/HELD_GAP_VERIFICATION_PUBLIC.json",
+      "bytes": 1024,
+      "sha256": "7544d7322aca7721a0f60bf29f388aaa52b3e2f6e21691bedaa018fe2922bd1b"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/LEASE_TRANSPORT_TEST_PUBLIC.json",
+      "bytes": 223,
+      "sha256": "fc5ae244cdcd3f2fbddcce5f08950bec9c3b63dcc71e43522ff0f9b770e1ea4b"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/PREFLIGHT_GIT_SYNC_PUBLIC.json",
+      "bytes": 235,
+      "sha256": "6a325a58399b90ed400381818835c02e941bef934e195172e88c4841b8b26b7d"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/REUSE_AVAILABILITY_V2_PUBLIC.json",
+      "bytes": 25869,
+      "sha256": "af4bcf6ca4dd25a97ebf2eebc9a4d2246da9f0049d602dd8228311c5aeed7e81"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/cloud_astra_audit_worker.py",
+      "bytes": 17127,
+      "sha256": "5bcc15414f5ad464a750b0b2a50db1c93cb2c4218728764d96a0631da4d2dcd8"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/cloud_reference_lease.py",
+      "bytes": 3763,
+      "sha256": "cdec6bb5b1a431f581011b28f9596afe2a57da2eabc7e33dbf3c109ad68e2e7a"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/cloud_reuse_availability.py",
+      "bytes": 2373,
+      "sha256": "8164b2347088eaa51a9a4058ad7dab8ba42a606af83e58ec4d104f776c22a93f"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/cloud_reuse_availability_v2.py",
+      "bytes": 2650,
+      "sha256": "29fd5e9cd2ec09ef316bb557123e7768ae30143fd7afa92a3e169f0ff6f002c5"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/cloud_verify_held_gaps.py",
+      "bytes": 1976,
+      "sha256": "eaa3ec2b6530f944b453372de29aebea3a3f5ef4541003dcd2d53af20ad4ef77"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/kimi_worker.py",
+      "bytes": 11557,
+      "sha256": "9e4f6c59643a76047a8526dfbc378d32045bdb39651344915d0ca33a5ab6566a"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/publish_public.py",
+      "bytes": 2311,
+      "sha256": "592145ddab04b34bdc0a364dfaf8673091b928124c0762218c8611da96bb5e93"
+    },
+    {
+      "file": "execution_20261116/continuation02/runtime/code/test_astra_transport.py",
+      "bytes": 1694,
+      "sha256": "ed6f56139a3886d57dbc00ee57b36ef97813fa35fbac31775e0dead63cd35389"
+    },
+    {
       "file": "integration_20261116/DELIVERY_ZH.md",
       "bytes": 5038,
       "sha256": "c6d7a13b436e58e6ad381b1c4336913a4bce0f4749360f29a90c783b6c2b0f78"
@@ -925,10 +995,10 @@
       "sha256": "6479a4b70deb1891c111f5d297fbc14d3b4d792ee34ffc2963611daffbea3df3"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 184,
+  "checked_file_count_excluding_this_receipt": 198,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 23,
+  "staged_file_count": 17,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,
