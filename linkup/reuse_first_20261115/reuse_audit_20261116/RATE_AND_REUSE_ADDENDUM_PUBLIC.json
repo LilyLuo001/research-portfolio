@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "created_at_utc": "2026-11-15T15:57:31.412040+00:00",
+  "status": "rate_assumption_and_reuse_guard_addendum_no_production_started",
+  "user_reported_shared_project_ceiling_tpm": 1000000,
+  "planning_shared_target_tpm": [
+    800000,
+    900000
+  ],
+  "limits_read_back_at_utc": "2026-11-15T15:56:05.416907+00:00",
+  "observed_deployments": {
+    "gpt-6-astra": {
+      "tpm": 1000000,
+      "rpm": 1000,
+      "deployment": "linkup-gpt-6-astra"
+    },
+    "Kimi-K3.1-Pro": {
+      "tpm": 300000,
+      "rpm": 300,
+      "deployment": "linkup-kimi-k3-1-pro"
+    },
+    "gpt-6-luna": {
+      "tpm": 100000,
+      "rpm": 100,
+      "deployment": "linkup-gpt-6-luna-benchmark"
+    }
+  },
+  "deployment_limit_source_sha256": "ade8083f09e499b618e53c0e38d1691f1e3c0fed953c6d7a029029926e4466e9",
+  "rules": [
+    "Project-level shared ceiling is not a per-thread allowance. All participating workers, retries and review calls must share the meter.",
+    "Each model route also obeys its own deployment and response-header limits and RPM/short-window restrictions; a higher project ceiling does not raise a lower model limit.",
+    "Use min(user ceiling, configured route allocation, currently observed provider limit), with shared headroom and backoff. No quota-bypass or automatic model substitution.",
+    "Never combine Luna prices with Astra capacity in an attainable-runtime quote. 1M Luna scenarios are conditional until that deployment actually permits it.",
+    "Admission accounting must use the provider estimated-token policy and requested maximum output, not only final billed tokens. Add per-stage timing before a later throughput test.",
+    "No new inference is admitted on the assumption that missing local status means unprocessed. Reconcile existing metadata and exact compatible input/field provenance first.",
+    "Reuse the completed narrow base, old field-reuse map and keyed additive overlays; do not invent a replacement cleaning framework.",
+    "Accepted fields are frozen. Saved_unverified is audited rather than blindly rerun. Reviewed_unknown is preserved, not a negative or automatically queued work. Protected tasks remain deny-only and never rerouted.",
+    "Unknown whole-delivery denominator and global accepted-key union remain unresolved; do not subtract mismatched source rows, contexts, candidates or overlapping samples."
+  ],
+  "confirmed_completed_assets": {
+    "canonical_US_base_shards": 2464,
+    "canonical_US_base_ads": 204774035,
+    "new_field_additive_wave_shards": 69,
+    "new_field_additive_wave_ads": 5804936,
+    "macro_months": 129,
+    "macro_years": 11
+  },
+  "complete_requested_delivery_rows_estimate": 500000000,
+  "remaining_eligible_unique_new_contexts": null,
+  "full_delivery_model_cost_quote": null,
+  "full_delivery_finish_date_quote": null,
+  "new_model_calls_this_audit": 0,
+  "new_production_accepted_this_audit": 0,
+  "model_or_quota_configuration_changed": false,
+  "old_primary_schema_results_ledgers_modified": false,
+  "human_review_required": false,
+  "actual_production_rate_limiter_changed": false,
+  "benchmark_not_restarted": true,
+  "next_required_step": "Finish record/field-level union using migrated manifests and accepted ledgers, consume existing exact-context references; only verified missing eligible semantic fields may enter a later bounded production decision."
+}

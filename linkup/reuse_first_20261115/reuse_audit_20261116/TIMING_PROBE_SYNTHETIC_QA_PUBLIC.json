@@ -1,0 +1,16 @@
+{
+  "status": "synthetic_control_plane_tests_pass",
+  "tests_passed": 8,
+  "checks": {
+    "usage": true,
+    "reservation": true,
+    "rate_header": true,
+    "window": true,
+    "reject_nonterminal": true,
+    "reject_bad_scope": true,
+    "reject_bad_usage": true,
+    "reject_missing_attempt": true
+  },
+  "actual_data_or_model_calls": 0,
+  "note": "Synthetic timing-ledger tests only; not model quality or measured throughput."
+}

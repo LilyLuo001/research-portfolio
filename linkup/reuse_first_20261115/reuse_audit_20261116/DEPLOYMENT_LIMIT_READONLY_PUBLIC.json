@@ -1,0 +1,85 @@
+{
+  "observed_at_utc": "2026-11-15T15:56:05.416907+00:00",
+  "status": "read_only_management_plane_success",
+  "user_reported_planning_ceiling_tpm": 1000000,
+  "model_calls": 0,
+  "configuration_changes": 0,
+  "deployments": [
+    {
+      "name": "linkup-gpt-6-astra",
+      "model": {
+        "format": "OpenAI",
+        "name": "gpt-6-astra",
+        "version": "2026-09-03"
+      },
+      "sku": {
+        "name": "GlobalStandard",
+        "capacity": 1000
+      },
+      "rate_limits": [
+        {
+          "key": "request",
+          "renewalPeriod": 60,
+          "count": 1000
+        },
+        {
+          "key": "token",
+          "renewalPeriod": 60,
+          "count": 1000000
+        }
+      ],
+      "state": "Succeeded"
+    },
+    {
+      "name": "linkup-kimi-k3-1-pro",
+      "model": {
+        "format": "MoonshotAI",
+        "name": "Kimi-K3.1-Pro",
+        "version": "2026-11-04"
+      },
+      "sku": {
+        "name": "GlobalStandard",
+        "capacity": 300
+      },
+      "rate_limits": [
+        {
+          "key": "request",
+          "renewalPeriod": 60,
+          "count": 300
+        },
+        {
+          "key": "token",
+          "renewalPeriod": 60,
+          "count": 300000
+        }
+      ],
+      "state": "Succeeded"
+    },
+    {
+      "name": "linkup-gpt-6-luna-benchmark",
+      "model": {
+        "format": "OpenAI",
+        "name": "gpt-6-luna",
+        "version": "2026-09-22"
+      },
+      "sku": {
+        "name": "GlobalStandard",
+        "capacity": 100
+      },
+      "rate_limits": [
+        {
+          "key": "request",
+          "renewalPeriod": 60,
+          "count": 100
+        },
+        {
+          "key": "token",
+          "renewalPeriod": 60,
+          "count": 100000
+        }
+      ],
+      "state": "Succeeded"
+    }
+  ],
+  "listing_complete": true
+}

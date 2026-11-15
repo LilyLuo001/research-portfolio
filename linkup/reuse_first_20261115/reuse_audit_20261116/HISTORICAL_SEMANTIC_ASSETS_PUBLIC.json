@@ -1,0 +1,971 @@
+{
+  "schema_version": "linkup-historical-semantic-assets-readonly-v1",
+  "created_at_utc": "2026-11-15T15:58:15.399782+00:00",
+  "status": "historical_public_metadata_and_code_audited_not_global_record_union",
+  "scope": {
+    "purpose_zh": "避免把已经接受的参考、已审未知、待验候选、重叠复核和全量未处理混在一起；先复用现有成果，不再自动扩模型调用。",
+    "evidence_boundary_zh": "本报告读取本地已有公开回执、聚合状态和代码，并验证公开文件 SHA；没有重新连接云端，也未读取私有逐条正文、模型输出或保护内容。云端路径为既有回执给出的定位入口，不代表本次已重新读取。",
+    "global_unique_accepted_contexts": null,
+    "global_unique_accepted_ads": null,
+    "global_remaining_semantic_contexts": null,
+    "global_completion_percent": null,
+    "global_record_and_field_union_complete": false,
+    "full_corpus_goal_reduced_to_fixed10k": false,
+    "new_model_calls": 0,
+    "cloud_operations": 0,
+    "raw_source_bodies_read": 0,
+    "private_record_ledgers_opened": 0,
+    "protected_content_accessed": false,
+    "existing_labels_modified": false,
+    "git_stage_or_commit_performed": false,
+    "supersession_zh": "历史回执中的 pending_real_human_audit 是当时状态，不构成现在新增真人审核要求。用户已否定真人审核；但这不自动将候选升级为已验收，也不把模型一致性冒充真实准确率。"
+  },
+  "bottom_line_zh": [
+    "既有工作远不止一次小样本试跑：固定10k已有七类字段账本，Formal800的最终判断已复用，补充关系判定已完成，Pro连续读取也有数万上下文的接受回执。",
+    "不能重新跑旧队列或把训练/部署失败说成旧参考没做。当前优先缺口是把这些资产按完整输入、字段版本与原验收掩码汇入Azure唯一总账。",
+    "不能相加800、719、1981、6486、1659、31700、1137、20凑进度：单位不同，而且有明确重叠。",
+    "当前Kimi1137是已保存通过冻结工程校验的候选，不是新增1137条已认证正确的参考；Luna20完全重审既有Kimi记录，没有新增覆盖。"
+  ],
+  "state_contract": {
+    "execution_axis": [
+      "accepted",
+      "saved_unverified",
+      "unprocessed",
+      "quarantined",
+      "not_reconciled"
+    ],
+    "field_axis": [
+      "known_per_original_receipt",
+      "not_applicable_per_original_receipt",
+      "reviewed_unknown",
+      "partial",
+      "candidate_only",
+      "not_reconciled"
+    ],
+    "axes_are_independent": true,
+    "accepted_meaning_zh": "有明确历史验收回执且与原输入/schema/字段掩码绑定；保留当时参考资格，不宣称真人金标准或人口总体准确率。accepted可以同时含reviewed_unknown。",
+    "reviewed_unknown_meaning_zh": "已经读过但未解决/冲突的字段状态；不是unprocessed，不转为负例，不自动进入新提取队列。",
+    "saved_unverified_meaning_zh": "结果已保存或冻结工程校验通过，但尚无对应研究用途的接受裁决；复用已有结果与元数据，不能重复付费生成同一初判。",
+    "quarantine_precedence": "deny any source-body/model access and inference before all reuse/claim logic; union all protection registers and aliases",
+    "unmatched_metadata_meaning": "not_reconciled, never automatically unprocessed",
+    "partial_read_nonmention_policy": "partial positive evidence may retain its original qualified scope; absence/nonmention cannot be inferred from an incomplete read"
+  },
+  "frozen_contracts": {
+    "full_review_schema_sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+    "full_review_instructions_sha256": "f13e1c431b4018fb7d1e2f1dc985dece69f092a8713c7ef673497a0fbd728d26",
+    "public_schema_copies_byte_identical": [
+      "formal_schema",
+      "pro_schema"
+    ],
+    "public_instruction_copies_byte_identical": [
+      "formal_instructions",
+      "pro_instructions"
+    ],
+    "same_pins_recorded_in": [
+      "formal_final_validation",
+      "kimi_final_cloud",
+      "luna_preparation",
+      "machine196_preparation"
+    ],
+    "frozen_complete_input_normalizer_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "formal_rule_version": "rulefirst-20261008-v1.2",
+    "formal_rule_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+    "fixed10k_latest_finalizer_version": "fixed10k-semantic-production-batch069-v1",
+    "fixed10k_latest_finalizer_sha256": "da82c8789e4d36619391f6ac8a999918244ca9ab777a8fe5bd9dd1ec5fb69f08",
+    "coverage_field_families": [
+      "current_responsibility_subject_and_relation",
+      "entry_wording_and_scope",
+      "experience_literal_years",
+      "experience_object",
+      "experience_strength",
+      "qualification_conditions_and_alternatives",
+      "technology_category_and_role"
+    ],
+    "raw_vs_normalized_context_zh": "exact_text_sha256为原始缓存全文，context_sha256为冻结标准化的完整输入；必须保留各自命名和normalizer版本，不能把局部窗口SHA当全文等价。",
+    "same_schema_not_same_quality_zh": "schema完全相同只说明输出合同一致，不证明不同模型或批次同样准确，也不自动解决unknown/conflict。"
+  },
+  "assets": [
+    {
+      "asset_id": "Formal800_final_reference",
+      "status": "accepted_original_bounded_reference_with_final_masks",
+      "units": {
+        "sample_ads": 800,
+        "unique_complete_review_contexts": 719,
+        "blind_audit_ads": 160,
+        "blind_audit_unique_contexts": 153,
+        "bounded_root_reread_contexts": 40
+      },
+      "denominator": {
+        "fixed_frame_ads": 10000,
+        "eligible_ads_after_previous_exposure_exclusion": 9282,
+        "previously_exposed_excluded_ads": 718,
+        "previously_exposed_excluded_unique_contexts": 505
+      },
+      "final_context_provenance_partition": {
+        "unaudited_primary": 566,
+        "audited_agreement": 5,
+        "masked_disagreement": 108,
+        "root_final": 40
+      },
+      "overlap_zh": "153盲审及40裁决均是719上下文的复核，不增加覆盖。719最终判断经原10k全输入精确绑定映射到1981广告：800直接+1160原文相同+21标准化完整输入相同。1981是复用映射，不是新阅读。",
+      "reusable_zh": "复用最终裁决/掩码后的719参考及其精确匹配传播；不要拿未裁决PRIMARY覆盖final，已完成字段不重判，masked/unknown继续保留。",
+      "acceptance_limits_zh": "工程身份/schema/证据/跨字段校验通过；原800有限参考已发布，但不等于全库准确率。144/153复合分歧不是人口错误率。",
+      "machine_artifacts": {
+        "final_validated_artifact_sha256": "2939a5846cb6d40f42af94465e764fedcad51b86fc3d387d04d142c51ff63860",
+        "final_authoring_artifact_name": "FINAL_REVIEW_RAW_PRIVATE.jsonl",
+        "final_authoring_artifact_sha256": "f8cef046ec6eeef489620ee5a99b78b3c05297bfe2adbb14c64fa01bcb62c833",
+        "frozen_packet_sha256": "c012761f8ae9e5b3d5974744d5ff9caf42531b84253e46ee2ab21a73ffd64d5c",
+        "preferred_consumption": "latest Batch069 FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl for fixed10k reuse, with original source acceptance and masks retained"
+      },
+      "sources": [
+        "formal_freeze",
+        "formal_final_validation",
+        "formal_execution_final",
+        "coverage_root",
+        "coverage_aggregates"
+      ]
+    },
+    {
+      "asset_id": "fixed10k_Batch069_final_reference",
+      "status": "processable_reference_queue_closed_with_protected_unfinished_and_reviewed_unknown_preserved",
+      "as_of_utc": "2026-10-23T15:22:45.072871+00:00",
+      "denominator": {
+        "ads": 10000,
+        "distinct_raw_texts": 7635,
+        "distinct_frozen_normalized_full_inputs": 7617,
+        "ad_field_rows": 70000,
+        "field_families": 7
+      },
+      "continuation_since_batch004": {
+        "original_context_queue": 6500,
+        "contexts_backfilled": 6486,
+        "isolated_unfinished_contexts": 14,
+        "processable_remaining_contexts": 0,
+        "required_context_family_cells_updated": 45339,
+        "prior_family_cells_reused": 63,
+        "cumulative_reviewed_uncertainty_contexts": 1002
+      },
+      "latest_batch_only": {
+        "batch": 69,
+        "contexts": 99,
+        "ads": 105,
+        "updated_context_family_cells": 691,
+        "updated_ad_field_rows": 733,
+        "previous_family_cells_reused": 2
+      },
+      "resumed_session_subset_not_additive": {
+        "new_readings": 2460,
+        "saved_reference_reuses": 134,
+        "contexts_backfilled": 2594
+      },
+      "field_status_ad_counts": {
+        "current_responsibility_subject_and_relation": {
+          "candidate_only": 12,
+          "known": 8718,
+          "not_applicable": 916,
+          "unknown_or_conflict": 354
+        },
+        "entry_wording_and_scope": {
+          "candidate_only": 12,
+          "known": 587,
+          "not_applicable": 9387,
+          "unknown_or_conflict": 14
+        },
+        "experience_literal_years": {
+          "candidate_only": 12,
+          "known": 9241,
+          "not_applicable": 124,
+          "unknown_or_conflict": 623
+        },
+        "experience_object": {
+          "candidate_only": 12,
+          "known": 9418,
+          "not_applicable": 123,
+          "unknown_or_conflict": 447
+        },
+        "experience_strength": {
+          "candidate_only": 12,
+          "known": 9343,
+          "not_applicable": 123,
+          "unknown_or_conflict": 522
+        },
+        "qualification_conditions_and_alternatives": {
+          "candidate_only": 12,
+          "known": 9308,
+          "not_applicable": 123,
+          "unknown_or_conflict": 557
+        },
+        "technology_category_and_role": {
+          "candidate_only": 12,
+          "known": 8482,
+          "not_applicable": 32,
+          "partial": 4,
+          "unknown_or_conflict": 1470
+        }
+      },
+      "field_denominator_conservation": {
+        "each_family_ads": 10000,
+        "all_seven_families_pass": true
+      },
+      "reusable_zh": "最终7万广告×字段账本是当前固定10k的首选参考入口；已完成字段、精确复用、原unknown/conflict和部分证据范围都保留。1002为上下文级已审不确定寄存，不等于逐字段unknown数。14隔离上下文不是统一14条各字段缺失。",
+      "do_not_do_zh": "不从2026-10-17旧6899队列或任何早期快照重新开跑。最终processable queue为空；不重判旧accepted/unknown；不把6486和Formal719、最新99或会话2594相加。",
+      "model_failure_boundary": {
+        "later_binary_baseline_targets": 27,
+        "candidate_only_targets": 10,
+        "not_adopted_targets": 17,
+        "formally_qualified_production_fields": 0,
+        "reference_labels_invalidated_by_model_failure": false,
+        "cpu_benchmark_rows_20000_are_semantic_production": false
+      },
+      "machine_artifacts": {
+        "historical_locators_only_do_not_connect_scnet": {
+          "ledger": "legacy_private_workspace:private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+          "queue": "legacy_private_workspace:private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
+          "uncertainty": "legacy_private_workspace:private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl"
+        },
+        "expected_sha256": {
+          "private_ledger_sha256": "794d76b2a6e913d7d08adab7e99bc96a3f57f8553c73518ae27b966a8fad86fb",
+          "private_queue_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "private_uncertainty_sha256": "355e4ee49d35d4974a4fe3af4027136303116e578a4ef2a6e29bf3f9deb8e612",
+          "public_counts_sha256": "114bb3adb1a9af49136646fbce7d9d77a0b98c9c2146f1a18e9d1ca46a41cf85"
+        },
+        "isolation_register_sha256": "641f2d3204a8f65f2483be485815ede04b57920227af4b867afd41cbd6de62b6"
+      },
+      "sources": [
+        "coverage_root",
+        "batch069_final_execution",
+        "batch069_receipt",
+        "batch069_counts",
+        "fixed_model_final"
+      ]
+    },
+    {
+      "asset_id": "supplemental_numeric_duration_relations",
+      "status": "accepted_supplemental_candidate_reference_only_not_full_field_production",
+      "units": {
+        "candidate_relations": 2736,
+        "distinct_contexts": 1659,
+        "packets": 71,
+        "remaining_candidates": 0
+      },
+      "counts_by_status": {
+        "explicit_non_experience": 1644,
+        "resolved": 801,
+        "unknown": 291
+      },
+      "counts_by_original_split": {
+        "final_previously_exposed": {
+          "candidates": 464,
+          "explicit_non_experience": 264,
+          "resolved": 142,
+          "unique_contexts": 274,
+          "unknown": 58
+        },
+        "previous_holdout_reserved_not_final": {
+          "candidates": 93,
+          "explicit_non_experience": 39,
+          "resolved": 41,
+          "unique_contexts": 49,
+          "unknown": 13
+        },
+        "train": {
+          "candidates": 2179,
+          "explicit_non_experience": 1341,
+          "resolved": 618,
+          "unique_contexts": 1336,
+          "unknown": 220
+        }
+      },
+      "overlap_zh": "来自既有参考语境的候选特定补判；不是新增1659条不相交广告，不能叠加到Batch069/Formal800覆盖。",
+      "reusable_zh": "保留801 resolved链接、1644明确非经验候选、291未知及原拆分/证据范围。已完成候选不重判；291不自动回队、不当负例；明确非经验只针对该冻结候选，不等于整篇没有经验要求。",
+      "not_implemented_by_this_asset": [
+        "all required/preferred scope endpoints",
+        "full alternative branch production",
+        "full responsibility-subject production"
+      ],
+      "existing_old_relational_fields_not_missing_zh": "原参考已经有同item的经验object/strength/conditionality/alternative_group/alternative_branch，以及职责dimension/subject/relation/conditionality；应按原同item和验收mask复用，不要因为缺少通用生产模型而重做全部关系标注。",
+      "machine_artifacts": {
+        "historical_ledger_locator": "legacy_private_workspace:private/relation_channel_20261025/reviews_v1/snapshots/47393594/REVIEW_LEDGER_PRIVATE.jsonl",
+        "ledger_sha256": "9ea1fcd0f61182d2d125b19d90af820f549e77351ff1064320613c311ae0d8a9",
+        "frozen_packet_manifest_sha256": "16883e6dfee6e2c309a3c98d4c6d87a21dbcccc5029fc8f8cbce1b666c369533",
+        "archive_sha256": "4563416ee359aae0aabf48d860ec2a399763bba1bc13bddf3aff8c5455497ffd",
+        "relation_validator_sha256": "d798de11825e51f3fd907ed8aa5a69d5d2207d43775dc24bc47669b276dc80f9"
+      },
+      "sources": [
+        "relations_final",
+        "relations_checkpoint",
+        "relations_schema_map",
+        "relations_validator"
+      ]
+    },
+    {
+      "asset_id": "Pro_continuous_Azure_metadata_scope",
+      "status": "historically_accepted_receipt_totals_available_record_union_incomplete",
+      "scope": "batch001–073 excluding protected batch035; metadata manifests only for inventory; protected source content not read",
+      "metadata_counts": {
+        "source_kind": "Azure SHA-verified metadata manifests and public checkpoint receipts",
+        "scope": "batch001–073 excluding quarantined batch035; original Pro normalized contexts only",
+        "metadata_manifest_count": 72,
+        "prepared_context_rows": 48240,
+        "unique_prepared_context_hashes": 48240,
+        "manifest_contexts_disjoint_within_checked_scope": true,
+        "matched_latest_checkpoint_manifests": 50,
+        "accepted_contexts_reported_in_latest_matched_receipts": 31700,
+        "accepted_contexts_with_any_unknown_reported": 2374,
+        "not_a_global_total": true,
+        "record_level_accepted_key_union_complete": false,
+        "saved_PRIMARY_file_counts_are_not_record_acceptance": true,
+        "batch_metadata_sidecar": {
+          "path": "azure_workspace:AZURE_PRO_BATCH_METADATA_PUBLIC.json",
+          "sha256": "35d17af69ba59c0c84a56467422b6d5c0ac0b3764a6d595e993898d08158e62c",
+          "batch_entries": 72
+        }
+      },
+      "accepted_counts_not_global_union": true,
+      "reviewed_unknown_count_is_subset_not_additive": true,
+      "reusable_zh": "按各latest complete checkpoint与对应manifest导入逐记录accepted状态及原unknown/partial；只有PRIMARY文件存在或prepared manifest存在不代表接受。精确重复全文可复用原参考并新增广告映射，不重新调用模型。",
+      "do_not_compute_remaining": "48240 - 31700 is not an established unprocessed queue: receipt coverage and record-level union are incomplete",
+      "bounded_overlap_evidence": {
+        "parent_pending_scope": 1309,
+        "pro_manifest_contexts_checked": 48240,
+        "related_acceptance_receipts_checked": 99,
+        "confirmed_duplicate_accepted_tasks_in_checked_parent": 0,
+        "fixed10k_reference_unique_contexts_checked": 7617,
+        "confirmed_fixed10k_duplicates_in_checked_parent": 0,
+        "global_overlap_complete": false,
+        "formal800_separate_identity_universe_reconciled": false
+      },
+      "pro_prepare_original_catalog_scope": {
+        "shards": 2464,
+        "US_ads": 204774035,
+        "catalog_sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+        "scope_warning": "This historical U.S. catalog is not the entire roughly 500M global data delivery."
+      },
+      "machine_artifacts": {
+        "manifest": "PACKET_MANIFEST_PRIVATE.jsonl",
+        "checkpoint_receipt_candidates": [
+          "public/CHECKPOINT_RECEIPT_PUBLIC.json",
+          "public/MERGED_RECEIPT_PUBLIC.json"
+        ],
+        "checkpoint_reference": "private/AD_LEVEL_PRO_REFERENCE_PRIVATE.jsonl",
+        "reference_sha_pointer": "/outputs/ad_level_reference_sha256",
+        "prepared_exact_reuse_bindings": "private/REUSE_AD_BINDINGS_PRIVATE.jsonl",
+        "bindings_sha_pointer": "public/PACKET_PREPARATION_PUBLIC.json#/output_sha256/reuse_ad_bindings_private"
+      },
+      "sources": [
+        "merged_azure_state_snapshot",
+        "pro_prepare_code",
+        "pro_reuse_code",
+        "parent_overlap_code"
+      ]
+    },
+    {
+      "asset_id": "Azure_Astra_original_accepted",
+      "status": "accepted_original_frozen_engineering_receipt",
+      "as_of_utc": "2026-11-10T15:29:57.094688+00:00",
+      "counts": {
+        "cumulative_accepted_contexts": 5
+      },
+      "overlap_zh": "旧提取交接中2条是较早累计快照，不是额外2条，不能2+5。5条属于1320独占父allowlist的accepted分区。",
+      "reusable_zh": "直接保留并排除新提取；后续Kimi/Luna回执说明旧账本未改。不能将工程接受称作总体语义准确率。",
+      "machine_artifacts": {
+        "azure_ledger": "azure_workspace:astra/extraction/STATE_PRIVATE.json",
+        "ledger_sha256_from_existing_state_snapshot": "0745018dbe0785021568a5fe488c39d5ca1c27e64bca81fb88e5a5b100214bac"
+      },
+      "sources": [
+        "astra_final",
+        "merged_azure_state_snapshot",
+        "kimi_final_cloud",
+        "luna_final"
+      ]
+    },
+    {
+      "asset_id": "Kimi_bounded_production_candidates",
+      "status": "saved_unverified_not_promoted",
+      "as_of_utc": "2026-11-15T10:23:23.551053+00:00",
+      "parent_initial_partition": {
+        "allowlist_contexts": 1320,
+        "Astra_accepted": 5,
+        "direct_Kimi_saved_unverified": 1,
+        "OpenCode_Kimi_pilot_saved_unverified": 5,
+        "then_pending_bulk_contexts": 1309
+      },
+      "bulk_counts": {
+        "handled": 1309,
+        "frozen_engineering_pass_candidates": 1137,
+        "exceptions": 172,
+        "production_promoted": 0
+      },
+      "bulk_exception_status_counts": {
+        "gateway_not_confirmed_complete": 3,
+        "quarantined_provider_content_filter": 41,
+        "frozen_validation_failed_preserve_output": 83,
+        "local_or_transport_boundary_exception": 44,
+        "identity_binding_mismatch": 1
+      },
+      "protection": {
+        "protected_worker_status_count": 41,
+        "additional_protected_register_count": 1,
+        "protected_union_contexts": 42,
+        "union_must_override_ordinary_worker_exception_status": true
+      },
+      "candidate_plus_pilot_arithmetic": {
+        "bulk_candidates": 1137,
+        "separate_prior_saved_candidates": 6,
+        "sum_within_bound_parent_snapshot": 1143,
+        "not_new_accepted": true,
+        "requires_ledger_identity_and_protection_union": true
+      },
+      "field_known_unknown_full_partial_distribution": "not_reconciled; no mutually exclusive full candidate field-state summary verified here",
+      "counterexamples_to_pass_equals_known": {
+        "existing_audit_frame_ads": 200,
+        "prior_unknown_or_unresolved_records": 106,
+        "note": "These are selected-frame counts, not a whole-1137 unknown estimate."
+      },
+      "reusable_zh": "复用已经落盘的候选、校验结果、usage与异常回执；不要重新提交同一广告初判。仍须保留saved_unverified轴以及原unknown/partial。没有真实资格回执不能自动promote。",
+      "human_review_boundary_zh": "final文件的waiting real human状态是历史文案；当前用户选择无真人审核路线，不代表历史候选已经通过新的模型审核或研究验收。",
+      "machine_artifacts": {
+        "azure_ledger": "azure_workspace:opencode_kimi_20261115/run01/bulk_1309_20261115/CANDIDATE_STATE_PRIVATE.json",
+        "azure_results": "azure_workspace:opencode_kimi_20261115/run01/results/bulk1309",
+        "azure_exception_register": "azure_workspace:opencode_kimi_20261115/run01/bulk_1309_20261115/EXCEPTION_RECORDS_PRIVATE.json",
+        "additional_quarantine_register_name": "QUARANTINED_TASKS_PRIVATE.json",
+        "additional_quarantine_register_sha256": "ff25f254a9a52fb774a77838e5e3adbd8b6b5413720dacd16792243dd366016d"
+      },
+      "sources": [
+        "kimi_final_cloud",
+        "kimi_final_worker_public",
+        "kimi_attempt_aggregate",
+        "merged_azure_state_snapshot",
+        "luna_preparation"
+      ]
+    },
+    {
+      "asset_id": "Luna20_existing_Kimi_rereview_benchmark",
+      "status": "finite_benchmark_completed_no_new_production_acceptance",
+      "as_of_utc": "2026-11-15T15:39:00.259641+00:00",
+      "selection": {
+        "original_existing_Kimi_audit_frame": 200,
+        "eligible_full_without_prior_unknown_candidates": 68,
+        "excluded_prior_unknown_or_unresolved": 106,
+        "excluded_prior_exception_or_non_candidate": 22,
+        "excluded_protected": 4,
+        "selected_fixed_order": 20,
+        "sampling_changed_to_population_representative": false
+      },
+      "counts": {
+        "completed_model_calls": 20,
+        "frozen_engineering_pass": 14,
+        "preserved_validation_failures": 6,
+        "paired_comparison_records": 14,
+        "full_business_exact_between_models": 2,
+        "new_production_accepted": 0,
+        "incremental_corpus_coverage": 0
+      },
+      "overlap_zh": "20条全部来自已完成Kimi记录，不是额外20条语料覆盖；14通过工程校验、2完整业务结构相同都不是人工正确率或独立金标准准确率。",
+      "reusable_zh": "保留这次固定基准、14个比较结果和6个失败输出；不为改好看的通过率替换样本、篡改schema或重复重判原失败任务。不得把已跑基准再作为新轮初判。",
+      "machine_artifacts": {
+        "azure_results": "azure_workspace:reuse_first_20261115/run01/benchmark20/results",
+        "azure_comparison": "azure_workspace:reuse_first_20261115/run01/benchmark20/comparison_v1/COMPARISON_PUBLIC.json",
+        "input_sha256": "1a24109c44c6fd619101b65ba2fd5f71043ed49cc16fde90bbefcd097fc6a96e",
+        "comparison_sha256": "d39c183845009327d82595922f205ed84d8d20129d7bea18d9b6d28ea5bfc0bd",
+        "worker_sha256": "615efb4a31e24476d52250d615dd8e4a2a0503161177a7028e39b98349321f16",
+        "archive_sha256": "280c6ffe70311eb74f938e323cb6dba94e56a2def2016e51395af0baadfaea0e",
+        "archive_blob_key": "reuse-first/20261115/benchmark20/BENCHMARK20_EVIDENCE_PRIVATE.tar.gz"
+      },
+      "sources": [
+        "luna_preparation",
+        "luna_final"
+      ]
+    },
+    {
+      "asset_id": "machine_audit196_preparation_only",
+      "status": "prepared_not_launched",
+      "counts": {
+        "existing_source_frame": 200,
+        "prepared_model_eligible": 196,
+        "protected_excluded": 4,
+        "actual_model_calls": 0,
+        "new_reviews": 0,
+        "new_coverage": 0
+      },
+      "overlap_zh": "是同一200候选审核框的准备，不是新增196审核或196接受；也不能与Luna20相加。",
+      "sources": [
+        "machine196_preparation",
+        "luna_preparation"
+      ]
+    },
+    {
+      "asset_id": "earlier_legacy_and_wave_reference_inventory",
+      "status": "preserve_with_source_specific_scope_do_not_count_as_full_seven_family_acceptance",
+      "legacy_experience_only": {
+        "Batch001_contexts": 24,
+        "Batch002_contexts": 128,
+        "total_unique_contexts": 152,
+        "original_ads": 198,
+        "scope": "legacy three experience objects / source-specific positive atoms; not exhaustive technology/tools/responsibility labels"
+      },
+      "Wave01": {
+        "accepted_contexts": 14,
+        "fixed10k_bound_ads": 16
+      },
+      "Wave02": {
+        "accepted_contexts": 96,
+        "verified_fixed10k_full_input_bindings": 0,
+        "preserve_outside_fixed10k": true
+      },
+      "do_not_promote_zh": "诊断性的配对/问题特定阅读、停下的Qwen尝试以及未接受的原始输出不能因为保存过就计入完整参考。旧严格规则zero不是无要求。",
+      "overlap_zh": "已在旧coverage账本中绑定者由最新Batch069来源掩码继承；不要在导入旧文件时再计一次；未匹配者保持not_reconciled而不是unprocessed。",
+      "sources": [
+        "coverage_inventory",
+        "coverage_aggregates",
+        "coverage_root"
+      ]
+    }
+  ],
+  "recommended_machine_reuse_plan_no_execution": {
+    "phase_1_metadata_only": [
+      {
+        "order": 1,
+        "action": "load protection-union metadata first",
+        "requirements": [
+          "preserve old fixed10k isolation register",
+          "exclude protected historical batch035 metadata identity without opening source/output bodies",
+          "union Kimi worker protection statuses with additional protection register",
+          "propagate protection to context aliases and re-review references; do not re-infer protected content"
+        ]
+      },
+      {
+        "order": 2,
+        "action": "resolve migrated artifacts by known receipt pins",
+        "sqlite_paths": [
+          "azure_workspace:kunshan/LEDGER_PRIVATE.sqlite",
+          "azure_workspace:wuzhen/LEDGER_PRIVATE.sqlite",
+          "azure_workspace:huazhong/LEDGER_PRIVATE.sqlite"
+        ],
+        "mode": "read-only SQLite and existing managed-identity Blob access; no SCP/SCNet connection and no new migration",
+        "lookup_basis": "existing files(path,root,rel,size,status,sha); match historical locator and expected artifact SHA, accept verified metadata only, validate Blob size/hash, deduplicate transport copies by SHA",
+        "example_existing_implementation_source": "parent_overlap_code",
+        "warning": "The existing parent-overlap script is bounded to one1320 allowlist; do not mislabel it a global union or rerun full source preparation."
+      },
+      {
+        "order": 3,
+        "action": "import field-level reference index from latest Batch069 ledger",
+        "expected_ledger_sha256": "794d76b2a6e913d7d08adab7e99bc96a3f57f8553c73518ae27b966a8fad86fb",
+        "preserve": [
+          "original known/not_applicable/unknown_or_conflict/partial states",
+          "Formal800 final masks",
+          "required-family whitelist and source receipt chain",
+          "isolation and current empty processable queue"
+        ]
+      },
+      {
+        "order": 4,
+        "action": "resolve complete Pro checkpoint plus corresponding manifest",
+        "requirements": [
+          "receipt status complete",
+          "manifest/checkpoint SHA and packet membership consistent",
+          "read only identity/status/provenance projection in metadata phase",
+          "never infer acceptance from PRIMARY file presence",
+          "do not reopen protected outputs"
+        ]
+      },
+      {
+        "order": 5,
+        "action": "merge candidate and benchmark execution metadata without promotion",
+        "requirements": [
+          "Astra5 remain accepted",
+          "Kimi1137 plus separate6 remain saved_unverified subject to protection union",
+          "Luna20 attach as comparison/rereview provenance to same Kimi identities",
+          "prepared196 has no review event",
+          "exceptions and unknowns are not automatic new work"
+        ]
+      }
+    ],
+    "identity_contract": {
+      "canonical_ad_key": [
+        "JOB_HASH",
+        "SOURCE_FILE",
+        "SOURCE_ROW",
+        "RECORD_SOURCE_ROW"
+      ],
+      "reference_reuse_key": [
+        "complete_normalized_input_sha256",
+        "frozen_normalizer_sha256",
+        "field_family",
+        "frozen_schema_sha256",
+        "source_acceptance_and_original_mask"
+      ],
+      "same_item_relation_key": [
+        "context_sha256",
+        "source_sha256",
+        "source_record_id",
+        "original_item_path"
+      ],
+      "disallowed_shortcuts": [
+        "JOB_HASH alone",
+        "CREATED alone",
+        "fuzzy matching",
+        "partial-context hash as full-document equivalence",
+        "family array position cross-join",
+        "recency or majority to clear unknown/conflict"
+      ],
+      "changed_body_same_canonical_ad_key": "halt identity binding and keep separate version metadata; never silently reuse an old body judgment",
+      "macro_merge_key_boundary": "JOB_HASH and CREATED may be the later analysis join contract; they are not sufficient by themselves to certify identical semantic input or transfer accepted labels."
+    },
+    "phase_2_exact_reuse_after_metadata_index": {
+      "existing_logic_source": "pro_reuse_code",
+      "historical_cli_args": [
+        "--batch-dir",
+        "--reference-checkpoints",
+        "--output-root"
+      ],
+      "new_artifacts_only": [
+        "private/AD_LEVEL_REUSED_REFERENCE_PRIVATE.jsonl",
+        "private/PENDING_REUSE_PRIVATE.jsonl",
+        "public/EXACT_REUSE_RECEIPT_PUBLIC.json"
+      ],
+      "safety": "Verify prepared binding and reference hashes; reject duplicate/currently accepted ad keys and conflicting complete reference payloads; copy same exact-input reference with original unknown/partial provenance; new_semantic_readings must remain0.",
+      "execution_boundary": "Historical script has a SLURM guard. Reuse its binding contract in an Azure-only controller; do not fake SLURM_JOB_ID, reconnect SCNet, or run the raw-data prepare_packets.py just to perform this audit."
+    },
+    "queue_policy": {
+      "protected": "deny_source_access_and_inference",
+      "accepted_original_scope": "exact_reuse_only_no_rejudgment",
+      "reviewed_unknown_or_conflict": "retain_original_no_automatic_requeue_no_negative_conversion",
+      "saved_unverified": "reuse_saved_artifact_do_not_repeat_initial_extraction; no automatic_acceptance",
+      "saved_failed_or_uncertain_attempt": "preserve_failure_and_usage; do_not_automatically_resubmit",
+      "prepared_only_or_unmatched": "not_reconciled_until_global_metadata_join",
+      "unprocessed": "claim only after full exclusion checks and an explicit bounded current run policy; not started by this audit"
+    }
+  },
+  "unresolved_metadata_gaps": [
+    "Pro31700是50个匹配latest checkpoint的报告接受数；72manifest的全部逐记录接受键并集尚未汇齐，不计算全局完成率。",
+    "已有1320父队列与Pro/fixed10k的有界metadata检查无确认重复，但不代表全库所有历史资产之间已去重。Formal800独立身份宇宙仍有单独核对缺口，不能只凭总计做全库排除。",
+    "Kimi1137的完整full/partial/unknown互斥状态分布没有在本次已核最终公开聚合中给出；不把1137全部叫known，也不把1137-955猜成unknown。",
+    "历史SCNet路径需要用Azure迁移manifest中的path和SHA定位，不需要再次迁移或用户去寻找配置。",
+    "关系原标注同item字段可用，但完整关系的所有类别支持、缺失端点和成对负例没有凭空补齐；复用时保持原范围，不阻塞其余已合格字段。"
+  ],
+  "validation_of_this_report": {
+    "source_files_hashed": 30,
+    "all_seven_field_denominators_equal10000": true,
+    "formal_final_partition_sums719": true,
+    "formal_binding_partition_sums1981": true,
+    "relation_statuses_sum2736": true,
+    "kimi_candidates_plus_exceptions_sum1309": true,
+    "kimi_exception_statuses_sum172": true,
+    "luna_pass_plus_fail_sum20": true,
+    "audit_eligibility_plus_exclusions_sum200": true,
+    "public_schema_and_instruction_hashes_cross_checked": true,
+    "private_artifact_hashes_reverified_this_audit": false,
+    "private_artifact_pin_source": "quoted from public receipts only",
+    "source_body_or_protected_output_evidence_in_report": false,
+    "record_identifiers_or_raw_model_outputs_in_report": false,
+    "all_source_json_pointers_resolve": true
+  },
+  "sources": {
+    "formal_freeze": {
+      "path": "repository:linkup/formal800_20261012/receipts/FORMAL800_FREEZE_RECEIPT_PUBLIC.json",
+      "sha256": "520e0f1b6f2e31fc43af6a608b026ee478b3fbf551640db706086f51ed779306",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/sample",
+        "/exclusions",
+        "/frame",
+        "/frozen_rule",
+        "/version"
+      ],
+      "relevant_line_span": [
+        3,
+        110
+      ]
+    },
+    "formal_final_validation": {
+      "path": "repository:linkup/formal800_20261012/receipts/FINAL719_VALIDATION_PUBLIC.json",
+      "sha256": "56977dbcf7533cc27720fd074dbc951e9c925996d63ce8c46461c700c3b4ce07",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/counts",
+        "/inputs",
+        "/private_outputs",
+        "/claim_boundary"
+      ],
+      "relevant_line_span": [
+        13,
+        43
+      ]
+    },
+    "formal_execution_final": {
+      "path": "repository:linkup/formal800_20261012/EXECUTION_LEDGER.md",
+      "sha256": "ecfea9658bdcf92b127ecec13e7e83daf92697506b5d233611e8281c25e2a331",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": [
+        116,
+        129
+      ]
+    },
+    "formal_schema": {
+      "path": "repository:linkup/formal800_20261012/FORMAL800_REVIEW_SCHEMA.json",
+      "sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "formal_instructions": {
+      "path": "repository:linkup/formal800_20261012/REVIEW_INSTRUCTIONS.md",
+      "sha256": "f13e1c431b4018fb7d1e2f1dc985dece69f092a8713c7ef673497a0fbd728d26",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "coverage_root": {
+      "path": "repository:linkup/production_coverage_20261017/ROOT_ACCEPTANCE.md",
+      "sha256": "1db3d3412216a204e827dcc0c720bea33e8945a196541a9a18f9cc67b6e587aa",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": [
+        3,
+        27
+      ]
+    },
+    "coverage_aggregates": {
+      "path": "repository:linkup/production_coverage_20261017/results/COVERAGE_AGGREGATES_PUBLIC.json",
+      "sha256": "53dcf3edbb9a4c5a1e64e331f8ff4f85d41fe841987022440f8296f00d125531",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "coverage_inventory": {
+      "path": "repository:linkup/production_coverage_20261017/SOURCE_INVENTORY.json",
+      "sha256": "ad8276506b26462f0de2268698bf3afa233f734124df516c8d391a32cedbe7e1",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "coverage_code": {
+      "path": "repository:linkup/production_coverage_20261017/code/reconcile_coverage.py",
+      "sha256": "4697d56d9660cdd7ea5c26505ab3d917466c6f67d2552c5d39a0a7ceee1e9110",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": [
+        324,
+        339
+      ]
+    },
+    "batch069_final_execution": {
+      "path": "repository:linkup/fixed10k_continuation_20261017/EXECUTION_RESULTS_PUBLIC.json",
+      "sha256": "131737b45d8830e69de0f6c8063360f975d71c73245d70e602619a64fcdd4b72",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/A",
+        "/latest_private_artifacts",
+        "/artifact_sha256",
+        "/B"
+      ],
+      "relevant_line_span": null
+    },
+    "batch069_receipt": {
+      "path": "repository:linkup/fixed10k_continuation_20261017/receipts/BATCH069_FINALIZE_RECEIPT.json",
+      "sha256": "a7ea3c8c4a96172c0d32227240f324598f496479d82c24a17aaf1956aa70b65c",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/checks",
+        "/outputs",
+        "/counts",
+        "/version"
+      ],
+      "relevant_line_span": null
+    },
+    "batch069_counts": {
+      "path": "repository:linkup/fixed10k_continuation_20261017/results/BATCH069_RESULTS_PUBLIC.json",
+      "sha256": "114bb3adb1a9af49136646fbce7d9d77a0b98c9c2146f1a18e9d1ca46a41cf85",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/field_status_ad_counts",
+        "/isolation",
+        "/delta"
+      ],
+      "relevant_line_span": null
+    },
+    "fixed_model_final": {
+      "path": "repository:linkup/fixed10k_continuation_20261017/final_results/FINAL_RUN_AND_ROOT_DECISION_PUBLIC.json",
+      "sha256": "c23c8b6ab6f5ce5f84e5305930b21aa752bb8afb3b79c1318a48694be1a32a09",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": [
+        4,
+        70
+      ]
+    },
+    "relations_final": {
+      "path": "repository:linkup/relation_channel_20261025/REVIEW_FINAL_DECISION_PUBLIC.json",
+      "sha256": "4227d0abe09fd860d69ec6a7c1da3908ef55e8fd09a8a5ae779a022a3c33ef39",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/scope",
+        "/counts_by_status",
+        "/private_ledger_sha256",
+        "/known_limits"
+      ],
+      "relevant_line_span": [
+        6,
+        72
+      ]
+    },
+    "relations_checkpoint": {
+      "path": "repository:linkup/relation_channel_20261025/results/REVIEW_CHECKPOINT_47393594_PUBLIC.json",
+      "sha256": "395d5220b893a646aed3e2dd3b4aa4810bd05adcccd02ffdececeedf5604a723",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "relations_schema_map": {
+      "path": "repository:linkup/relation_channel_20261025/code/SCHEMA_MAP.md",
+      "sha256": "371208b9545ba79c68c097d26c4f4236fca97240c5ab4b4fed671e654ded60c8",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "relations_validator": {
+      "path": "repository:linkup/relation_channel_20261025/code/validate_review_sidecars.py",
+      "sha256": "d798de11825e51f3fd907ed8aa5a69d5d2207d43775dc24bc47669b276dc80f9",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": [
+        26,
+        118
+      ]
+    },
+    "pro_prepare_code": {
+      "path": "repository:linkup/corpus_pro_review_20261026/code/prepare_packets.py",
+      "sha256": "0042a3677377c22850a1c099dae54575887149f2e959103a057a978f4d9165ae",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": [
+        20,
+        26
+      ]
+    },
+    "pro_reuse_code": {
+      "path": "repository:linkup/corpus_pro_review_20261026/code/attach_exact_reuse.py",
+      "sha256": "1a57e7559699c4a1a30636b5137a03989f6d5699ab129ecd13b800d069ac47fa",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": [
+        13,
+        77
+      ]
+    },
+    "pro_schema": {
+      "path": "repository:linkup/corpus_pro_review_20261026/code/FORMAL800_REVIEW_SCHEMA.json",
+      "sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "pro_instructions": {
+      "path": "repository:linkup/corpus_pro_review_20261026/code/REVIEW_INSTRUCTIONS.md",
+      "sha256": "f13e1c431b4018fb7d1e2f1dc985dece69f092a8713c7ef673497a0fbd728d26",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "merged_azure_state_snapshot": {
+      "path": "external_public:AZURE_RESEARCH_STATE.json",
+      "sha256": "974ec46d40eef83223462fef2d5ba3666dce3f0e45e8b172eaec4a6899ff9921",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/assets/azure_Pro_metadata",
+        "/deduplication",
+        "/parent_allowlist_initial_snapshot"
+      ],
+      "relevant_line_span": null
+    },
+    "parent_overlap_code": {
+      "path": "external_public:azure_global_ledger_20261115/check_parent_historical_overlap.py",
+      "sha256": "04409e9395a933732de45f56d8f3e5aad6b35b13b680bc6da473ed89e8e1802d",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [],
+      "relevant_line_span": null
+    },
+    "astra_final": {
+      "path": "repository:linkup/azure_resume_20261110/MANUAL_FINAL_STATUS_PUBLIC.json",
+      "sha256": "56d88427714995ddea3473ee39662cb9d74f2a06b637f9cce5de9395f98f8666",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/report/accepted_contexts",
+        "/report/observed_at_utc"
+      ],
+      "relevant_line_span": null
+    },
+    "kimi_final_cloud": {
+      "path": "external_public:opencode_bulk_20261115/FINAL_CLOUD_PUBLIC.json",
+      "sha256": "841ee535eaa772f76027b475305516a85499473200d65986ee904f842fbbb566",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/handled",
+        "/frozen_pass_candidates",
+        "/exception_count",
+        "/production_promoted",
+        "/audit_file_sha256"
+      ],
+      "relevant_line_span": null
+    },
+    "kimi_final_worker_public": {
+      "path": "external_public:opencode_bulk_20261115/FINAL_PUBLIC.json",
+      "sha256": "5154e321ac6e93beef464354cd311949af8026eafe9fb117c7d95761a75cf947",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/total",
+        "/cloud_frozen_pass_candidates",
+        "/exceptions"
+      ],
+      "relevant_line_span": null
+    },
+    "kimi_attempt_aggregate": {
+      "path": "external_public:azure_gpu_launch_20261115/ACTUAL_WORKLOAD_COST_PUBLIC.json",
+      "sha256": "3991e42e269c047690d11b0fe0d3ac1f2eb7c0f5f13c8b7e526bb638e4e9984b",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/attempt_accounting"
+      ],
+      "relevant_line_span": null
+    },
+    "luna_preparation": {
+      "path": "external_public:reuse_first_20261115/BENCHMARK_PREPARATION_CLOUD_PUBLIC.json",
+      "sha256": "d671c3e59c37e74567399ba246925b914081605a9b090e63e065618305085630",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/selected_n",
+        "/eligible_existing_candidates",
+        "/exclusions",
+        "/input_sha256",
+        "/schema_sha256"
+      ],
+      "relevant_line_span": null
+    },
+    "luna_final": {
+      "path": "external_public:reuse_first_20261115/FINAL_SUMMARY_PUBLIC.json",
+      "sha256": "dfab506daedf21229ca765560130256c2491279df3b63b3999c1ca0abdf7005e",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/run",
+        "/relative_comparison",
+        "/new_production_accepted",
+        "/limits"
+      ],
+      "relevant_line_span": null
+    },
+    "machine196_preparation": {
+      "path": "external_public:machine_audit_20261115/PREPARATION_PUBLIC.json",
+      "sha256": "81324ea63b625ed3594879e6d8c901e22f182501240a2d829359ed0ed33ef919",
+      "kind": "local_public_receipt_or_code",
+      "json_pointers": [
+        "/status",
+        "/model_calls",
+        "/model_review_eligible",
+        "/human_review_required"
+      ],
+      "relevant_line_span": null
+    }
+  }
+}

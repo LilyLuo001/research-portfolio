@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-11-15T15:54:09.082733+00:00",
+  "status": "read_only_public_receipt_and_code_audit_conditional_arithmetic_not_production_quote",
+  "actions": {
+    "model_calls": 0,
+    "cloud_calls": 0,
+    "deployments_or_quotas_changed": 0,
+    "raw_advertisements_read": 0,
+    "raw_model_outputs_read": 0,
+    "historical_results_or_ledgers_modified": 0
+  },
+  "sources": {
+    "final_summary": {
+      "path": "external_public:reuse_first_20261115/FINAL_SUMMARY_PUBLIC.json",
+      "sha256": "dfab506daedf21229ca765560130256c2491279df3b63b3999c1ca0abdf7005e"
+    },
+    "worker": {
+      "path": "repository:linkup/reuse_first_20261115/code/cloud_benchmark_worker.py",
+      "sha256": "615efb4a31e24476d52250d615dd8e4a2a0503161177a7028e39b98349321f16"
+    },
+    "config": {
+      "path": "repository:linkup/reuse_first_20261115/BENCHMARK_CONFIG_PUBLIC.json",
+      "sha256": "f290676e846b211aae0b2226f37ae3a837f434b1d9c0f73e84e1c4ee29dab749"
+    },
+    "preparation": {
+      "path": "external_public:reuse_first_20261115/BENCHMARK_PREPARATION_CLOUD_PUBLIC.json",
+      "sha256": "d671c3e59c37e74567399ba246925b914081605a9b090e63e065618305085630"
+    },
+    "channel_preflight": {
+      "path": "external_public:reuse_first_20261115/MODEL_CHANNEL_PREFLIGHT_PUBLIC.json",
+      "sha256": "32b627f49263dfddcdd78d1a3b3a04358f90e75b6cedbb68d2ebbd717d58e12b"
+    },
+    "azure_price_receipt": {
+      "path": "external_public:reuse_first_20261115/LUNA_AZURE_PRICE_READONLY_PUBLIC.json",
+      "sha256": "b9e3bd111c7e1fd42132819a904c5e3dd1515a498e94b9c68a1eaa4b522d9485"
+    },
+    "cloud_timing_probe": {
+      "path": "external_public:reuse_audit_20261116/summarize_benchmark_timing_metadata.py",
+      "sha256": "a700974c7d21b2117117c40b3e77125b5f870590414a447d956bf77f5b78c746"
+    }
+  },
+  "actual_benchmark": {
+    "model": "gpt-6-luna",
+    "model_version": "2026-09-22",
+    "deployment": "linkup-gpt-6-luna-benchmark",
+    "deployment_type": "GlobalStandard",
+    "reasoning_effort": "none",
+    "completed_records": 20,
+    "physical_attempts": 20,
+    "engineering_pass_records": 14,
+    "frozen_validation_failure_records": 6,
+    "new_production_accepted": 0,
+    "quality_certified": false,
+    "input_tokens": 86953,
+    "output_tokens": 15682,
+    "total_tokens": 102635,
+    "mean_input_tokens": 4347.65,
+    "mean_output_tokens": 784.1,
+    "mean_total_tokens": 5131.75,
+    "estimated_usage_usd_from_public_price": 0.0165363,
+    "estimated_usage_usd_per_called_record": 0.000826815,
+    "estimated_usage_usd_per_engineering_pass_diagnostic_not_semantic_acceptance": 0.0011811642857142857,
+    "elapsed_seconds": 565.424,
+    "observed_records_per_minute": 2.122301140383146,
+    "observed_billing_tokens_per_minute": 10891.11887716121,
+    "elapsed_seconds_per_called_record_not_service_latency": 28.2712
+  },
+  "price_contract": {
+    "currency": "USD",
+    "per_million_input_tokens": 0.1,
+    "per_million_output_tokens": 0.5,
+    "source_type": "Azure_Global_Standard_short_context_public_list_not_invoice",
+    "cache_discount_applied": false,
+    "actual_invoice_verified": false,
+    "source_url": "https://azure.microsoft.com/en-us/blog/gpt-6-astra-sol-and-luna-for-production-agents-in-microsoft-foundry/",
+    "failed_output_token_usage_included_in_observed_cost": true,
+    "future_rework_or_independent_reviewer_tokens_included": false,
+    "vm_storage_CPU_network_and_tax_included": false
+  },
+  "user_linear_extrapolation": {
+    "user_rounded_20_record_cost_usd": 0.017,
+    "rounded_full500M_cost_usd": 425000,
+    "exact_public_price_full500M_cost_usd": 413407.5,
+    "exact_full500M_input_tokens": 2173825000000,
+    "exact_full500M_output_tokens": 392050000000,
+    "exact_full500M_total_tokens": 2565875000000,
+    "exact_full500M_input_cost_usd": 217382.5,
+    "exact_full500M_output_cost_usd": 196025.0,
+    "identical_single_worker_full500M_seconds": 14135600000.0,
+    "identical_single_worker_full500M_days": 163606.4814814815,
+    "identical_single_worker_full500M_years_365_25": 447.93013410398765,
+    "identical_single_worker_full500M_years_365": 448.2369355657027,
+    "supported_conclusion": "A blind plan to send 500M new full-schema requests at this benchmark workload is expensive and this exact serial worker is slow. This arithmetic is not a qualified full-corpus delivery quote or proof that parallel acceleration is impossible."
+  },
+  "worker_timing_audit": {
+    "configured_concurrency": 1,
+    "scheduled_tpm_ceiling": 100000,
+    "max_completion_tokens_reserved_per_request": 12000,
+    "reservation_input_formula": "len(compact_UTF8_request_body_bytes) + 1024, used as a conservative token upper bound",
+    "reservation_total_formula": "input_upper + max_completion_tokens",
+    "price_reservation_formula": "input_upper * 0.10/1e6 + 12000 * 0.50/1e6",
+    "spent_reservation_usd_not_actual_invoice": 0.1683505,
+    "derived_total_reserved_input_tokens": 483505,
+    "derived_total_reserved_output_tokens": 240000,
+    "derived_total_reserved_tokens": 723505,
+    "derived_mean_reserved_tokens": 36175.25,
+    "reservation_to_actual_token_ratio": 7.049300920738539,
+    "derived_from_final_reserved_usd_with_20_physical_calls": true,
+    "rolling_window_seconds": 60,
+    "successful_calls_keep_full_reservation_until_window_expires": true,
+    "response_header_may_lower_not_raise_worker_tpm": true,
+    "serial_work_includes": [
+      "local token-reservation waiting and any retry cooldown",
+      "managed-identity authentication",
+      "request network and model response",
+      "frozen validation subprocess",
+      "private output/ledger writing and fsync"
+    ],
+    "timing_separation_measured": false,
+    "missing_timing_fields": [
+      "response_finished_epoch",
+      "request_service_seconds",
+      "local_rate_wait_seconds",
+      "validation_and_IO_seconds"
+    ],
+    "code_observation": "ATTEMPTS at_utc and forwarded_epoch are assigned once immediately before each POST and not refreshed on final response event; subtracting identical timestamps would incorrectly report zero latency.",
+    "metadata_probe_status": "written_and_synthetic_tested_not_cloud_executed_by_this_agent"
+  },
+  "quota_conditional_scenarios": [
+    {
+      "tokens_per_minute": 100000,
+      "condition": "Measured Luna deployment and worker scheduled cap",
+      "availability_status": "deployed_100k_TPM_at_benchmark_time",
+      "billing_token_fluid_arithmetic_only": {
+        "mean_tokens_per_request": 5131.75,
+        "requests_per_minute": 19.486529936181615,
+        "full500M_minutes": 25658750.0,
+        "full500M_days": 17818.57638888889,
+        "full500M_years_365_25": 48.78460339189292,
+        "wall_linear_to_fluid_ratio": 9.181793085529627
+      },
+      "unchanged_worker_reservation_fluid_arithmetic_only": {
+        "mean_reserved_tokens_per_request": 36175.25,
+        "requests_per_minute_upper_bound_before_window_packing_and_latency": 2.7643209100144435,
+        "full500M_days": 125608.50694444444,
+        "full500M_years_365_25": 343.8973496083352
+      },
+      "not_a_finish_date": true
+    },
+    {
+      "tokens_per_minute": 250000,
+      "condition": "Luna East US GlobalStandard model quota pool at preflight, not deployed throughput",
+      "availability_status": "preflight_model_quota_limit_250k_not_newly_granted_or_applied",
+      "billing_token_fluid_arithmetic_only": {
+        "mean_tokens_per_request": 5131.75,
+        "requests_per_minute": 48.716324840454035,
+        "full500M_minutes": 10263500.0,
+        "full500M_days": 7127.430555555556,
+        "full500M_years_365_25": 19.51384135675717,
+        "wall_linear_to_fluid_ratio": 22.95448271382407
+      },
+      "unchanged_worker_reservation_fluid_arithmetic_only": {
+        "mean_reserved_tokens_per_request": 36175.25,
+        "requests_per_minute_upper_bound_before_window_packing_and_latency": 6.910802275036109,
+        "full500M_days": 50243.40277777778,
+        "full500M_years_365_25": 137.5589398433341
+      },
+      "not_a_finish_date": true
+    },
+    {
+      "tokens_per_minute": 300000,
+      "condition": "Counterfactual Luna capacity comparison; existing Kimi 300k is a different model pool",
+      "availability_status": "not_verified_Luna_quota_and_not_transferable_from_Kimi",
+      "billing_token_fluid_arithmetic_only": {
+        "mean_tokens_per_request": 5131.75,
+        "requests_per_minute": 58.45958980854484,
+        "full500M_minutes": 8552916.666666666,
+        "full500M_days": 5939.525462962963,
+        "full500M_years_365_25": 16.261534463964306,
+        "wall_linear_to_fluid_ratio": 27.545379256588884
+      },
+      "unchanged_worker_reservation_fluid_arithmetic_only": {
+        "mean_reserved_tokens_per_request": 36175.25,
+        "requests_per_minute_upper_bound_before_window_packing_and_latency": 8.29296273004333,
+        "full500M_days": 41869.50231481482,
+        "full500M_years_365_25": 114.63244986944508
+      },
+      "not_a_finish_date": true
+    }
+  ],
+  "quota_interpretation_limits": [
+    "The actual-token scenarios assume all stated TPM can continuously serve the same mean input+output workload with enough concurrency and no bottlenecks. They are optimistic fluid arithmetic, not measured Azure throughput.",
+    "Azure rate admission can account estimated input and maximum requested completion tokens rather than billed token totals; actual billing-token means alone do not predict admission rate.",
+    "The unchanged-worker reservation rows ignore 60-second bin packing, request latency, validation, I/O and other shared traffic; parallel requests cannot evade the shared token budget.",
+    "250k was total model quota at preflight, not 250k extra on top of the 100k deployment. No quota changes were made in this audit.",
+    "300k existing Kimi capacity cannot simply be borrowed by Luna. A hypothetical 300k Luna row is not authorization or proof of available quota.",
+    "Parallelism can improve wall time until a token/requests/service/IO bottleneck binds. It does not by itself reduce billed tokens or dollars.",
+    "All rows assume the unrepresentative fixed20 workload, with no quality-approved large-corpus distribution or saturation benchmark."
+  ],
+  "scope_correction": {
+    "full_requested_coverage_rows": 500000000,
+    "global_unique_required_context_count": null,
+    "global_remaining_semantic_request_count": null,
+    "full_coverage_equals_500M_new_calls": false,
+    "benchmark_is_new_coverage": false,
+    "benchmark_selected_from_existing_Kimi_records": true,
+    "benchmark_is_random_corpus_sample": false,
+    "selection_bias": "First20 eligible known-full/no-unknown candidates from 68 eligible among a frozen200 audit frame; 106unknown/unresolved,22prior exceptions/noncandidates,4protected were excluded.",
+    "required_accounting": [
+      "Verify corpus unit: source rows, canonical ads and complete-input contexts are different denominators. Preserve requested full scope.",
+      "Union historical results by verified complete-input identity and compatible frozen schema/field version, not by filename or adding counts.",
+      "Reuse accepted field results and retained compatible rule/coarse features without claiming their engineering acceptance proves missing fine semantics.",
+      "For duplicate contexts, reuse only verified exact compatible full inputs and preserve all ad mappings; no assumed global dedup fraction or fuzzy semantic equivalence.",
+      "Preserve reviewed_unknown/partial and protected states distinctly. Unknown does not automatically become an unprocessed model task; provider-quarantined content is not rerouted or retried.",
+      "New semantic request count must come from verified missing, eligible context/field work, plus separately bounded AI checks. Saved_unverified is not accepted and does not authorize blind rerun."
+    ],
+    "simplified_forward_budget_formula": "new_eligible_requests * matched_mean_request_cost + separately_bounded_QA_and_rework + compute/storage/network; current benchmark mean is only a planning sensitivity until workload/quality are qualified",
+    "primary_estimation_scope": "New verified eligible unprocessed contexts U_new only; 500M all-new-call arithmetic retained solely to audit the users extrapolation and reject blind full rerun."
+  },
+  "5000_usd_caution": {
+    "all_budget_for_identical_model_calls_only": true,
+    "same_benchmark_call_equivalents_before_other_costs": 6047301.996214389,
+    "fraction_of500M": 0.012094603992428779,
+    "required_fraction_avoiding_new_fullschema_calls_if_no_other_costs": 0.9879053960075712,
+    "actual_reuse_fraction_measured": false,
+    "promise_to_finish_full500M_for5000": false,
+    "interpretation": "At this measured per-call workload, $5000 buys only ~6.047M call-equivalents before infrastructure and QA. Finishing full coverage under that amount would require proven reuse/cheaper qualified processing for the rest; it is not established."
+  },
+  "decision_supported": [
+    "Use the user-reported1M TPM ceiling at80–90% shared-budget assumption for conditional new-work planning; keep effective same-model quota unverified until read-only confirmation, and do not upgrade configuration in this audit.",
+    "Do not expand the 20-record Luna benchmark into 500M blind new requests. No production expansion is launched by this audit.",
+    "Inventory and reuse existing framework/results first; determine real missing semantic work rather than substituting500M rows with500M API requests.",
+    "Keep Luna outputs as compatibility-test sidecars. 14/20 engineering pass and2/14 literal structure matches do not establish semantic accuracy or certify production quality.",
+    "If future runtime optimization is authorized, add explicit per-stage timing and bounded saturation tests before quoting finish dates; do not alter frozen research schema to make the price look better."
+  ],
+  "last_updated_at_utc": "2026-11-15T15:54:51.833520+00:00",
+  "primary_planning_scenario": {
+    "status": "user_reported_estimation_ceiling_not_verified_deployment_quota",
+    "user_reported_estimation_ceiling_tpm": 1000000,
+    "verified_current_Luna_deployment_effective_quota_tpm": null,
+    "historical_benchmark_Luna_deployment_tpm": 100000,
+    "historical_other_model_Astra_deployment_tpm": 1000000,
+    "other_model_quota_is_not_transferable": true,
+    "shared_budget_fraction_range": [
+      0.8,
+      0.9
+    ],
+    "shared_budget_target_tpm_range": [
+      800000,
+      900000
+    ],
+    "other_concurrent_consumers_tpm": null,
+    "all_concurrent_consumers_must_share_budget": true,
+    "worker_config_or_deployment_changed": false,
+    "actual_new_unprocessed_eligible_context_count": null,
+    "actual_time_and_cost_quote": null,
+    "planning_unit": "unique eligible complete-input context requiring a new semantic call; not every source row or saved output",
+    "conditional_formula": {
+      "cost_usd": "U_new * 0.000826815 + separately bounded QA/rework + compute/storage/network",
+      "optimistic_minutes": "U_new * 5131.75 / (1,000,000 * 0.8_to_0.9 - other_consumers_effective_TPM)",
+      "unchanged_conservative_reservation_fluid_minutes": "U_new * 36175.25 / (1,000,000 * 0.8_to_0.9 - other_consumers_reserved_TPM)"
+    },
+    "synthetic_missing_context_workload_scales_not_measured_remaining_counts": [
+      {
+        "new_contexts": 100000,
+        "same_benchmark_public_price_usd": 82.6815,
+        "conditional_schedules": [
+          {
+            "shared_budget_fraction": 0.8,
+            "usable_tpm_if_no_other_consumers": 800000,
+            "ideal_billed_token_minutes": 641.46875,
+            "ideal_billed_token_hours": 10.691145833333334,
+            "ideal_billed_token_days": 0.44546440972222223,
+            "unchanged_reservation_fluid_minutes": 4521.90625,
+            "unchanged_reservation_fluid_days": 3.140212673611111
+          },
+          {
+            "shared_budget_fraction": 0.9,
+            "usable_tpm_if_no_other_consumers": 900000,
+            "ideal_billed_token_minutes": 570.1944444444445,
+            "ideal_billed_token_hours": 9.503240740740742,
+            "ideal_billed_token_days": 0.39596836419753084,
+            "unchanged_reservation_fluid_minutes": 4019.472222222222,
+            "unchanged_reservation_fluid_days": 2.7913001543209877
+          }
+        ]
+      },
+      {
+        "new_contexts": 1000000,
+        "same_benchmark_public_price_usd": 826.815,
+        "conditional_schedules": [
+          {
+            "shared_budget_fraction": 0.8,
+            "usable_tpm_if_no_other_consumers": 800000,
+            "ideal_billed_token_minutes": 6414.6875,
+            "ideal_billed_token_hours": 106.91145833333333,
+            "ideal_billed_token_days": 4.454644097222222,
+            "unchanged_reservation_fluid_minutes": 45219.0625,
+            "unchanged_reservation_fluid_days": 31.40212673611111
+          },
+          {
+            "shared_budget_fraction": 0.9,
+            "usable_tpm_if_no_other_consumers": 900000,
+            "ideal_billed_token_minutes": 5701.944444444444,
+            "ideal_billed_token_hours": 95.0324074074074,
+            "ideal_billed_token_days": 3.9596836419753085,
+            "unchanged_reservation_fluid_minutes": 40194.72222222222,
+            "unchanged_reservation_fluid_days": 27.913001543209877
+          }
+        ]
+      },
+      {
+        "new_contexts": 10000000,
+        "same_benchmark_public_price_usd": 8268.15,
+        "conditional_schedules": [
+          {
+            "shared_budget_fraction": 0.8,
+            "usable_tpm_if_no_other_consumers": 800000,
+            "ideal_billed_token_minutes": 64146.875,
+            "ideal_billed_token_hours": 1069.1145833333333,
+            "ideal_billed_token_days": 44.54644097222222,
+            "unchanged_reservation_fluid_minutes": 452190.625,
+            "unchanged_reservation_fluid_days": 314.0212673611111
+          },
+          {
+            "shared_budget_fraction": 0.9,
+            "usable_tpm_if_no_other_consumers": 900000,
+            "ideal_billed_token_minutes": 57019.444444444445,
+            "ideal_billed_token_hours": 950.324074074074,
+            "ideal_billed_token_days": 39.59683641975309,
+            "unchanged_reservation_fluid_minutes": 401947.22222222225,
+            "unchanged_reservation_fluid_days": 279.1300154320988
+          }
+        ]
+      }
+    ],
+    "counterfactual_full500M_all_new_calls_not_operating_plan": {
+      "cost_usd": 413407.5,
+      "conditional_schedules": [
+        {
+          "shared_budget_fraction": 0.8,
+          "usable_tpm_if_no_other_consumers": 800000,
+          "ideal_billed_token_minutes": 3207343.75,
+          "ideal_billed_token_hours": 53455.729166666664,
+          "ideal_billed_token_days": 2227.3220486111113,
+          "unchanged_reservation_fluid_minutes": 22609531.25,
+          "unchanged_reservation_fluid_days": 15701.063368055555
+        },
+        {
+          "shared_budget_fraction": 0.9,
+          "usable_tpm_if_no_other_consumers": 900000,
+          "ideal_billed_token_minutes": 2850972.222222222,
+          "ideal_billed_token_hours": 47516.2037037037,
+          "ideal_billed_token_days": 1979.8418209876543,
+          "unchanged_reservation_fluid_minutes": 20097361.111111112,
+          "unchanged_reservation_fluid_days": 13956.500771604939
+        }
+      ],
+      "ideal_billed_token_full100percent_ceiling_years_365_25": 4.878460339189292
+    },
+    "limits": [
+      "1M is a user-reported planning ceiling only; same-model deployment quota, service admission accounting, requests/minute and all shared consumers must be verified before use.",
+      "Using 80–90% shared budget does not override the existing100k Luna worker cap; this audit makes no changes.",
+      "The observed20 records were QA rereads of already-saved candidates, not20 new corpus coverage increments. The remaining U_new must come from a nonduplicative asset/field/context ledger.",
+      "5131.75 tokens and$0.000826815 are the biased20-record workload means, not a certified global distribution. 80–90% headroom is a planning assumption, not measured efficiency.",
+      "Optimistic billed-token arithmetic is not an attainable-throughput promise. The current byte-upper-bound plus12000-output reservation is7.0493 times observed billed tokens, and service rate admission may also reserve maximum output.",
+      "Concurrency can help fill legitimate capacity but cannot bypass shared token limits or cure the benchmark quality failures. No claim of finishing the project for$5000 is made."
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "cloud_or_run_policy_changes": 0,
+  "configured_concurrency": 1,
+  "configured_max_completion_tokens": 12000,
+  "configured_tpm_ceiling": 100000,
+  "first_to_last_forwarded_seconds": 557.4888763427734,
+  "forwarded_interarrival_seconds": {
+    "max": 55.829381465911865,
+    "mean": 29.34151980751439,
+    "min": 4.325301885604858,
+    "n": 19,
+    "p50": 16.633936882019043,
+    "p90_nearest_rank": 55.75983953475952,
+    "sum": 557.4888763427734
+  },
+  "http_status_counts": {
+    "200": 20
+  },
+  "last_forwarded_to_finish_seconds": 7.900949001312256,
+  "lifecycle_event_count": 40,
+  "model_calls": 0,
+  "observed_at_utc": "2026-11-15T15:55:25.828491+00:00",
+  "physical_attempts": 20,
+  "rate_headers": {
+    "retry-after": {
+      "nonnumeric_omitted": 0,
+      "numeric": {
+        "n": 0
+      }
+    },
+    "retry-after-ms": {
+      "nonnumeric_omitted": 0,
+      "numeric": {
+        "n": 0
+      }
+    },
+    "x-ratelimit-limit-requests": {
+      "nonnumeric_omitted": 0,
+      "numeric": {
+        "max": 100.0,
+        "mean": 100.0,
+        "min": 100.0,
+        "n": 20,
+        "p50": 100.0,
+        "p90_nearest_rank": 100.0,
+        "sum": 2000.0
+      }
+    },
+    "x-ratelimit-limit-tokens": {
+      "nonnumeric_omitted": 0,
+      "numeric": {
+        "max": 100000.0,
+        "mean": 100000.0,
+        "min": 100000.0,
+        "n": 20,
+        "p50": 100000.0,
+        "p90_nearest_rank": 100000.0,
+        "sum": 2000000.0
+      }
+    },
+    "x-ratelimit-remaining-tokens": {
+      "nonnumeric_omitted": 0,
+      "numeric": {
+        "max": 96220.0,
+        "mean": 95652.35,
+        "min": 95038.0,
+        "n": 20,
+        "p50": 95617.5,
+        "p90_nearest_rank": 96130.0,
+        "sum": 1913047.0
+      }
+    }
+  },
+  "raw_advertisements_or_response_payloads_read": 0,
+  "reservation_usd": {
+    "max": 0.0087213,
+    "mean": 0.008417525,
+    "min": 0.0081182,
+    "n": 20,
+    "p50": 0.00842465,
+    "p90_nearest_rank": 0.0085796,
+    "sum": 0.16835050000000001
+  },
+  "retry_attempts": 0,
+  "source_sha256": {
+    "ATTEMPTS_PRIVATE.jsonl": "51f1cc8b5487bfcc6d6df85117207309be0404e8db4f0a92984a87284ee1770b",
+    "BENCHMARK_CONFIG_PUBLIC.json": "f290676e846b211aae0b2226f37ae3a837f434b1d9c0f73e84e1c4ee29dab749",
+    "RUN_STATUS_PUBLIC.json": "8a61f48cd0d172e9dd6f3c6539aef0d91057480a56545332d2cb401086fa60b8"
+  },
+  "start_to_first_forwarded_seconds": 0.03293871879577637,
+  "status": "completed_ledger_metadata_aggregated_no_inference",
+  "terminal_status_counts": {
+    "response_saved": 20
+  },
+  "timing_limitations": [
+    "Interarrival includes prior request service, validation, I/O, authentication and any local limiter wait; not request latency.",
+    "The worker does not record response_finished_epoch or separate limiter_wait_seconds; exact decomposition is unavailable retrospectively.",
+    "Last-forwarded-to-finish includes final request, validation and bookkeeping; it is not pure model service time.",
+    "A single-concurrency finite benchmark does not establish saturated parallel throughput."
+  ],
+  "token_reservation": {
+    "max": 39213,
+    "mean": 36175.25,
+    "min": 33182,
+    "n": 20,
+    "p50": 36246.5,
+    "p90_nearest_rank": 37796,
+    "sum": 723505
+  },
+  "trailing_60s_at_forwarding_max_requests": 2,
+  "trailing_60s_at_forwarding_max_reserved_tokens": 76245,
+  "unique_ordinals": 20,
+  "usage": {
+    "completion_tokens": {
+      "max": 2949,
+      "mean": 784.1,
+      "min": 255,
+      "n": 20,
+      "p50": 516.0,
+      "p90_nearest_rank": 2022,
+      "sum": 15682
+    },
+    "prompt_tokens": {
+      "max": 4962,
+      "mean": 4347.65,
+      "min": 3780,
+      "n": 20,
+      "p50": 4382.5,
+      "p90_nearest_rank": 4642,
+      "sum": 86953
+    },
+    "total_tokens": {
+      "max": 7510,
+      "mean": 5131.75,
+      "min": 4043,
+      "n": 20,
+      "p50": 4917.0,
+      "p90_nearest_rank": 6606,
+      "sum": 102635
+    }
+  },
+  "worker_elapsed_seconds": 565.424,
+  "writes": 0,
+  "wrapper_public_receipts_written": 1
+}

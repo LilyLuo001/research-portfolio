@@ -1,0 +1,802 @@
+{
+  "version": "existing-base-capabilities-readonly-v1",
+  "audit_utc": "2026-11-15T15:53:30.047358+00:00",
+  "audit_method": "本机公开回执、字段契约、代码及既有Azure执行回执的只读核验；本轮不连接云端、不重新校验全库数据字节、不处理广告原文。",
+  "main_correction": "工业级旧版规则清洗与复用框架并非未做：2,464片美国旧版底座已完成，D65–D67已经明确纠偏并完成键控增量复用。不能把新字段仅覆盖69片说成其余全库从未清洗，也不能重新安排约5亿条全文API推理作为默认起点。",
+  "denominators_not_interchangeable": {
+    "user_requested_full_delivery_approximate_advertisements": 500000000,
+    "full_delivery_exact_advertisement_denominator_verified": false,
+    "full_delivery_exact_advertisement_denominator": null,
+    "old_raw_Description_input_rows": 298673078,
+    "old_canonical_US_advertisements": 204774035,
+    "old_engineering_usable_ads": 204768752,
+    "old_engineering_usable_rate_not_accuracy": 0.9999742008306863,
+    "old_engineering_flagged_ads_computed_difference": 5283,
+    "old_experience_candidate_evidence_rows": 421992351,
+    "old_technology_candidate_evidence_rows": 82379739,
+    "two_evidence_families_sum_not_ads": 504372090,
+    "old_duration_clause_rows": 131286035,
+    "reused_Records_US_all_history_rows": 253210047,
+    "reused_Records_US_2016_onward_rows": 199644730,
+    "global_distinct_complete_input_fingerprint_count": null,
+    "warning": "源输入行、美国canonical广告、Records行、条款证据、规范正文、研究支持单元均不可直接互换；两种证据表合计约5.04亿不证明用户的5亿广告分母。不能据此假定高去重率或报全局完成百分比。",
+    "evidence": [
+      {
+        "path": "repository:linkup/corpus_pro_review_20261026/EXISTING_UNIT_COUNTERS_PUBLIC.json",
+        "line_ranges": [
+          [
+            2,
+            13
+          ]
+        ],
+        "sha256": "f705fe38557557d3c936590cc6431f8f1303ccc57cb36c0f4a0b2fd55902c70c"
+      },
+      {
+        "path": "external_public:azure_gpu_launch_20261115/FULL_SCOPE_CATALOG_PREFLIGHT_PUBLIC.json",
+        "line_ranges": [
+          [
+            2,
+            31
+          ],
+          [
+            120,
+            124
+          ]
+        ],
+        "sha256": "569a26a242eadc05e1b4f7776d85d525337a62b87da35b0b4e629ce9739ceb1e"
+      },
+      {
+        "path": "external_public:macro_records_20261115/RESULTS_ZH.md",
+        "line_ranges": [
+          [
+            7,
+            9
+          ]
+        ],
+        "sha256": "227850c94f60e635477f99adcabd514beb9f7c379abfa3ef8cc4676365bb6570"
+      },
+      {
+        "path": "external_public:AZURE_RESEARCH_STATE.json",
+        "line_ranges": [
+          [
+            6,
+            8
+          ],
+          [
+            30,
+            30
+          ],
+          [
+            798,
+            802
+          ]
+        ],
+        "sha256": "974ec46d40eef83223462fef2d5ba3666dce3f0e45e8b172eaec4a6899ff9921"
+      }
+    ]
+  },
+  "assets": [
+    {
+      "id": "A_legacy_industrial_typed_base",
+      "scope": {
+        "shards": 2464,
+        "canonical_US_ads": 204774035,
+        "KS_shards": 1358,
+        "WZ_shards": 1106
+      },
+      "completion": "既有最终门complete/exact-disjoint-ID-union；本轮仅复核公开证据，未重读全部Parquet。",
+      "fields": [
+        "ad_status：四键定位、日期/地理、解析质量与证据计数",
+        "experience：证据offset、对象候选、年限上下界、单位、强弱及关系/optional状态",
+        "technology：技术名称/类型、角色、关系、歧义与申请人语境候选",
+        "v6_audit：教育、资格替代、否定、等价、歧义等稀疏审计字段"
+      ],
+      "reuse_now": "默认研究底座；保留原字段含义和版本。复用已匹配身份、已提取证据及不确定状态。",
+      "limits": [
+        "工程usable不是语义准确率。",
+        "v6_audit为稀疏选择表；未保留行不等于无要求。",
+        "未在旧lean schema观察到完整清洗正文列；只能在确有缺失字段时按原定位及固定normalization取所需上下文。"
+      ],
+      "do_not_rerun": [
+        "原始Description→Records全量匹配",
+        "2,464片基础规则提取",
+        "旧全量清洗控制器或已结束复制服务"
+      ],
+      "evidence": [
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_audit_20261010/CLOUD_INVENTORY_PUBLIC.json",
+          "line_ranges": [
+            [
+              9,
+              46
+            ],
+            [
+              49,
+              78
+            ]
+          ],
+          "sha256": "b6244a7207ba57eaabb2e617a037aa520d1d8f464f1b18fccf99040efb96936c"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_audit_20261010/ROOT_REUSE_DECISION.json",
+          "line_ranges": [
+            [
+              2,
+              18
+            ],
+            [
+              20,
+              32
+            ],
+            [
+              40,
+              47
+            ]
+          ],
+          "sha256": "976d5b3f4da586a094d446b2a137d9b7ab46ebd1b8168629fa0e1121c9fbf1ff"
+        }
+      ]
+    },
+    {
+      "id": "B_corpus_release_old_narrow_and_durations",
+      "scope": {
+        "ad_rows": 204774035,
+        "duration_clause_rows": 131286035,
+        "shards_each": 2464
+      },
+      "completion": "whole-corpus-old-narrow-v1 complete；零拷贝目录与SQL视图。2026-11-15 Azure已下载目录2,562,347字节并验证冻结SHA及2,464唯一片。",
+      "fields": [
+        "JOB_HASH/SOURCE_FILE/SOURCE_ROW/RECORD_SOURCE_ROW",
+        "CREATED、STATE、usable与解析flag",
+        "general_work/specific_tool/industry_domain/object_unspecified的main/required/preferred/broad候选",
+        "四类技术检测及use/develop/implement候选",
+        "独立duration sidecar的对象/上下界/单位/BOUND_TYPE/REQUIREMENT_STRENGTH",
+        "T1–T4既有覆盖、经验/技术候选、观察时间、构成与集中度汇总"
+      ],
+      "azure_verified_entry": "azure_workspace:full_scope_catalog_preflight_20261115/20261115T120402Z/CORPUS_RELEASE_CATALOG_PRIVATE.jsonl",
+      "catalog_sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+      "reuse_now": "按既有catalog映射Azure对象并注册窄表/年限视图；不能重新投影/复制同一完整底座。",
+      "limits": [
+        "occupation_task旧字段结构性不可得，保留NA；predictive_ai旧词表全零不可解释为真实不存在。",
+        "候选未检出不是语义缺失。",
+        "Azure目录验证不等于本轮逐一验证所有底层Parquet已可读。"
+      ],
+      "do_not_rerun": [
+        "semantic_narrow全量投影",
+        "duration sidecar全量构建",
+        "已完成T1–T4计算，仅因大模型尚未全量跑完而重算"
+      ],
+      "evidence": [
+        {
+          "path": "repository:linkup/corpus_release_20261012/results/CORPUS_RELEASE_RECEIPT.json",
+          "line_ranges": [
+            [
+              2,
+              32
+            ],
+            [
+              34,
+              78
+            ]
+          ],
+          "sha256": "75e3afd8720ff8b174d0fe3a3b52fb7f8367c45305edecbcef78cc115181c921"
+        },
+        {
+          "path": "repository:linkup/corpus_release_20261012/results/SCHEMA_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              57
+            ],
+            [
+              58,
+              247
+            ],
+            [
+              531,
+              595
+            ]
+          ],
+          "sha256": "a779d31376c1774a5b3c6be5963ea37ea1f8d35a016eb0ffe042282cf73fb2e0"
+        },
+        {
+          "path": "repository:linkup/corpus_release_20261012/README.md",
+          "line_ranges": [
+            [
+              3,
+              17
+            ],
+            [
+              19,
+              39
+            ],
+            [
+              51,
+              54
+            ]
+          ],
+          "sha256": "8d2ecec314931ad35025b5eedf11d3655532feeadedf8d4935a469e49d8d0fcb"
+        },
+        {
+          "path": "external_public:azure_gpu_launch_20261115/FULL_SCOPE_CATALOG_PREFLIGHT_PUBLIC.json",
+          "line_ranges": [
+            [
+              14,
+              31
+            ],
+            [
+              132,
+              137
+            ]
+          ],
+          "sha256": "569a26a242eadc05e1b4f7776d85d525337a62b87da35b0b4e629ce9739ceb1e"
+        }
+      ]
+    },
+    {
+      "id": "C_D64_D65_D66_reuse_framework_already_implemented",
+      "scope": {
+        "D66_first5_ads": 424226,
+        "exact_four_key_matches": 424226,
+        "old_usable_current_processed": 424219,
+        "old_experience_rows": 872022,
+        "old_v6_audit_rows": 541170
+      },
+      "completion": "D64仅准许候选层及执行修复；D65已纠正重复全库提取方向；D66旧新overlay和证据定位sidecar完成并独立QA通过。",
+      "reuse_now": "直接沿用FIELD_REUSE_MAP_PUBLIC.json的direct_reuse/candidate_existing/targeted_delta_required三分法、四键连接、版本隔离、相同支持与权重以及既有增量实现。不要再新建一套同义框架。",
+      "existing_overlay_sha256": "aab7db0501836c74ecb47d8b0b1bb5ce086e315749c4e76679527bb04ef9b7e5",
+      "existing_evidence_locator_sha256": "f101ae0d7387ba67a2b693f038b52afd75bc2b6d77d2cc469fa4a8e01ae24507",
+      "existing_code_entry": "repository:linkup/analysis_transition_20260930/reuse_analysis_20261010/FIELD_REUSE_MAP_PUBLIC.json",
+      "do_not_rerun": [
+        "D64 held controller及后续自动扩片",
+        "D66已完成5片旧新对比或再次从原文提取同列",
+        "把已经存在的字段复用契约重新设计一遍"
+      ],
+      "evidence": [
+        {
+          "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/d64_acceptance/ROOT_MEASUREMENT_USE_CONTRACT.json",
+          "line_ranges": [
+            [
+              2,
+              10
+            ],
+            [
+              35,
+              38
+            ],
+            [
+              56,
+              58
+            ]
+          ],
+          "sha256": "62d56fbef87ecf0afd8479fee95101668aec0ffed23ea39cacc0ac39e966526f"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_analysis_20261010/FIELD_REUSE_MAP_PUBLIC.json",
+          "line_ranges": [
+            [
+              5,
+              18
+            ],
+            [
+              33,
+              100
+            ],
+            [
+              114,
+              118
+            ],
+            [
+              154,
+              170
+            ],
+            [
+              193,
+              212
+            ]
+          ],
+          "sha256": "0127bcf981a110a0edafb66cfa7ddebd9d516c117e841af70a50c9d5fbfc1817"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_analysis_20261010/public/RUN_RECEIPT_PUBLIC.json",
+          "line_ranges": [
+            [
+              13,
+              42
+            ],
+            [
+              74,
+              85
+            ]
+          ],
+          "sha256": "09ba7ec62c8d8b60ec7217a2aa4895ff6e986aa6399a872fd6e6bd4105871e2a"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_analysis_20261010/public/QA_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              18
+            ]
+          ],
+          "sha256": "790fa975c00042caf1a418779f40a933496686fb34ab71148369de09f9df2af3"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_analysis_20261010/ROOT_RESULT_AND_NEXT_SCOPE_PUBLIC.json",
+          "line_ranges": [
+            [
+              89,
+              118
+            ]
+          ],
+          "sha256": "da63e0449387daf58cec1cd5489aabdbe93127b124c3db040be42b5c33fdf38f"
+        }
+      ]
+    },
+    {
+      "id": "D_D67_additive_rule_outputs_and_full_metadata69",
+      "scope": {
+        "completed_new_rule_shards": 69,
+        "posting_rows": 5804936,
+        "current_processed": 5804916,
+        "exact_old_matches": 5804936,
+        "old_usable_current_processed": 5804788,
+        "current_evidence_rows": 29664560,
+        "official_occupation_rows": 5801980
+      },
+      "completion": "69片旧新增量最终accepted；metadata64新增5,380,710行＋先前5片424,226行=5,804,936，最终独立QA pass且精确目标键守恒，无未解决一对多。",
+      "fields": [
+        "已有旧测量列+新版occupation/task经验、newcomer、责任、qualification/unknown候选",
+        "COMPANY_ID、官方occupation状态、CREATED、地理及明确缺失状态",
+        "固定技术组及共同职业支持的旧/新对比",
+        "保留字面年限、强弱和资格条件；共同支持中1,251,746条numeric经验条款已汇总"
+      ],
+      "reuse_now": "现有69片升级结果逐键overlay进底座，已有metadata直接消费；这些片无需再跑原文，也不能说其他旧底座片未清洗。",
+      "metadata69_output_sha256": "058ab850fb88fe9497933771ffdc6b7a010d5ab0828ca6b6de269ff4d3866cb5",
+      "global_manifest_sha256": "eef8a7f2833714d3b68eb74726f5255187b0d7ccdbe69ff4313372de992520af",
+      "historical_global_manifest_locator": "legacy_public_home_workspace:linkup_rulefirst_20261008/reuse_expansion_20261010/private/final/GLOBAL_OUTPUT_MANIFEST_PRIVATE.json",
+      "historical_locator_warning": "SCNet历史路径只作Azure迁移账本定位，不是本轮允许执行位置；本轮未重新验证其全部Azure对应对象。",
+      "limitations": [
+        "69片是完成片便利波次，非概率样本、非全库新增字段覆盖。",
+        "D67旧numeric仅audit口径；D66旧experience+audit联合口径不能直接移植为D67完成状态。",
+        "公司×职业估计在D67最终summary记为not_delivered；不能把D63或fixed10k的同名局部结果当此范围结果。",
+        "规则/数值QA不是语义准确率。"
+      ],
+      "do_not_rerun": [
+        "已完成metadata64补连",
+        "69片原文提取或旧新overlay",
+        "已完成闭幕条款聚合；不可由旧中间metadata缺失记录判断它尚未完成"
+      ],
+      "evidence": [
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/D67_COMPLETED_INVENTORY_PUBLIC.json",
+          "line_ranges": [
+            [
+              5,
+              27
+            ],
+            [
+              100,
+              115
+            ]
+          ],
+          "sha256": "61c9ae4e2e621d1bfdeb3368ce673725b3a90be19559695a9c19e8d0dc2bdbc0"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/ROOT_FINAL_ACCEPTANCE_AND_NEXT_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              29
+            ],
+            [
+              53,
+              66
+            ]
+          ],
+          "sha256": "23c5eb86328a1e70a106d65cac4795ea7e2fa43d98ec9b8699e168c56bcfd95b"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/public/final_results/final/RUN_RECEIPT_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              31
+            ],
+            [
+              74,
+              75
+            ]
+          ],
+          "sha256": "78e07867c856cd079fd5f39b3ca170c92e7881dbf3c4ed618e7e314bc7c1fced"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/public/final_results/final/SUMMARY_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              18
+            ]
+          ],
+          "sha256": "274bf95c8f568625ee6a54120edc6c9a589c1c3991fa39c000bdea9a1faf8f32"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/public/final_results/metadata/METADATA69_RECEIPT_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              17
+            ],
+            [
+              28,
+              38
+            ]
+          ],
+          "sha256": "98e143d084cc5926ff9c1ae0bf4d0957a10a5b5f4a2b85c7860ddbb788912a9c"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/public/final_results/metadata/METADATA69_QA_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              22
+            ]
+          ],
+          "sha256": "ef1b4fc58d99cc51aadceb42b41412d37027946b3a7b84ce93cc85cb1846873d"
+        },
+        {
+          "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/public/final_results/closing_package/CLOSING_PACKAGE_SUMMARY_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              16
+            ]
+          ],
+          "sha256": "4af4e329eed208a8e168f276c9b197bcfabb0aacc1c1fe6f2ac0f397e2e77b36"
+        }
+      ]
+    },
+    {
+      "id": "E_retained_candidate_company_occupation_join",
+      "scope": {
+        "technical_candidate_ads": 6010975,
+        "Records_exact_one": 6010975,
+        "ONET_exact_one": 6008133,
+        "ONET_missing": 2842,
+        "ONET_multiple": 0
+      },
+      "completion": "候选专用单独view已纳入corpus release；不是2.047亿广告完整宽表。",
+      "fields": [
+        "COMPANY_ID、CREATED、OCCUPATION_MAJOR、CENSUS_REGION",
+        "OBSERVATION_END/CLOSED、DATE_COMPLETE、STALE_DELETE_OR_REAPPEARANCE与跨2022-11-30风险"
+      ],
+      "reuse_now": "当前候选范围直接用既有连接。全库需要额外metadata宽表时复用保留cache/聚合并做必要键控投影，而不是再清洗正文。",
+      "limits": [
+        "T4曾执行全库连接但只保留汇总，未保留临时全库逐行Records/ONET宽表。",
+        "旧回执对候选数据SHA是manifest-recorded，不能冒称本轮重新hash全部字节。"
+      ],
+      "do_not_rerun": [
+        "这6,010,975条已完成候选metadata连接",
+        "以601万替代全库广告分母"
+      ],
+      "evidence": [
+        {
+          "path": "repository:linkup/corpus_release_20261012/results/CORPUS_RELEASE_RECEIPT.json",
+          "line_ranges": [
+            [
+              19,
+              31
+            ]
+          ],
+          "sha256": "75e3afd8720ff8b174d0fe3a3b52fb7f8367c45305edecbcef78cc115181c921"
+        },
+        {
+          "path": "repository:linkup/corpus_release_20261012/results/SCHEMA_PUBLIC.json",
+          "line_ranges": [
+            [
+              485,
+              529
+            ]
+          ],
+          "sha256": "a779d31376c1774a5b3c6be5963ea37ea1f8d35a016eb0ffe042282cf73fb2e0"
+        },
+        {
+          "path": "repository:linkup/corpus_release_20261012/RESULTS_ZH.md",
+          "line_ranges": [
+            [
+              9,
+              17
+            ]
+          ],
+          "sha256": "3739abf90f4fd05aef24fca4d259370169e6dc9d4d95da11329507f7f940b278"
+        }
+      ]
+    },
+    {
+      "id": "F_fixed10k_metadata_and_bounded_micro_results",
+      "scope": {
+        "ads": 10000,
+        "normalized_contexts": 7617,
+        "supplier_company_ids": 2503,
+        "Q1_common_support_ads": 999,
+        "Q1_contexts": 693,
+        "Q1_companies": 83,
+        "Q1_cells": 108,
+        "Q2_common_support_positive_eligible_ads": 10
+      },
+      "completion": "2026-10-26 RELEASE_ACCEPTED_AND_STOPPED；连接及独立数值检查完成，无description读取与标签改写。",
+      "fields": [
+        "全部10,000条原身份/标签/掩码/权重保留",
+        "公司、标题、州、CREATED、LAST_CHECKED各10,000条；DELETE_DATE9,702；LAST_UPDATED2,081",
+        "公司×职业支持漏斗、Q1描述差异及Q2支持不足NA"
+      ],
+      "reuse_now": "用作既有有限参考及工程连接基准，不重新构造同一10k表。它不是用户全量交付的替代品。",
+      "do_not_rerun": [
+        "fixed10k metadata补连/旧Q1Q2仅为复述而重算",
+        "重复语义阅读已接受原记录",
+        "把有限样本扩写为全库结果"
+      ],
+      "evidence": [
+        {
+          "path": "repository:linkup/metadata_research_20261026/RELEASE_RECEIPT_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              13
+            ],
+            [
+              32,
+              39
+            ]
+          ],
+          "sha256": "785649f19ce0f4168d4ca2e963cfe7273cfbe39cd237579392fb9a9c0218156a"
+        },
+        {
+          "path": "repository:linkup/metadata_research_20261026/RESULTS_ZH.md",
+          "line_ranges": [
+            [
+              3,
+              26
+            ],
+            [
+              35,
+              50
+            ],
+            [
+              54,
+              72
+            ]
+          ],
+          "sha256": "48a9d51e28fb81bd69236206f0e9672fc2548fbad63f2a3e5e7c4d2e3e1094b1"
+        },
+        {
+          "path": "repository:linkup/metadata_research_20261026/results/public/METADATA_COVERAGE_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              5
+            ],
+            [
+              55,
+              79
+            ],
+            [
+              107,
+              129
+            ]
+          ],
+          "sha256": "ffbf34b4f8e79a7ce80026a2f04c4ac4cd648c913364913d875f7159c6ddb623"
+        }
+      ]
+    },
+    {
+      "id": "G_existing_Records_macro_Azure_delivery",
+      "scope": {
+        "US_Records_all_history": 253210047,
+        "US_Records_2016_onward": 199644730,
+        "months_2016_2026": 129,
+        "years": 11,
+        "existing_source_objects": 12,
+        "source_bytes": 399393
+      },
+      "completion": "Azure run004已真实执行、14输出SHA复核、4公共Blob完整读回验证。无Description读取或模型调用。",
+      "cloud_output": "azure_workspace:macro_records_20261115/run004",
+      "fields": [
+        "新首次观察流量",
+        "月末活跃存量及missing-delete敏感性",
+        "交付snapshot职业季度/年度构成",
+        "2022-11前后12个月描述对比；非因果/非正式断点检验"
+      ],
+      "observed_results": {
+        "new_first_observed_pre12m": 25328196,
+        "new_first_observed_post12m": 22549332,
+        "change_pct": -10.971424889478898,
+        "active_stock_mean_change_pct": -13.823082060884017
+      },
+      "reuse_now": "论文宏观部分已可直接使用；不必等待大模型全量。CREATED明确标注首次观察时间代理。",
+      "gaps": [
+        "全国Entry-level份额缺同范围同时间标签拼接，不是没有任何宏观结果。",
+        "当前退出为存量恒等式诊断，尚无直接DELETE_DATE退出维度表。",
+        "2026仅至9月6日，不能与完整2025年比较。",
+        "11/15早期macro文档/merge接口仍写人工门，这是历史实现限制而非当前用户要求；本轮不修改，父任务需按当前AI质检政策更新该接口并保留版本。"
+      ],
+      "do_not_rerun": [
+        "现有年度/月度基本量与职业构成聚合",
+        "因为全国entry字段缺失而重启整个Records管线"
+      ],
+      "evidence": [
+        {
+          "path": "external_public:macro_records_20261115/RESULTS_ZH.md",
+          "line_ranges": [
+            [
+              3,
+              23
+            ],
+            [
+              25,
+              33
+            ]
+          ],
+          "sha256": "227850c94f60e635477f99adcabd514beb9f7c379abfa3ef8cc4676365bb6570"
+        },
+        {
+          "path": "external_public:macro_records_20261115/FINAL_VERIFICATION_PUBLIC.json",
+          "line_ranges": [
+            [
+              2,
+              44
+            ],
+            [
+              46,
+              68
+            ]
+          ],
+          "sha256": "5460d9f518fb36660590104ef5de9cea67a40451551bb5f0c39ab99c99932bce"
+        }
+      ]
+    }
+  ],
+  "existing_incremental_code_not_a_new_framework": [
+    {
+      "entry": {
+        "path": "repository:linkup/analysis_transition_20260930/reuse_analysis_20261010/FIELD_REUSE_MAP_PUBLIC.json",
+        "line_ranges": [
+          [
+            5,
+            18
+          ],
+          [
+            200,
+            212
+          ]
+        ],
+        "sha256": "0127bcf981a110a0edafb66cfa7ddebd9d516c117e841af70a50c9d5fbfc1817"
+      },
+      "use": "权威字段复用/增量地图已存在；沿用并仅更新新证据。"
+    },
+    {
+      "entry": {
+        "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/code/project_one_shard.py",
+        "line_ranges": [
+          [
+            16,
+            17
+          ],
+          [
+            39,
+            51
+          ],
+          [
+            81,
+            81
+          ],
+          [
+            133,
+            133
+          ],
+          [
+            227,
+            227
+          ]
+        ],
+        "sha256": "355d08820d4e15cd2136836c4fef757149b7bf0b268312ed64a2e663a352d945"
+      },
+      "use": "按4-key旧新overlay及重复key/行数检查；只允许缺字段增量，不重跑已完成片。"
+    },
+    {
+      "entry": {
+        "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/code/metadata64_pipeline.py",
+        "line_ranges": [
+          [
+            129,
+            140
+          ],
+          [
+            175,
+            187
+          ],
+          [
+            227,
+            234
+          ]
+        ],
+        "sha256": "19375cb12f1df2f854e1b1d0442703b9c689989be12c091cbf4d57cec95eb8d4"
+      },
+      "use": "已有保留metadata cache的集中target-key连接实现；64片结果已完成，脚本只作为后续真缺键接口参考。"
+    },
+    {
+      "entry": {
+        "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/code/aggregate_expansion.py",
+        "line_ranges": [
+          [
+            8,
+            9
+          ],
+          [
+            92,
+            96
+          ],
+          [
+            212,
+            216
+          ]
+        ],
+        "sha256": "e01405caadf749a381b90366e6bf79da56c7b02b9090e9ac6ce8e145c0b11408"
+      },
+      "use": "已有分片metadata/overlay拼接与全局manifest回执；要迁移现有入口，不再重造原框架。"
+    },
+    {
+      "entry": {
+        "path": "repository:linkup/analysis_transition_20260930/reuse_expansion_20261010/code/project_closing_evidence.py",
+        "line_ranges": [
+          [
+            9,
+            13
+          ],
+          [
+            55,
+            62
+          ],
+          [
+            81,
+            81
+          ],
+          [
+            129,
+            138
+          ]
+        ],
+        "sha256": "b5a4b98a3dcdaf860d16165977e5d4d65881b474ead379bc715c730630cbc4e0"
+      },
+      "use": "现成证据侧表投影实现；literal-years/条件汇总不必再调用模型。"
+    }
+  ],
+  "minimum_actual_remaining_work_not_executed_here": [
+    "用现有迁移账本/catalog对齐用户完整交付约5亿口径；确定非US、重复交付、Records/Description及增量的身份对应，不擅自缩成2.047亿。",
+    "沿用现成四键身份＋版本字段接通旧底座和D66/D67增量，不再建立另一套原始匹配/规则清洗框架。",
+    "只对FIELD_REUSE_MAP标出的真缺维度做命名增量：occupation/task经验，完整graduate/junior/newcomer语境和当前职责关系；先消费已完成69片和所有有效细读结果。",
+    "精细模型复用必须额外满足完整规范输入指纹与schema/instruction版本兼容；单凭JOB_HASH、文件名或同广告不同时间不可复用语义答案。未知/隔离状态不转负值，不重判保护拒绝内容。",
+    "宏观结果直接进入写作；新增全国entry指标需缺失字段增量完成后的键控拼接，不以小样本替代全量。",
+    "用当前AI质检政策做独立验证但不把模型一致率当真实准确率；本审计既不要求真人审核，也不自动升级历史候选层为语义验收。"
+  ],
+  "metadata_only_checks": {
+    "corpus_schema_SHA_matches_release": true,
+    "d66_receipt_SHA_matches_coverage_addendum": true,
+    "d67_summary_SHA_matches_final_receipt": true,
+    "d67_metadata_union_conserves_5804936": true,
+    "d67_metadata_QA_pass_no_errors": true,
+    "fixed10k_coverage_SHA_matches_release": true,
+    "azure_verified_catalog_SHA_equals_old_release": true
+  },
+  "actions_this_audit": {
+    "cloud_connections": 0,
+    "SCNet_connections": 0,
+    "model_calls": 0,
+    "raw_advertisement_files_read": 0,
+    "protected_content_read": 0,
+    "production_jobs_started": 0,
+    "old_result_or_schema_writes": 0,
+    "AGENTS_changes": 0,
+    "new_public_audit_report": "external_public:reuse_audit_20261116/EXISTING_BASE_CAPABILITIES_PUBLIC.json"
+  }
+}
