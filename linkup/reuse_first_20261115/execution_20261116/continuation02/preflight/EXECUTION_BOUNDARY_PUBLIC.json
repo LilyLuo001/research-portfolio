@@ -1,0 +1,51 @@
+{
+  "scope": "finish_current500_qualification_no_new_production",
+  "reference_unique_max": 350,
+  "prior_independent_references_reused": 150,
+  "Astra_unique_max": 50,
+  "case_replacement_or_prompt_tuning": false,
+  "route": "existing_OpenCode_to_Azure_Kimi",
+  "new_resources": false,
+  "human_review": false,
+  "legs_serial": true,
+  "Kimi_scheduled_TPM": 240000,
+  "Kimi_actual_TPM": 300000,
+  "Luna_actual_TPM": 100000,
+  "Astra_scheduled_TPM": 800000,
+  "project_TPM": 1000000,
+  "Kimi_max_physical_attempts": 420,
+  "Kimi_per_case_attempt_max": 2,
+  "Kimi_dollar_reservation_cap": 135,
+  "Astra_dollar_reservation_cap": 100,
+  "Kimi_public_Azure_price_input_output_per_M": [
+    2.3,
+    11.5
+  ],
+  "Astra_conservative_input_output_per_M": [
+    12.5,
+    50.0
+  ],
+  "no_invoice_claim": true,
+  "paper_paused": true,
+  "code_SHA256": {
+    "prepare_kimi_transport.py": "000adbd8bade6086bd015671e29333971eef5e3f098e5c3cbe31c1f8e21eb890",
+    "cloud_gap_lineage_files.py": "5f5a7be040930f83da40bd455dee0ee02d599234eaf7103f7e387b6120572a08",
+    "cloud_reference_lease.py": "cde98fe48644fc32165454cdd6d04ff0d342292aea9773c9b2d335040b1ff05a",
+    "cloud_gap_lineage.py": "385fd1b23e225fc87c6e7ea38c8d86aae12bb77410192d5deb9e812ef7f43860",
+    "publish_public.py": "242253e4f7c5a1c98e1927a32f69b36a88195e5e34975305571a5ddea5453ee1",
+    "kimi_worker.py": "a829eadebdbd01654f898347791d2d53d6d52ae3747858362c4d096dd650f4f1",
+    "cloud_prepare_kimi_transport.py": "ca8f3b3f5706772994868ebf62fd40cf44b891bcdf2180c1066dd7bb7a59586a",
+    "control.py": "781210615aba57b488f96ea88473c8b30737e31e5195e4676dd74ae31cc388f6",
+    "cloud_verify_held_gaps.py": "eaa3ec2b6530f944b453372de29aebea3a3f5ef4541003dcd2d53af20ad4ef77",
+    "kimi_gateway.py": "3427c11c7486f575c1f528d2a272cce5225ec045af631489c2b9ec671df32a4b",
+    "cloud_commit_references.py": "bcc54b4fea8da8374404ac458f8e7f08c747b6f58bca8dbf79b549a8d50489e6",
+    "cloud_astra_audit_worker.py": "395d427960cc5b6b60abf319c4bb65789c95570f32214e461a56e6f7c7b01776",
+    "test_kimi_gateway.py": "812f59618d806e90ab070310724f187618adf04b507c14eafe1308a614eb64c6",
+    "cloud_status.py": "a47eeba65331568771e63229443c387022addfd52142983dff619ca01fc60dfc",
+    "cloud_targeted_gap_inventory.py": "ecddb5610c9f7b630d70b0cb92aab49d82ac065541b51884cce1effb17f716e5",
+    "continue_fixed_protocol.py": "120ff1402e6ccd237cf81377478951bec3aa777d4c88d0afd63390b26d3d91ad",
+    "cloud_evaluate_prepare_audit.py": "c2e49af82326b998518984ebfb770e08f58762723dab7461717dd375e802412a"
+  },
+  "frozen_at_utc": "2026-11-15T19:22:43.782151+00:00",
+  "loopback_address_source_spelling": "tuple join; identical loopback endpoint, no permission change"
+}

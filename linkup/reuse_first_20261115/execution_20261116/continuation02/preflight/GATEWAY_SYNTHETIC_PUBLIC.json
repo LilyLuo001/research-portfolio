@@ -1,0 +1,26 @@
+{
+  "source_sha256": "3427c11c7486f575c1f528d2a272cce5225ec045af631489c2b9ec671df32a4b",
+  "passed": 17,
+  "tests": [
+    "SSE_forwarded",
+    "max_tokens_and_usage_enforced",
+    "raw_usage_preserved",
+    "credential_reasoning_source_not_logged",
+    "completed_duplicate_blocked",
+    "uncertain_submission_never_retried",
+    "confirmed_429_then_bounded_retry",
+    "attempt_count_durable",
+    "wrong_model_rejected_without_upstream",
+    "altered_source_rejected_without_upstream",
+    "provider_filter_5xx_never_retried",
+    "SSE_content_filter_explicitly_quarantined",
+    "exclusions_blocked_before_upstream",
+    "physical_attempt_limit_two_enforced",
+    "persisted_dollar_cap_before_forward",
+    "conservative_reservations_do_not_disappear",
+    "expired_serial_lease_no_call"
+  ],
+  "real_model_calls": 0,
+  "private_source_read": false,
+  "scope": "gateway synthetic HTTP boundary only; not semantic quality certification"
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-15T18:43:27.169891+00:00",
+  "created_utc": "2026-11-15T19:25:49.180890+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -86,13 +86,13 @@
     },
     {
       "file": "PUBLIC_COPY_MANIFEST.json",
-      "bytes": 81695,
-      "sha256": "50e2ed25f5fafbd4012493fb34e0afe74c423c1a49cacaf180893f8663eec4d6"
+      "bytes": 93641,
+      "sha256": "33884d0b711418add4dda720470463584009c182f4083e64342bdb60b6de1d71"
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 15411,
-      "sha256": "c4456973c69cff721e8d5feefbe18c09129e7f103b845ebdbae610c1fcffe388"
+      "bytes": 17004,
+      "sha256": "ca1d457686908a15baeddbd6669cbff60fcfc08b1ffdf81a730fe0cdde186efc"
     },
     {
       "file": "README.md",
@@ -660,6 +660,106 @@
       "sha256": "63dac5702a1d357b8f21f49a25bffb674e485c9ddece636eba731926c156b491"
     },
     {
+      "file": "execution_20261116/continuation02/preflight/EXECUTION_BOUNDARY_PUBLIC.json",
+      "bytes": 2683,
+      "sha256": "4f3bc9da39e10c8ca9f0e6c45b80cbd02328b770fc7541374f4fc16f46bd9373"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/GATEWAY_SYNTHETIC_PUBLIC.json",
+      "bytes": 941,
+      "sha256": "506d32eea8ab4c9839eff0a068183ad0a2efb0a76ea3da315388b070751e1cee"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/KIMI_TRANSPORT_PUBLIC.json",
+      "bytes": 284,
+      "sha256": "2e4ff932518b7c3503c638e6eaafd6095bfd3a5a1877af4a879667005e062d8f"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/REFERENCE_BOUNDARY_PUBLIC.json",
+      "bytes": 569,
+      "sha256": "aa0e03e17efeef1037b82bda3d35f4f81854b669194a0e20471b00eeb362375d"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_astra_audit_worker.py",
+      "bytes": 16147,
+      "sha256": "395d427960cc5b6b60abf319c4bb65789c95570f32214e461a56e6f7c7b01776"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_commit_references.py",
+      "bytes": 3879,
+      "sha256": "bcc54b4fea8da8374404ac458f8e7f08c747b6f58bca8dbf79b549a8d50489e6"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_evaluate_prepare_audit.py",
+      "bytes": 8063,
+      "sha256": "c2e49af82326b998518984ebfb770e08f58762723dab7461717dd375e802412a"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_gap_lineage.py",
+      "bytes": 2187,
+      "sha256": "385fd1b23e225fc87c6e7ea38c8d86aae12bb77410192d5deb9e812ef7f43860"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_gap_lineage_files.py",
+      "bytes": 1381,
+      "sha256": "5f5a7be040930f83da40bd455dee0ee02d599234eaf7103f7e387b6120572a08"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_prepare_kimi_transport.py",
+      "bytes": 3066,
+      "sha256": "ca8f3b3f5706772994868ebf62fd40cf44b891bcdf2180c1066dd7bb7a59586a"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_reference_lease.py",
+      "bytes": 3122,
+      "sha256": "cde98fe48644fc32165454cdd6d04ff0d342292aea9773c9b2d335040b1ff05a"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_status.py",
+      "bytes": 787,
+      "sha256": "a47eeba65331568771e63229443c387022addfd52142983dff619ca01fc60dfc"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/cloud_targeted_gap_inventory.py",
+      "bytes": 2814,
+      "sha256": "ecddb5610c9f7b630d70b0cb92aab49d82ac065541b51884cce1effb17f716e5"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/continue_fixed_protocol.py",
+      "bytes": 5579,
+      "sha256": "120ff1402e6ccd237cf81377478951bec3aa777d4c88d0afd63390b26d3d91ad"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/control.py",
+      "bytes": 2172,
+      "sha256": "781210615aba57b488f96ea88473c8b30737e31e5195e4676dd74ae31cc388f6"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/kimi_gateway.py",
+      "bytes": 13488,
+      "sha256": "3427c11c7486f575c1f528d2a272cce5225ec045af631489c2b9ec671df32a4b"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/kimi_worker.py",
+      "bytes": 11010,
+      "sha256": "a829eadebdbd01654f898347791d2d53d6d52ae3747858362c4d096dd650f4f1"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/prepare_kimi_transport.py",
+      "bytes": 1766,
+      "sha256": "000adbd8bade6086bd015671e29333971eef5e3f098e5c3cbe31c1f8e21eb890"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/publish_public.py",
+      "bytes": 2301,
+      "sha256": "242253e4f7c5a1c98e1927a32f69b36a88195e5e34975305571a5ddea5453ee1"
+    },
+    {
+      "file": "execution_20261116/continuation02/preflight/code/test_kimi_gateway.py",
+      "bytes": 8968,
+      "sha256": "812f59618d806e90ab070310724f187618adf04b507c14eafe1308a614eb64c6"
+    },
+    {
       "file": "integration_20261116/DELIVERY_ZH.md",
       "bytes": 5038,
       "sha256": "c6d7a13b436e58e6ad381b1c4336913a4bce0f4749360f29a90c783b6c2b0f78"
@@ -825,10 +925,10 @@
       "sha256": "6479a4b70deb1891c111f5d297fbc14d3b4d792ee34ffc2963611daffbea3df3"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 164,
+  "checked_file_count_excluding_this_receipt": 184,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 35,
+  "staged_file_count": 23,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,
