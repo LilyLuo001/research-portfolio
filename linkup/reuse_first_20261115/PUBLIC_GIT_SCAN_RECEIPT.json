@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-15T15:21:35.457319+00:00",
+  "root_repo_relative_path": "linkup/reuse_first_20261115",
+  "status": "pass",
+  "checked_files": [
+    {
+      "file": "README.md",
+      "bytes": 3245,
+      "sha256": "8d1965db08f8cc3d018e2f368c71ba97c939da247884f761b18cf99d39c24524"
+    },
+    {
+      "file": "AUTHORIZATION_AND_BOUNDARIES_PUBLIC.json",
+      "bytes": 5704,
+      "sha256": "2f3b9c8d76a96e84bb0ca379a7d69a57cbb861d38704999072b14d366af5f11a"
+    },
+    {
+      "file": "BUDGET_RECONCILIATION_PUBLIC.json",
+      "bytes": 3154,
+      "sha256": "a6185c8739e8456221de8c523b1116f87a35430d7a497a983353f1f556f4e3db"
+    },
+    {
+      "file": "OLD_OCT09_BUDGET_PROVENANCE_PUBLIC.json",
+      "bytes": 9189,
+      "sha256": "9994623b7d8699bfc0eaa485b9bc908e05c1b3ee672cac3ecf5b823a724de682"
+    },
+    {
+      "file": "NEW_5000_PLAN_CORRECTION_AUDIT_PUBLIC.json",
+      "bytes": 5442,
+      "sha256": "d7ef16a30f661ca48dd641df273a46005ddc4e95b6294d194a8f5e552e2f2dfd"
+    },
+    {
+      "file": "PUBLIC_COPY_MANIFEST.json",
+      "bytes": 2082,
+      "sha256": "060d2e529fa4d597bf82ecccff3523818b36dd781b5151ec94e82ec2194517e6"
+    },
+    {
+      "file": "PUBLIC_GIT_ALLOWLIST.json",
+      "bytes": 777,
+      "sha256": "0a1bf2339ad2a823a0e15403f90787b32b29a060b0dba03fcb51ebd94eb4fb03"
+    },
+    {
+      "file": "scan_public_git.py",
+      "bytes": 9460,
+      "sha256": "967317e0481bb659149aed2d809044d7952a6f98f6c09dfc8efc5e625a66ae68"
+    },
+    {
+      "file": "BENCHMARK_CONFIG_PUBLIC.json",
+      "bytes": 1332,
+      "sha256": "f290676e846b211aae0b2226f37ae3a837f434b1d9c0f73e84e1c4ee29dab749"
+    }
+  ],
+  "checked_file_count_excluding_this_receipt": 9,
+  "derived_receipt_excluded_from_own_content_hashes": true,
+  "staged_check_requested": true,
+  "staged_file_count": 10,
+  "synthetic_detector_self_tests": {
+    "passed": 8,
+    "total": 8,
+    "all_passed": true
+  },
+  "findings": [],
+  "staging_committing_or_pushing_performed": false,
+  "limitations": "Lightweight pattern/schema screen plus an explicitly reviewed allowlist; not a guarantee against arbitrary secrets or semantic errors."
+}

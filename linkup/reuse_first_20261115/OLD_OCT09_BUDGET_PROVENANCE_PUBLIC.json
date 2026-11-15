@@ -1,0 +1,230 @@
+{
+  "artifact": "OLD_OCT09_BUDGET_PROVENANCE_PUBLIC",
+  "created_utc": "2026-11-15T15:05:18.523130+00:00",
+  "method": "Read-only bounded public metadata and budget-code audit. No model calls, cloud changes, corpus scans or protected thread/output reads.",
+  "conclusion_zh": "用户所引$882–948及其除以5得到的$176–190，来源于7,635篇唯一标准化正文（代表10,000条冻结样本记录）的联合全文判读情景，而不是5亿条全库的报价。原记录明确写not all LinkUp。",
+  "original_scope": {
+    "unique_normalized_documents": 7635,
+    "represented_frozen_sample_rows": 10000,
+    "all_linkup": false,
+    "distinct_unit": "one request per unique normalized document; sample binding retains duplicate rows",
+    "request_route": "B_full_joint",
+    "intended_fields": [
+      "experience scope/object/strength",
+      "qualification alternative conditions",
+      "technology role",
+      "task responsibility"
+    ],
+    "not_claimed_complete_field_coverage": [
+      "all education fields",
+      "salary",
+      "licensing",
+      "training policy"
+    ]
+  },
+  "historical_pricing_status": "Prices preserved in historical 2026-10-08 file, not verified as current vendor prices or current API availability.",
+  "historical_astra_batch_rate_usd_per_million": {
+    "input": 5,
+    "output": 25
+  },
+  "budget_method": {
+    "serialized_request_bytes": 99747908,
+    "included_input_components": [
+      "prompt",
+      "schema",
+      "full normalized source text",
+      "input coordinate/prefix metadata"
+    ],
+    "approx_input_formula": "sum(ceil(request_utf8_bytes_i / divisor)) for divisor in {5,4,3}; not actual tokenizer counts",
+    "total_output_formula": "7635 * 4096 = 31272960",
+    "output_includes_hidden_reasoning": true,
+    "cost_formula": "approx_input_tokens*5/1000000 + total_output_tokens*25/1000000",
+    "central_cost_usd": 906.52307,
+    "excluded": [
+      "retries",
+      "additional audits",
+      "taxes"
+    ],
+    "no_cache_discount": true,
+    "not_quote_or_guarantee": true,
+    "not_demonstrated_output_cap_sufficiency": true
+  },
+  "recomputed_source_scenarios": [
+    {
+      "scenario": "B_full_joint",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium",
+      "selector": "all",
+      "text_source": "full",
+      "service": "batch",
+      "bytes_per_token_planning_divisor": 5,
+      "output_cap_per_request": 4096,
+      "request_count": 7635,
+      "serialized_utf8_bytes": 99747908,
+      "max_request_serialized_utf8_bytes": "45622",
+      "approx_input_tokens": 19952618,
+      "max_request_approx_input_tokens": "9125",
+      "potential_long_context_request_count": "0",
+      "reasoning_output_tokens_budget": 31272960,
+      "estimated_usd": 881.58709,
+      "source_line": 29,
+      "quoted_sol_one_fifth_arithmetic_usd": 176.317418
+    },
+    {
+      "scenario": "B_full_joint",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium",
+      "selector": "all",
+      "text_source": "full",
+      "service": "batch",
+      "bytes_per_token_planning_divisor": 4,
+      "output_cap_per_request": 4096,
+      "request_count": 7635,
+      "serialized_utf8_bytes": 99747908,
+      "max_request_serialized_utf8_bytes": "45622",
+      "approx_input_tokens": 24939814,
+      "max_request_approx_input_tokens": "11406",
+      "potential_long_context_request_count": "0",
+      "reasoning_output_tokens_budget": 31272960,
+      "estimated_usd": 906.52307,
+      "source_line": 37,
+      "quoted_sol_one_fifth_arithmetic_usd": 181.304614
+    },
+    {
+      "scenario": "B_full_joint",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "medium",
+      "selector": "all",
+      "text_source": "full",
+      "service": "batch",
+      "bytes_per_token_planning_divisor": 3,
+      "output_cap_per_request": 4096,
+      "request_count": 7635,
+      "serialized_utf8_bytes": 99747908,
+      "max_request_serialized_utf8_bytes": "45622",
+      "approx_input_tokens": 33251799,
+      "max_request_approx_input_tokens": "15208",
+      "potential_long_context_request_count": "0",
+      "reasoning_output_tokens_budget": 31272960,
+      "estimated_usd": 948.082995,
+      "source_line": 45,
+      "quoted_sol_one_fifth_arithmetic_usd": 189.616599
+    }
+  ],
+  "sol_comparison": {
+    "source_for_one_fifth_factor": "User-pasted Oct 9, 13:43 conversation quote",
+    "arithmetic_only_usd_range": [
+      176.317418,
+      189.616599
+    ],
+    "independently_located_historical_sol_price_file": false,
+    "same_workload_denominator": 7635,
+    "not_current_price_quote": true
+  },
+  "fallback_scope": {
+    "fulltext_fallback_documents": 7359,
+    "denominator": 7635,
+    "rate_percent": 96.38506876227898,
+    "retained_context_characters": 45770100,
+    "fullsource_characters": 46319767,
+    "retained_character_percent": 98.81332088738702,
+    "interpretation": "Outcome of the then-conservative retrieval policy; not evidence that every compression method fails or that all corpus documents need a frontier model."
+  },
+  "reusable_assets_as_of_historical_quote": [
+    "frozen rule-first v1.2 outputs",
+    "7635 unique normalized texts",
+    "10000-row sample bindings",
+    "rule candidates",
+    "source evidence and coordinates",
+    "context packs",
+    "variable/schema contracts",
+    "budget scenario code and receipts"
+  ],
+  "historical_execution_status": {
+    "receipt_status": "complete_no_model_calls",
+    "semantic_labels_pending": true,
+    "next_gate_then": "locked eval80 once, assess scope/object/alternatives/role/evidence and actual billed tokens before full 7635",
+    "later_20261009_supersession": "D54 switched from Astra full-sample and discussed midrange API proposal to scheduled CPU code plus bounded Pro decision review; API-spend-zero is historical, not a current authorization claim."
+  },
+  "cannot_infer": [
+    "Cost or throughput for 500 million records from the old 7635-document scenario alone",
+    "Current unique normalized corpus size or eligibility scope",
+    "Current model prices/availability",
+    "Actual production token distribution or route fractions",
+    "That old semantic production ran or was paid for"
+  ],
+  "sources": [
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/contextual_handoff_20261008/README.md",
+      "line_span": [
+        3,
+        21
+      ],
+      "sha256": "3566e2a6c327e6d3c10f610fc1a1d59bf4a73209fd619be7caa0148d9d03fd88"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/contextual_handoff_20261008/ROOT_ROUTE_SELECTION.json",
+      "line_span": [
+        5,
+        29
+      ],
+      "sha256": "b42b3a0b7346b1eadf9ccdbff2b1eb9c0172d2c7a460cec1cf774f631aea9a93"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/contextual_handoff_20261008/pricing.json",
+      "line_span": [
+        2,
+        27
+      ],
+      "sha256": "4ab1ba8e19f16837794003c22f024a91bb50e79f36f5b8313dffa6f6b9fe73fa"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/contextual_handoff_20261008/DECISION_RATIONALE.md",
+      "line_span": [
+        3,
+        25
+      ],
+      "sha256": "8bf767cf4c43cff924e367764f2662fd00100f3477dfbcb2ff2b9a4d73da0238"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/rulefirst_20261008/contextual_handoff_public/CONTEXT_HANDOFF_RECEIPT_PUBLIC.json",
+      "line_span": [
+        13,
+        46
+      ],
+      "sha256": "170fb1b96e7fe410e297e16ab923e05a4c8d8663a881ef86380574b29bfc25ec"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/rulefirst_20261008/contextual_handoff_public/BUDGET_SCENARIOS_PUBLIC.csv",
+      "line_span": [
+        29,
+        45
+      ],
+      "sha256": "9d4e9e2554a4032aec583d22a5d8be9d1b2a039c2d00809f116acc666e27a9eb"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/rulefirst_20261008/build_contextual_handoff.py",
+      "line_span": [
+        135,
+        150
+      ],
+      "sha256": "4e9dc9fe08485b6b8034415d61b6d56edde4b01e08a52a9edc6b93f3f9b8eaa1"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/hybrid_production_20261009/RESEARCH_ALIGNMENT.md",
+      "line_span": [
+        3,
+        40
+      ],
+      "sha256": "1f2afee8d01e23055f1bc5a852129aaf2798147f0b67d50d56ae3a031adf2033"
+    },
+    {
+      "path": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/hybrid_production_20261009/PRO_DECISION_WORKFLOW.json",
+      "line_span": [
+        3,
+        69
+      ],
+      "sha256": "227b03b0e90326f9c71b1fa0431b39411935a8b2e375062540c54504cc64f78d"
+    }
+  ]
+}

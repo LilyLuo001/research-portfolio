@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-15T15:18:15.752134+00:00",
+  "copies": [
+    {
+      "source_label": "external_public:azure_gpu_launch_20261115/BUDGET_RECONCILIATION_PUBLIC.json",
+      "source_sha256": "35f20a4df453329c719f19d20043d32c6b6dc37a4be39efb408c052aeff801c7",
+      "published_file": "BUDGET_RECONCILIATION_PUBLIC.json",
+      "published_sha256": "a6185c8739e8456221de8c523b1116f87a35430d7a497a983353f1f556f4e3db",
+      "source_modified": false,
+      "transform": "Replace machine-specific absolute public-artifact paths with repository: or external_public: aliases; preserve all values, source SHA digests, counts, assumptions and conclusions."
+    },
+    {
+      "source_label": "external_public:azure_gpu_launch_20261115/OLD_OCT09_BUDGET_PROVENANCE_PUBLIC.json",
+      "source_sha256": "487a9853a923e66515203d57f37ab55433f4a8ac0c0de62086f90a896db3de4e",
+      "published_file": "OLD_OCT09_BUDGET_PROVENANCE_PUBLIC.json",
+      "published_sha256": "9994623b7d8699bfc0eaa485b9bc908e05c1b3ee672cac3ecf5b823a724de682",
+      "source_modified": false,
+      "transform": "Replace machine-specific absolute public-artifact paths with repository: or external_public: aliases; preserve all values, source SHA digests, counts, assumptions and conclusions."
+    },
+    {
+      "source_label": "external_public:azure_gpu_launch_20261115/NEW_5000_PLAN_CORRECTION_AUDIT_PUBLIC.json",
+      "source_sha256": "e702c55c8469de25983101fb4914f44e97574dbe33c084408aee5eb27ef92aad",
+      "published_file": "NEW_5000_PLAN_CORRECTION_AUDIT_PUBLIC.json",
+      "published_sha256": "d7ef16a30f661ca48dd641df273a46005ddc4e95b6294d194a8f5e552e2f2dfd",
+      "source_modified": false,
+      "transform": "Replace machine-specific absolute public-artifact paths with repository: or external_public: aliases; preserve all values, source SHA digests, counts, assumptions and conclusions."
+    }
+  ],
+  "sensitive_source_data_copied": false,
+  "raw_advertisement_or_model_output_copied": false,
+  "scope": "Three existing aggregate public budget-reconciliation reports only."
+}

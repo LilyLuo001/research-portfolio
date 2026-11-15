@@ -1,0 +1,76 @@
+{
+  "at_utc": "2026-11-15T15:06:05.758756+00:00",
+  "status": "old_and_new_budget_scope_reconciled_not_new_quote",
+  "historical_source": {
+    "readme": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/contextual_handoff_20261008/README.md",
+    "readme_sha256": "3566e2a6c327e6d3c10f610fc1a1d59bf4a73209fd619be7caa0148d9d03fd88",
+    "decision": "repository:linkup/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/contextual_handoff_20261008/ROOT_ROUTE_SELECTION.json",
+    "decision_sha256": "b42b3a0b7346b1eadf9ccdbff2b1eb9c0172d2c7a460cec1cf774f631aea9a93",
+    "scope_line": 5,
+    "scope_verbatim": "Existing 7635 unique normalized documents representing 10000 frozen sample rows; not all LinkUp",
+    "budget_lines": [
+      20,
+      27
+    ]
+  },
+  "historical_budget": {
+    "unique_documents": 7635,
+    "represented_sample_rows": 10000,
+    "covers_all_LinkUp": false,
+    "assumed_output_tokens_per_unique_document": 4096,
+    "assumed_output_includes_reasoning": true,
+    "batch_USD_range": [
+      881.59,
+      948.08
+    ],
+    "central_case": {
+      "approx_input_tokens": 24939814,
+      "total_output_budget_tokens": 31272960,
+      "batch_usd": 906.52307
+    },
+    "Sol_one_fifth_arithmetic_USD_range": [
+      176.317418,
+      189.616599
+    ],
+    "historical_Sol_rate_independently_retrieved": false,
+    "actual_invoice": false,
+    "excluded": [
+      "retries",
+      "tax",
+      "additional_audit_or_adjudication"
+    ],
+    "fulltext_fallback_96_4_percent_is_route_not_error_rate": true
+  },
+  "recent_5000_plan": {
+    "file": "external_public:azure_gpu_launch_20261115/LAYERED_EXECUTION_ESTIMATE_PUBLIC.json",
+    "sha256": "be89d50dad4c2ea2643d63bca53405c3bfa94679217031e29271c10aedb0da63",
+    "was_budget_allowance_designed_around_user_credit": true,
+    "was_measured_required_cost": false,
+    "is_recalculation_of_same_historical_scope": false,
+    "introduced_student_training_and_full_corpus_gpu_production": true,
+    "active_quote": false,
+    "hypotheses_not_verified": [
+      "500M separate inference tasks",
+      "50 complete records per T4 second",
+      "70%efficiency",
+      "5–10workdays initial trial",
+      "full-schema quality and GPU memory fit"
+    ],
+    "new800_phase_is_not_same_as_historical800": true
+  },
+  "correction": {
+    "preserve_historical_evidence": true,
+    "retain_layered_method": true,
+    "prioritize_existing_candidate_evidence_schema_and_checkpoint_framework": true,
+    "dedicated_student_training_mandatory": false,
+    "first_measure_low_cost_ready_model_on_fixed_eligible_evaluation_inputs": true,
+    "do_not_relabel_exposed_sets_as_blind": true,
+    "independent_machine_audit_no_human_requirement": true,
+    "full_scope_goal_unchanged": true,
+    "quote_full_scope_only_after_actual_remaining_eligible_contexts_and_token_metrics": true,
+    "no_automatic_800_training_or_5000_fleet_spend": true,
+    "previous_7_to9_or4_to6_week_scenarios_not_active_schedule": true,
+    "new_paid_resources_created": 0,
+    "model_calls_this_reconciliation": 0
+  }
+}

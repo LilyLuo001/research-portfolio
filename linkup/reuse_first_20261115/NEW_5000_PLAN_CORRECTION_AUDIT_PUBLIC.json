@@ -1,0 +1,106 @@
+{
+  "at_utc": "2026-11-15T15:03:56.439511+00:00",
+  "status": "read_only_correction_audit_of_new_5000_design_not_old_quote_denominator_audit",
+  "source": {
+    "path": "external_public:azure_gpu_launch_20261115/LAYERED_T4_PLAN_PUBLIC.json",
+    "sha256": "9e78402af751f18b7a31062f436c49c5bf91ebccf8bbc28e1e75a4710b2841e2"
+  },
+  "actions": {
+    "cloud_calls": 0,
+    "model_calls": 0,
+    "raw_data_reads": 0,
+    "source_artifacts_modified": false
+  },
+  "central_finding": "The 5000 USD plan is a newly designed allocation aligned to the user-reported Azure credit, not a recalculation derived from the October 9 estimate. It does not establish that completing the same old plan now requires 5000 USD.",
+  "allocation_audit": [
+    {
+      "item": "stage1_validation_and_training",
+      "USD": 800,
+      "evidence_class": "new_budget_pool_not_cost_estimate",
+      "not_derived_from_Oct9_800": true,
+      "missing": [
+        "chosen_model_training_run_hours",
+        "actual_new_teacher_count",
+        "independent_audit_prompt_token_cost",
+        "measured_validation_effort"
+      ],
+      "correction": "This new 800 USD line must not be used to call the October 9 800 USD estimate merely a pilot."
+    },
+    {
+      "item": "index_CPU_storage_data_engineering",
+      "USD": 700,
+      "evidence_class": "self_selected_allowance_not_metered_quote",
+      "missing": [
+        "incremental_data_to_read_after_reuse",
+        "CPU_job_runtime",
+        "read_write_request_counts",
+        "persistent_storage_GB_days",
+        "incremental_egress"
+      ],
+      "correction": "Not established as required incremental cost; existing indexes/results may be reusable."
+    },
+    {
+      "item": "later_AI_review",
+      "USD": 500,
+      "evidence_class": "self_selected_cap_not_observed_exception_budget",
+      "missing": [
+        "measured_eligible_difficult_case_count",
+        "review_prompt_token_profile",
+        "current_meter_match",
+        "new_review_calls_separate_from_existing_labels"
+      ],
+      "correction": "The roughly7014-context conversion is arithmetic under old token mean, not an observed required review workload."
+    },
+    {
+      "item": "production_GPU",
+      "USD": 3000,
+      "evidence_class": "self_selected_allocation_not_actual_VM_quote_for_entire_workload",
+      "missing": [
+        "measured_complete_ad_speed_on_T4",
+        "validated_16GB_fit",
+        "full_eligible_unique_inference_count",
+        "measured_end_to_end_parallel_efficiency"
+      ],
+      "correction": "The 3000 USD amount is a budget ceiling design, while the 2087 USD baseline is conditional arithmetic, not observed full-run cost."
+    }
+  ],
+  "fact_vs_assumption": {
+    "verified_public_unit_price": {
+      "SKU": "Standard_NC4as_T4_v3",
+      "region": "eastus2",
+      "USD_per_hour": 0.526,
+      "scope": "whole_VM_Linux_PAYG_not_capacity_or_invoice"
+    },
+    "four_GPU_choice": "new_architecture_choice_not_required_by_old_plan_or_verified_optimum",
+    "fifty_complete_ads_per_T4_second": "unmeasured_scenario_input_not_benchmark",
+    "parallel_efficiency_70pct": "unmeasured_scenario_discount_not_observed_utilization",
+    "500million_independent_inferences": "no_reuse_sensitivity_assumption_not_verified_necessary_call_count_or_old_quote_denominator",
+    "conditional_arithmetic_2087_USD_and_41_34_days": "mathematically_valid_given_assumptions_not_proven_cost_or_ETA",
+    "additional_7_to_14_preparation_days": "self_selected_planning_target_not_measured_work_estimate",
+    "5000_total": "sum_of_new_budget_pools_not_evidence_of_required_total_cost"
+  },
+  "architecture_change": [
+    "New dedicated compact-model training/adaptation and four-T4 production route was proposed.",
+    "Separate new validation, infrastructure and bounded exception-review budget pools were introduced.",
+    "A full500M independent-inference sensitivity was chosen without demonstrating that all rows need new inference after exact reuse and historical accepted-output reuse.",
+    "These choices were not derived from the October9 quote and must be compared as alternatives rather than presented as an updated price of the same plan."
+  ],
+  "old_quote_boundary": {
+    "denominator_and_method_trace": "handled_by_separate_agent_not_audited_here",
+    "not_relabelled_as_pilot": true,
+    "882_to_948_times_one_fifth": [
+      176.4,
+      189.6
+    ],
+    "arithmetic_only": true,
+    "additional_adjudication_and_actual_fees_not_resolved_here": true,
+    "no_claim_old_scheme_is_feasible_or_infeasible_from_this_audit": true
+  },
+  "recommended_correction": [
+    "Acknowledge that5000 was a newly proposed spending allocation, not a necessary-cost conclusion derived from the original plan.",
+    "Do not explain the discrepancy by calling the original800 estimate a pilot or by asserting a changed denominator without the old evidence.",
+    "Downgrade the5000/7to8weeks presentation to an unvalidated alternative scenario; do not treat it as the default execution plan or a budget reason to spend the available credit.",
+    "First compare the old scheme and new scheme on the same data scope, reuse mapping, extraction schema, unique call count and billing path; retain original files and exceptions.",
+    "Only after metadata reconciliation and a bounded faithful implementation benchmark decide whether the old cheaper route can continue and what incremental cost is actually needed."
+  ]
+}
