@@ -1,0 +1,170 @@
+{
+  "observed_at_utc": "2026-11-15T16:50:46.676611+00:00",
+  "mode": "management_readonly_no_model_calls_no_resource_changes",
+  "identity_type": "existing_service_principal",
+  "credit_balance_usd": null,
+  "credit_balance_verified": false,
+  "vm": {
+    "name": "vm-linkup-transfer",
+    "location": "eastasia",
+    "size": "Standard_B2als_v2",
+    "identity_type": "SystemAssigned",
+    "provisioning_state": "Succeeded",
+    "power_states": [
+      "PowerState/running"
+    ]
+  },
+  "deployments": [
+    {
+      "name": "linkup-gpt-6-astra",
+      "model": {
+        "format": "OpenAI",
+        "name": "gpt-6-astra",
+        "version": "2026-09-03"
+      },
+      "sku": {
+        "name": "GlobalStandard",
+        "capacity": 1000
+      },
+      "rate_limits": [
+        {
+          "key": "request",
+          "renewalPeriod": 60,
+          "count": 1000
+        },
+        {
+          "key": "token",
+          "renewalPeriod": 60,
+          "count": 1000000
+        }
+      ]
+    },
+    {
+      "name": "linkup-kimi-k3-1-pro",
+      "model": {
+        "format": "MoonshotAI",
+        "name": "Kimi-K3.1-Pro",
+        "version": "2026-11-04"
+      },
+      "sku": {
+        "name": "GlobalStandard",
+        "capacity": 300
+      },
+      "rate_limits": [
+        {
+          "key": "request",
+          "renewalPeriod": 60,
+          "count": 300
+        },
+        {
+          "key": "token",
+          "renewalPeriod": 60,
+          "count": 300000
+        }
+      ]
+    },
+    {
+      "name": "linkup-gpt-6-luna-benchmark",
+      "model": {
+        "format": "OpenAI",
+        "name": "gpt-6-luna",
+        "version": "2026-09-22"
+      },
+      "sku": {
+        "name": "GlobalStandard",
+        "capacity": 100
+      },
+      "rate_limits": [
+        {
+          "key": "request",
+          "renewalPeriod": 60,
+          "count": 100
+        },
+        {
+          "key": "token",
+          "renewalPeriod": 60,
+          "count": 100000
+        }
+      ]
+    }
+  ],
+  "cost_query": {
+    "timeframe": "MonthToDate",
+    "scope": "existing_LinkUp_resource_group",
+    "columns": [
+      "Cost",
+      "ResourceId",
+      "Currency"
+    ],
+    "rows": [
+      {
+        "Cost": 0.240447777777778,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 278.86946286,
+        "ResourceId": "rg-linkup",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 2.2332052,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 92.1460318196773,
+        "ResourceId": "vm-linkup-transfer",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 12.7934552764,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 18.8182064736,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 18.2,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 1.29051666666667,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 25.957,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 0.0,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 20.844046650002,
+        "ResourceId": "stlinkup70d455c0261104",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 15.115092928,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      },
+      {
+        "Cost": 0.0,
+        "ResourceId": "other_resource",
+        "Currency": "USD"
+      }
+    ],
+    "has_next_page": false,
+    "not_remaining_credit": true,
+    "may_have_billing_lag": true
+  }
+}

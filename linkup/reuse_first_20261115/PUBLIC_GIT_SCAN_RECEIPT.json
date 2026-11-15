@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-15T16:31:36.901248+00:00",
+  "created_utc": "2026-11-15T16:57:26.359598+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -86,13 +86,13 @@
     },
     {
       "file": "PUBLIC_COPY_MANIFEST.json",
-      "bytes": 26494,
-      "sha256": "673a57234a77dbed986c616f8aa37e409ba9e34114b8f53fa4a2a94e802d4f41"
+      "bytes": 30211,
+      "sha256": "a34210b3e14dbddb903be92756a27f31bb15338e89dd462128ba64119fa18c65"
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 8593,
-      "sha256": "1c495d9d244287542bd8899f0fdf7450e76373940f6659b752cb6138e261a772"
+      "bytes": 8992,
+      "sha256": "9639cbbc3c990031cd4e6b486cf9323190b57794555f8075b0c07ba6b94c10ee"
     },
     {
       "file": "README.md",
@@ -118,6 +118,41 @@
       "file": "WORKER_MECHANICAL_AUDIT_PUBLIC.json",
       "bytes": 3451,
       "sha256": "ebc58cf3619a8b8cc73587f93dd81a0475e6401619454b582624fe8b1484595b"
+    },
+    {
+      "file": "budget_plan_20261116/AZURE_CURRENT_READONLY_PUBLIC.json",
+      "bytes": 3734,
+      "sha256": "c5ec5f2e61f6712378eab1fde2ea35e93d943811c2184de7385a5c61ae56ceac"
+    },
+    {
+      "file": "budget_plan_20261116/BUDGET_PLAN_PUBLIC.json",
+      "bytes": 16761,
+      "sha256": "b371fefe8b79d8369934eff77d71f0aa53886e97bd9fd1068e5d3b874aaea14d"
+    },
+    {
+      "file": "budget_plan_20261116/CALCULATION_CHECKS_PUBLIC.json",
+      "bytes": 464,
+      "sha256": "0287813dfd81c709e0a88310489aea0076464b149b7da4589e85feccf11b9653"
+    },
+    {
+      "file": "budget_plan_20261116/CLOUD_INDEX_READONLY_PUBLIC.json",
+      "bytes": 528,
+      "sha256": "0b7d1ac1024a783eb10205f8c350fc01672b01a8b749041c6d38d254223c8d31"
+    },
+    {
+      "file": "budget_plan_20261116/PLAN_AND_BUDGET_ZH.md",
+      "bytes": 11722,
+      "sha256": "38cc15092a6520db85cc56239bd456748612ceed377d53b1a07eb3a95fa860e1"
+    },
+    {
+      "file": "budget_plan_20261116/VM_RETAIL_PRICE_READONLY_PUBLIC.json",
+      "bytes": 93,
+      "sha256": "c6344d0084c74e34793ed4032ebef4ae5a553d07ba519515562913a5414080fc"
+    },
+    {
+      "file": "budget_plan_20261116/build_budget_plan.py",
+      "bytes": 15443,
+      "sha256": "2b234833d20bdad67eb7eecbc0571a7197431ecc154ac63865a6ee3f672b6dd6"
     },
     {
       "file": "code/cloud_benchmark_worker.py",
@@ -345,10 +380,10 @@
       "sha256": "6479a4b70deb1891c111f5d297fbc14d3b4d792ee34ffc2963611daffbea3df3"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 68,
+  "checked_file_count_excluding_this_receipt": 75,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 26,
+  "staged_file_count": 10,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,
@@ -402,38 +437,6 @@
       "line": 14,
       "literal_sha256": "f3e0cb76a056bf6f33999ce12787ad02e5c9ca4ac12d5975a4a8374321291afb",
       "review_reason": "Synthetic test uses a fixed public schema file already in this repository; no private inputs or credential file."
-    },
-    {
-      "file": "integration_20261116/code/cloud_discover.py",
-      "file_sha256": "86b294517658c75978536f6278eba64039212a4770110461434af4e2e5a3543b",
-      "rule": "uuid_identifier",
-      "line": 13,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
-    },
-    {
-      "file": "integration_20261116/code/cloud_integrate.py",
-      "file_sha256": "1a4c29e144a68dd154f1ffc8b703e3ec79d39f2099189ff6a710134660a7c905",
-      "rule": "uuid_identifier",
-      "line": 28,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
-    },
-    {
-      "file": "integration_20261116/code/cloud_recover_packet_metadata.py",
-      "file_sha256": "ba098eeb3528fa689969af1d9afb29d32e6b932a3b95d631c6a2fe5fda36300a",
-      "rule": "uuid_identifier",
-      "line": 12,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
-    },
-    {
-      "file": "integration_20261116/code/cloud_refine_index.py",
-      "file_sha256": "a64b558ccd0dbce8a33e9fdc7f1316eb45106dff34f63ebef5582a46acf2f850",
-      "rule": "uuid_identifier",
-      "line": 12,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
     },
     {
       "file": "integration_20261116/code/cloud_discover.py",

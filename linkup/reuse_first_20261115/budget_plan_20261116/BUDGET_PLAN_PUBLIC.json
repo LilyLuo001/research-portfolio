@@ -1,0 +1,365 @@
+{
+  "as_of_local_date": "2026-11-16",
+  "currency": "USD",
+  "status": "verified_facts_and_proposed_bounded_budget_not_full_completion_quote",
+  "actions_this_audit": {
+    "model_calls": 0,
+    "production_workers_started": 0,
+    "new_resources": 0,
+    "quota_or_permission_changes": 0,
+    "cloud_index_readonly_check": true,
+    "resource_group_cost_query": true
+  },
+  "confirmed_assets": {
+    "canonical_US_base_shards": 2464,
+    "canonical_US_base_ads": 204774035,
+    "new_field_additive_wave_shards": 69,
+    "new_field_additive_wave_ads": 5804936,
+    "macro_months": 129,
+    "macro_years": 11
+  },
+  "known_index": {
+    "at_utc": "2026-11-15T16:51:58.004722+00:00",
+    "mode": "read_only_index_metadata_no_advertisement_text",
+    "index_exists": true,
+    "index_sha256": "0344e94b9f2b75af74652a2f517c4e5c535d8090e1db62eec84b55afced1523a",
+    "context_states": {
+      "accepted_original_scope": 39308,
+      "not_reconciled": 10012,
+      "quarantined": 56,
+      "saved_unverified": 6506
+    },
+    "unique_contexts": 55882,
+    "unique_ad_keys": 62414,
+    "prior_receipt_new_model_calls": 0,
+    "prior_receipt_full_delivery_remaining_unique_model_tasks": null
+  },
+  "not_additive": "Base ads, new-field overlay, historical semantic contexts and source rows overlap or use different units. Never sum them as cleaned total.",
+  "full_requested_rows_approx": 500000000,
+  "full_remaining_eligible_unique_contexts": null,
+  "full_completion_cost_usd": null,
+  "full_completion_days": null,
+  "billing": {
+    "queried_at_utc": "2026-11-15T16:50:46.676611+00:00",
+    "scope": "existing_LinkUp_resource_group",
+    "period": "MonthToDate",
+    "posted_actual_cost_usd": 486.50746565212376,
+    "known_resource_cost_usd": {
+      "rg-linkup": 278.86946286,
+      "vm-linkup-transfer": 92.1460318196773,
+      "stlinkup70d455c0261104": 20.844046650002
+    },
+    "other_resource_cost_usd": 94.64792432244445,
+    "posted_cost_includes_historical_activity_and_can_lag": true,
+    "model_deployment_cost_breakdown_verified": false,
+    "user_reported_credit_usd": 5000,
+    "remaining_credit_verified": false,
+    "remaining_credit_usd": null,
+    "if_5000_were_initial_credit_and_only_this_RG_charged_arithmetic_remaining_usd": 4513.492534347876,
+    "arithmetic_is_not_credit_balance": true,
+    "Marketplace_credit_eligibility_verified": false,
+    "price_tax_credit_applicability_not_confirmed": true
+  },
+  "price_baseline": {
+    "rates_usd_per_million_tokens": {
+      "Luna": {
+        "input": 0.1,
+        "output": 0.5
+      },
+      "Kimi": {
+        "input": 2.3,
+        "output": 11.5
+      },
+      "Astra": {
+        "input": 10.0,
+        "output": 50.0
+      }
+    },
+    "type": "public_Azure_list_prices_checked_2026_11_15_not_contract_or_invoice",
+    "discounts_assumed": false,
+    "Luna_and_Astra_source_url": "https://azure.microsoft.com/en-us/blog/gpt-6-astra-sol-and-luna-for-production-agents-in-microsoft-foundry/",
+    "Kimi_source_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/moonshot-ai%E2%80%99s-kimi-k3-1-pro-comes-to-microsoft-foundry/4570292",
+    "Astra_evidence": "Same saved official Azure source: Global Standard short context Input10 CachedInput1 CacheWrite12.5 Output50.",
+    "VM_retail_lookup_failed": "URLError; no VM-hour rate invented. Infrastructure amounts below are risk allowances, not measured job prices."
+  },
+  "real_usage_checks": {
+    "Luna_calls": 20,
+    "Luna_usage_public_price_usd": 0.0165363,
+    "Luna_engineering_pass": 14,
+    "Luna_quality_certified": false,
+    "Luna_new_production_accepted": 0,
+    "Luna_observed_usd_per_request": 0.000826815,
+    "Luna_observed_total_tokens_per_request": 5131.75,
+    "Kimi_known_usage_response_count": 1253,
+    "Kimi_total_attempts": 1309,
+    "Kimi_known_usage_no_cache_public_price_usd": 91.790309,
+    "Kimi_unknown_usage_attempt_count": 56,
+    "Kimi_known_usage_not_complete_bill": true,
+    "do_not_add_usage_estimates_to_posted_cost_as_new_charges": true
+  },
+  "stages": [
+    {
+      "step": 1,
+      "work": "Complete delivery/asset/field inventory using existing manifests and ledgers; distinguish source rows, ads, contexts and unresolved scope.",
+      "output": "Global field-by-universe coverage and missingness table; confirmed counts or explicit unknowns, no assumed dedup rate.",
+      "new_model_cap_usd": 0,
+      "incremental_infrastructure_risk_allowance_usd": 25,
+      "incremental_stage_cap_usd": 25,
+      "planning_work_window_days": [
+        1,
+        2
+      ]
+    },
+    {
+      "step": 2,
+      "work": "Attach old accepted values and evidence under original field masks; mechanically validate existing saved outputs and reconcile status-only events.",
+      "output": "Versioned joinable semantic-value sidecar, reuse/unknown/protected masks and exact ad bindings; not just a status index.",
+      "new_model_cap_usd": 0,
+      "incremental_infrastructure_risk_allowance_usd": 25,
+      "incremental_stage_cap_usd": 25,
+      "planning_work_window_days": [
+        1,
+        2
+      ]
+    },
+    {
+      "step": 3,
+      "work": "One bounded qualification attempt on at most 500 eligible contexts; cheap candidate model plus independent Kimi comparison and at most 100 Astra adjudications.",
+      "output": "Per-field evidence checks, machine-reference agreement, unknown rates and measured token/latency/failure profile; no human QA.",
+      "new_model_cap_usd": 250,
+      "incremental_infrastructure_risk_allowance_usd": 0,
+      "incremental_stage_cap_usd": 250,
+      "planning_work_window_days": [
+        1,
+        2
+      ]
+    },
+    {
+      "step": 4,
+      "work": "Only if step3 qualifies the proposed fields, process up to 10000 truly missing eligible contexts for incremental production and throughput measurement.",
+      "output": "Nonduplicate field-level incremental sidecars and cost/accepted-field throughput receipt; this is a pilot, not the full target or a replacement sample.",
+      "new_model_cap_usd": 150,
+      "incremental_infrastructure_risk_allowance_usd": 0,
+      "incremental_stage_cap_usd": 150,
+      "planning_work_window_days": null,
+      "depends_on_qualified_fields": true
+    },
+    {
+      "step": 5,
+      "work": "In parallel, develop the existing paper draft and compatible macro/micro tables from reused data; preserve proxy and causal limits.",
+      "output": "Paper data/methods/descriptive results and clearly marked remaining identification/Revelio work.",
+      "new_model_cap_usd": 0,
+      "incremental_infrastructure_risk_allowance_usd": 50,
+      "incremental_stage_cap_usd": 50,
+      "planning_work_window_days": [
+        2,
+        4
+      ]
+    },
+    {
+      "step": 6,
+      "work": "Release measured missing-field production by bounded tranche; no new training/GPU, no full-text rerun by default.",
+      "output": "Full target remains unchanged; itemized true remaining cost and schedule from the qualified workload.",
+      "incremental_stage_cap_usd": null,
+      "incremental_infrastructure_risk_allowance_usd": null,
+      "new_model_cap_usd": null,
+      "planning_work_window_days": null,
+      "gate": "Need verified eligible unique count by field, qualified route, measured throughput and verified funds; no automatic full expansion."
+    }
+  ],
+  "next_tranche_cap_usd": 500,
+  "tranche_scope": "Steps1-5 only; caps are proposed, not purchased, reserved or automatically enforced by Azure. Stop job admission before caps; maintain separate existing-resource baseline costs.",
+  "qualification_token_envelope": {
+    "requests": [
+      {
+        "model": "Luna",
+        "nominal_calls": 500,
+        "maximum_input_tokens_per_call": 12000,
+        "maximum_output_tokens_per_call": 12000,
+        "no_cache_price_upper_usd": 3.6
+      },
+      {
+        "model": "Kimi",
+        "nominal_calls": 500,
+        "maximum_input_tokens_per_call": 12000,
+        "maximum_output_tokens_per_call": 16000,
+        "no_cache_price_upper_usd": 105.8
+      },
+      {
+        "model": "Astra",
+        "nominal_calls": 100,
+        "maximum_input_tokens_per_call": 16000,
+        "maximum_output_tokens_per_call": 16000,
+        "no_cache_price_upper_usd": 96.0
+      }
+    ],
+    "nominal_token_cap_price_usd": 205.39999999999998,
+    "maximum_additional_physical_retry_fraction": 0.2,
+    "including_twenty_percent_retry_reserve_usd": 246.47999999999996,
+    "stage_model_spend_cap_usd": 250,
+    "implemented_or_launched": false,
+    "long_inputs": "Never truncate to fit this estimate; record as separately costed out-of-envelope work.",
+    "failures": "Preserve unsuccessful outputs and tokens, no semantic resubmission loop; safety blocks are excluded, never retried."
+  },
+  "pilot_token_envelope": {
+    "requests": [
+      {
+        "model": "Luna",
+        "nominal_calls": 10000,
+        "maximum_input_tokens_per_call": 12000,
+        "maximum_output_tokens_per_call": 12000,
+        "no_cache_price_upper_usd": 72.0
+      },
+      {
+        "model": "Kimi",
+        "nominal_calls": 100,
+        "maximum_input_tokens_per_call": 12000,
+        "maximum_output_tokens_per_call": 16000,
+        "no_cache_price_upper_usd": 21.16
+      },
+      {
+        "model": "Astra",
+        "nominal_calls": 20,
+        "maximum_input_tokens_per_call": 16000,
+        "maximum_output_tokens_per_call": 16000,
+        "no_cache_price_upper_usd": 19.2
+      }
+    ],
+    "nominal_token_cap_price_usd": 112.36,
+    "maximum_additional_physical_retry_fraction": 0.2,
+    "including_twenty_percent_retry_reserve_usd": 134.832,
+    "stage_model_spend_cap_usd": 150,
+    "implemented_or_launched": false,
+    "long_inputs": "Never truncate to fit this estimate; record as separately costed out-of-envelope work.",
+    "failures": "Preserve unsuccessful outputs and tokens, no semantic resubmission loop; safety blocks are excluded, never retried."
+  },
+  "review_design": {
+    "reuse_existing_labels_before_new_calls": true,
+    "training_required": false,
+    "human_review_required": false,
+    "one_predeclared_eligible_frame_max_contexts": 500,
+    "development_contexts_max": 200,
+    "heldout_contexts_max": 300,
+    "old_benchmark20_excluded_from_holdout": true,
+    "split_grouped_by_exact_context": true,
+    "avoid_candidate_only_screening": true,
+    "sample_covers": [
+      "passing",
+      "exception",
+      "unknown",
+      "no_hit",
+      "new_eligible_inputs"
+    ],
+    "frozen_original_unknowns_not_overwritten": true,
+    "protected_content_excluded_from_all_routes": true,
+    "reviewer_blinded_to_candidate_output_until_reference_saved": true,
+    "no_reference_is_human_gold": true,
+    "P90_R80_MacroF1_85_interpretation": "Predeclared machine-reference agreement diagnostics by field/relation, not true population accuracy. Insufficient class support is reported, never turned into a passing score.",
+    "failed_fields": "Remain unavailable/unknown in new overlays; compatible qualified fields can advance independently without changing research definitions.",
+    "no_repeat_until_pass": true
+  },
+  "limits": {
+    "shared_project_user_ceiling_tpm": 1000000,
+    "Luna_tpm": 100000,
+    "Kimi_tpm": 300000,
+    "Astra_tpm": 1000000,
+    "planning_utilization_range": [
+      0.8,
+      0.9
+    ],
+    "upper_project_schedule_tpm": 900000,
+    "admission": "Both project and model token/RPM gates; estimated input/max output, response limits and Retry-After respected. Concurrency does not add TPM.",
+    "caps_enforcement_not_implemented_by_this_audit": true
+  },
+  "new_work_sensitivities": [
+    {
+      "new_unique_eligible_calls": 100000,
+      "Luna_only_public_price_usd": 82.6815,
+      "optimistic_billed_token_days_at_90_percent_actual_Luna_quota": 3.9596836419753085,
+      "optimistic_billed_token_days_at_80_percent_actual_Luna_quota": 4.454644097222222,
+      "not_a_production_quote": true
+    },
+    {
+      "new_unique_eligible_calls": 1000000,
+      "Luna_only_public_price_usd": 826.8149999999999,
+      "optimistic_billed_token_days_at_90_percent_actual_Luna_quota": 39.59683641975309,
+      "optimistic_billed_token_days_at_80_percent_actual_Luna_quota": 44.54644097222222,
+      "not_a_production_quote": true
+    },
+    {
+      "new_unique_eligible_calls": 3000000,
+      "Luna_only_public_price_usd": 2480.4449999999997,
+      "optimistic_billed_token_days_at_90_percent_actual_Luna_quota": 118.79050925925925,
+      "optimistic_billed_token_days_at_80_percent_actual_Luna_quota": 133.63932291666666,
+      "not_a_production_quote": true
+    },
+    {
+      "new_unique_eligible_calls": 5000000,
+      "Luna_only_public_price_usd": 4134.075,
+      "optimistic_billed_token_days_at_90_percent_actual_Luna_quota": 197.98418209876544,
+      "optimistic_billed_token_days_at_80_percent_actual_Luna_quota": 222.73220486111111,
+      "not_a_production_quote": true
+    }
+  ],
+  "sensitivity_caveats": [
+    "Unrepresentative20-context Luna workload only, no quality qualification.",
+    "Excludes QA, failed-attempt overhead beyond measured20, storage, CPU, tax and baseline costs.",
+    "Times are optimistic billed-token lower bounds, not measured saturation or finish dates; max-output reservations, RPM, other users and service latency can dominate.",
+    "Current Luna quota100k, not Astra1M; unchanged single-worker pilot timing is not production throughput."
+  ],
+  "conditional_pilot_time": {
+    "old_Luna_workload_10000_fluid_hours_90_percent": 9.503240740740742,
+    "old_Luna_workload_10000_fluid_hours_80_percent": 10.691145833333334,
+    "unchanged_reservation_fluid_hours_90_percent": 66.9912037037037,
+    "unchanged_reservation_fluid_hours_80_percent": 75.36510416666667,
+    "unchanged_serial_worker_hours": 78.53111111111112,
+    "planning_statement": "Do not promise overnight; measure safe concurrent admission first, or unchanged-worker10k alone is approximately79h before independent review."
+  },
+  "old_budget_reconciliation": {
+    "training800": "Removed as mandatory; actual bounded machine qualification proposed cap250.",
+    "infrastructure700": "Replace with100 total incremental risk allowance for existing VM metadata/join/paper work, no new CPU purchase.",
+    "extra_review500": "Not a separate automatic500; reviews already included in the250 qualification and150 pilot caps.",
+    "full_production3000": "Withdrawn as completion quote; measured production budget remains unallocated until true missing workload is known.",
+    "total5000": "Credit/budget boundary, not amount that must be spent or verified remaining funds."
+  },
+  "production_formula": "Cost=sum(new eligible context-field-route bundles * measured tokens * matched model rates)+separately bounded QA/rework+incremental CPU/storage/network+continuing baseline; timeline=max(token admission, RPM, measured request service+IO constraints), not serial extrapolation.",
+  "scope_of_first_deliverable": "An integrated reuse/missingness ledger and improved current paper draft; not a completed full500M semantic dataset or causal paper.",
+  "sources": [
+    {
+      "source": "external_public:budget_plan_20261116/AZURE_CURRENT_READONLY_PUBLIC.json",
+      "sha256": "c5ec5f2e61f6712378eab1fde2ea35e93d943811c2184de7385a5c61ae56ceac"
+    },
+    {
+      "source": "external_public:budget_plan_20261116/CLOUD_INDEX_READONLY_PUBLIC.json",
+      "sha256": "0b7d1ac1024a783eb10205f8c350fc01672b01a8b749041c6d38d254223c8d31"
+    },
+    {
+      "source": "external_public:reuse_audit_20261116/RATE_AND_REUSE_ADDENDUM_PUBLIC.json",
+      "sha256": "2971e1796a2508045169891b21ff0aaf2511befa0a789e283804ab41e623df22"
+    },
+    {
+      "source": "external_public:reuse_audit_20261116/COST_TIME_SCOPE_CORRECTION_PUBLIC.json",
+      "sha256": "c8c3d45f262c670468dae85247380cffcc45c9ee9bca91468efa7f86de0f792a"
+    },
+    {
+      "source": "external_public:azure_gpu_launch_20261115/ACTUAL_WORKLOAD_COST_PUBLIC.json",
+      "sha256": "3991e42e269c047690d11b0fe0d3ac1f2eb7c0f5f13c8b7e526bb638e4e9984b"
+    },
+    {
+      "source": "external_public:azure_gpu_launch_20261115/K31_PUBLIC_API_PRICE_SUPPLEMENT_PUBLIC.json",
+      "sha256": "911dcbeb57bb77f8f6daddd9ab39ce82d78bfb897a0d420a1ec861f161ac06db"
+    },
+    {
+      "source": "external_public:reuse_first_20261115/LUNA_AZURE_PRICE_READONLY_PUBLIC.json",
+      "sha256": "b9e3bd111c7e1fd42132819a904c5e3dd1515a498e94b9c68a1eaa4b522d9485"
+    },
+    {
+      "source": "external_public:budget_plan_20261116/VM_RETAIL_PRICE_READONLY_PUBLIC.json",
+      "sha256": "c6344d0084c74e34793ed4032ebef4ae5a553d07ba519515562913a5414080fc"
+    },
+    {
+      "source": "external_public:reuse_first_20261115/LUNA_AZURE_PRICE_SOURCE_PUBLIC.html",
+      "sha256": "8643181a4b3847eee5e25df0a7448a9e0db811b498f6cd0e9232ef4c394def58"
+    }
+  ]
+}
