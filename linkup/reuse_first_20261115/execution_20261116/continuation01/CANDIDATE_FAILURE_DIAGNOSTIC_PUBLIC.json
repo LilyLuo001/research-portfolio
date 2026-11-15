@@ -1,0 +1,28 @@
+{
+  "at_utc": "2026-11-15T18:39:52.887727+00:00",
+  "completed_candidate_cases_at_snapshot": 116,
+  "engineering_pass_at_snapshot": 70,
+  "failed_candidate_outputs_examined": 46,
+  "failures_missing_error_file": 0,
+  "error_occurrences_by_category": {
+    "experience_outcome_consistency": 17,
+    "exact_source_quote_missing": 59,
+    "partial_nonmention": 16,
+    "alternative_reference_consistency": 13,
+    "responsibility_outcome_consistency": 2,
+    "schema": 2
+  },
+  "distinct_failed_cases_by_category_nonadditive": {
+    "experience_outcome_consistency": 15,
+    "exact_source_quote_missing": 25,
+    "partial_nonmention": 2,
+    "alternative_reference_consistency": 10,
+    "responsibility_outcome_consistency": 2,
+    "schema": 2
+  },
+  "new_model_calls": 0,
+  "original_outputs_and_rules_changed": false,
+  "failed_cases_retried": false,
+  "quality_gate_evaluated": false,
+  "interpretation": "Engineering failures are not rate-limit failures or semantic accuracy estimates. Preserve every result; no post-hoc prompt changes or sample replacement."
+}

@@ -1,0 +1,81 @@
+{
+  "at_utc": "2026-11-15T18:13:52.780143+00:00",
+  "status": "bounded_existing_metadata_join_complete_with_explicit_unavailable_states",
+  "all_existing_ad_keys": 62414,
+  "original_accepted_ad_keys_with_values": 45592,
+  "join_status_all_keys": {
+    "matched_consistent": 62414
+  },
+  "join_status_accepted_keys": {
+    "matched_consistent": 45592
+  },
+  "accepted_key_created_years": {
+    "2011": 3,
+    "2012": 5,
+    "2013": 38,
+    "2014": 535,
+    "2015": 1089,
+    "2016": 1759,
+    "2017": 2605,
+    "2018": 2624,
+    "2019": 2877,
+    "2020": 2545,
+    "2021": 4082,
+    "2022": 3938,
+    "2023": 3961,
+    "2024": 5896,
+    "2025": 7463,
+    "2026": 6172
+  },
+  "source_tables": [
+    {
+      "source_sha256": "733875307de475a296e3da4531ad64ba99351f5e2dff109b757ad80b80b34adb",
+      "rows_read": 10000,
+      "four_key_matches": 10000,
+      "null_identity_rows": 0,
+      "created_source_states": {
+        "candidate_exact_ad_key": 10000
+      }
+    },
+    {
+      "source_sha256": "b43c86cb688e166e9c1ddbfd31a181246053cb2f3f2d41a5d57fa40780badee7",
+      "rows_read": 85376,
+      "four_key_matches": 51871,
+      "null_identity_rows": 0,
+      "created_source_states": {}
+    },
+    {
+      "source_sha256": "cac0ac0441ecd498fd730e02a25841c55e5d36b061d7067bc5787fe3e92863c3",
+      "rows_read": 83345,
+      "four_key_matches": 549,
+      "null_identity_rows": 0,
+      "created_source_states": {}
+    }
+  ],
+  "derived_table_rows_read": 178721,
+  "raw_description_rows_read": 0,
+  "metadata_scan_scope": "three_previously_SHA_verified_existing_derived_Parquet_tables_only",
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "original_database_sha256": "0594d18bfb27a9a5f9069aec5065e0b03557965f9631f82ab9742ae525f57925",
+  "time_proxy_notice": "CREATED is a first-observed posting-time proxy; before-after changes are not automatically AI causal effects.",
+  "checks": {
+    "original_database_unchanged": true,
+    "integrity_pass": true,
+    "original_document_count_unchanged": true,
+    "four_key_only": true,
+    "original_values_masks_unchanged": true,
+    "source_SHA_verified": true
+  },
+  "paper_paused": true,
+  "joined_database_sha256": "816605110f9b91b81386fc7630db956907a1bbecd57e49958da1a7ee53686572",
+  "failed_carrier_probe": {
+    "paths": 83,
+    "review_files_found": 83,
+    "review_context_bound": 83,
+    "checksum_manifest_paths_found": 83,
+    "validation_statuses": {
+      "fail": 83
+    }
+  }
+}

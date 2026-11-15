@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-15T17:50:12.927720+00:00",
+  "created_utc": "2026-11-15T18:43:27.169891+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -86,13 +86,13 @@
     },
     {
       "file": "PUBLIC_COPY_MANIFEST.json",
-      "bytes": 63574,
-      "sha256": "eb7a8a86265e0d4b8e9f8e836f9458918ff6ac8826af024bc03b0494acd50b84"
+      "bytes": 81695,
+      "sha256": "50e2ed25f5fafbd4012493fb34e0afe74c423c1a49cacaf180893f8663eec4d6"
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 12996,
-      "sha256": "11a53f007841546b967af324ec376c403da6752e712b05d30932699e1e2694b7"
+      "bytes": 15411,
+      "sha256": "c4456973c69cff721e8d5feefbe18c09129e7f103b845ebdbae610c1fcffe388"
     },
     {
       "file": "README.md",
@@ -500,6 +500,166 @@
       "sha256": "e48b3e086645179044ebd76d4872ea13a74388085ae160ba11f7b2310a98d6ac"
     },
     {
+      "file": "execution_20261116/continuation01/CANDIDATE_FAILURE_DIAGNOSTIC_PUBLIC.json",
+      "bytes": 1063,
+      "sha256": "726d97119ea4042852adcdc87be042185841e90ff829f9d4eea9006f3a608c7f"
+    },
+    {
+      "file": "execution_20261116/continuation01/CHECKPOINT_PUBLIC.json",
+      "bytes": 1638,
+      "sha256": "e26832855fbce5d174c70ea830e588c2cbafb30a1c974496864a629a8d3a187a"
+    },
+    {
+      "file": "execution_20261116/continuation01/CHECKPOINT_TRANSPORT_RECOVERY_PUBLIC.json",
+      "bytes": 646,
+      "sha256": "01bc2af89ebfa0ffc883df3de761dd5c688ee6d5ed7781192ab5f438184d4d4d"
+    },
+    {
+      "file": "execution_20261116/continuation01/CONTINUATION_NOTE_ZH.md",
+      "bytes": 4285,
+      "sha256": "beaa36d321af641b40a2e1fabea0fdbdb313dcb46bfeb5a7d202849ae1f3ceac"
+    },
+    {
+      "file": "execution_20261116/continuation01/CREATED_JOIN_PUBLIC.json",
+      "bytes": 2448,
+      "sha256": "b1c5fe69b04fe66438f02a816f86a8294314c3619342b6ef08329ebabf64679d"
+    },
+    {
+      "file": "execution_20261116/continuation01/EXECUTION_STATUS_PUBLIC.json",
+      "bytes": 2636,
+      "sha256": "908020e5a6da65ec8a89bafccdc0bc6693ccfe536e3982f59e1dcb6172e1614b"
+    },
+    {
+      "file": "execution_20261116/continuation01/FAILED_OUTPUT_REUSE_PUBLIC.json",
+      "bytes": 1416,
+      "sha256": "5a004f1bd6ee9460839e999da52e68d43c8c18495fc893d5f4a24db88badbbf4"
+    },
+    {
+      "file": "execution_20261116/continuation01/FINAL_INTEGRITY_PUBLIC.json",
+      "bytes": 563,
+      "sha256": "2d81b149cb7dffa7e9299569d3f62605566c1d2038597b64c2232b579f1db127"
+    },
+    {
+      "file": "execution_20261116/continuation01/GAP_REGISTER_PUBLIC.json",
+      "bytes": 2175,
+      "sha256": "7421b16c1d9de734aa11a36d65f3963f9b632dcf90c62dab6b7586acdf98305a"
+    },
+    {
+      "file": "execution_20261116/continuation01/INITIAL_OUTPUT_REUSE_PUBLIC.json",
+      "bytes": 1090,
+      "sha256": "cfa55bc83bf47fc02afb665e12ee693aa941d96379a47c9d13a94310ac3f01ec"
+    },
+    {
+      "file": "execution_20261116/continuation01/LATEST_QUALIFICATION_STATUS_PUBLIC.json",
+      "bytes": 1165,
+      "sha256": "4cb8fb57f23a62538116b4a87196b895bb95db91db5c5e3249e20527dce78a13"
+    },
+    {
+      "file": "execution_20261116/continuation01/REFERENCE_PREFLIGHT_INITIAL_FAILURE_PUBLIC.json",
+      "bytes": 1819,
+      "sha256": "2f99e0bfc87714bd7a10a06462d986683c705eac3e701e39df4eee48efa23c3b"
+    },
+    {
+      "file": "execution_20261116/continuation01/REFERENCE_PREFLIGHT_PUBLIC.json",
+      "bytes": 2053,
+      "sha256": "c77241134f950ce0a00c75e4fdfbc4d644d300d2b0848fbcef294936a87c8d64"
+    },
+    {
+      "file": "execution_20261116/continuation01/RESUME_INVENTORY_PUBLIC.json",
+      "bytes": 6413,
+      "sha256": "9127be12cf4c7922ed053068b76e9a19f3746755911081da20088dad5af0b8f4"
+    },
+    {
+      "file": "execution_20261116/continuation01/STARTING_QUALIFICATION_STATUS_PUBLIC.json",
+      "bytes": 1227,
+      "sha256": "1f1ff361aa826565d57119e1ed03199ccd8b81f1b6fdbf41d580d3e3e5d514ee"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_attach_failed_carriers.py",
+      "bytes": 7719,
+      "sha256": "d95db6d344818e1263724228e0cf1c7248e3abed75277835f8fb90f2250e22d5"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_checkpoint_continuation.py",
+      "bytes": 8810,
+      "sha256": "95f2d140aee8cde1b9c64ca26198f216b766a5b3add87edf5030e99c02364a39"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_close_initial_carriers.py",
+      "bytes": 8088,
+      "sha256": "97c2961d8cdc20f84af74b1df7ee45596d9869fac14b2af6c01b8773867f16dc"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_diagnose_candidate_failures.py",
+      "bytes": 2399,
+      "sha256": "85fc01af5f2b769a1655fb547c485bee6a0ce67df6c2197524f54d19b792a9b3"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_final_integrity.py",
+      "bytes": 3402,
+      "sha256": "7916ec581ea81d5f80ebe4db811c708e036d87707a4f521cc047dc32266fb99d"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_join_created.py",
+      "bytes": 7898,
+      "sha256": "7ba3b46e903d9a4b0681b80237a77070741c6a317e1194e2cf0a9b07f129eb0b"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_prepare_reference_leg.py",
+      "bytes": 4828,
+      "sha256": "d432de36d1a1a54085f1540fa745c770968db46c6784aef454dc16b42005f7bc"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_prepare_reference_leg_v2.py",
+      "bytes": 5343,
+      "sha256": "5e28a9ea1913ca6c6ad9a4309b85d9abf2b1028f355e0a5c6660b3c61c6d06fc"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_probe_initial_and_accepted.py",
+      "bytes": 3442,
+      "sha256": "49a94401fb148a39ead73c31316fb0385306d72e55d1e17c2c928d11323975d7"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_probe_remaining.py",
+      "bytes": 1884,
+      "sha256": "8ab61b8e61c71c09a467ebafab568daf51ce88cad2aaf7176c532c1a440f0dcc"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_recover_carriers_probe.py",
+      "bytes": 5377,
+      "sha256": "279857a96cf515030c0b3d51256f852948e7444eb6ae25aba33d763b89ff231d"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/cloud_resume_inventory.py",
+      "bytes": 5263,
+      "sha256": "396bd5eb043a314ca4fffaad6eca7944c94878994955295f39fd79e0a4dda9bc"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/preflight001_qualification_metrics.py",
+      "bytes": 7136,
+      "sha256": "27fd27e76239c8feb07e3ea9baba89d758bcae97b849dab077af72d8ca6e60ac"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/preflight001_test_qualification_metrics.py",
+      "bytes": 4500,
+      "sha256": "0695f6f94379afb0b87d35c8c4979f38c95fad4c018a29abd878eea70514ba3d"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/publish_continuation.py",
+      "bytes": 2590,
+      "sha256": "738a8bb7fcd0ef31026efc64e59043dd37dec193381c338e90ad7e05610dc473"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/qualification_metrics.py",
+      "bytes": 7606,
+      "sha256": "34c490817d9dfd5f93861607f8f892956bad3f3706d09fd42a88f8abedc86fba"
+    },
+    {
+      "file": "execution_20261116/continuation01/code/test_qualification_metrics.py",
+      "bytes": 5158,
+      "sha256": "63dac5702a1d357b8f21f49a25bffb674e485c9ddece636eba731926c156b491"
+    },
+    {
       "file": "integration_20261116/DELIVERY_ZH.md",
       "bytes": 5038,
       "sha256": "c6d7a13b436e58e6ad381b1c4336913a4bce0f4749360f29a90c783b6c2b0f78"
@@ -665,10 +825,10 @@
       "sha256": "6479a4b70deb1891c111f5d297fbc14d3b4d792ee34ffc2963611daffbea3df3"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 132,
+  "checked_file_count_excluding_this_receipt": 164,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 60,
+  "staged_file_count": 35,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,
@@ -762,14 +922,6 @@
       "line": 12,
       "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
       "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
-    },
-    {
-      "file": "execution_20261116/code/publish_execution.py",
-      "file_sha256": "79cca1dc4ad00392b70f67d40be923c06ee94b9a9564f28e2a1a144265dd4e8d",
-      "rule": "machine_private_absolute_path",
-      "line": 10,
-      "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
-      "review_reason": "Known Azure workspace prefix used only to sanitize output artifact paths into an azure_workspace alias. Not a credential, personal record or raw data locator."
     }
   ],
   "credential_or_record_payload_exemptions_permitted": false,

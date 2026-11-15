@@ -1,0 +1,264 @@
+{
+  "at_utc": "2026-11-15T18:06:09.322986+00:00",
+  "missing_saved_total": 94,
+  "missing_saved_by_exception": [
+    {
+      "exception_status": null,
+      "handled_status": null,
+      "has_task": false,
+      "retry_forbidden": false,
+      "n": 5
+    },
+    {
+      "exception_status": "frozen_validation_failed_preserve_output",
+      "handled_status": "frozen_validation_failed_preserve_output",
+      "has_task": true,
+      "retry_forbidden": true,
+      "n": 83
+    },
+    {
+      "exception_status": null,
+      "handled_status": null,
+      "has_task": true,
+      "retry_forbidden": false,
+      "n": 6
+    }
+  ],
+  "missing_saved_exception_field_names": [
+    "batch_id",
+    "disposition",
+    "path",
+    "retry_forbidden",
+    "status"
+  ],
+  "missing_accepted_packets": 2,
+  "missing_accepted_packet_field_names": [
+    "error_entries",
+    "errors_sha256",
+    "expected_records",
+    "name",
+    "packet_sha256",
+    "reused_prior_validation",
+    "review_sha256",
+    "status",
+    "validated_records",
+    "validated_sha256",
+    "validator_receipt_sha256",
+    "validator_return_code"
+  ],
+  "missing_accepted_SHA_found_in_migration": 0,
+  "unreconciled_event_states": [
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch049",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch060",
+      "n": 420
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch070",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch062",
+      "n": 355
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch061",
+      "n": 260
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch071",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch069",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch056",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch063",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch066",
+      "n": 13
+    },
+    {
+      "asset": "Azure_parent",
+      "state": "not_reconciled",
+      "batch_or_reason": "transport_or_identity_exception_preserved_not_proof_of_saved_model_output:local_or_transport_boundary_exception",
+      "n": 44
+    },
+    {
+      "asset": "Azure_parent",
+      "state": "not_reconciled",
+      "batch_or_reason": "transport_or_identity_exception_preserved_not_proof_of_saved_model_output:gateway_not_confirmed_complete",
+      "n": 2
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch065",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch053",
+      "n": 100
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch042",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch064",
+      "n": 710
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch073",
+      "n": 30
+    },
+    {
+      "asset": "Azure_parent",
+      "state": "not_reconciled",
+      "batch_or_reason": "transport_or_identity_exception_preserved_not_proof_of_saved_model_output:identity_binding_mismatch",
+      "n": 1
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch068",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch072",
+      "n": 720
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch059",
+      "n": 4
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch058",
+      "n": 175
+    },
+    {
+      "asset": "Pro",
+      "state": "not_reconciled",
+      "batch_or_reason": "batch067",
+      "n": 720
+    }
+  ],
+  "metadata_research_files": 51,
+  "metadata_basenames": [
+    "._COMPARISON_SPEC_PUBLIC.json",
+    "._EXECUTION_CONTRACT_PUBLIC.json",
+    "._RELEASE_RECEIPT_PUBLIC.json",
+    "._RESULTS_ZH.md",
+    "._ROOT_DECISION_PUBLIC.json",
+    "._RUN_COMMANDS.md",
+    "._SLURM_ACCOUNTING_PUBLIC.txt",
+    ".___pycache__",
+    "._code",
+    "._compare_support.cpython-310.pyc",
+    "._compare_support.py",
+    "._join_metadata.cpython-310.pyc",
+    "._join_metadata.py",
+    "._ks_probe.sbatch",
+    "._ks_run_metadata.sbatch",
+    "._ks_verify.sbatch",
+    "._probe_metadata.py",
+    "._verify_outputs.py",
+    "AD_LEVEL_RESEARCH_PRIVATE.parquet",
+    "CELL_SIZE_AND_SPARSITY_DISTRIBUTION.csv",
+    "CELL_SUPPORT_RESULTS_WEIGHTS_PRIVATE.csv",
+    "COMPARISON_RECEIPT_PUBLIC.json",
+    "COMPARISON_SPEC_PUBLIC.json",
+    "EXECUTION_CONTRACT_PUBLIC.json",
+    "METADATA_COVERAGE_PUBLIC.json",
+    "METADATA_JOIN_RECEIPT_PUBLIC.json",
+    "METADATA_PROBE_PUBLIC.json",
+    "NUMERIC_ACCEPTANCE_PUBLIC.json",
+    "Q1_Q2_DESCRIPTIVE_RESULTS.csv",
+    "RELEASE_RECEIPT_PUBLIC.json",
+    "RESEARCH_SCHEMA_PUBLIC.json",
+    "RESULTS_ZH.md",
+    "ROOT_DECISION_PUBLIC.json",
+    "RUN_COMMANDS.md",
+    "SLURM_ACCOUNTING_PUBLIC.txt",
+    "SUPPORT_AND_EXCLUSIONS.csv",
+    "compare_support.cpython-310.pyc",
+    "compare_support.py",
+    "join_metadata.cpython-310.pyc",
+    "join_metadata.py",
+    "ks_probe.sbatch",
+    "ks_run_metadata.sbatch",
+    "ks_verify.sbatch",
+    "probe-125613326.err",
+    "probe-125613326.out",
+    "probe_metadata.py",
+    "qa-125615844.err",
+    "qa-125615844.out",
+    "run-125615039.err",
+    "run-125615039.out",
+    "verify_outputs.py"
+  ],
+  "selected_Pro_base_shards": 2,
+  "selected_Pro_base_catalog_field_names": [
+    "ad_bytes",
+    "ad_path",
+    "ad_rows",
+    "ad_sha256_from_original_receipt",
+    "duration_bytes",
+    "duration_path",
+    "duration_rows",
+    "duration_sha256_from_original_receipt",
+    "original_receipt_path",
+    "original_receipt_sha256",
+    "shard_id"
+  ],
+  "existing_SQL_runtime": {
+    "duckdb": "1.4.3",
+    "available": true
+  },
+  "new_model_calls": 0,
+  "raw_description_files_read": 0
+}

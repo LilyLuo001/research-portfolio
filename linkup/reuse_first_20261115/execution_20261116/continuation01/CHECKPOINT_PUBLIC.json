@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-11-15T18:35:11.978615+00:00",
+  "status": "immutable_continuation_checkpoint_verified",
+  "archive_blob_key": "reuse-execution/20261116/run001/continuation01/REUSE_CONTINUATION_PRIVATE.tar.gz",
+  "archive_bytes": 139272345,
+  "archive_sha256": "65ff5b7f7b2a4afd9421ed510c2ec9d73553328dd94a7b604def3ae3b982b825",
+  "archive_full_readback_SHA_verified": true,
+  "latest_value_database_relative_to_migration": "execution_20261116/run001/continuation01/joined_revision003/REUSED_VALUES_WITH_CREATED_PRIVATE.sqlite",
+  "latest_value_database_sha256": "fdcdfc86270c0391fef512dcdd641438606ec9ad2f00b0554c8bc9b1353f49a5",
+  "old_semantic_and_mask_rows_preserved_byte_value_identical": true,
+  "original_status_index_unchanged": true,
+  "old_output_contexts_reused_this_continuation": 88,
+  "saved_unverified_contexts_with_values": 6500,
+  "original_accepted_contexts_with_values": 39298,
+  "original_accepted_ad_keys_with_values": 45592,
+  "existing_ledger_ad_keys_created_matched": 62414,
+  "missing_saved_carrier_partition": {
+    "Pro_original_carrier_or_binding": 5,
+    "Astra_original_failure": 1
+  },
+  "missing_accepted_carriers": 10,
+  "status_unreconciled": 10012,
+  "protected_quarantined": 56,
+  "independent_existing_Kimi_references_revalidated": 150,
+  "new_Kimi_reference_inputs_prepared_not_submitted": 350,
+  "new_production_accepted": 0,
+  "step4_locked": true,
+  "paper_paused": true,
+  "new_resources_or_timers": false,
+  "infrastructure_invoice_cost_usd": null,
+  "infrastructure_note": "Existing VM/Blob only; actual job-level invoice not available. Stage1/2 allowances are not reported as zero cost."
+}

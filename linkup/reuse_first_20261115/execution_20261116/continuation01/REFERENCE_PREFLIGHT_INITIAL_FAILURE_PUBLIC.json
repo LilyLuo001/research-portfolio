@@ -1,0 +1,41 @@
+{
+  "at_utc": "2026-11-15T18:20:28.402220+00:00",
+  "status": "reference_sources_prepared_not_submitted",
+  "existing_independent_Kimi_references": 150,
+  "existing_Kimi_references_frozen_validation_status": "fail",
+  "existing_Kimi_references_validation_counts": {
+    "ambiguous_quote_instances": 0,
+    "error_entries": 150,
+    "quote_instances": 0,
+    "quote_occurrences": 0,
+    "submitted_review_rows": 150,
+    "trusted_packet_records": 150,
+    "valid_blind_audit_records": 0,
+    "valid_primary_records": 0,
+    "validated_records": 0
+  },
+  "new_blind_Kimi_inputs_prepared": 350,
+  "blocked_cases_removed_no_replacement": 0,
+  "candidate_answers_read": false,
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "new_Kimi_route": "existing OpenCode -> Azure Kimi; transport worker not yet launched",
+  "serial_legs_required": true,
+  "live_exclusions_must_be_rechecked_at_every_submission": true,
+  "paper_paused": true,
+  "metrics_synthetic_tests": {
+    "tests": 14,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "metrics_measurement": "exact normalized complete semantic tuples; conservative disagreements can include free-text paraphrases; no fuzzy matches or output-guided aliases",
+  "quality_gate_evaluated": false,
+  "input_pins": {
+    "PRIOR_REFERENCE_INPUTS_PRIVATE.jsonl": "8e041f97bde6d4daec9da28f158dfd499e7d0e53b3dcca8d3132cf0617d94a93",
+    "PRIOR_REFERENCES_PRIVATE.jsonl": "e28f34086e24ab59cdf254aa685c6b297798862e95eb83ddbc3c7ba27acdc485",
+    "BLIND_NEW_REFERENCE_INPUTS_PRIVATE.jsonl": "19ed3c19fbffe976acc77e894222072b0d93b23d4c6c517a7ec79c2d29b6883d",
+    "qualification_metrics.py": "27fd27e76239c8feb07e3ea9baba89d758bcae97b849dab077af72d8ca6e60ac",
+    "test_qualification_metrics.py": "0695f6f94379afb0b87d35c8c4979f38c95fad4c018a29abd878eea70514ba3d"
+  }
+}

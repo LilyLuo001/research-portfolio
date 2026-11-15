@@ -1,0 +1,65 @@
+{
+  "at_utc": "2026-11-15T18:39:52.887727+00:00",
+  "phase": "old_reuse_and_date_join_advanced_frozen_candidate_test_running",
+  "new_spend_caps_usd": {
+    "metadata_reconciliation": 25,
+    "old_value_reuse": 25,
+    "one_qualification_test": 250,
+    "conditional_10000_input_pilot": 150,
+    "paper": 0,
+    "total": 450
+  },
+  "paper_paused": true,
+  "step6_not_released": true,
+  "new_production_accepted": 0,
+  "old_context_outputs_recovered_this_continuation": 88,
+  "existing_ad_identity_CREATED_joined": 62414,
+  "original_accepted_ad_keys_with_values": 45592,
+  "latest_candidate_progress": {
+    "model": "gpt-6-luna",
+    "selected": 500,
+    "saved_results": 116,
+    "engineering_pass": 70,
+    "frozen_failures_preserved": 46,
+    "quality_gate_passed": false,
+    "process_alive_last_checked": true,
+    "process_check_at_utc": "2026-11-15T18:37:28.017155+00:00",
+    "worker_restarted": false,
+    "scheduled_tpm": 80000,
+    "observed_deployment_tpm": 100000
+  },
+  "reference_leg": {
+    "prior_independent_Kimi_revalidated_and_reused": 150,
+    "new_blind_Kimi_inputs_prepared": 350,
+    "new_Kimi_calls": 0,
+    "new_Astra_calls": 0,
+    "serial_after_candidate": true,
+    "human_review_required": false,
+    "qualification_metrics_synthetic_tests_passed": 16,
+    "machine_agreement_not_human_gold": true,
+    "automatic_reference_handoff_running": false
+  },
+  "accounting": {
+    "candidate_public_price_usage_estimate_at_last_billing_snapshot_usd": 0.09232270000000001,
+    "candidate_conservative_reserved_usd": 0.9301092,
+    "billing_snapshot_at_utc": "2026-11-15T18:36:51.763302+00:00",
+    "invoice_verified": false,
+    "client_conversation_billing_not_included_in_worker_ledger": true,
+    "infrastructure_actual_invoice_usd": null,
+    "new_resources": false
+  },
+  "remaining": {
+    "accepted_original_carriers_not_located": 10,
+    "saved_carrier_or_identity_gaps": 6,
+    "state_not_reconciled": 10012,
+    "quarantined_never_rerun": 56,
+    "full_delivery_unique_missing_field_model_inputs": null,
+    "qualification_complete": false,
+    "conditional_pilot_released": false
+  },
+  "database_relative_to_migration": "execution_20261116/run001/continuation01/joined_revision003/REUSED_VALUES_WITH_CREATED_PRIVATE.sqlite",
+  "database_sha256": "fdcdfc86270c0391fef512dcdd641438606ec9ad2f00b0554c8bc9b1353f49a5",
+  "private_checkpoint_full_SHA_readback_verified": true,
+  "archive_blob_key": "reuse-execution/20261116/run001/continuation01/REUSE_CONTINUATION_PRIVATE.tar.gz",
+  "claim_boundary": "This is reuse and qualification progress, not full-corpus completion or new production acceptance."
+}

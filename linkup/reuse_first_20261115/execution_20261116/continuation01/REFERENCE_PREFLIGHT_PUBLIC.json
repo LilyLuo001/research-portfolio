@@ -1,0 +1,44 @@
+{
+  "at_utc": "2026-11-15T18:23:02.842838+00:00",
+  "status": "reference_sources_prepared_not_submitted",
+  "prior_preflight_preserved": "reference_preflight001",
+  "carrier_adapter": "project only three known frozen-validator-added fields; all original schema values byte-value identical",
+  "source_schema_rules_changed": false,
+  "existing_independent_Kimi_references": 150,
+  "existing_Kimi_references_frozen_validation_status": "pass",
+  "existing_Kimi_references_validation_counts": {
+    "ambiguous_quote_instances": 54,
+    "error_entries": 0,
+    "quote_instances": 1942,
+    "quote_occurrences": 1996,
+    "submitted_review_rows": 150,
+    "trusted_packet_records": 150,
+    "valid_blind_audit_records": 150,
+    "valid_primary_records": 0,
+    "validated_records": 150
+  },
+  "new_blind_Kimi_inputs_prepared": 350,
+  "blocked_cases_removed_no_replacement": 0,
+  "candidate_answers_read": false,
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "new_Kimi_route": "existing OpenCode -> Azure Kimi; transport worker not yet launched",
+  "serial_legs_required": true,
+  "live_exclusions_must_be_rechecked_at_every_submission": true,
+  "paper_paused": true,
+  "metrics_synthetic_tests": {
+    "tests": 16,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "metrics_measurement": "exact normalized complete semantic tuples; conservative disagreements can include free-text paraphrases; no fuzzy matches or output-guided aliases",
+  "quality_gate_evaluated": false,
+  "input_pins": {
+    "PRIOR_REFERENCE_INPUTS_PRIVATE.jsonl": "8e041f97bde6d4daec9da28f158dfd499e7d0e53b3dcca8d3132cf0617d94a93",
+    "PRIOR_REFERENCES_PRIVATE.jsonl": "98d562545f31966331737b1865fd222e7796c526d8e03d9668d5c8d5a17c91de",
+    "BLIND_NEW_REFERENCE_INPUTS_PRIVATE.jsonl": "19ed3c19fbffe976acc77e894222072b0d93b23d4c6c517a7ec79c2d29b6883d",
+    "qualification_metrics.py": "34c490817d9dfd5f93861607f8f892956bad3f3706d09fd42a88f8abedc86fba",
+    "test_qualification_metrics.py": "63dac5702a1d357b8f21f49a25bffb674e485c9ddece636eba731926c156b491"
+  }
+}
