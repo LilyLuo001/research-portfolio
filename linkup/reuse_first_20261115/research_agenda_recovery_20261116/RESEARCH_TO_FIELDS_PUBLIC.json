@@ -1,0 +1,219 @@
+{
+  "at_utc": "2026-11-16T08:08:37.676652+00:00",
+  "status": "research_contract_draft_not_executable_schema",
+  "user_requested_full_scope_rows": 500000000,
+  "verified_full_delivery_unique_ads": null,
+  "final_sample_replacement": false,
+  "future_increments_in_scope": true,
+  "future_revelio_interface_required": true,
+  "modules": [
+    {
+      "id": "M1",
+      "name": "机会数量与构成",
+      "question": "哪些岗位增加或减少，而非仅初级是否减少",
+      "needed": [
+        "source_and_delivery_scope",
+        "ad_identity_and_versions",
+        "employer_occupation_industry_region",
+        "first_observed_active_removed_states",
+        "period_coverage"
+      ],
+      "existing": "Records索引、基础清洗、覆盖与宏观记录可复用；未新执行统计",
+      "gap": "完整交付身份并集及跨范围覆盖未关闭",
+      "source_refs": [
+        "S03",
+        "S04",
+        "S06",
+        "S11a"
+      ]
+    },
+    {
+      "id": "M2",
+      "name": "经验特定性",
+      "question": "总经验相近时，哪种既有经历对应不同要求",
+      "needed": [
+        "general_work",
+        "occupation_task",
+        "industry_domain",
+        "tool_specific",
+        "literal_year_bounds",
+        "required_preferred_waived_unspecified",
+        "conditionality_and_qualification_branches"
+      ],
+      "existing": "细语义参考和部分旧基础/增量保留兼容值",
+      "gap": "非全库语义资格；旧未测与未知不能当零",
+      "source_refs": [
+        "S01",
+        "S05",
+        "S08"
+      ]
+    },
+    {
+      "id": "M3",
+      "name": "资格与跨界开放路径",
+      "question": "公开资格是否接受其他行业、相近任务或工具背景",
+      "needed": [
+        "education_experience_AND_OR_equivalence",
+        "explicit_adjacent_or_transferable_experience",
+        "explicit_tool_substitution",
+        "training_received_vs_provided",
+        "negation_and_scope"
+      ],
+      "existing": "原资格分支可逐项核实复用；没有声称完整独立字段",
+      "gap": "培训接收、可迁移资格、完整学历许可库存不全；先派生已有明确证据",
+      "source_refs": [
+        "S04",
+        "S05",
+        "S07"
+      ]
+    },
+    {
+      "id": "M4",
+      "name": "任务与责任组合",
+      "question": "变化后的岗位要做什么，不把职责当经验",
+      "needed": [
+        "bounded_activity_and_object",
+        "execution_analysis_judgment_verification",
+        "client_business_responsibility_coordination",
+        "supervision_mentoring",
+        "subject_current_duty_capability_prior_experience"
+      ],
+      "existing": "四职责与证据为可复用子集",
+      "gap": "有限任务类别新版本待定义；四职责不是完整任务包",
+      "source_refs": [
+        "S02",
+        "S04",
+        "S08"
+      ]
+    },
+    {
+      "id": "M5",
+      "name": "技术类别与角色",
+      "question": "软件和AI在哪种工作角色中对应要求变化",
+      "needed": [
+        "traditional_software",
+        "predictive_AI",
+        "generative_AI",
+        "develop_implement_use_background",
+        "external_exposure_separate_from_outcome"
+      ],
+      "existing": "已有技术库存和角色参考",
+      "gap": "新生产路线未资格通过；不把提及当采用",
+      "source_refs": [
+        "S05",
+        "S06",
+        "S08",
+        "S11"
+      ]
+    },
+    {
+      "id": "M6",
+      "name": "初级与职业阶梯边际",
+      "question": "新人怎样变化，与经验者共同观察",
+      "needed": [
+        "explicit_no_experience",
+        "new_graduate",
+        "student_internship",
+        "junior_entry_label",
+        "conditionality",
+        "declared_seniority_separate_from_actual_tenure"
+      ],
+      "existing": "四entry原定义保留",
+      "gap": "不能借此替代中级与跨界研究；后续真实晋升需要人员证据",
+      "source_refs": [
+        "S01",
+        "S02",
+        "S08"
+      ]
+    },
+    {
+      "id": "M7",
+      "name": "Revelio人员路径",
+      "question": "谁实际进入、留任或转岗",
+      "needed": [
+        "person_and_position_event_identity",
+        "pre_event_employment_months_union",
+        "first_target_entry_return_continuous",
+        "employer_internal_external_axis",
+        "industry_and_occupation_separate_axes",
+        "prior_task_relatedness",
+        "risk_set_and_history_observability"
+      ],
+      "existing": "共同定义、旧事件合同和接口可复用，非已实现人员面板",
+      "gap": "实际交付/schema/桥表待验证；新版代理时间对照未实现",
+      "source_refs": [
+        "S01",
+        "S05",
+        "S09"
+      ]
+    },
+    {
+      "id": "M8",
+      "name": "跨技术比较与联合证据",
+      "question": "AI与传统软件的共同调整及不同模式",
+      "needed": [
+        "compatible_outcomes",
+        "technology_role_and_stage",
+        "common_support_and_composition",
+        "CREATED_proxy_cohort_explicit",
+        "history_comparison_separate",
+        "predeclared_join_lags_and_selection"
+      ],
+      "existing": "原方法合同与有限Q1/Q2作基准",
+      "gap": "不能用两变量通过代替联合证据；历史软件浪潮不是当代软件组",
+      "source_refs": [
+        "S02",
+        "S03",
+        "S05",
+        "S06",
+        "S10"
+      ]
+    }
+  ],
+  "claim_dependencies": {
+    "posting_counts": [
+      "M1"
+    ],
+    "explicit_requirement_composition": [
+      "M1",
+      "M2"
+    ],
+    "explicit_cross_background_paths": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "tasks_by_technology_role": [
+      "M1",
+      "M4",
+      "M5"
+    ],
+    "entry_wording_share": [
+      "M1",
+      "M6"
+    ],
+    "observed_cross_industry_flows": [
+      "M7"
+    ],
+    "cross_industry_entry_rates": [
+      "M7:validated_target_specific_risk_set"
+    ],
+    "joint_demand_and_entrant_comparison": [
+      "relevant_linkup_modules_only",
+      "M7",
+      "M8"
+    ]
+  },
+  "quality_design": {
+    "prior_failed_gate_unchanged": true,
+    "new_pass_claimed": false,
+    "local_field_failure_must_not_invalidate_unrelated_modules": true,
+    "economic_relations_not_dropped_for_format_simplicity": true,
+    "machine_reference_not_human_truth": true,
+    "human_review_required": false,
+    "new_confirmation_not_started": true,
+    "field_unknown_not_unprocessed": true
+  },
+  "production_started": false,
+  "new_full_scope_cost_quote_usd": null
+}
