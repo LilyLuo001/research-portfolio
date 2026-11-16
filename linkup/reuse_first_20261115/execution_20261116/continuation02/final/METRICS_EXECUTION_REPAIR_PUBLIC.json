@@ -1,0 +1,13 @@
+{
+  "at_utc": "2026-11-16T02:00:50.518093+00:00",
+  "status": "execution_only_schema_compatibility_fix_tested",
+  "tests_passed": 19,
+  "old_metrics_sha256": "34c490817d9dfd5f93861607f8f892956bad3f3706d09fd42a88f8abedc86fba",
+  "new_metrics_sha256": "33f354aa7dda0c117032f4cbc06c4bba427eb50727372528980471570b809d11",
+  "cause": "evaluator_omitted_frozen_validator_shared_group_null_branch_contract",
+  "fix": "Represent null-branch shared conditions separately from selected branches and unconditional clauses; retain all group branch conditions. Nonnull undeclared branches still rejected.",
+  "original_validator_schema_and_model_outputs_unchanged": true,
+  "frozen_qualification_thresholds_and_frame_unchanged": true,
+  "first_comparison_failed_before_metric_output": true,
+  "extra_model_calls": 0
+}

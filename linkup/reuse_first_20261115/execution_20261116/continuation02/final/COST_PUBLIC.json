@@ -1,0 +1,66 @@
+{
+  "qualification_model_legs": {
+    "Luna": {
+      "physical_attempts": 500,
+      "input_tokens": 2220385,
+      "output_tokens": 414555,
+      "responses_without_usage": 0,
+      "conservative_reserved_usd": 4.2373731,
+      "priced_usage_estimate_usd": 0.429316,
+      "price_type": "Azure_Global_Standard_short_context_public_list_not_invoice",
+      "actual_invoice_verified": false,
+      "engineering_pass": 290,
+      "completed": 500,
+      "selected": 500,
+      "original_ledgers_unchanged": true,
+      "rate_limit_tokens_headers": {
+        "100000": 500
+      },
+      "returned_model_names": {
+        "gpt-6-luna-2026-09-22": 500
+      }
+    },
+    "Kimi": {
+      "physical_attempts": 350,
+      "input_tokens": 1480165,
+      "output_tokens": 2098451,
+      "conservative_reserved_usd": 83.0754733,
+      "priced_usage_estimate_usd": 27.536566,
+      "responses_without_usage": 7,
+      "actual_invoice_verified": false
+    },
+    "Astra": {
+      "physical_attempts": 100,
+      "input_tokens": 220992,
+      "output_tokens": 142355,
+      "responses_without_usage": 50,
+      "conservative_reserved_usd": 90.7523,
+      "priced_usage_estimate_usd": 9.88015,
+      "price_type": "conservative_existing_Azure_short_context_cache_write_bound_not_invoice",
+      "actual_invoice_verified": false,
+      "engineering_pass": 50,
+      "completed": 50,
+      "selected": 50,
+      "original_ledgers_unchanged": true,
+      "rate_limit_tokens_headers": {
+        "missing": 50,
+        "1000000": 50
+      },
+      "returned_model_names": {
+        "not_returned": 50,
+        "linkup-gpt-6-astra": 50
+      }
+    }
+  },
+  "total_priced_usage_estimate_usd": 37.846032,
+  "total_conservative_model_reservations_usd": 178.0651464,
+  "qualification_cap_usd": 250,
+  "stage1_cap_usd": 25,
+  "stage2_cap_usd": 25,
+  "stage4_cap_usd": 150,
+  "stage4_model_spend_usd": 0,
+  "paper_cap_usd": 0,
+  "new_paid_resources_created": false,
+  "infrastructure_job_level_invoice_usd": null,
+  "infrastructure_note": "Existing VM/Blob only. Caps and reservation estimates are not charges. No zero-infrastructure-cost or Azure-credit coverage claim."
+}

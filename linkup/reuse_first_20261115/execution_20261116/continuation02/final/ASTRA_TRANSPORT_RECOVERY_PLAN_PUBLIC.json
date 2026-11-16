@@ -1,0 +1,17 @@
+{
+  "recovery_worker_sha256": "cee09e12c0ff0245c45f4a8bc43906b6647d9b972812b0ef27de7aacbda3dc5e",
+  "original_worker_sha256": "5bcc15414f5ad464a750b0b2a50db1c93cb2c4218728764d96a0631da4d2dcd8",
+  "transport_fix": "Add Return JSON to the Responses API input, as required by json_object; unchanged original instructions, schema, reasoning effort and selected source content.",
+  "model_outputs_to_rerun": 0,
+  "definite_HTTP400_input_validation_rejections_preserved": 50,
+  "same_unique_audit_inputs": 50,
+  "attempts_per_input_max_including_original": 2,
+  "previous_self_imposed_HTTP_subcap": 60,
+  "recovery_HTTP_cap_including_original": 100,
+  "reason_for_HTTP_subcap_change": "One additional request per same audit input after definite pre-inference request rejection; no retries beyond attempt2. The original $100 audit reservation budget includes all first-attempt reservations and is unchanged.",
+  "user_stage3_dollar_cap_unchanged": 250,
+  "audit_dollar_cap_unchanged": 100,
+  "qualification_thresholds_unchanged": true,
+  "first_new_systemic_HTTP_error_stops_recovery": true,
+  "no_new_model_or_sample": true
+}

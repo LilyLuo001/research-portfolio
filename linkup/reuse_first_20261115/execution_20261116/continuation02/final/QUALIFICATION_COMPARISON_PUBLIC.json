@@ -1,0 +1,1151 @@
+{
+  "fields": {
+    "technology": {
+      "heldout_cases": 300,
+      "known_reference_cases": 271,
+      "unknown_reference_cases": 29,
+      "reference_relation_ambiguous_cases": 98,
+      "resolved_relation_cases": 173,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "present": 185,
+        "not_mentioned": 86
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 43
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 10
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 33
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 17
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 84
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 84
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.8936170212765957,
+        "recall": 0.4540540540540541,
+        "f1": 0.6021505376344086,
+        "tp": 84,
+        "fp": 10,
+        "fn": 101
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.8936170212765957,
+          "recall": 0.4540540540540541,
+          "f1": 0.6021505376344086,
+          "tp": 84,
+          "fp": 10,
+          "fn": 101
+        },
+        "not_mentioned": {
+          "precision": 0.7166666666666667,
+          "recall": 0.5,
+          "f1": 0.589041095890411,
+          "tp": 43,
+          "fp": 17,
+          "fn": 43
+        }
+      },
+      "outcome_macro_f1": 0.5955958167624098,
+      "complete_relation": {
+        "precision": 0.5390625,
+        "recall": 0.22115384615384615,
+        "f1": 0.31363636363636366,
+        "tp": 69,
+        "fp": 59,
+        "fn": 243
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "resolved_relation_coverage_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "experience.general_work": {
+      "heldout_cases": 300,
+      "known_reference_cases": 269,
+      "unknown_reference_cases": 31,
+      "reference_relation_ambiguous_cases": 1,
+      "resolved_relation_cases": 268,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 235,
+        "present": 34
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 124
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 8
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 103
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 11
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 11
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 12
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.5789473684210527,
+        "recall": 0.3235294117647059,
+        "f1": 0.41509433962264153,
+        "tp": 11,
+        "fp": 8,
+        "fn": 23
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.5789473684210527,
+          "recall": 0.3235294117647059,
+          "f1": 0.41509433962264153,
+          "tp": 11,
+          "fp": 8,
+          "fn": 23
+        },
+        "not_mentioned": {
+          "precision": 0.9185185185185185,
+          "recall": 0.5276595744680851,
+          "f1": 0.6702702702702703,
+          "tp": 124,
+          "fp": 11,
+          "fn": 111
+        }
+      },
+      "outcome_macro_f1": 0.542682304946456,
+      "complete_relation": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 23,
+        "fn": 40
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "experience.occupation_task": {
+      "heldout_cases": 300,
+      "known_reference_cases": 270,
+      "unknown_reference_cases": 30,
+      "reference_relation_ambiguous_cases": 7,
+      "resolved_relation_cases": 263,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "present": 174,
+        "not_mentioned": 96
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 54
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 17
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 25
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 5
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 78
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 91
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.8210526315789474,
+        "recall": 0.4482758620689655,
+        "f1": 0.5799256505576208,
+        "tp": 78,
+        "fp": 17,
+        "fn": 96
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.8210526315789474,
+          "recall": 0.4482758620689655,
+          "f1": 0.5799256505576208,
+          "tp": 78,
+          "fp": 17,
+          "fn": 96
+        },
+        "not_mentioned": {
+          "precision": 0.9152542372881356,
+          "recall": 0.5625,
+          "f1": 0.6967741935483871,
+          "tp": 54,
+          "fp": 5,
+          "fn": 42
+        }
+      },
+      "outcome_macro_f1": 0.638349922053004,
+      "complete_relation": {
+        "precision": 0.017341040462427744,
+        "recall": 0.008547008547008548,
+        "f1": 0.011450381679389313,
+        "tp": 3,
+        "fp": 170,
+        "fn": 348
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "experience.industry_domain": {
+      "heldout_cases": 300,
+      "known_reference_cases": 270,
+      "unknown_reference_cases": 30,
+      "reference_relation_ambiguous_cases": 3,
+      "resolved_relation_cases": 267,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "present": 118,
+        "not_mentioned": 152
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 93
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 2
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 57
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 14
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 45
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 59
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.9574468085106383,
+        "recall": 0.3813559322033898,
+        "f1": 0.5454545454545454,
+        "tp": 45,
+        "fp": 2,
+        "fn": 73
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.9574468085106383,
+          "recall": 0.3813559322033898,
+          "f1": 0.5454545454545454,
+          "tp": 45,
+          "fp": 2,
+          "fn": 73
+        },
+        "not_mentioned": {
+          "precision": 0.8691588785046729,
+          "recall": 0.6118421052631579,
+          "f1": 0.7181467181467182,
+          "tp": 93,
+          "fp": 14,
+          "fn": 59
+        }
+      },
+      "outcome_macro_f1": 0.6318006318006317,
+      "complete_relation": {
+        "precision": 0.037037037037037035,
+        "recall": 0.012578616352201259,
+        "f1": 0.018779342723004695,
+        "tp": 2,
+        "fp": 52,
+        "fn": 157
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "experience.tool_specific": {
+      "heldout_cases": 300,
+      "known_reference_cases": 256,
+      "unknown_reference_cases": 44,
+      "reference_relation_ambiguous_cases": 1,
+      "resolved_relation_cases": 255,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 203,
+        "present": 53
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 104
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 18
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 81
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 1
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 21
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 31
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.5384615384615384,
+        "recall": 0.39622641509433965,
+        "f1": 0.45652173913043476,
+        "tp": 21,
+        "fp": 18,
+        "fn": 32
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.5384615384615384,
+          "recall": 0.39622641509433965,
+          "f1": 0.45652173913043476,
+          "tp": 21,
+          "fp": 18,
+          "fn": 32
+        },
+        "not_mentioned": {
+          "precision": 0.9904761904761905,
+          "recall": 0.5123152709359606,
+          "f1": 0.6753246753246753,
+          "tp": 104,
+          "fp": 1,
+          "fn": 99
+        }
+      },
+      "outcome_macro_f1": 0.5659232072275551,
+      "complete_relation": {
+        "precision": 0.07547169811320754,
+        "recall": 0.041666666666666664,
+        "f1": 0.053691275167785234,
+        "tp": 4,
+        "fp": 49,
+        "fn": 92
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "entry.explicit_no_experience": {
+      "heldout_cases": 300,
+      "known_reference_cases": 271,
+      "unknown_reference_cases": 29,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 271,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 252,
+        "present": 19
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 139
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 113
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 4
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 11
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 4
+        }
+      ],
+      "positive_outcome": {
+        "precision": 1.0,
+        "recall": 0.5789473684210527,
+        "f1": 0.7333333333333333,
+        "tp": 11,
+        "fp": 0,
+        "fn": 8
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 1.0,
+          "recall": 0.5789473684210527,
+          "f1": 0.7333333333333333,
+          "tp": 11,
+          "fp": 0,
+          "fn": 8
+        },
+        "not_mentioned": {
+          "precision": 0.972027972027972,
+          "recall": 0.5515873015873016,
+          "f1": 0.7037974683544304,
+          "tp": 139,
+          "fp": 4,
+          "fn": 113
+        }
+      },
+      "outcome_macro_f1": 0.7185654008438818,
+      "complete_relation": {
+        "precision": 0.9090909090909091,
+        "recall": 0.5263157894736842,
+        "f1": 0.6666666666666666,
+        "tp": 10,
+        "fp": 1,
+        "fn": 9
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "entry.explicit_new_graduate": {
+      "heldout_cases": 300,
+      "known_reference_cases": 271,
+      "unknown_reference_cases": 29,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 271,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 267,
+        "present": 4
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 152
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 115
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 2
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 2
+        }
+      ],
+      "positive_outcome": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "fp": 0,
+        "fn": 2
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        },
+        "not_mentioned": {
+          "precision": 1.0,
+          "recall": 0.5692883895131086,
+          "f1": 0.7255369928400954,
+          "tp": 152,
+          "fp": 0,
+          "fn": 115
+        }
+      },
+      "outcome_macro_f1": 0.696101829753381,
+      "complete_relation": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285714,
+        "tp": 2,
+        "fp": 1,
+        "fn": 2
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "entry.current_student_internship": {
+      "heldout_cases": 300,
+      "known_reference_cases": 271,
+      "unknown_reference_cases": 29,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 271,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 264,
+        "present": 7
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 150
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 1
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 113
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 1
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 2
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 4
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.6666666666666666,
+        "recall": 0.2857142857142857,
+        "f1": 0.4,
+        "tp": 2,
+        "fp": 1,
+        "fn": 5
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.6666666666666666,
+          "recall": 0.2857142857142857,
+          "f1": 0.4,
+          "tp": 2,
+          "fp": 1,
+          "fn": 5
+        },
+        "not_mentioned": {
+          "precision": 0.9933774834437086,
+          "recall": 0.5681818181818182,
+          "f1": 0.7228915662650602,
+          "tp": 150,
+          "fp": 1,
+          "fn": 114
+        }
+      },
+      "outcome_macro_f1": 0.5614457831325301,
+      "complete_relation": {
+        "precision": 0.6666666666666666,
+        "recall": 0.2857142857142857,
+        "f1": 0.4,
+        "tp": 2,
+        "fp": 1,
+        "fn": 5
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "entry.explicit_junior_or_entry_label": {
+      "heldout_cases": 300,
+      "known_reference_cases": 270,
+      "unknown_reference_cases": 30,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 270,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 255,
+        "present": 15
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 146
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 1
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 108
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 1
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 6
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 8
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.8571428571428571,
+        "recall": 0.4,
+        "f1": 0.5454545454545454,
+        "tp": 6,
+        "fp": 1,
+        "fn": 9
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.8571428571428571,
+          "recall": 0.4,
+          "f1": 0.5454545454545454,
+          "tp": 6,
+          "fp": 1,
+          "fn": 9
+        },
+        "not_mentioned": {
+          "precision": 0.9931972789115646,
+          "recall": 0.5725490196078431,
+          "f1": 0.7263681592039801,
+          "tp": 146,
+          "fp": 1,
+          "fn": 109
+        }
+      },
+      "outcome_macro_f1": 0.6359113523292628,
+      "complete_relation": {
+        "precision": 0.8571428571428571,
+        "recall": 0.4,
+        "f1": 0.5454545454545454,
+        "tp": 6,
+        "fp": 1,
+        "fn": 9
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "responsibility.independent_judgment": {
+      "heldout_cases": 300,
+      "known_reference_cases": 271,
+      "unknown_reference_cases": 29,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 271,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "present": 184,
+        "not_mentioned": 87
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 49
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 9
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 29
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 29
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 67
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 88
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.881578947368421,
+        "recall": 0.3641304347826087,
+        "f1": 0.5153846153846153,
+        "tp": 67,
+        "fp": 9,
+        "fn": 117
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.881578947368421,
+          "recall": 0.3641304347826087,
+          "f1": 0.5153846153846153,
+          "tp": 67,
+          "fp": 9,
+          "fn": 117
+        },
+        "not_mentioned": {
+          "precision": 0.6282051282051282,
+          "recall": 0.5632183908045977,
+          "f1": 0.593939393939394,
+          "tp": 49,
+          "fp": 29,
+          "fn": 38
+        }
+      },
+      "outcome_macro_f1": 0.5546620046620047,
+      "complete_relation": {
+        "precision": 0.6666666666666666,
+        "recall": 0.28846153846153844,
+        "f1": 0.40268456375838924,
+        "tp": 60,
+        "fp": 30,
+        "fn": 148
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "responsibility.client_ownership": {
+      "heldout_cases": 300,
+      "known_reference_cases": 269,
+      "unknown_reference_cases": 31,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 269,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 221,
+        "present": 48
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 126
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 2
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 93
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 10
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 14
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 24
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.875,
+        "recall": 0.2916666666666667,
+        "f1": 0.4375,
+        "tp": 14,
+        "fp": 2,
+        "fn": 34
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.875,
+          "recall": 0.2916666666666667,
+          "f1": 0.4375,
+          "tp": 14,
+          "fp": 2,
+          "fn": 34
+        },
+        "not_mentioned": {
+          "precision": 0.9264705882352942,
+          "recall": 0.5701357466063348,
+          "f1": 0.7058823529411765,
+          "tp": 126,
+          "fp": 10,
+          "fn": 95
+        }
+      },
+      "outcome_macro_f1": 0.5716911764705883,
+      "complete_relation": {
+        "precision": 0.7647058823529411,
+        "recall": 0.23214285714285715,
+        "f1": 0.3561643835616438,
+        "tp": 13,
+        "fp": 4,
+        "fn": 43
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "responsibility.people_supervision": {
+      "heldout_cases": 300,
+      "known_reference_cases": 268,
+      "unknown_reference_cases": 32,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 268,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "not_mentioned": 206,
+        "present": 62
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 120
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "present",
+          "n": 3
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 83
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 2
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 26
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 34
+        }
+      ],
+      "positive_outcome": {
+        "precision": 0.896551724137931,
+        "recall": 0.41935483870967744,
+        "f1": 0.5714285714285714,
+        "tp": 26,
+        "fp": 3,
+        "fn": 36
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 0.896551724137931,
+          "recall": 0.41935483870967744,
+          "f1": 0.5714285714285714,
+          "tp": 26,
+          "fp": 3,
+          "fn": 36
+        },
+        "not_mentioned": {
+          "precision": 0.9836065573770492,
+          "recall": 0.5825242718446602,
+          "f1": 0.7317073170731707,
+          "tp": 120,
+          "fp": 2,
+          "fn": 86
+        }
+      },
+      "outcome_macro_f1": 0.6515679442508711,
+      "complete_relation": {
+        "precision": 0.7941176470588235,
+        "recall": 0.3333333333333333,
+        "f1": 0.46956521739130436,
+        "tp": 27,
+        "fp": 7,
+        "fn": 54
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    },
+    "responsibility.training_mentoring": {
+      "heldout_cases": 300,
+      "known_reference_cases": 271,
+      "unknown_reference_cases": 29,
+      "reference_relation_ambiguous_cases": 0,
+      "resolved_relation_cases": 271,
+      "candidate_known_cases_all": 167,
+      "support": {
+        "present": 86,
+        "not_mentioned": 185
+      },
+      "confusion_matrix": [
+        {
+          "reference": "not_mentioned",
+          "candidate": "not_mentioned",
+          "n": 112
+        },
+        {
+          "reference": "not_mentioned",
+          "candidate": "unknown",
+          "n": 73
+        },
+        {
+          "reference": "present",
+          "candidate": "not_mentioned",
+          "n": 5
+        },
+        {
+          "reference": "present",
+          "candidate": "present",
+          "n": 37
+        },
+        {
+          "reference": "present",
+          "candidate": "unknown",
+          "n": 44
+        }
+      ],
+      "positive_outcome": {
+        "precision": 1.0,
+        "recall": 0.43023255813953487,
+        "f1": 0.6016260162601627,
+        "tp": 37,
+        "fp": 0,
+        "fn": 49
+      },
+      "class_metrics": {
+        "present": {
+          "precision": 1.0,
+          "recall": 0.43023255813953487,
+          "f1": 0.6016260162601627,
+          "tp": 37,
+          "fp": 0,
+          "fn": 49
+        },
+        "not_mentioned": {
+          "precision": 0.9572649572649573,
+          "recall": 0.6054054054054054,
+          "f1": 0.7417218543046358,
+          "tp": 112,
+          "fp": 5,
+          "fn": 73
+        }
+      },
+      "outcome_macro_f1": 0.6716739352823993,
+      "complete_relation": {
+        "precision": 0.8604651162790697,
+        "recall": 0.31896551724137934,
+        "f1": 0.46540880503144655,
+        "tp": 37,
+        "fp": 6,
+        "fn": 79
+      },
+      "machine_reference_field_gate_pass": false,
+      "blocking_reasons": [
+        "outcome_recall_below_gate",
+        "outcome_macro_f1_below_gate",
+        "complete_relation_precision_below_gate",
+        "complete_relation_recall_below_gate",
+        "complete_relation_f1_below_gate"
+      ]
+    }
+  },
+  "heldout_cases": 300,
+  "development_cases_excluded_from_gate": 200,
+  "measurement": "conservative_exact_normalized_complete_tuple_machine_reference_agreement",
+  "machine_agreement_is_not_gold_accuracy": true,
+  "population_generalization_certified": false,
+  "production_admission": false,
+  "production_requires_external_complete_protocol_and_nonduplicate_queue": true,
+  "at_utc": "2026-11-16T02:01:04.928029+00:00",
+  "complete_predeclared_frame_accounted": 500,
+  "reference_status_counts": {
+    "frozen_validator_pass_reference_only": 307,
+    "frozen_validation_failed_preserve_output": 28,
+    "unexpected_assistant_count": 4,
+    "quarantined_provider_filter_no_reroute": 5,
+    "visible_boundary_failed_preserve_output": 6,
+    "reused_preinference_independent_Kimi": 150
+  },
+  "candidate_status_counts": {
+    "frozen_validator_pass_candidate_only": 290,
+    "frozen_validation_failed_preserve_output": 209,
+    "invalid_json_preserved": 1
+  },
+  "production_locked_pending_full_protocol": true
+}

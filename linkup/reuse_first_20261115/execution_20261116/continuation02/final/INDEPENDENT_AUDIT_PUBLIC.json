@@ -1,0 +1,1536 @@
+{
+  "scope_note": "30 hash-ranked heldout and 20 selected disagreements reported separately; automated reference comparisons, not human truth or unbiased pooled accuracy",
+  "groups": {
+    "heldout30": {
+      "model_agreement": {
+        "candidate": {
+          "fields": {
+            "technology": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 10,
+                "present": 20
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.1,
+                "f1": 0.18181818181818182,
+                "tp": 2,
+                "fp": 0,
+                "fn": 18
+              },
+              "outcome_macro_f1": 0.4409090909090909,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 2,
+                "fn": 23
+              }
+            },
+            "experience.general_work": {
+              "known_reference_cases": 29,
+              "unknown_reference_cases": 1,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 26,
+                "present": 3
+              },
+              "positive_outcome": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 1,
+                "fn": 3
+              },
+              "outcome_macro_f1": 0.2972972972972973,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 1,
+                "fn": 4
+              }
+            },
+            "experience.occupation_task": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 12,
+                "present": 18
+              },
+              "positive_outcome": {
+                "precision": 0.75,
+                "recall": 0.16666666666666666,
+                "f1": 0.2727272727272727,
+                "tp": 3,
+                "fp": 1,
+                "fn": 15
+              },
+              "outcome_macro_f1": 0.48636363636363633,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 4,
+                "fn": 42
+              }
+            },
+            "experience.industry_domain": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 16,
+                "present": 14
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.2857142857142857,
+                "f1": 0.4444444444444444,
+                "tp": 4,
+                "fp": 0,
+                "fn": 10
+              },
+              "outcome_macro_f1": 0.5138888888888888,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 6,
+                "fn": 23
+              }
+            },
+            "experience.tool_specific": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 21,
+                "present": 9
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.2222222222222222,
+                "f1": 0.36363636363636365,
+                "tp": 2,
+                "fp": 0,
+                "fn": 7
+              },
+              "outcome_macro_f1": 0.5043988269794721,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 2,
+                "fn": 21
+              }
+            },
+            "entry.explicit_no_experience": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 28,
+                "present": 2
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666,
+                "tp": 1,
+                "fp": 0,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.6153846153846154,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666,
+                "tp": 1,
+                "fp": 0,
+                "fn": 1
+              }
+            },
+            "entry.explicit_new_graduate": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 30
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.2857142857142857,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.current_student_internship": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 30
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.2857142857142857,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.explicit_junior_or_entry_label": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 30
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.2857142857142857,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "responsibility.independent_judgment": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 10,
+                "present": 20
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.15,
+                "f1": 0.2608695652173913,
+                "tp": 3,
+                "fp": 0,
+                "fn": 17
+              },
+              "outcome_macro_f1": 0.49885583524027455,
+              "complete_relation": {
+                "precision": 0.75,
+                "recall": 0.11538461538461539,
+                "f1": 0.2,
+                "tp": 3,
+                "fp": 1,
+                "fn": 23
+              }
+            },
+            "responsibility.client_ownership": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 27,
+                "present": 3
+              },
+              "positive_outcome": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 1,
+                "fn": 3
+              },
+              "outcome_macro_f1": 0.2894736842105263,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 1,
+                "fn": 3
+              }
+            },
+            "responsibility.people_supervision": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 23,
+                "present": 7
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 0,
+                "fn": 7
+              },
+              "outcome_macro_f1": 0.34285714285714286,
+              "complete_relation": {
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 0,
+                "fn": 12
+              }
+            },
+            "responsibility.training_mentoring": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 22,
+                "present": 8
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 0,
+                "fn": 8
+              },
+              "outcome_macro_f1": 0.35294117647058826,
+              "complete_relation": {
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 0,
+                "fn": 14
+              }
+            }
+          },
+          "cases": 30,
+          "not_a_population_accuracy_estimate": true
+        },
+        "reference": {
+          "fields": {
+            "technology": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 10,
+                "present": 20
+              },
+              "positive_outcome": {
+                "precision": 0.9375,
+                "recall": 0.75,
+                "f1": 0.8333333333333334,
+                "tp": 15,
+                "fp": 1,
+                "fn": 5
+              },
+              "outcome_macro_f1": 0.8377192982456141,
+              "complete_relation": {
+                "precision": 0.46153846153846156,
+                "recall": 0.2608695652173913,
+                "f1": 0.3333333333333333,
+                "tp": 6,
+                "fp": 7,
+                "fn": 17
+              }
+            },
+            "experience.general_work": {
+              "known_reference_cases": 29,
+              "unknown_reference_cases": 1,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 26,
+                "present": 3
+              },
+              "positive_outcome": {
+                "precision": 0.6666666666666666,
+                "recall": 0.6666666666666666,
+                "f1": 0.6666666666666666,
+                "tp": 2,
+                "fp": 1,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.7801418439716312,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 3,
+                "fn": 4
+              }
+            },
+            "experience.occupation_task": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 12,
+                "present": 18
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.6666666666666666,
+                "f1": 0.8,
+                "tp": 12,
+                "fp": 0,
+                "fn": 6
+              },
+              "outcome_macro_f1": 0.8,
+              "complete_relation": {
+                "precision": 0.15,
+                "recall": 0.07142857142857142,
+                "f1": 0.0967741935483871,
+                "tp": 3,
+                "fp": 17,
+                "fn": 39
+              }
+            },
+            "experience.industry_domain": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 16,
+                "present": 14
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.8571428571428571,
+                "f1": 0.9230769230769231,
+                "tp": 12,
+                "fp": 0,
+                "fn": 2
+              },
+              "outcome_macro_f1": 0.9098143236074271,
+              "complete_relation": {
+                "precision": 0.1111111111111111,
+                "recall": 0.08695652173913043,
+                "f1": 0.0975609756097561,
+                "tp": 2,
+                "fp": 16,
+                "fn": 21
+              }
+            },
+            "experience.tool_specific": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 21,
+                "present": 9
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.6666666666666666,
+                "f1": 0.8,
+                "tp": 6,
+                "fp": 0,
+                "fn": 3
+              },
+              "outcome_macro_f1": 0.875,
+              "complete_relation": {
+                "precision": 0.5555555555555556,
+                "recall": 0.23809523809523808,
+                "f1": 0.3333333333333333,
+                "tp": 5,
+                "fp": 4,
+                "fn": 16
+              }
+            },
+            "entry.explicit_no_experience": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 28,
+                "present": 2
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666,
+                "tp": 1,
+                "fp": 0,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.7756410256410255,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666,
+                "tp": 1,
+                "fp": 0,
+                "fn": 1
+              }
+            },
+            "entry.explicit_new_graduate": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 30
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.45454545454545453,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.current_student_internship": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 30
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.45454545454545453,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.explicit_junior_or_entry_label": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 30
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.45454545454545453,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "responsibility.independent_judgment": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 10,
+                "present": 20
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1": 0.9473684210526315,
+                "tp": 18,
+                "fp": 0,
+                "fn": 2
+              },
+              "outcome_macro_f1": 0.8854489164086687,
+              "complete_relation": {
+                "precision": 0.9444444444444444,
+                "recall": 0.6538461538461539,
+                "f1": 0.7727272727272727,
+                "tp": 17,
+                "fp": 1,
+                "fn": 9
+              }
+            },
+            "responsibility.client_ownership": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 27,
+                "present": 3
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "tp": 3,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.9489795918367347,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "tp": 3,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "responsibility.people_supervision": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 23,
+                "present": 7
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.7142857142857143,
+                "f1": 0.8333333333333334,
+                "tp": 5,
+                "fp": 0,
+                "fn": 2
+              },
+              "outcome_macro_f1": 0.8817829457364341,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.6666666666666666,
+                "f1": 0.8,
+                "tp": 8,
+                "fp": 0,
+                "fn": 4
+              }
+            },
+            "responsibility.training_mentoring": {
+              "known_reference_cases": 30,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 25,
+              "support": {
+                "not_mentioned": 22,
+                "present": 8
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.75,
+                "f1": 0.8571428571428571,
+                "tp": 6,
+                "fp": 0,
+                "fn": 2
+              },
+              "outcome_macro_f1": 0.89198606271777,
+              "complete_relation": {
+                "precision": 0.8181818181818182,
+                "recall": 0.6428571428571429,
+                "f1": 0.72,
+                "tp": 9,
+                "fp": 2,
+                "fn": 5
+              }
+            }
+          },
+          "cases": 30,
+          "not_a_population_accuracy_estimate": true
+        }
+      },
+      "bounded_tiebreak_support": {
+        "technology": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 20,
+          "GPT_exact_supports_Kimi_not_Luna": 3,
+          "all_three_exactly_agree": 6
+        },
+        "experience.general_work": {
+          "different_or_unresolved_semantics": 8,
+          "GPT_exact_supports_Kimi_not_Luna": 11,
+          "all_three_exactly_agree": 9,
+          "GPT_unresolved": 1,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        },
+        "experience.occupation_task": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 17,
+          "GPT_exact_supports_Kimi_not_Luna": 6,
+          "all_three_exactly_agree": 6
+        },
+        "experience.industry_domain": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 15,
+          "all_three_exactly_agree": 6,
+          "GPT_exact_supports_Kimi_not_Luna": 8
+        },
+        "experience.tool_specific": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 8,
+          "GPT_exact_supports_Kimi_not_Luna": 12,
+          "all_three_exactly_agree": 9
+        },
+        "entry.explicit_no_experience": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 5,
+          "GPT_exact_supports_Kimi_not_Luna": 13,
+          "all_three_exactly_agree": 11
+        },
+        "entry.explicit_new_graduate": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 4,
+          "GPT_exact_supports_Kimi_not_Luna": 14,
+          "all_three_exactly_agree": 11
+        },
+        "entry.current_student_internship": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 4,
+          "GPT_exact_supports_Kimi_not_Luna": 14,
+          "all_three_exactly_agree": 11
+        },
+        "entry.explicit_junior_or_entry_label": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 4,
+          "GPT_exact_supports_Kimi_not_Luna": 14,
+          "all_three_exactly_agree": 11
+        },
+        "responsibility.independent_judgment": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 8,
+          "GPT_exact_supports_Kimi_not_Luna": 13,
+          "all_three_exactly_agree": 8
+        },
+        "responsibility.client_ownership": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 4,
+          "GPT_exact_supports_Kimi_not_Luna": 15,
+          "all_three_exactly_agree": 10
+        },
+        "responsibility.people_supervision": {
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 6,
+          "GPT_exact_supports_Kimi_not_Luna": 13,
+          "all_three_exactly_agree": 10
+        },
+        "responsibility.training_mentoring": {
+          "GPT_exact_supports_Luna_not_Kimi": 2,
+          "different_or_unresolved_semantics": 5,
+          "GPT_exact_supports_Kimi_not_Luna": 15,
+          "all_three_exactly_agree": 8
+        }
+      },
+      "stratum_selected_on_disagreement": false
+    },
+    "disagreement20": {
+      "model_agreement": {
+        "candidate": {
+          "fields": {
+            "technology": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "present": 15,
+                "not_mentioned": 5
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.5333333333333333,
+                "f1": 0.6956521739130435,
+                "tp": 8,
+                "fp": 0,
+                "fn": 7
+              },
+              "outcome_macro_f1": 0.681159420289855,
+              "complete_relation": {
+                "precision": 0.2631578947368421,
+                "recall": 0.21739130434782608,
+                "f1": 0.23809523809523808,
+                "tp": 5,
+                "fp": 14,
+                "fn": 18
+              }
+            },
+            "experience.general_work": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 20
+              },
+              "positive_outcome": {
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 2,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.3333333333333333,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 2,
+                "fn": 1
+              }
+            },
+            "experience.occupation_task": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "present": 18,
+                "not_mentioned": 2
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.5555555555555556,
+                "f1": 0.7142857142857143,
+                "tp": 10,
+                "fp": 0,
+                "fn": 8
+              },
+              "outcome_macro_f1": 0.8571428571428572,
+              "complete_relation": {
+                "precision": 0.0625,
+                "recall": 0.022727272727272728,
+                "f1": 0.03333333333333333,
+                "tp": 1,
+                "fp": 15,
+                "fn": 43
+              }
+            },
+            "experience.industry_domain": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "present": 10,
+                "not_mentioned": 10
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.3,
+                "f1": 0.46153846153846156,
+                "tp": 3,
+                "fp": 0,
+                "fn": 7
+              },
+              "outcome_macro_f1": 0.5991902834008097,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 4,
+                "fn": 15
+              }
+            },
+            "experience.tool_specific": {
+              "known_reference_cases": 19,
+              "unknown_reference_cases": 1,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 17,
+                "present": 2
+              },
+              "positive_outcome": {
+                "precision": 0.25,
+                "recall": 0.5,
+                "f1": 0.3333333333333333,
+                "tp": 1,
+                "fp": 3,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.45833333333333337,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 4,
+                "fn": 3
+              }
+            },
+            "entry.explicit_no_experience": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 17,
+                "present": 3
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.6666666666666666,
+                "f1": 0.8,
+                "tp": 2,
+                "fp": 0,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.7333333333333334,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.6666666666666666,
+                "f1": 0.8,
+                "tp": 2,
+                "fp": 0,
+                "fn": 1
+              }
+            },
+            "entry.explicit_new_graduate": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 20
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.375,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.current_student_internship": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 20
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.375,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.explicit_junior_or_entry_label": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "present": 2,
+                "not_mentioned": 18
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666,
+                "tp": 1,
+                "fp": 0,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.7126436781609196,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666,
+                "tp": 1,
+                "fp": 0,
+                "fn": 1
+              }
+            },
+            "responsibility.independent_judgment": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "present": 18,
+                "not_mentioned": 2
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.5,
+                "f1": 0.6666666666666666,
+                "tp": 9,
+                "fp": 0,
+                "fn": 9
+              },
+              "outcome_macro_f1": 0.7333333333333334,
+              "complete_relation": {
+                "precision": 0.9166666666666666,
+                "recall": 0.4074074074074074,
+                "f1": 0.5641025641025641,
+                "tp": 11,
+                "fp": 1,
+                "fn": 16
+              }
+            },
+            "responsibility.client_ownership": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 16,
+                "present": 4
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.25,
+                "f1": 0.4,
+                "tp": 1,
+                "fp": 0,
+                "fn": 3
+              },
+              "outcome_macro_f1": 0.5333333333333333,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.16666666666666666,
+                "f1": 0.2857142857142857,
+                "tp": 1,
+                "fp": 0,
+                "fn": 5
+              }
+            },
+            "responsibility.people_supervision": {
+              "known_reference_cases": 19,
+              "unknown_reference_cases": 1,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 12,
+                "present": 7
+              },
+              "positive_outcome": {
+                "precision": 0.75,
+                "recall": 0.42857142857142855,
+                "f1": 0.5454545454545454,
+                "tp": 3,
+                "fp": 1,
+                "fn": 4
+              },
+              "outcome_macro_f1": 0.6411483253588517,
+              "complete_relation": {
+                "precision": 0.6666666666666666,
+                "recall": 0.2857142857142857,
+                "f1": 0.4,
+                "tp": 2,
+                "fp": 1,
+                "fn": 5
+              }
+            },
+            "responsibility.training_mentoring": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 12,
+              "support": {
+                "not_mentioned": 9,
+                "present": 11
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.36363636363636365,
+                "f1": 0.5333333333333333,
+                "tp": 4,
+                "fp": 0,
+                "fn": 7
+              },
+              "outcome_macro_f1": 0.6784313725490196,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.25,
+                "f1": 0.4,
+                "tp": 4,
+                "fp": 0,
+                "fn": 12
+              }
+            }
+          },
+          "cases": 20,
+          "not_a_population_accuracy_estimate": true
+        },
+        "reference": {
+          "fields": {
+            "technology": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "present": 15,
+                "not_mentioned": 5
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.8666666666666667,
+                "f1": 0.9285714285714286,
+                "tp": 13,
+                "fp": 0,
+                "fn": 2
+              },
+              "outcome_macro_f1": 0.9188311688311688,
+              "complete_relation": {
+                "precision": 0.5384615384615384,
+                "recall": 0.30434782608695654,
+                "f1": 0.3888888888888889,
+                "tp": 7,
+                "fp": 6,
+                "fn": 16
+              }
+            },
+            "experience.general_work": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 18,
+              "support": {
+                "not_mentioned": 20
+              },
+              "positive_outcome": {
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 1,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.4594594594594595,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 2,
+                "fn": 1
+              }
+            },
+            "experience.occupation_task": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "present": 18,
+                "not_mentioned": 2
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.8888888888888888,
+                "f1": 0.9411764705882353,
+                "tp": 16,
+                "fp": 0,
+                "fn": 2
+              },
+              "outcome_macro_f1": 0.8705882352941177,
+              "complete_relation": {
+                "precision": 0.14705882352941177,
+                "recall": 0.11363636363636363,
+                "f1": 0.1282051282051282,
+                "tp": 5,
+                "fp": 29,
+                "fn": 39
+              }
+            },
+            "experience.industry_domain": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "present": 10,
+                "not_mentioned": 10
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.8,
+                "f1": 0.8888888888888888,
+                "tp": 8,
+                "fp": 0,
+                "fn": 2
+              },
+              "outcome_macro_f1": 0.9206349206349206,
+              "complete_relation": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "tp": 0,
+                "fp": 11,
+                "fn": 15
+              }
+            },
+            "experience.tool_specific": {
+              "known_reference_cases": 19,
+              "unknown_reference_cases": 1,
+              "candidate_known_cases_all": 17,
+              "support": {
+                "not_mentioned": 17,
+                "present": 2
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "tp": 2,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.9516129032258065,
+              "complete_relation": {
+                "precision": 0.5,
+                "recall": 0.3333333333333333,
+                "f1": 0.4,
+                "tp": 1,
+                "fp": 1,
+                "fn": 2
+              }
+            },
+            "entry.explicit_no_experience": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "not_mentioned": 17,
+                "present": 3
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "tp": 3,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.9848484848484849,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "tp": 3,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.explicit_new_graduate": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "not_mentioned": 20
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.48717948717948717,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.current_student_internship": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "not_mentioned": 20
+              },
+              "positive_outcome": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.48717948717948717,
+              "complete_relation": {
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "tp": 0,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "entry.explicit_junior_or_entry_label": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "present": 2,
+                "not_mentioned": 18
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "tp": 2,
+                "fp": 0,
+                "fn": 0
+              },
+              "outcome_macro_f1": 0.9857142857142858,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "tp": 2,
+                "fp": 0,
+                "fn": 0
+              }
+            },
+            "responsibility.independent_judgment": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "present": 18,
+                "not_mentioned": 2
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.9444444444444444,
+                "f1": 0.9714285714285714,
+                "tp": 17,
+                "fp": 0,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.9857142857142858,
+              "complete_relation": {
+                "precision": 0.9,
+                "recall": 0.6666666666666666,
+                "f1": 0.7659574468085106,
+                "tp": 18,
+                "fp": 2,
+                "fn": 9
+              }
+            },
+            "responsibility.client_ownership": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "not_mentioned": 16,
+                "present": 4
+              },
+              "positive_outcome": {
+                "precision": 0.75,
+                "recall": 0.75,
+                "f1": 0.75,
+                "tp": 3,
+                "fp": 1,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.8266129032258065,
+              "complete_relation": {
+                "precision": 0.75,
+                "recall": 0.5,
+                "f1": 0.6,
+                "tp": 3,
+                "fp": 1,
+                "fn": 3
+              }
+            },
+            "responsibility.people_supervision": {
+              "known_reference_cases": 19,
+              "unknown_reference_cases": 1,
+              "candidate_known_cases_all": 17,
+              "support": {
+                "not_mentioned": 12,
+                "present": 7
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.8571428571428571,
+                "f1": 0.9230769230769231,
+                "tp": 6,
+                "fp": 0,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.939799331103679,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.8571428571428571,
+                "f1": 0.9230769230769231,
+                "tp": 6,
+                "fp": 0,
+                "fn": 1
+              }
+            },
+            "responsibility.training_mentoring": {
+              "known_reference_cases": 20,
+              "unknown_reference_cases": 0,
+              "candidate_known_cases_all": 19,
+              "support": {
+                "not_mentioned": 9,
+                "present": 11
+              },
+              "positive_outcome": {
+                "precision": 1.0,
+                "recall": 0.9090909090909091,
+                "f1": 0.9523809523809523,
+                "tp": 10,
+                "fp": 0,
+                "fn": 1
+              },
+              "outcome_macro_f1": 0.9761904761904762,
+              "complete_relation": {
+                "precision": 1.0,
+                "recall": 0.6875,
+                "f1": 0.8148148148148148,
+                "tp": 11,
+                "fp": 0,
+                "fn": 5
+              }
+            }
+          },
+          "cases": 20,
+          "not_a_population_accuracy_estimate": true
+        }
+      },
+      "bounded_tiebreak_support": {
+        "technology": {
+          "different_or_unresolved_semantics": 12,
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "GPT_exact_supports_Kimi_not_Luna": 3,
+          "all_three_exactly_agree": 4
+        },
+        "experience.general_work": {
+          "GPT_exact_supports_Kimi_not_Luna": 8,
+          "all_three_exactly_agree": 8,
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "different_or_unresolved_semantics": 3
+        },
+        "experience.occupation_task": {
+          "different_or_unresolved_semantics": 17,
+          "GPT_exact_supports_Kimi_not_Luna": 1,
+          "all_three_exactly_agree": 2
+        },
+        "experience.industry_domain": {
+          "different_or_unresolved_semantics": 11,
+          "all_three_exactly_agree": 6,
+          "GPT_exact_supports_Kimi_not_Luna": 3
+        },
+        "experience.tool_specific": {
+          "GPT_exact_supports_Kimi_not_Luna": 9,
+          "all_three_exactly_agree": 6,
+          "GPT_unresolved": 1,
+          "different_or_unresolved_semantics": 3,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        },
+        "entry.explicit_no_experience": {
+          "GPT_exact_supports_Kimi_not_Luna": 9,
+          "all_three_exactly_agree": 10,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        },
+        "entry.explicit_new_graduate": {
+          "GPT_exact_supports_Kimi_not_Luna": 8,
+          "all_three_exactly_agree": 11,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        },
+        "entry.current_student_internship": {
+          "GPT_exact_supports_Kimi_not_Luna": 8,
+          "all_three_exactly_agree": 11,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        },
+        "entry.explicit_junior_or_entry_label": {
+          "GPT_exact_supports_Kimi_not_Luna": 8,
+          "all_three_exactly_agree": 11,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        },
+        "responsibility.independent_judgment": {
+          "different_or_unresolved_semantics": 10,
+          "all_three_exactly_agree": 5,
+          "GPT_exact_supports_Luna_not_Kimi": 1,
+          "GPT_exact_supports_Kimi_not_Luna": 4
+        },
+        "responsibility.client_ownership": {
+          "GPT_exact_supports_Kimi_not_Luna": 7,
+          "different_or_unresolved_semantics": 4,
+          "all_three_exactly_agree": 8,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        },
+        "responsibility.people_supervision": {
+          "GPT_exact_supports_Kimi_not_Luna": 7,
+          "all_three_exactly_agree": 9,
+          "different_or_unresolved_semantics": 3,
+          "GPT_unresolved": 1
+        },
+        "responsibility.training_mentoring": {
+          "GPT_exact_supports_Kimi_not_Luna": 9,
+          "all_three_exactly_agree": 6,
+          "different_or_unresolved_semantics": 4,
+          "GPT_exact_supports_Luna_not_Kimi": 1
+        }
+      },
+      "stratum_selected_on_disagreement": true
+    }
+  },
+  "original_outputs_unchanged": true
+}

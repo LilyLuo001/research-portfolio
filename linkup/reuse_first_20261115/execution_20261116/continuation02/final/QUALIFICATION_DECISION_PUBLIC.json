@@ -1,0 +1,182 @@
+{
+  "at_utc": "2026-11-16T02:52:56.487223+00:00",
+  "status": "fixed_qualification_protocol_completed",
+  "scope": "500_predeclared_historical_contexts_not_population_production",
+  "candidate_model": "gpt-6-luna",
+  "independent_reference_model": "Kimi-K3.1-Pro",
+  "audit_model": "gpt-6-astra",
+  "selected_inputs": 500,
+  "heldout_inputs": 300,
+  "development_inputs_not_used_in_gate": 200,
+  "independent_Kimi_existing_reused": 150,
+  "independent_Kimi_new_results_accounted": 350,
+  "Astra_audit_results_accounted": 50,
+  "Astra_audits_with_validated_outputs": 50,
+  "Astra_initial_HTTP400_rejections_preserved": 50,
+  "Astra_transport_recovery_did_not_repeat_any_model_generated_answer": true,
+  "Astra_audit_outcomes": {
+    "frozen_validator_pass_independent_audit_only": 50
+  },
+  "machine_reference_qualified_fields": [],
+  "field_blocking_reasons": {
+    "technology": [
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "resolved_relation_coverage_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "experience.general_work": [
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "experience.occupation_task": [
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "experience.industry_domain": [
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "experience.tool_specific": [
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "entry.explicit_no_experience": [
+      "insufficient_positive_cases",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "entry.explicit_new_graduate": [
+      "insufficient_positive_cases",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "entry.current_student_internship": [
+      "insufficient_positive_cases",
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "entry.explicit_junior_or_entry_label": [
+      "insufficient_positive_cases",
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "responsibility.independent_judgment": [
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "responsibility.client_ownership": [
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "responsibility.people_supervision": [
+      "outcome_precision_below_gate",
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ],
+    "responsibility.training_mentoring": [
+      "outcome_recall_below_gate",
+      "outcome_macro_f1_below_gate",
+      "complete_relation_precision_below_gate",
+      "complete_relation_recall_below_gate",
+      "complete_relation_f1_below_gate"
+    ]
+  },
+  "machine_agreement_not_human_gold": true,
+  "no_human_review_required_or_performed": true,
+  "no_population_generalization_claim": true,
+  "no_prompts_schemas_samples_or_thresholds_retuned_to_pass": true,
+  "Astra_audit_did_not_replace_Kimi_labels": true,
+  "new_production_accepted": 0,
+  "stage4_admitted_inputs": 0,
+  "stage4_reason": "no_field_passed_frozen_qualification",
+  "stage4_budget_spent_usd": 0,
+  "whole_corpus_missing_unique_input_count": null,
+  "whole_corpus_production_budget_released": false,
+  "paper_paused": true,
+  "original_ledger_and_reused_values_SHA_unchanged": true,
+  "Luna_usage": {
+    "physical_attempts": 500,
+    "input_tokens": 2220385,
+    "output_tokens": 414555,
+    "responses_without_usage": 0,
+    "conservative_reserved_usd": 4.2373731,
+    "priced_usage_estimate_usd": 0.429316,
+    "price_type": "Azure_Global_Standard_short_context_public_list_not_invoice",
+    "actual_invoice_verified": false,
+    "engineering_pass": 290,
+    "completed": 500,
+    "selected": 500,
+    "original_ledgers_unchanged": true,
+    "rate_limit_tokens_headers": {
+      "100000": 500
+    },
+    "returned_model_names": {
+      "gpt-6-luna-2026-09-22": 500
+    }
+  },
+  "Astra_usage": {
+    "physical_attempts": 100,
+    "input_tokens": 220992,
+    "output_tokens": 142355,
+    "responses_without_usage": 50,
+    "conservative_reserved_usd": 90.7523,
+    "priced_usage_estimate_usd": 9.88015,
+    "price_type": "conservative_existing_Azure_short_context_cache_write_bound_not_invoice",
+    "actual_invoice_verified": false,
+    "engineering_pass": 50,
+    "completed": 50,
+    "selected": 50,
+    "original_ledgers_unchanged": true,
+    "rate_limit_tokens_headers": {
+      "missing": 50,
+      "1000000": 50
+    },
+    "returned_model_names": {
+      "not_returned": 50,
+      "linkup-gpt-6-astra": 50
+    }
+  }
+}

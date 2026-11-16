@@ -1,0 +1,36 @@
+{
+  "status": {
+    "status": "finite_benchmark_completed",
+    "started_at_utc": "2026-11-16T02:01:19.771542+00:00",
+    "pid": 141447,
+    "model": "gpt-6-astra",
+    "deployment": "linkup-gpt-6-astra",
+    "selected": 50,
+    "completed": 50,
+    "engineering_pass": 0,
+    "new_production_accepted": 0,
+    "exceptions": {
+      "http_error_preserved": 50
+    },
+    "physical_attempts": 50,
+    "reserved_usd": 45.371775,
+    "public_price_estimated_usage_usd": 0.0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "no_human_gold_claim": true,
+    "updated_at_utc": "2026-11-16T02:03:28.682560+00:00",
+    "elapsed_seconds": 128.911,
+    "original_ledgers_unchanged": true,
+    "finished_at_utc": "2026-11-16T02:03:28.680250+00:00",
+    "alive": false
+  },
+  "http_status_counts": {
+    "http_error": 50
+  },
+  "first_error": {
+    "code": null,
+    "type": "invalid_request_error",
+    "param": "input",
+    "message": "Response input messages must contain the word 'json' in some form to use 'text.format' of type 'json_object'."
+  }
+}
