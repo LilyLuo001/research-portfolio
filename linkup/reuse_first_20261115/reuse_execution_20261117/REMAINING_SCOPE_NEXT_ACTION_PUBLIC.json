@@ -1,0 +1,328 @@
+{
+  "at_utc": "2026-11-17T11:12:59.978626+00:00",
+  "status": "public_receipt_scope_dependency_review_only_no_execution_queue",
+  "read_scope": "Only existing public files under execution_20261116, integration_20261116, budget_plan_20261116 and reuse_execution_20261117; no cloud or private payload access.",
+  "sources": [
+    {
+      "relative_to_reuse_first": "execution_20261116/ALL_SHARD_ACCOUNTING_PUBLIC.json",
+      "sha256": "03d656512249bfb960ddaabd246ae321aaeb0a1007d10157ada62709bcc0ca93"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/SCOPE_RECONCILIATION_PUBLIC.json",
+      "sha256": "aed3f14ecc3b010437cf3ed9b4bc07459f4632e641e95d8273414e709b32ef10"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/RECORDS_SOURCE_DEDUP_PUBLIC.json",
+      "sha256": "f87c3db4e69e20cca64560523c457198b412ee4532ef4a73746f770db8ebc816"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/FIELD_COVERAGE_REGISTER_PUBLIC.json",
+      "sha256": "50ecc0e1819450538d51d981ce796659736e5db5e45d77a96e1e209796e89e3a"
+    },
+    {
+      "relative_to_reuse_first": "budget_plan_20261116/CLOUD_INDEX_READONLY_PUBLIC.json",
+      "sha256": "0b7d1ac1024a783eb10205f8c350fc01672b01a8b749041c6d38d254223c8d31"
+    },
+    {
+      "relative_to_reuse_first": "budget_plan_20261116/BUDGET_PLAN_PUBLIC.json",
+      "sha256": "b371fefe8b79d8369934eff77d71f0aa53886e97bd9fd1068e5d3b874aaea14d"
+    },
+    {
+      "relative_to_reuse_first": "reuse_execution_20261117/RECONCILIATION_INPUTS_PUBLIC.json",
+      "sha256": "be9e30ef8db00978eca2a84d8343287dfe2adf89019faca3b8e7cf097a5eb3de"
+    },
+    {
+      "relative_to_reuse_first": "reuse_execution_20261117/RECONCILIATION_V3_PUBLIC.json",
+      "sha256": "83d95fd42d37d0cd684f5875e671f6f1a3de5368ba0ecdf8680777e5a948e102"
+    },
+    {
+      "relative_to_reuse_first": "reuse_execution_20261117/MATERIALIZATION_PUBLIC.json",
+      "sha256": "1f4af1bc3048abc53c38884466c5f28cdb8a3618706d2cace47cd47ff8ce086b"
+    },
+    {
+      "relative_to_reuse_first": "reuse_execution_20261117/VARIABLE_COVERAGE_PUBLIC.json",
+      "sha256": "d41aad1c0e69fda322b42b157ac80e5251f21e28913d77b1b7ff4e95a394b72d"
+    }
+  ],
+  "one_next_action": {
+    "name": "Attach a complete delivery-to-identity coverage map, beginning with existing provider manifests and Records narrow-index manifests.",
+    "first_concrete_dependency": "Resolve the already-verified 269-source Records index_manifest/RECORDS_INVENTORY locators from stage1/VERIFIED_DELIVERY_METADATA_PRIVATE.json, then verify existing narrow identity columns and source-row identity against the completed 2,464-shard canonical-US catalog. Use only manifest/footer/schema metadata first.",
+    "why_now": "The current 55,882-context fine index and 45,710-carrier projection cannot supply a full-delivery denominator. Further per-field subtraction within that subset will not close the full-delivery gap.",
+    "minimum_next_artifact": "One metadata-only scope/identity register per provider delivery version and source file: source SHA, footer row unit, existing index locator/schema, selected-or-duplicate-version state, US/non-US scope and base/semantic asset bindings. This is a reconciliation artifact, not a model task queue.",
+    "after_schema_evidence_only": "If existing indices contain the required identities, perform a separately bounded cloud narrow-column union/join and preserve exact source keys. If a delivery-range manifest or complete context-hash index is absent, record that missing dependency instead of reconstructing a false exact total."
+  },
+  "existing_manifests_and_indices_to_attach": [
+    {
+      "dataset": "Job Descriptions",
+      "provider_manifest_sha256": "e9b80c3b59337202b7ee05380f32de9d0cb8d07cf664e0809609cc366625eee3",
+      "migration_relative_path": "execution_20261116/run001/stage1/metadata_cache/e9b80c3b59337202b7ee05380f32de9d0cb8d07cf664e0809609cc366625eee3.metadata",
+      "files": 2464,
+      "source_bytes": 652027698428,
+      "dataset_version": "2026-09-06T04:57:24.018000+00:00",
+      "evidence": "Existing verified provider-manifest inventory, not row-level ad/context uniqueness."
+    },
+    {
+      "dataset": "Job Records",
+      "provider_manifest_sha256": "05cf0d4d2fa1a02119e796e6ab75c838adb21fbed1bf90cd55df825d625f05bd",
+      "migration_relative_path": "execution_20261116/run001/stage1/metadata_cache/05cf0d4d2fa1a02119e796e6ab75c838adb21fbed1bf90cd55df825d625f05bd.metadata",
+      "files": 269,
+      "source_bytes": 63291244154,
+      "dataset_version": "2026-09-06T04:57:24.018000+00:00",
+      "evidence": "Existing verified provider-manifest inventory, not row-level ad/context uniqueness."
+    },
+    {
+      "dataset": "completed_frozen_US_base_catalog",
+      "migration_relative_path": "full_scope_catalog_preflight_20261115/20261115T120402Z/CORPUS_RELEASE_CATALOG_PRIVATE.jsonl",
+      "sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+      "shards": 2464,
+      "canonical_US_ads": 204774035,
+      "ad_table_bytes_from_existing_manifest": 7364262618,
+      "purpose": "Existing base shard and original output-receipt map; reuse, not re-clean."
+    },
+    {
+      "dataset": "delivery_and_derived_index_metadata",
+      "migration_relative_path": "execution_20261116/run001/stage1/VERIFIED_DELIVERY_METADATA_PRIVATE.json",
+      "purpose": "Resolve exact existing index_manifest.json, job_records_manifest.tsv and RECORDS_INVENTORY_PRIVATE.json locators by already-verified SHA; do not search the entire warehouse."
+    },
+    {
+      "dataset": "all_completed_base_receipts",
+      "migration_relative_path": "execution_20261116/run001/stage1/ALL_SHARD_ACCOUNTING_PRIVATE.json",
+      "purpose": "Previously verified per-shard original raw and canonical counts; no repeat 2,464-receipt scan."
+    },
+    {
+      "dataset": "existing_fine_identity_status_index",
+      "migration_relative_path": "integration_20261116/run001/revision003/STATUS_INDEX_PRIVATE.sqlite",
+      "contexts": 55882,
+      "ad_keys": 62414,
+      "purpose": "This is the known fine-review subset, not the complete delivery identity index."
+    },
+    {
+      "dataset": "new_reuse_sidecar",
+      "migration_relative_path": "reuse_execution_20261117/run001/LINKUP_REUSED_VARIABLES_V1_PRIVATE.sqlite",
+      "source_documents": 108292,
+      "variable_atoms": 2963270,
+      "eligible_carrier_contexts": 45710,
+      "purpose": "Existing fine-ledger values projected to dictionary v1; attach by existing exact keys/masks, not a new corpus or new qualification."
+    }
+  ],
+  "what_is_exact_already": {
+    "Description_provider_files": 2464,
+    "Description_raw_footer_or_receipt_rows": 298673078,
+    "Records_provider_files": 269,
+    "Records_footer_rows": 356449214,
+    "Records_derived_index_rows": 356449214,
+    "Records_inventory_files": 1160,
+    "Records_derived_index_known_columns": [
+      "JOB_HASH",
+      "COMPANY_ID",
+      "COUNTRY",
+      "STATE",
+      "CREATED",
+      "LAST_UPDATED",
+      "LAST_CHECKED",
+      "DELETE_DATE",
+      "RECORD_SOURCE_ROW"
+    ],
+    "canonical_US_base_ads": 204774035,
+    "overlapping_D67_delta_ads": 5804936,
+    "known_fine_contexts": 55882,
+    "known_fine_ad_keys": 62414,
+    "exact_fine_field_projection_counts_available": true,
+    "global_per_field_missing_context_counts_available": false,
+    "row_counts_across_description_records_and_derived_versions_must_not_be_added": true,
+    "metadata_index_rows_are_not_unique_JOB_HASH_or_normalized_context_counts": true
+  },
+  "current_known_subset_field_evidence": {
+    "scope": "Only 45,710 eligible stored-carrier contexts, plus preserved 62,414 structural ad identities; categories may overlap.",
+    "examples": [
+      {
+        "variable_key": "lk.time.created",
+        "unit": "广告源记录",
+        "source_availability": "structural_reuse",
+        "projected_atom_rows": 0,
+        "contexts_with_any_projection": 0,
+        "contexts_with_some_original_scope_known_atom": 0,
+        "contexts_with_unknown_or_partial_atom": 0,
+        "contexts_with_saved_unverified_atom": 0,
+        "ad_keys_with_nonnull_structural_source_value": 62414,
+        "eligible_carrier_contexts_without_projection": null,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "lk.occupation",
+        "unit": "广告源记录",
+        "source_availability": "structural_reuse",
+        "projected_atom_rows": 0,
+        "contexts_with_any_projection": 0,
+        "contexts_with_some_original_scope_known_atom": 0,
+        "contexts_with_unknown_or_partial_atom": 0,
+        "contexts_with_saved_unverified_atom": 0,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": null,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "lk.exp.general_work",
+        "unit": "上下文×经历类别",
+        "source_availability": "partial_semantic_reuse",
+        "projected_atom_rows": 48364,
+        "contexts_with_any_projection": 45690,
+        "contexts_with_some_original_scope_known_atom": 37064,
+        "contexts_with_unknown_or_partial_atom": 2380,
+        "contexts_with_saved_unverified_atom": 6416,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": 20,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "lk.exp.occupation_task",
+        "unit": "上下文×经历类别",
+        "source_availability": "partial_semantic_reuse",
+        "projected_atom_rows": 48364,
+        "contexts_with_any_projection": 45690,
+        "contexts_with_some_original_scope_known_atom": 37377,
+        "contexts_with_unknown_or_partial_atom": 2183,
+        "contexts_with_saved_unverified_atom": 6416,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": 20,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "lk.qual.logic",
+        "unit": "相关资格组",
+        "source_availability": "new_definition",
+        "projected_atom_rows": 0,
+        "contexts_with_any_projection": 0,
+        "contexts_with_some_original_scope_known_atom": 0,
+        "contexts_with_unknown_or_partial_atom": 0,
+        "contexts_with_saved_unverified_atom": 0,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": 45710,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "lk.task.activity",
+        "unit": "任务条款",
+        "source_availability": "new_definition",
+        "projected_atom_rows": 0,
+        "contexts_with_any_projection": 0,
+        "contexts_with_some_original_scope_known_atom": 0,
+        "contexts_with_unknown_or_partial_atom": 0,
+        "contexts_with_saved_unverified_atom": 0,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": 45710,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "measure.cross_domain_openness",
+        "unit": "广告×来源经历类别",
+        "source_availability": "new_definition",
+        "projected_atom_rows": 0,
+        "contexts_with_any_projection": 0,
+        "contexts_with_some_original_scope_known_atom": 0,
+        "contexts_with_unknown_or_partial_atom": 0,
+        "contexts_with_saved_unverified_atom": 0,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": null,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "pe.identity",
+        "unit": "person-position key",
+        "source_availability": "external_pending",
+        "projected_atom_rows": 0,
+        "contexts_with_any_projection": 0,
+        "contexts_with_some_original_scope_known_atom": 0,
+        "contexts_with_unknown_or_partial_atom": 0,
+        "contexts_with_saved_unverified_atom": 0,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": null,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      },
+      {
+        "variable_key": "bridge.entity_mapping",
+        "unit": "versioned cross-source mapping by axis",
+        "source_availability": "external_pending",
+        "projected_atom_rows": 0,
+        "contexts_with_any_projection": 0,
+        "contexts_with_some_original_scope_known_atom": 0,
+        "contexts_with_unknown_or_partial_atom": 0,
+        "contexts_with_saved_unverified_atom": 0,
+        "ad_keys_with_nonnull_structural_source_value": 0,
+        "eligible_carrier_contexts_without_projection": null,
+        "without_projection_is_not_proven_missing_requirement": true,
+        "some_known_atom_is_not_complete_variable_coverage": true,
+        "full_delivery_missing_unique_inputs": null
+      }
+    ],
+    "interpretation": [
+      "The two experience-family examples each have 45,690 contexts with any projection and 20 without projection. Neither 20 nor total-minus-known is a model-eligible net gap.",
+      "Task activity and computable qualification logic have no projected new-definition values in this sidecar; this proves no projection in this version, not that all records need new inference.",
+      "lk.occupation structural count zero cannot distinguish a missing physical source column from an unmapped alias; inspect the independent QA metadata_field_inventory before claiming absent occupation data.",
+      "Revelio/bridge external_pending is not LinkUp cleaning backlog.",
+      "Known atoms, not-mentioned and complete-variable qualification are different; saved/unknown/protected states never become automatic negatives or new work."
+    ]
+  },
+  "missing_evidence_blocking_full_net_gap": [
+    {
+      "dependency": "Exact full requested delivery range and version union",
+      "known": "Current verified provider manifests identify the stated 2026-09-06 dataset version and existing files.",
+      "not_proved": "No reviewed public receipt establishes an exact 500,000,000-row selected source union, global unique ads or all future-delivery coverage. The 500M target is retained, not replaced by the 204.77M US base."
+    },
+    {
+      "dependency": "Full ad-identity bridge across Records, Descriptions, old base and increments",
+      "known": "Existing fine subset has exact four-key bindings; full Records has a narrow index and footer accounting.",
+      "not_proved": "A completed full-delivery source/ad/version union or verified full Records-to-Descriptions-to-base exact-key crosswalk is not evidenced by these public receipts. A distinct JOB_HASH count alone would not establish all four-key/version relationships."
+    },
+    {
+      "dependency": "Full normalized-context identity and shared-context map",
+      "known": "Fine contexts use existing normalized context SHA identities.",
+      "not_proved": "No reviewed public manifest proves a complete all-delivery normalized-text hash index. Records narrow columns do not contain a normalized-context hash. If unavailable, a later separately scoped deterministic indexing task would be required; not a new LLM call or permission to rescan all bodies now."
+    },
+    {
+      "dependency": "Field-by-identity version/eligibility masks over the full universe",
+      "known": "Original base/D67 coverage counts and fine masks/projections are reusable under original meanings.",
+      "not_proved": "No exact full-universe per-field accepted/reusable/saved/unknown/protected/unprocessed partition or dependency-qualified model-input count exists in the reviewed receipts."
+    },
+    {
+      "dependency": "Qualified new production route and verified remaining funds",
+      "known": "Current materialization has zero model calls and grants no semantic qualification.",
+      "not_proved": "Full-production funds, full cost or date cannot be inferred from atom counts, the old $25/$25 caps or the historical $5000 credit statement."
+    }
+  ],
+  "boundaries": {
+    "cloud_calls": 0,
+    "model_calls": 0,
+    "private_rows_read": 0,
+    "new_inference_queue_created": false,
+    "existing_ledger_mutations": 0,
+    "full_database_rescan": false,
+    "new_resources": false,
+    "paper_generated": false,
+    "do_not_repeat": [
+      "Completed 2,464-shard receipt accounting",
+      "Completed source-file footer/index-version dedup",
+      "Existing 62,414-key CREATED join",
+      "Old fine-ledger value attachment/materialization",
+      "Previously identified held-carrier searches or HEAD requests"
+    ],
+    "budget": "Existing stage1/stage2 limits remain shared cumulative caps; this review does not reset or spend them.",
+    "independent_QA": "This note uses the main materialization receipt but does not assert the still-separate independent QA outcome."
+  }
+}

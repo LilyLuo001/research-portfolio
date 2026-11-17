@@ -1,0 +1,12 @@
+{
+  "at_utc": "2026-11-17T11:03:22.050966+00:00",
+  "status": "deployment_control_syntax_error_before_execution",
+  "error": "SyntaxError: unterminated string literal",
+  "line": 15,
+  "failed_control_sha256": "9448f1f8e206e2a0e95797a1e9eabd6c5f59064d688aab9a46d491ca3d865816",
+  "code_or_data_written_by_failed_control": false,
+  "worker_started_by_failed_control": false,
+  "repair": "Use raw literal for nested deployment source, preserving newline escaping; original failed control retained.",
+  "original_source_data_unchanged": true,
+  "new_model_calls": 0
+}

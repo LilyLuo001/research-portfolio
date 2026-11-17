@@ -1,0 +1,281 @@
+{
+  "at_utc": "2026-11-17T11:13:15.716676+00:00",
+  "version": "independent-qa-v2.0.1",
+  "status": "pass",
+  "checks": {
+    "sqlite_integrity": true,
+    "document_count_matches_receipt": true,
+    "atom_count_matches_receipt": true,
+    "89_dictionary_definitions": true,
+    "no_runtime_excluded_document": true,
+    "no_orphan_atoms": true,
+    "no_unknown_or_invalid_promoted": true,
+    "saved_documents_not_promoted": true,
+    "no_new_semantic_acceptance": true,
+    "negative_derivation_requires_complete_review": true,
+    "variable_ids_nonnull": true,
+    "metadata_json_valid": true,
+    "analysis_join_no_source_binding_duplication": true,
+    "analysis_join_respects_source_ad_key": true,
+    "exact_view_definition": true,
+    "id_single_column_primary_unique": true,
+    "output_sha_unchanged": true
+  },
+  "counts": {
+    "metadata_value": 184834,
+    "adapter_issue": 66225,
+    "context_state": 55882,
+    "original_mask": 515652,
+    "deferred_mapping": 1117024,
+    "source_document": 108292,
+    "variable_value": 2963270,
+    "ad_binding": 62414
+  },
+  "summary": {
+    "variable_measurement_rows": {
+      "known": 1830804,
+      "not_mentioned": 442128,
+      "null_preserved": 158736,
+      "not_applicable": 45452,
+      "missing": 57484,
+      "partial": 6840,
+      "unknown_or_conflict": 75456,
+      "missing_original_mask": 344787,
+      "unknown": 1583
+    },
+    "variable_workflow_rows": {
+      "accepted_original_scope": 2531737,
+      "reviewed_unknown": 82368,
+      "saved_unverified": 339106,
+      "partial_original_scope": 1910,
+      "missing_original_mask": 8149
+    },
+    "ad_keys_with_any_original_scope_atom": 44248,
+    "contexts_with_any_original_scope_atom": 38217,
+    "source_contexts_by_original_acceptance_nonadditive": {
+      "1": 39294,
+      "0": 6416
+    },
+    "bound_ad_keys": 62414,
+    "bound_created_states": {
+      "matched_consistent": 62414
+    },
+    "deferred_variable_keys": [
+      "lk.evidence.ref",
+      "lk.exp.bound_inclusivity",
+      "lk.exp.object",
+      "lk.exp.object_concept",
+      "lk.exp.object_label",
+      "lk.qual.condition_atoms",
+      "lk.qual.legacy_groups",
+      "lk.qual.logic",
+      "lk.task.activity",
+      "lk.task.code",
+      "lk.tech.developed_object",
+      "lk.tech.entity",
+      "measure.cross_domain_openness",
+      "measure.experience_bundle"
+    ],
+    "metadata_field_inventory": [
+      {
+        "physical_column": "CREATED",
+        "rows_present": 52420,
+        "nonnull_rows": 52420
+      },
+      {
+        "physical_column": "STATE",
+        "rows_present": 52420,
+        "nonnull_rows": 52089
+      },
+      {
+        "physical_column": "metadata_candidate_match_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_candidate_matches",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_census_region",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_census_region_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_company_id",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_company_id_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_company_valid",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_conflict",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_conflict_fields",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_country",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_country_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_created",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_created_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_crosses_2022_11_30",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_crosses_2022_11_30_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_date_complete",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_date_complete_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_delete_date",
+        "rows_present": 10000,
+        "nonnull_rows": 9702
+      },
+      {
+        "physical_column": "metadata_delete_date_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_last_checked",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_last_checked_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_last_updated",
+        "rows_present": 10000,
+        "nonnull_rows": 2081
+      },
+      {
+        "physical_column": "metadata_last_updated_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_observation_closed",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_observation_closed_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_observation_end",
+        "rows_present": 10000,
+        "nonnull_rows": 9702
+      },
+      {
+        "physical_column": "metadata_observation_end_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_records_match_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_records_matches",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_stale_delete_or_reappearance",
+        "rows_present": 10000,
+        "nonnull_rows": 9702
+      },
+      {
+        "physical_column": "metadata_stale_delete_or_reappearance_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_state_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_title",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      },
+      {
+        "physical_column": "metadata_title_state",
+        "rows_present": 10000,
+        "nonnull_rows": 10000
+      }
+    ],
+    "never_add_atom_rows_to_ad_or_context_counts": true,
+    "some_original_scope_atom_not_all_fields_complete": true
+  },
+  "output_sha256": "6f77e3ee4e39d9e60e9eec7731c891c632a528440587450105af3ca1580b5b01",
+  "elapsed_seconds": 572.5026969779283,
+  "wall_limit_seconds": 1800,
+  "sqlite_read_cache_MiB": 256,
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "scope": "engineering_and_binding_integrity_not_semantic_requalification",
+  "private_output_remains_on_azure": true,
+  "full_delivery_unique_missing_inputs": null,
+  "wide_analysis_view_scanned": false,
+  "join_equivalence_proof": "exact_view_SQL + full_integrity_check + unique_nonnull_variable_id + DISTINCT_binding_relation",
+  "prior_QA_artifacts_preserved": true
+}

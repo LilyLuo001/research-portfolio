@@ -1,0 +1,17 @@
+{
+  "event": "one_ARM_status_poll_failed",
+  "identity_type": "existing_ARM_service_principal",
+  "resource": "existing_vm_runCommand_async_operation",
+  "operation": "GET_operation_status",
+  "http_status": 400,
+  "authorization_failure_established": false,
+  "minimum_new_permission_required": null,
+  "permission_or_network_expansion_performed": false,
+  "raw_error_and_signed_URLs_retained_privately": true,
+  "same_failed_operation_not_resubmitted": "fresh_read_only_status_command_only",
+  "materialization_not_restarted": true,
+  "recovery_at_utc": "2026-11-17T10:17:27.665611+00:00",
+  "recovered_worker_status": "materializing_existing_values",
+  "recovered_processed_documents": 105500,
+  "worker_was_still_present": true
+}

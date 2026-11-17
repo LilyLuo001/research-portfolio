@@ -1,0 +1,118 @@
+{
+  "at_utc": "2026-11-17T10:35:50.550032+00:00",
+  "status": "first_reuse_materialization_complete",
+  "source_database_sha256": "fdcdfc86270c0391fef512dcdd641438606ec9ad2f00b0554c8bc9b1353f49a5",
+  "destination_relative_to_migration": "reuse_execution_20261117/run001/LINKUP_REUSED_VARIABLES_V1_PRIVATE.sqlite",
+  "destination_sha256": "6f77e3ee4e39d9e60e9eec7731c891c632a528440587450105af3ca1580b5b01",
+  "destination_bytes": 5550370816,
+  "dictionary_version": "1.0.0",
+  "processed_documents": 108292,
+  "excluded_source_documents": 88,
+  "eligible_carrier_contexts": 45710,
+  "materialized_variable_rows": 2963270,
+  "source_documents_by_asset": {
+    "fixed10k": 69888,
+    "Pro": 31686,
+    "Pro_PRIMARY_saved_unverified": 5391,
+    "Kimi_saved_unverified": 1137,
+    "Pro_merged": 180,
+    "Kimi_initial_saved_unverified": 5,
+    "Astra_original_accepted": 5
+  },
+  "mask_binding_counts": [
+    {
+      "asset": "Astra_original_accepted",
+      "binding": "no_exact_external_mask",
+      "documents": 5
+    },
+    {
+      "asset": "Kimi_initial_saved_unverified",
+      "binding": "no_exact_external_mask",
+      "documents": 5
+    },
+    {
+      "asset": "Kimi_saved_unverified",
+      "binding": "no_exact_external_mask",
+      "documents": 1137
+    },
+    {
+      "asset": "Pro",
+      "binding": "exact_source_masks",
+      "documents": 31686
+    },
+    {
+      "asset": "Pro_PRIMARY_saved_unverified",
+      "binding": "no_exact_external_mask",
+      "documents": 5391
+    },
+    {
+      "asset": "Pro_merged",
+      "binding": "exact_source_masks",
+      "documents": 180
+    },
+    {
+      "asset": "fixed10k",
+      "binding": "exact_source_masks",
+      "documents": 69888
+    }
+  ],
+  "adapter_issue_counts": [
+    {
+      "code": "duplicate_qualification_branch",
+      "rows": 2
+    },
+    {
+      "code": "fixed_family_has_no_value_carrier",
+      "rows": 71
+    },
+    {
+      "code": "fixed_legacy_shape_preserved_not_promoted",
+      "rows": 1
+    },
+    {
+      "code": "item_inventory_missing_or_malformed",
+      "rows": 5
+    },
+    {
+      "code": "item_not_object",
+      "rows": 2
+    },
+    {
+      "code": "nonmention_requires_complete_original_review",
+      "rows": 62020
+    },
+    {
+      "code": "original_outcome_and_inventory_disagree",
+      "rows": 927
+    },
+    {
+      "code": "same_clause_year_bounds_not_compatible",
+      "rows": 1824
+    },
+    {
+      "code": "source_atom_invalid",
+      "rows": 1373
+    }
+  ],
+  "checks": {
+    "source_document_conservation": true,
+    "all_89_definitions_preserved": true,
+    "protected_projection_count_zero": true,
+    "all_original_ad_bindings_preserved": true,
+    "one_created_state_per_ad_context": true,
+    "existing_created_join_not_recomputed": true,
+    "no_original_schema_or_ledger_update": true,
+    "sqlite_integrity": true,
+    "source_database_SHA_unchanged": true,
+    "source_state_SHA_unchanged": true,
+    "reconciliation_SHA_unchanged": true,
+    "runtime_exclusions_SHA_unchanged": true
+  },
+  "elapsed_seconds": 5749.742332234047,
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "raw_advertisement_files_read": 0,
+  "full_delivery_missing_unique_inputs": null,
+  "not_all_variables_complete_for_all_contexts": true,
+  "no_semantic_requalification_from_adapter": true
+}

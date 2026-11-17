@@ -1,0 +1,71 @@
+{
+  "qa_version": "independent-adapter-synthetic-qa-v1",
+  "verified_at_utc": "2026-11-17T08:57:34.873671+00:00",
+  "status": "pass_engineering_adapter_only",
+  "review_scope": "独立代码审阅及纯合成执行；不含真实广告、人员、旧输出载荷或全文语义验证。",
+  "source_files": [
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/reuse_execution_20261117/code/adapter.py",
+      "sha256": "da1e7542cd78a28559ae90688a83a45f1e8d36e597be8a9f50fb6d1eb36a64c1"
+    },
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/reuse_execution_20261117/code/test_adapter.py",
+      "sha256": "2f9b2f8849dab57bb2b2bff9867846222a9cf50269f409c0f95503e70794fd5d"
+    },
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/reuse_execution_20261117/code/independent_adapter_synthetic_qa.py",
+      "sha256": "223507b8fee121d6b9ef0e0a5029a220ccd3df722aa94135064032a5efa1278d"
+    }
+  ],
+  "execution": {
+    "existing_synthetic_unit_tests": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -q test_adapter",
+      "tests_run": 50,
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    "independent_synthetic_invariants": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 independent_adapter_synthetic_qa.py",
+      "checks_run": 12,
+      "exit_code": 0,
+      "results": {
+        "accepted_merged_exception_scoped": true,
+        "family_conflict_all_descendants_blocked": true,
+        "generic_missing_doc_mask_negative_blocked": true,
+        "legacy_evidence_not_revalidated": true,
+        "missing_family_mask_not_known": true,
+        "no_new_acceptance": true,
+        "source_inputs_immutable": true,
+        "strict_duty_inherits_conflict": true,
+        "unrelated_family_retained": true,
+        "unverified_merged_not_promoted": true,
+        "waiver_clause_retained": true,
+        "waiver_not_promoted_to_presence": true
+      },
+      "result": "PASS"
+    },
+    "note": "50项为现有单元测试，另12项为独立合成断言；不是62条真实广告或语义准确率样本。"
+  },
+  "verified_properties": [
+    "原值和原mask保持不变；有效mask另存，冲突传播至同family后代及相关依赖。",
+    "局部冲突不使无关family整体失效。",
+    "同item对象、年限和强度保留来源锚，不跨独立family载体按数组位置拼接。",
+    "旧经验presence仅指非豁免要求或偏好；explicitly_waived条款独立保留，不制造present。",
+    "严格当前职责只依据同item招聘者主体及current_duty；其他人、既往经历或能力关系不能拼成当前职责。",
+    "缺family mask、unknown、partial、candidate及source-unavailable不升级为可用known；saved不升级accepted。",
+    "缺document mask的raw-full例外仅限original_accepted为真的Pro_merged，仍不能补任何缺family mask；上游须验证真实来源身份与原验收scope。",
+    "旧引文仅保存且明确未对全文复验；没有新模型调用或语义接受决定。"
+  ],
+  "acceptance_boundaries": {
+    "semantic_accuracy_certified": false,
+    "new_model_route_qualified": false,
+    "full_record_or_field_coverage_certified": false,
+    "original_qualification_results_changed": false,
+    "eligible_original_scope_meaning": "原范围兼容及mask门，不是全字段已知、新语义资格或完整覆盖。统计必须区分原子行、证据行、广告和上下文。",
+    "old_output_materialization_certified_by_this_receipt": false,
+    "raw_or_private_data_read": false,
+    "cloud_or_model_calls": false,
+    "paper_chapter_written": false,
+    "git_commit_or_push_performed": false
+  }
+}

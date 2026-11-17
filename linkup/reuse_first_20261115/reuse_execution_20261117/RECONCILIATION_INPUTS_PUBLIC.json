@@ -1,0 +1,562 @@
+{
+  "status": "historical_readonly_reconciliation_design_not_cloud_execution",
+  "created_at_utc": "2026-11-17T08:44:04.764215+00:00",
+  "scope": "Stage A minimal metadata-only reconciliation; cloud queries to be executed by parent in a new isolated result directory.",
+  "source_boundary": {
+    "local_public_records_and_code_only": true,
+    "private_payloads_read": 0,
+    "cloud_calls": 0,
+    "model_calls": 0,
+    "git_operations": 0,
+    "original_artifacts_modified": false
+  },
+  "sources": [
+    {
+      "repository_relative_to_reuse_first": "integration_20261116/code/cloud_integrate.py",
+      "sha256": "1a4c29e144a68dd154f1ffc8b703e3ec79d39f2099189ff6a710134660a7c905"
+    },
+    {
+      "repository_relative_to_reuse_first": "integration_20261116/code/cloud_refine_index.py",
+      "sha256": "a64b558ccd0dbce8a33e9fdc7f1316eb45106dff34f63ebef5582a46acf2f850"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/ALL_SHARD_ACCOUNTING_PUBLIC.json",
+      "sha256": "03d656512249bfb960ddaabd246ae321aaeb0a1007d10157ada62709bcc0ca93"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/SCOPE_RECONCILIATION_PUBLIC.json",
+      "sha256": "aed3f14ecc3b010437cf3ed9b4bc07459f4632e641e95d8273414e709b32ef10"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/RECORDS_SOURCE_DEDUP_PUBLIC.json",
+      "sha256": "f87c3db4e69e20cca64560523c457198b412ee4532ef4a73746f770db8ebc816"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/REMAINING_DISCOVERY_PUBLIC.json",
+      "sha256": "c41103d101e04b6075bea2e742a8038996a0c99d42a1899a599d137ca4cf284a"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/SAVED_OUTPUT_VERIFICATION_PUBLIC.json",
+      "sha256": "f3450f18348115eb30dd6fc0c0663e94ea55d6effeb4fac5af3b36d7b0d2627f"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/REUSE_CLOSURE_PUBLIC.json",
+      "sha256": "4f52c2053f3ab47c96deb15136c53a9aaf29a9ccf179141d5d142192919afb56"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation01/RESUME_INVENTORY_PUBLIC.json",
+      "sha256": "9127be12cf4c7922ed053068b76e9a19f3746755911081da20088dad5af0b8f4"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation01/FAILED_OUTPUT_REUSE_PUBLIC.json",
+      "sha256": "5a004f1bd6ee9460839e999da52e68d43c8c18495fc893d5f4a24db88badbbf4"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation01/INITIAL_OUTPUT_REUSE_PUBLIC.json",
+      "sha256": "cfa55bc83bf47fc02afb665e12ee693aa941d96379a47c9d13a94310ac3f01ec"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation01/CREATED_JOIN_PUBLIC.json",
+      "sha256": "b1c5fe69b04fe66438f02a816f86a8294314c3619342b6ef08329ebabf64679d"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation02/final/GAP_REGISTER_PUBLIC.json",
+      "sha256": "375db99bf1f438d07adabaf2588d5ee2651a3cea8f6e175330886553e2c29c66"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation02/runtime/HELD_GAP_VERIFICATION_PUBLIC.json",
+      "sha256": "7544d7322aca7721a0f60bf29f388aaa52b3e2f6e21691bedaa018fe2922bd1b"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation02/final/CHECKPOINT_PUBLIC.json",
+      "sha256": "c00e170708744b4171c58211b28f71d72f8e3e2cbf93f518b647405384cf7cb0"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/code/cloud_stage1_inventory.py",
+      "sha256": "3c8b6252af82289a51386031d2c37473cffda7dc3eff9fd7a8ffaec59da6fa87"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/code/cloud_stage1_all_shard_receipts_v2.py",
+      "sha256": "fee61c33e11a4e7c19f4172aec3c47b5c1ba09760ee5c250c27b9716f19d173f"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/code/cloud_stage2_discover_remaining.py",
+      "sha256": "c5afa115eea123ef4f0ad72fe3165cd922dc3866be34ea8acb2fcec2109bb60e"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation01/code/cloud_resume_inventory.py",
+      "sha256": "396bd5eb043a314ca4fffaad6eca7944c94878994955295f39fd79e0a4dda9bc"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation01/code/cloud_close_initial_carriers.py",
+      "sha256": "97c2961d8cdc20f84af74b1df7ee45596d9869fac14b2af6c01b8773867f16dc"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation02/preflight/code/cloud_targeted_gap_inventory.py",
+      "sha256": "ecddb5610c9f7b630d70b0cb92aab49d82ac065541b51884cce1effb17f716e5"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation02/preflight/code/cloud_gap_lineage.py",
+      "sha256": "385fd1b23e225fc87c6e7ea38c8d86aae12bb77410192d5deb9e812ef7f43860"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation02/preflight/code/cloud_gap_lineage_files.py",
+      "sha256": "5f5a7be040930f83da40bd455dee0ee02d599234eaf7103f7e387b6120572a08"
+    },
+    {
+      "repository_relative_to_reuse_first": "execution_20261116/continuation02/runtime/code/cloud_verify_held_gaps.py",
+      "sha256": "eaa3ec2b6530f944b453372de29aebea3a3f5ef4541003dcd2d53af20ad4ef77"
+    }
+  ],
+  "completed_reuse_do_not_repeat": [
+    {
+      "work": "2,464-shard original analysis and upstream publication receipt accounting",
+      "verified_shards": 2464,
+      "canonical_US_ads": 204774035,
+      "Description_raw_rows": 298673078,
+      "receipt_download_bytes_already_completed": 316801573,
+      "action": "Copy forward immutable receipt/source SHA; no upstream repeat scan."
+    },
+    {
+      "work": "Available delivery/provider and Records source identity reconciliation",
+      "Records_source_files": 269,
+      "Records_footer_rows_once": 356449214,
+      "derived_schema_versions_per_source": 2,
+      "action": "Keep source-file dedup separate from row/ad/text dedup; do not sum duplicate skinny index versions."
+    },
+    {
+      "work": "Existing fine-ledger state/value union",
+      "contexts": 55882,
+      "ad_keys": 62414,
+      "accepted_attached": 39298,
+      "saved_attached": 6500,
+      "action": "Start from latest joined_revision003, not initial stage2 database."
+    },
+    {
+      "work": "Saved PRIMARY mechanical revalidation",
+      "packets": 1080,
+      "original_files_sha_verified": 2136,
+      "action": "Read PRIMARY_VALIDATION metadata only; do not revalidate or regenerate old results."
+    },
+    {
+      "work": "Failed/initial output reuse",
+      "existing_failed_carriers_attached": 83,
+      "initial_Kimi_attached": 5,
+      "action": "Already recovered 88 historical outputs; remain unverified, not new production."
+    },
+    {
+      "work": "CREATED four-key join",
+      "matched_ad_keys": 62414,
+      "action": "Reuse metadata_resolution and evidence; no repeat 3-Parquet join."
+    }
+  ],
+  "remaining_status_origins": {
+    "final_not_reconciled_contexts": 10012,
+    "historical_Pro_event_contexts_within_final_not_reconciled": 9987,
+    "historical_Pro_batches": [
+      {
+        "batch": "batch049",
+        "contexts": 720
+      },
+      {
+        "batch": "batch060",
+        "contexts": 420
+      },
+      {
+        "batch": "batch070",
+        "contexts": 720
+      },
+      {
+        "batch": "batch062",
+        "contexts": 355
+      },
+      {
+        "batch": "batch061",
+        "contexts": 260
+      },
+      {
+        "batch": "batch071",
+        "contexts": 720
+      },
+      {
+        "batch": "batch069",
+        "contexts": 720
+      },
+      {
+        "batch": "batch056",
+        "contexts": 720
+      },
+      {
+        "batch": "batch063",
+        "contexts": 720
+      },
+      {
+        "batch": "batch066",
+        "contexts": 13
+      },
+      {
+        "batch": "batch065",
+        "contexts": 720
+      },
+      {
+        "batch": "batch053",
+        "contexts": 100
+      },
+      {
+        "batch": "batch042",
+        "contexts": 720
+      },
+      {
+        "batch": "batch064",
+        "contexts": 710
+      },
+      {
+        "batch": "batch073",
+        "contexts": 30
+      },
+      {
+        "batch": "batch068",
+        "contexts": 720
+      },
+      {
+        "batch": "batch072",
+        "contexts": 720
+      },
+      {
+        "batch": "batch059",
+        "contexts": 4
+      },
+      {
+        "batch": "batch058",
+        "contexts": 175
+      },
+      {
+        "batch": "batch067",
+        "contexts": 720
+      }
+    ],
+    "historical_Azure_parent_events_within_final_not_reconciled": [
+      {
+        "reason": "transport_or_identity_exception_preserved_not_proof_of_saved_model_output:local_or_transport_boundary_exception",
+        "contexts": 44
+      },
+      {
+        "reason": "transport_or_identity_exception_preserved_not_proof_of_saved_model_output:gateway_not_confirmed_complete",
+        "contexts": 2
+      },
+      {
+        "reason": "transport_or_identity_exception_preserved_not_proof_of_saved_model_output:identity_binding_mismatch",
+        "contexts": 1
+      }
+    ],
+    "asset_event_counts_nonadditive": true,
+    "fixed10k_events_in_reported_unreconciled_groups": 0,
+    "overlap_22_and_Azure_only_25_are_not_asserted_without_disjoint_SQL": true,
+    "status_origin_logic": "Pro: matched checkpoint accepted/failed/pending or verified PRIMARY presence; absent conclusive receipt becomes not_reconciled. Azure_parent: 47 handled transport/identity outcomes were explicitly demoted from saved_unverified because no completed model output was proved.",
+    "minimum_action": "Run Q1-Q6; attach cached source evidence by exact source hash. Record unresolved_reason classes. Only changed, verified, schema-compatible receipt metadata may alter a new reconciliation overlay; original status index stays frozen.",
+    "not_authorized_to_infer_from_absence": true
+  },
+  "remaining_carriers": {
+    "accepted_original_scope_10": {
+      "checkpoint_packet_pairs": [
+        {
+          "checkpoint": "125737131",
+          "packet": "packet_0133"
+        },
+        {
+          "checkpoint": "125740198",
+          "packet": "packet_0080"
+        }
+      ],
+      "carrier_files": 2,
+      "migration_state": "held",
+      "hold_reason": "credential_content_review",
+      "last_HEAD_identity": "existing_VM_system_managed_identity",
+      "last_HEAD_error": "404 BlobNotFound",
+      "disposition": "located_protective_blocker_preserve_original_accepted_status",
+      "next_action": "Copy forward existing held verification receipt; no repeated search, HEAD, content fetch, source-system connection or reconstruction."
+    },
+    "saved_unverified_6": {
+      "Pro_original_carrier_or_identity_binding": 5,
+      "Astra_original_failed_output_locator": 1,
+      "already_attempted": [
+        "Checked old saved PRIMARY carrier hashes and stored record/context identifiers; no corresponding ID match in the remaining diagnostic.",
+        "Initial five Kimi results attached and removed from the gap.",
+        "Astra original failure identity/path inventory performed separately; original batch052/packet_0094/0 locator remains unresolved."
+      ],
+      "minimum_action": "Use exact 6 metadata records and existing lineage summaries. If no new compatible locator evidence, mark unresolved_binding or unresolved_original_failure_locator and move on; no rerun, no invented match."
+    }
+  },
+  "azure_inputs": [
+    {
+      "migration_relative_path": "integration_20261116/run001/revision003/STATUS_INDEX_PRIVATE.sqlite",
+      "purpose": "Authoritative immutable 55,882-context status/event/identity index; first query source partitions and missing-carrier membership.",
+      "access": "sqlite_readonly_no_payload",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check",
+      "historical_sha256": "0344e94b9f2b75af74652a2f517c4e5c535d8090e1db62eec84b55afced1523a"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation01/joined_revision003/REUSED_VALUES_WITH_CREATED_PRIVATE.sqlite",
+      "purpose": "Latest completed original value/field-mask/CREATED overlay; use identity and existence columns only in stage A.",
+      "access": "sqlite_readonly_do_not_select_document_json_or_value_json",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check",
+      "historical_sha256": "fdcdfc86270c0391fef512dcdd641438606ec9ad2f00b0554c8bc9b1353f49a5"
+    },
+    {
+      "migration_relative_path": "integration_20261116/run001/revision003/INTEGRATION_PUBLIC.json",
+      "purpose": "Existing batch_statuses, source_snapshot_sha256 and metadata_gaps; do not rerun integration.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "integration_20261116/run001/DISCOVERY_PRIVATE.json",
+      "purpose": "Previously located metadata_inventory; project only target batch paths and SHA to recover local cached receipts.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "integration_20261116/run001/SOURCE_MANIFEST_PRIVATE.json",
+      "purpose": "Existing source locators; exact SHA lookup before any migration-ledger query.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "integration_20261116/run001/metadata_cache/{sha256}.metadata",
+      "purpose": "Cached pinned manifests/checkpoint/preparation receipts; substitute only SHA already referenced by source index.",
+      "access": "only_allowlisted_metadata_shapes_no_raw_ads_or_review_payloads",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage2/REMAINING_SOURCE_LOCATORS_PRIVATE.json",
+      "purpose": "Existing context-to-batch/packet/ordinal mapping, PRIMARY locators and input packet hashes. Reuse instead of rebuilding all 72 manifests.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage2/revision002/PRIMARY_VALIDATION_PRIVATE.json",
+      "purpose": "Already-completed 1,080 PRIMARY validation outcomes; read status/SHA/context-membership metadata only; never rerun validators en masse.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation01/RESUME_LOCATORS_PRIVATE.json",
+      "purpose": "Previously frozen missing-saved cases and 2 missing accepted packets. Filter to remaining 16, not historical 94.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation01/joined_revision003/UNBOUND_PRO_REMAINDER_PRIVATE.json",
+      "purpose": "Existing 6-case carrier/binding diagnostics; actual partition is 5 Pro plus 1 Astra, despite generic filename. No matching record/context IDs found in old checked carriers.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation02/TARGETED_GAP_INVENTORY_PRIVATE.json",
+      "purpose": "Already-performed bounded inventory and original event-group metadata; consume aggregate metadata only.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation02/TARGETED_ALTERNATE_LOCATORS_PRIVATE.json",
+      "purpose": "Existing packet-name alternative locators. Retain only provenance diagnostics; do not repeat broad basename discovery.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation02/GAP_LINEAGE_PRIVATE.json",
+      "purpose": "Previously performed exact lineage and Astra saved-input identity inventory; use file presence/status and aggregate match flags only.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation02/ACCEPTED_CHECKPOINT_LINEAGE_PRIVATE.json",
+      "purpose": "Known accepted checkpoint lineage locator cache; the 2 held carriers are settled protective blockers, not new searches.",
+      "access": "reuse_existing_metadata_no_payload_search",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation02/EXACT_LINEAGE_FILES_PRIVATE.json",
+      "purpose": "Known exact held-carrier directory/file inventory; do not enumerate or read held payloads again.",
+      "access": "reuse_existing_metadata_no_payload_search",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/continuation02/HELD_GAP_VERIFICATION_PUBLIC.json",
+      "purpose": "Existing managed-identity HEAD 404 proof for 2 credential_content_review held carriers.",
+      "access": "read_existing_receipt_do_not_repeat_HEAD",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "kunshan/LEDGER_PRIVATE.sqlite",
+      "purpose": "Azure VM local migration metadata index, not SCNet connection. Query only needed exact SHA/path, or known target batch metadata prefix on evidenced change.",
+      "access": "sqlite_readonly_parameterized_targeted_queries",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "wuzhen/LEDGER_PRIVATE.sqlite",
+      "purpose": "Azure VM local migration metadata index, not SCNet connection. Query only needed exact SHA/path, or known target batch metadata prefix on evidenced change.",
+      "access": "sqlite_readonly_parameterized_targeted_queries",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "huazhong/LEDGER_PRIVATE.sqlite",
+      "purpose": "Azure VM local migration metadata index, not SCNet connection. Query only needed exact SHA/path, or known target batch metadata prefix on evidenced change.",
+      "access": "sqlite_readonly_parameterized_targeted_queries",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "opencode_kimi_20261115/run01/bulk_1309_20261115/CANDIDATE_STATE_PRIVATE.json",
+      "purpose": "Existing Azure_parent handled/exception metadata for 47 uncertain events; no payload read or inference retry.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "AZURE_RESEARCH_IDENTITIES_PRIVATE.json",
+      "purpose": "Existing 1,320-task context identity metadata; only join unresolved parent event members, never print identifiers.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "astra/extraction/STATE_PRIVATE.json",
+      "purpose": "Original accepted/failure run locators if existing lineage receipt lacks exact path; metadata only, no blanket runs traversal.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage1/ALL_SHARD_ACCOUNTING_PUBLIC.json",
+      "purpose": "Completed 2,464/2,464 receipt accounting; copy forward counts, no repeat upstream receipt scan.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage1/ALL_SHARD_ACCOUNTING_PRIVATE.json",
+      "purpose": "Completed per-shard accounting metadata; use only if a specific range discrepancy requires lookup.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage1/ALL_SHARD_SOURCE_LOCATORS_PRIVATE.json",
+      "purpose": "Already-built all-shard receipt locators; no redownload of 316.8 MB.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage1/SCOPE_RECONCILIATION_PUBLIC.json",
+      "purpose": "Completed delivery scope/footer/index accounting; raw rows are not ad/context denominator.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage1/VERIFIED_DELIVERY_METADATA_PRIVATE.json",
+      "purpose": "Existing provider manifests and metadata content map; use file inventory differences only.",
+      "access": "metadata_only_read_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "execution_20261116/run001/stage1/metadata_cache/{sha256}.metadata",
+      "purpose": "SHA-pinned provider delivery metadata; only the few requested provider summaries on evidenced change.",
+      "access": "only_allowlisted_provider_metadata_no_review_payloads",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check"
+    },
+    {
+      "migration_relative_path": "full_scope_catalog_preflight_20261115/20261115T120402Z/CORPUS_RELEASE_CATALOG_PRIVATE.jsonl",
+      "purpose": "Existing 2,464-shard canonical US catalog; do not rebuild or reopen data shards.",
+      "access": "reuse_existing_manifest_if_needed",
+      "existence_basis": "existing_executed_public_receipt_or_published_code_not_fresh_cloud_check",
+      "historical_sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e"
+    }
+  ],
+  "minimal_queries": [
+    {
+      "id": "Q0_schema_preflight",
+      "connection": "status index and reused values, separately, mode=ro; PRAGMA query_only=ON",
+      "sql": [
+        "SELECT name,type FROM sqlite_master WHERE type IN ('table','view','index') ORDER BY type,name;",
+        "PRAGMA table_info(event);",
+        "PRAGMA table_info(provenance);"
+      ],
+      "purpose": "Verify real schema without guessing newer table names. Hash pins and any changes stay in a new receipt; do not modify either source."
+    },
+    {
+      "id": "Q1_status_partition",
+      "connection": "status index",
+      "sql": "SELECT state,COUNT(*) AS n FROM final_status GROUP BY state;",
+      "expected_historical": {
+        "accepted_original_scope": 39308,
+        "saved_unverified": 6506,
+        "not_reconciled": 10012,
+        "quarantined": 56
+      }
+    },
+    {
+      "id": "Q2_unreconciled_event_sources",
+      "connection": "status index",
+      "sql": "SELECT e.asset,e.state,e.detail,COUNT(DISTINCT e.h) AS contexts FROM event e JOIN final_status f ON f.h=e.h WHERE f.state='not_reconciled' GROUP BY e.asset,e.state,e.detail ORDER BY e.asset,e.detail;",
+      "purpose": "Replicate only a small metadata grouping. Prior result is 9,987 Pro events in 20 batches plus 47 Azure_parent events, not mutually exclusive and not a task queue."
+    },
+    {
+      "id": "Q3_disjoint_unreconciled_origins",
+      "connection": "status index",
+      "sql": "WITH u AS (SELECT h FROM final_status WHERE state='not_reconciled') SELECT EXISTS(SELECT 1 FROM event e WHERE e.h=u.h AND e.asset='Pro') AS has_Pro, EXISTS(SELECT 1 FROM event e WHERE e.h=u.h AND e.asset='Azure_parent') AS has_Azure_parent, EXISTS(SELECT 1 FROM event e WHERE e.h=u.h AND e.asset='fixed10k') AS has_fixed10k, EXISTS(SELECT 1 FROM event e WHERE e.h=u.h) AS has_any_event, COUNT(*) AS contexts FROM u GROUP BY 1,2,3,4;",
+      "purpose": "Resolve exact overlaps and eventless/relation-only rows. Do not infer 10,012=unread or assume fixed10k exclusions."
+    },
+    {
+      "id": "Q4_current_missing_carrier_partition",
+      "connection": "status index with reused database attached as values_db in read-only mode",
+      "sql": "SELECT f.state,COUNT(*) AS contexts FROM final_status f WHERE NOT EXISTS(SELECT 1 FROM values_db.document d WHERE d.h=f.h) GROUP BY f.state;",
+      "purpose": "Confirm remaining 10 accepted + 6 saved gap; 10,012 unresolved and 56 protected intentionally also have no attached values. Do not relabel them all as missing output or unread."
+    },
+    {
+      "id": "Q5_unresolved_source_locator_join",
+      "connection": "status index",
+      "sql": "SELECT DISTINCT e.source,e.asset,e.state,e.detail,p.metadata FROM event e JOIN final_status f ON f.h=e.h LEFT JOIN provenance p ON p.sha=e.source WHERE f.state='not_reconciled' ORDER BY e.asset,e.detail;",
+      "visibility": "Result stays private in Azure; public output only counts/SHA/content type. Some source values are ledger snapshot hashes rather than cached manifests; use original source_snapshot_sha256."
+    },
+    {
+      "id": "Q6_saved_gap_source_membership",
+      "connection": "status index with read-only values_db",
+      "sql": "SELECT e.h,e.asset,e.state,e.source,e.detail FROM event e JOIN final_status f ON f.h=e.h WHERE f.state='saved_unverified' AND NOT EXISTS(SELECT 1 FROM values_db.document d WHERE d.h=f.h) ORDER BY e.h,e.asset;",
+      "visibility": "Identities remain private; use to match existing 6-case diagnostic, not infer new keys or parse payloads."
+    },
+    {
+      "id": "Q7_exact_migration_metadata",
+      "connection": "one local VM migration ledger at a time, mode=ro",
+      "sql": "SELECT path,root,rel,size,status,sha,reason FROM files WHERE sha IN (<bounded bound parameters>) OR path IN (<bounded bound parameters>);",
+      "purpose": "Only exact already-known missing metadata locators if a later change is evidenced. Exclude held/protected content and do not issue a network call to unchanged held/missing files."
+    },
+    {
+      "id": "Q8_new_checkpoint_metadata_if_changed",
+      "connection": "migration ledger mode=ro, only 20 known batch metadata prefixes recovered from Q5/existing mapping",
+      "sql": "SELECT path,root,rel,size,status,sha,reason FROM files WHERE path>=:prefix AND path<:prefix_upper AND (rel LIKE '%CHECKPOINT_RECEIPT_PUBLIC.json' OR rel LIKE '%PACKET_PREPARATION_PUBLIC.json' OR rel LIKE '%MERGED_RECEIPT_PUBLIC.json');",
+      "purpose": "Only when receipt/ledger metadata changed since prior checkpoint. Compare SHA with cached inventory; do not download known receipts, enumerate whole corpus or derive a new pending state from file absence. Inspect query plan and existing indexes before expensive prefix work."
+    },
+    {
+      "id": "Q9_blocked_and_no_reinfer_guards",
+      "connection": "status index and reused values separately",
+      "sql": [
+        "SELECT COUNT(*) FROM blocked;",
+        "SELECT COUNT(*) FROM protected;",
+        "SELECT COUNT(*) FROM do_not_reinfer_context;"
+      ],
+      "purpose": "Historical deny-first union plus current runtime protection overlay must be applied by controller. Historical 56 quarantine and 186 do-not-reinfer rows are different scopes and must not be added blindly; final old qualification added 5 provider protections separately."
+    }
+  ],
+  "bounded_execution_sequence": [
+    "Read existing cloud public pointer and verify expected status/value database file identity. If historical pin differs, log change and inspect only newer receipt pointer before using it.",
+    "Run Q0-Q6 in SQLite read-only mode. Export only aggregate partitions and source-proof classes publicly; private identifiers/locators remain in the cloud output.",
+    "Recover needed public checkpoint/provenance metadata from existing caches and prior targeted diagnostics. There are only 20 implicated Pro batches, 47 parent event records and 16 missing-carrier contexts; this is not a full-corpus rescan.",
+    "Mark the 10 accepted held-carrier contexts as already-located protection blockers immediately, without network requests.",
+    "For the 5 Pro binding gaps and 1 Astra locator gap, compare prior diagnostics and existing exact metadata. Only if a verified source change exists perform Q7/Q8; otherwise no additional scan.",
+    "Write an additive private reconciliation overlay with old_state, evidence_class, source_sha, carrier_state, last_checked and inference_admitted=false, plus a public aggregate reconciliation receipt. Never modify original event/final_status/PRIMARY/masks.",
+    "Reuse ALL_SHARD/SCOPE/Records-dedup and field-coverage receipts; classify true whole-delivery unknowns explicitly instead of guessing 500M minus known counts."
+  ],
+  "stop_rules": {
+    "do_not_rerun_old_stage1_or_stage2_entry_scripts": true,
+    "metadata_search_window": "Bounded one pass of known unresolved metadata, then persist unresolved reasons; no recursive whole-migration or source-ad traversal.",
+    "unchanged_missing_or_held_evidence": "Do not retry same query/network configuration or fetch content.",
+    "admission": "No not_reconciled, missing_carrier, reviewed_unknown, saved_unverified, ambiguous_identity or protected record becomes an inference task merely through accounting.",
+    "protection": "Preserve historical blocked contexts, do_not_reinfer rows, all 5 later provider-protection overlays and all source-level holds; do not reroute restricted content.",
+    "whole_delivery": "500M/future-delivery target retained, but unique ads/contexts/full-field gap cannot be certified by these same old manifests. Additional delivery scope without an observed manifest remains unverified.",
+    "budgets": "No new model calls, no resources, no paper, no timers; existing stage1 $25 and stage2 $25 are shared historical caps, not replenished by this run."
+  }
+}

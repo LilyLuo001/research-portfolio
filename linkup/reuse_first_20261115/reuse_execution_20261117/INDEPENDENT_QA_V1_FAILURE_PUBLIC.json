@@ -1,0 +1,18 @@
+{
+  "at_utc": "2026-11-17T10:57:31.483509+00:00",
+  "status": "independent_QA_v1_interrupted_at_resource_limit_not_quality_failure",
+  "verification_code_sha256": "799bdf7a856ae0323b405e6346ba14e8ff4cce855ceb5d22e1371db615f47e8e",
+  "exception_type": "sqlite3.OperationalError",
+  "sanitized_error": "interrupted",
+  "max_wall_seconds": 900,
+  "interrupted_check": "analysis_join_no_source_binding_duplication",
+  "interrupted_operation": "GROUP BY id,ad_key,created,created_state on expanded analysis view",
+  "successful_final_QA_receipt_emitted": false,
+  "earlier_check_results_not_certified_from_execution_order": true,
+  "materialization_status": "first_reuse_materialization_complete",
+  "materialized_output_sha256": "6f77e3ee4e39d9e60e9eec7731c891c632a528440587450105af3ca1580b5b01",
+  "materialization_rerun": false,
+  "verification_was_read_only": true,
+  "failed_code_and_private_execution_receipt_preserved": true,
+  "planned_repair": "equivalent view-definition/key-constraint proof plus one-pass value invariants; all properties retained; no semantic change"
+}

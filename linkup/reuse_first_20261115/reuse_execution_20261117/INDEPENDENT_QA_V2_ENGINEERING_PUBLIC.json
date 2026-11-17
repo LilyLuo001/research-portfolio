@@ -1,0 +1,25 @@
+{
+  "at_utc": "2026-11-17T11:02:58.094914+00:00",
+  "status": "synthetic_engineering_tests_passed",
+  "tests": {
+    "adapter_unit": 50,
+    "materialization_driver": 4,
+    "independent_QA_v2": 11,
+    "total_unittest": 65,
+    "independent_adapter_assertions": 12
+  },
+  "commands": [
+    "python3 -m unittest test_adapter test_cloud_materialize test_cloud_verify_materialization_v2",
+    "python3 independent_adapter_synthetic_qa.py"
+  ],
+  "files_sha256": {
+    "cloud_verify_materialization_v2.py": "59d49c278efa27b0aff3e50230e21a422710dc5b5a95b41372f9dd192e10ac62",
+    "test_cloud_verify_materialization_v2.py": "9b4d964fbf153edca50d8dad443af91e5aa4163f6081002fd37cdfeb397196b2",
+    "cloud_launch_independent_qa_v2.py": "bc191a06bb7be3ca254cd9753b7af7bcc670f57162eea61c93b870b2b4150f68"
+  },
+  "fix": "Token-aware SQL comparison preserves literals, escaped quotes and token boundaries. View equivalence proof retains original QA properties.",
+  "old_QA_v1_preserved": true,
+  "raw_or_private_data_read": false,
+  "certifies_real_cloud_output": false,
+  "certifies_semantic_accuracy": false
+}

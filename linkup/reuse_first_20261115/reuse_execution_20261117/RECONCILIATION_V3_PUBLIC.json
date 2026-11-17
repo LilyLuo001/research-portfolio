@@ -1,0 +1,132 @@
+{
+  "at_utc": "2026-11-17T08:51:41.720043+00:00",
+  "status": "existing_indexes_reconciled_with_explicit_unresolved_acceptance",
+  "scope": "existing_55882_context_ledger_not_full_delivery",
+  "source_sha256": {
+    "values": "fdcdfc86270c0391fef512dcdd641438606ec9ad2f00b0554c8bc9b1353f49a5",
+    "status": "0344e94b9f2b75af74652a2f517c4e5c535d8090e1db62eec84b55afced1523a",
+    "state": "149f6f9706f5d8be3472837aec625f09ea8bf52dcdd19763dd7556990dd39694"
+  },
+  "actual_index_schema": {
+    "event": [
+      "h",
+      "asset",
+      "state",
+      "source",
+      "detail"
+    ],
+    "provenance": [
+      "sha",
+      "metadata"
+    ],
+    "final_status": [
+      "h",
+      "state"
+    ],
+    "do_not_reinfer_context": [
+      "h",
+      "reason",
+      "source_sha"
+    ]
+  },
+  "original_state_counts": {
+    "accepted_original_scope": 39308,
+    "not_reconciled": 10012,
+    "quarantined": 56,
+    "saved_unverified": 6506
+  },
+  "unreconciled_disjoint_origins": [
+    {
+      "has_Pro": false,
+      "has_Azure_parent": false,
+      "has_fixed10k": false,
+      "has_any_event": false,
+      "contexts": 25
+    },
+    {
+      "has_Pro": true,
+      "has_Azure_parent": false,
+      "has_fixed10k": false,
+      "has_any_event": true,
+      "contexts": 9940
+    },
+    {
+      "has_Pro": true,
+      "has_Azure_parent": true,
+      "has_fixed10k": false,
+      "has_any_event": true,
+      "contexts": 47
+    }
+  ],
+  "unreconciled_source_states": [
+    {
+      "asset": "Azure_parent",
+      "source_state": "not_reconciled",
+      "contexts_non_additive": 47
+    },
+    {
+      "asset": "Pro",
+      "source_state": "not_reconciled",
+      "contexts_non_additive": 9987
+    }
+  ],
+  "unattached_carriers_by_original_state": {
+    "accepted_original_scope": 10,
+    "not_reconciled": 10012,
+    "quarantined": 56,
+    "saved_unverified": 6
+  },
+  "audit_resolution_counts": {
+    "event_provenance_located_acceptance_unresolved": 9940,
+    "existing_carrier_available": 45710,
+    "held_carrier_previously_confirmed": 10,
+    "identity_present_but_no_event_in_current_index": 25,
+    "protected_not_reopened": 191,
+    "saved_carrier_or_binding_still_missing": 6
+  },
+  "unresolved_receipt_sources_with_provenance": 20,
+  "unresolved_receipt_sources_without_provenance": 1,
+  "runtime_exclusion_contexts": 191,
+  "exclusion_union": 191,
+  "exclusion_intersection_original_states": {
+    "quarantined": 56,
+    "saved_unverified": 84,
+    "not_reconciled": 47,
+    "accepted_original_scope": 4
+  },
+  "preflight_shape_sample_protected_overlap": 3,
+  "missing_accepted_carrier_resolution": "10 contexts already traced to 2 held credential-content-review files; no content or HEAD retry",
+  "missing_saved_carrier_resolution": "5 Pro binding/carrier cases and 1 Astra failure locator retained; no proof of unread work",
+  "original_state_mutations": 0,
+  "newly_admitted_unprocessed_contexts": 0,
+  "new_model_calls": 0,
+  "held_payload_reads": 0,
+  "new_source_body_scans": 0,
+  "full_delivery_missing_unique_inputs": null,
+  "private_state_relative_to_migration": "reuse_execution_20261117/run001/RECONCILED_STATE_V3_PRIVATE.sqlite",
+  "private_state_sha256": "95abdd76eb4cbe769dceb6324e8d9f71187a0ca5feb9449a063373ee41eadc89",
+  "original_databases_unchanged": true,
+  "elapsed_seconds": 14.312174825929105,
+  "revision": 3,
+  "eventless_identity_origins": {
+    "eventless_contexts": 25,
+    "with_ad_binding": 25,
+    "with_field_mask": 0,
+    "with_do_not_reinfer": 0
+  },
+  "correction": "25 eventless contexts now have an explicit no-event label; no acceptance or source status changed",
+  "previous_private_state_sha256_preserved": "df1d3c88f96cb2761497402db3a63eb8db433d27b76b2793102f76e0df2252af",
+  "repair_provenance": {
+    "prior_v2_failed_on_wrong_database_for_do_not_reinfer_view": true,
+    "failed_v2_output_preserved": true,
+    "correct_table_owner": "retained_values_database",
+    "no_model_or_raw_body_reads": true
+  },
+  "preflight_boundary_correction": {
+    "initial_structure_only_sample_runtime_overlap": 3,
+    "no_row_values_or_evidence_exported": true,
+    "initial_probe_did_not_reinfer_or_review_semantics": true,
+    "deny_before_payload_filter_required_for_materialization": true,
+    "original_probe_and_correction_preserved": true
+  }
+}

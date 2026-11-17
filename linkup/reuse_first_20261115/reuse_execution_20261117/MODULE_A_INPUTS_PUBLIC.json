@@ -1,0 +1,359 @@
+{
+  "index_version": "module-a-existing-inputs-v1",
+  "prepared_date": "2026-11-17",
+  "status": "input_index_only_chapter_writing_not_started",
+  "activation_condition": "等待总控确认第1步交付完成后，才依据用户新授权恢复模块A宏观章节；本文件不自动触发写作。",
+  "execution_boundary": {
+    "raw_ad_or_person_data_read": false,
+    "new_statistical_computation": false,
+    "cloud_calls": false,
+    "model_api_calls": false,
+    "new_chapter_text_written": false,
+    "timers_restored": false,
+    "git_commit_or_push_performed": false
+  },
+  "sources": [
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+      "sha256": "2ab2854c18c3e44874131ccb23fdfe5e5fe2e3c769fd803e3776a02d02917ede"
+    },
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_DRAFT_EN.md",
+      "sha256": "b8352ccae5c2502e02a1ec971277fd25e530ad19251b394851186b4f39e34748"
+    },
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_EVIDENCE_REGISTER_PUBLIC.json",
+      "sha256": "e196940e3071bf45234b472678010637287199a585c860afa67bdc82088b26c3"
+    },
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+      "sha256": "accab2d7a241c4fab31187b6b0e62512c87503b27efb893b4f0da5f280edf130"
+    },
+    {
+      "repository_relative_path": "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+      "sha256": "8791c478f26d396b8f4a7f9602aff50159ee63314cae04ad68a8a3a4b6b08852"
+    }
+  ],
+  "external_receipt_chain": {
+    "repository_relative_index": "linkup/reuse_first_20261115/integration_20261116/PAPER_EVIDENCE_REGISTER_PUBLIC.json",
+    "json_pointer": "/sources/macro_verification",
+    "original_public_receipt_label": "macro_records_20261115/FINAL_VERIFICATION_PUBLIC.json",
+    "sha256": "5460d9f518fb36660590104ef5de9cea67a40451551bb5f0c39ab99c99932bce",
+    "local_read_hash_matches_repository_index": true,
+    "original_verified_at_utc": "2026-11-15T07:21:59.111980+00:00",
+    "new_live_cloud_verification": false,
+    "original_status": "verified_macro_first_delivery",
+    "original_independent_checks": [
+      "monthly_to_annual_sum",
+      "complete_month_count_and_sum",
+      "annual_counts_match_prior_accepted_Records_baseline",
+      "all_written_output_SHA",
+      "four_uploaded_Blob_full_readback_SHA"
+    ],
+    "original_output_files_verified": 14
+  },
+  "scope_and_period": {
+    "unit": "US advertisement records, not vacancies, hires, workers or employment",
+    "country_rule": "original COUNTRY equals USA",
+    "all_history_us_records_reported": 253210047,
+    "first_observed_from_2016_reported": 199644730,
+    "count_source_repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_DRAFT_EN.md",
+    "count_source_section": "2.1 Records-based recruitment panel",
+    "monthly_observations": 129,
+    "annual_observations": 11,
+    "monthly_first": "2016-01",
+    "monthly_last": "2026-09",
+    "annual_first": 2016,
+    "annual_last": 2026,
+    "delivery_cutoff": "2026-09-06",
+    "year2026": {
+      "year": 2026,
+      "available_months": 9,
+      "complete_months": 8,
+      "first_observed_records_available": 15496940,
+      "first_observed_records_complete_months": 15029705,
+      "avg_month_end_active_missing_delete_open": 3535932.625,
+      "avg_month_end_active_missing_delete_excluded": 2097072.125,
+      "invalid_delete_before_created": 0,
+      "coverage_status": "partial_year_do_not_compare_to_full_year",
+      "explicit_entry_level_share": null,
+      "entry_level_status": "unavailable_no_same_frame_accepted_labels"
+    },
+    "full_delivery_scope_caveat": "上述Records口径不是全部约5亿交付或已完成细语义广告数；不同资产分母不得相加或相减为模型待办。"
+  },
+  "available_indicators": [
+    {
+      "name": "first_observed_advertisements",
+      "frequency": [
+        "month",
+        "year"
+      ],
+      "definition": "CREATED首次观察时间计数；UPDATE或LAST_CHECKED不另计新发布。",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+      "pointers": [
+        "/monthly_columns",
+        "/monthly_rows",
+        "/annual_columns",
+        "/annual_rows"
+      ]
+    },
+    {
+      "name": "active_missing_delete_open",
+      "frequency": [
+        "month_end",
+        "comparison_window_mean"
+      ],
+      "definition": "CREATED不晚于月末且DELETE_DATE晚于月末；缺失删除日期保持开放。",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+      "pointer": "/monthly_rows",
+      "caveat": "vendor-observed active stock；不是实际就业或未填补岗位存量。"
+    },
+    {
+      "name": "active_missing_delete_excluded",
+      "frequency": [
+        "comparison_window_mean"
+      ],
+      "definition": "相同月末概念，但缺失DELETE_DATE排除，作为独立敏感性口径。",
+      "source": "external_receipt_chain",
+      "pointer": "/prepost",
+      "caveat": "均值已在本地公共回执可读；不能把仅含open口径的仓库月度导出误称同时含excluded月度全序列。"
+    },
+    {
+      "name": "snapshot_occupation_composition",
+      "frequency": [
+        "quarter",
+        "year"
+      ],
+      "definition": "交付快照职业码的大类格式分组，保留缺失、空值和99。",
+      "source": "external_receipt_chain",
+      "available_local_summary": "calendar2022-to-calendar2023 selected share changes and record counts",
+      "caveat": "不是已验证历史职业分类；官方2019成员flag在原执行中未定位，完整职业季度/年度表在原交付中有回执但本索引不冒称全表已本地重读。"
+    }
+  ],
+  "annual_table_copied_without_recalculation": {
+    "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+    "columns": [
+      "year",
+      "first_observed_available",
+      "first_observed_complete_months",
+      "complete_months"
+    ],
+    "rows": [
+      [
+        2016,
+        11280900,
+        11280900,
+        12
+      ],
+      [
+        2017,
+        14741748,
+        14741748,
+        12
+      ],
+      [
+        2018,
+        15252192,
+        15252192,
+        12
+      ],
+      [
+        2019,
+        16742466,
+        16742466,
+        12
+      ],
+      [
+        2020,
+        14728302,
+        14728302,
+        12
+      ],
+      [
+        2021,
+        24461581,
+        24461581,
+        12
+      ],
+      [
+        2022,
+        25082680,
+        25082680,
+        12
+      ],
+      [
+        2023,
+        22267905,
+        22267905,
+        12
+      ],
+      [
+        2024,
+        20526445,
+        20526445,
+        12
+      ],
+      [
+        2025,
+        19063571,
+        19063571,
+        12
+      ],
+      [
+        2026,
+        15496940,
+        15029705,
+        8
+      ]
+    ],
+    "year2026_rule": "available包含不完整9月；complete_months仅1至8月。不得以任一2026总量与完整2025作无调整同比。"
+  },
+  "equal_length_comparison_copied_without_recalculation": {
+    "notice": "CREATED 为首次观察时间代理，且前后变化不自动等同于 AI 因果效应。",
+    "pre_window": {
+      "period": "pre_12m",
+      "first_month": "2021-12",
+      "last_month": "2022-11",
+      "months": 12,
+      "new_first_observed": 25328196,
+      "mean_active_open": 4180547.4166666665,
+      "mean_active_excluded": 4140658.4166666665
+    },
+    "post_window": {
+      "period": "post_12m",
+      "first_month": "2022-12",
+      "last_month": "2023-11",
+      "months": 12,
+      "new_first_observed": 22549332,
+      "mean_active_open": 3602666.9166666665,
+      "mean_active_excluded": 3510360.5833333335
+    },
+    "first_observed_change_pct": -10.971424889478898,
+    "mean_active_open_change_pct": -13.823082060884017,
+    "interpretation": "descriptive_noncausal; not a fitted structural-break or causal test"
+  },
+  "occupation_comparison_copied_without_recalculation": {
+    "periods": "calendar 2022 and calendar 2023",
+    "share_increases": [
+      {
+        "occupation_major_group": "35",
+        "records_2022": 1194281,
+        "records_2023": 1266375,
+        "share_change_pp": 0.9256194255046001
+      },
+      {
+        "occupation_major_group": "53",
+        "records_2022": 1458135,
+        "records_2023": 1480254,
+        "share_change_pp": 0.8341634068280208
+      },
+      {
+        "occupation_major_group": "29",
+        "records_2022": 3223379,
+        "records_2023": 3035094,
+        "share_change_pp": 0.7788885434997034
+      }
+    ],
+    "share_decreases": [
+      {
+        "occupation_major_group": "13",
+        "records_2022": 2184822,
+        "records_2023": 1624983,
+        "share_change_pp": -1.413058691090434
+      },
+      {
+        "occupation_major_group": "11",
+        "records_2022": 3112968,
+        "records_2023": 2421070,
+        "share_change_pp": -1.53836270970735
+      },
+      {
+        "occupation_major_group": "15",
+        "records_2022": 1775098,
+        "records_2023": 1065189,
+        "share_change_pp": -2.2934700839201363
+      }
+    ],
+    "source": "external_receipt_chain",
+    "important_distinction": "代码29份额上升，但保存记录数从3223379降至3035094；不可把所有份额上升组写成广告机会绝对增加。"
+  },
+  "claims_ready_for_later_drafting": [
+    {
+      "claim": "美国首次观察广告在两个等长窗口间下降约10.97%。",
+      "evidence": "equal_length_comparison_copied_without_recalculation",
+      "limitation": "描述变化，不是拟合结构断点或AI因果效应。"
+    },
+    {
+      "claim": "同窗口缺失删除日期保持开放口径的月末活跃均值下降约13.82%；排除缺失口径的均值另列。",
+      "evidence": "equal_length_comparison_copied_without_recalculation",
+      "limitation": "流量与存量是不同测量；不推断成功招聘、就业或岗位填补。"
+    },
+    {
+      "claim": "2022到2023快照职业大类构成有异向变化，必须同时区分份额与数量。",
+      "evidence": "occupation_comparison_copied_without_recalculation",
+      "limitation": "分类回标、平台覆盖和企业构成变化尚不能排除。"
+    },
+    {
+      "claim": "可复用11年度与129月记录序列，2026是未完年。",
+      "evidence": "scope_and_period and annual_table_copied_without_recalculation",
+      "limitation": "截至9月6日；不能称已有完整2016至2026十一整年。"
+    }
+  ],
+  "not_available_and_not_to_invent": [
+    {
+      "item": "national_explicit_entry_level_share",
+      "value": null,
+      "reason": "没有同范围同时间且已验收的标签；fixed10k或顺序Kimi队列不能直接除以全国Records分母。"
+    },
+    {
+      "item": "direct_delete_date_exit_series",
+      "value": null,
+      "reason": "现有复用聚合缺直接退出维度；flow-stock残差只有closure诊断意义，不是直接观测退出。"
+    },
+    {
+      "item": "fitted_structural_break_or_causal_estimate",
+      "value": null,
+      "reason": "既有前后比较未估正式断点、处理效应或因果标准误。"
+    },
+    {
+      "item": "historically_verified_occupation_code_series",
+      "value": null,
+      "reason": "当前使用交付快照格式大类，官方成员及历史分类含义仍有限制。"
+    },
+    {
+      "item": "revelio_worker_entry_or_mobility_estimates",
+      "value": null,
+      "reason": "当前稿未分析Revelio人员数据，广告不等于人。"
+    }
+  ],
+  "mandatory_method_notes": [
+    "CREATED为首次观察时间代理，前后变化不自动等同于AI因果效应；保存正文可能曾更新。",
+    "新观察flow、月末active stock、直接exit必须分开；不把存量恒等式残差命名为真实退出。",
+    "来源/网站覆盖、公司构成、多地点广告、疫情及招聘周期均为竞争解释。",
+    "原宏观回执中的独立人工审核门为历史政策，已被后续无需真人、model_reference非truth政策替代；不恢复旧人工门，也不凭工程通过宣称语义合格。",
+    "Q1/Q2保持其限定技术筛选框和权重，不进入全国entry分母或冒充宏观证据。",
+    "原回执记录该次宏观作业结束；本次未重新检查当前进程，因此不作新的运行状态声明。"
+  ],
+  "writing_reuse_map": [
+    {
+      "existing_section": "2.1 Records-based recruitment panel",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_DRAFT_EN.md",
+      "later_use": "范围、时期、Records分母与CREATED代理说明"
+    },
+    {
+      "existing_section": "3.1 Flows, stocks, and exits",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_DRAFT_EN.md",
+      "later_use": "流量、两种存量口径及退出缺口"
+    },
+    {
+      "existing_section": "4.1 Advertisement volume around late 2022",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_DRAFT_EN.md",
+      "later_use": "既有Table1和职业构成描述；原数不重估"
+    },
+    {
+      "existing_section": "5. Analyses not yet estimated",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_DRAFT_EN.md",
+      "later_use": "保留实际未完成事项，但后续叙事按宽研究agenda，不再让全国entry份额独占主线"
+    }
+  ]
+}

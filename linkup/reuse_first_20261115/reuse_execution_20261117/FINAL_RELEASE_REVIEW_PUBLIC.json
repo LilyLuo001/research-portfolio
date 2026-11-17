@@ -1,0 +1,120 @@
+{
+  "review_version": "final-public-release-review-v1",
+  "at_utc": "2026-11-17T11:16:55.488033+00:00",
+  "status": "pass_public_aggregate_release_with_explicit_scope_clarifications",
+  "review_scope": "仅审阅本地公开产出、真实云端工程QA回执及其哈希；未打开私有SQLite、广告正文、个体数据或模型输出载荷，未重跑云计算。",
+  "checked_public_file_sha256": {
+    "STEP1_RESULTS_ZH.md": "25089a0f610866c239c0eabc75e6a57ec1740f0557bcc4789968a22a6cfffcca",
+    "STEP1_RELEASE_PUBLIC.json": "9b08103669384f232d8b934e4c88d9e99b186dd644f9b8c62b1d60b7656d6e98",
+    "FIELD_GAPS_V1_PUBLIC.json": "768946550014e1767cf3da0756bc4c46acff3e7a365469ba9354749bec6ff782",
+    "AZURE_RESEARCH_STATE.json": "752af9a9aef0a3496ba65cc060d8a3bb1e8b15ee93ac0f636584d48d1b1d7f62",
+    "MATERIALIZATION_PUBLIC.json": "1f4af1bc3048abc53c38884466c5f28cdb8a3618706d2cace47cd47ff8ce086b",
+    "MATERIALIZATION_INDEPENDENT_QA_V2_PUBLIC.json": "ee743e504c0d5a3d078c2d0f40a1c78b6439d8eedba1dd3e3fd984eb110d00ee",
+    "RECONCILIATION_V3_PUBLIC.json": "83d95fd42d37d0cd684f5875e671f6f1a3de5368ba0ecdf8680777e5a948e102",
+    "VARIABLE_COVERAGE_PUBLIC.json": "d41aad1c0e69fda322b42b157ac80e5251f21e28913d77b1b7ff4e95a394b72d",
+    "AUTHORIZATION_PUBLIC.json": "46990c87f4d6c08b165c10d672feb73a593efac59ffaf175e5498a8456460b2e",
+    "INDEPENDENT_QA_V2_ENGINEERING_PUBLIC.json": "47402d57dd70c7b1ffb3810debb4c64fb548f75295fa0c968d80f0b7de9de4a4",
+    "TASK_FRAMEWORK_DISCUSSION_ZH.md": "c73efd5c28aedaa9ae1e1acd65aac4ba5c66a1e31c192cfbaabcd18b4e08cf98"
+  },
+  "checks": {
+    "release_input_hashes_match": true,
+    "same_private_output_sha": true,
+    "all_17_real_engineering_checks_pass": true,
+    "carrier_and_atom_counts_match": true,
+    "atoms_conserved_across_89_keys": true,
+    "four_key_and_created_counts_correctly_separated": true,
+    "current_bound_created_states_all_matched_consistent": true,
+    "original_ledger_and_audit_resolution_accounting_conserved": true,
+    "runtime_protections_and_no_new_acceptance_retained": true,
+    "new_and_legacy_deferred_variables_separated": true,
+    "budget_and_no_inference_match_authorization": true,
+    "synthetic_counts_are_not_data_samples": true,
+    "full_scope_and_all_fields_not_claimed_complete": true,
+    "paper_resume_scope_matches_existing_authorization": true,
+    "created_proxy_and_no_automatic_causal_claim_explicit": true
+  },
+  "real_cloud_QA": {
+    "status": "pass",
+    "checks_passed": 17,
+    "elapsed_seconds": 572.5026969779283,
+    "scope": "engineering_and_binding_integrity_not_semantic_requalification",
+    "no_semantic_accuracy_certification": true
+  },
+  "verified_count_units": {
+    "carrier_contexts": 45710,
+    "source_carrier_rows": 108292,
+    "carrier_row_unit": "fixed10k为广告×字段族载体记录；其余为原review载体记录，不是文件数、独立广告版本数或新生产数。",
+    "variable_atom_rows": 2963270,
+    "atom_count_not_ads_or_new_acceptances": true,
+    "bound_distinct_ad_four_keys": 62414,
+    "nonnull_consistent_CREATED_distinct_four_keys": 62414,
+    "contexts_with_any_original_scope_atom": 38217,
+    "ad_four_keys_with_any_original_scope_atom": 44248,
+    "any_original_scope_atom_includes_evidence_anchors_and_does_not_certify_a_complete_measure": true,
+    "original_ledger_contexts": 55882,
+    "new_production_accepted": 0
+  },
+  "mandatory_interpretation_clarifications": [
+    {
+      "topic": "CREATED状态模板措辞",
+      "source": "STEP1_RESULTS_ZH.md",
+      "clarification_zh": "“包括未匹配等状态”说明bound_ad_keys是涵盖全部状态的指标，不是本次观察到未匹配记录。本次真实QA为62,414个四键、62,414条绑定，全部matched_consistent；非空一致CREATED四键亦为62,414，未观察到未匹配状态。两指标本次相等，不意味着定义可混用。",
+      "observed_bound_created_states": {
+        "matched_consistent": 62414
+      }
+    },
+    {
+      "topic": "SOC/职业字段范围",
+      "clarification_zh": "真实QA的metadata_field_inventory仅清点本次继承的metadata_evidence载体，未列SOC/职业代码。lk.occupation本次非空结构值覆盖为0，只能表述本次sidecar未带入相应列，不能推断Azure全库、旧基础库或现有宏观结果缺少职业分类；优先复用现有职业映射资产。",
+      "inventory_scope": "this_materialized_inherited_metadata_carrier_only",
+      "occupation_structural_ad_four_keys_this_sidecar": 0,
+      "global_occupation_data_missing_claim_allowed": false
+    },
+    {
+      "topic": "已验状态与可分析字段",
+      "clarification_zh": "39,308个原范围已验上下文与38,217个至少有一个兼容原子上下文属于不同指标。原验收状态不变；局部不兼容、缺掩码或未知不升级。任何兼容原子数量包括证据/锚点，不能当完整指标覆盖或新的语义验收。"
+    },
+    {
+      "topic": "保护集合",
+      "clarification_zh": "运行保护并集191个跨越原状态，其中原quarantined为56；88是未投影的载体记录数，不是88个新隔离上下文。定位到的10个保护载体上下文及6个载体/绑定缺失上下文仍不进入重新生成队列。"
+    }
+  ],
+  "budget_review": {
+    "phase_total_cap_usd": 450,
+    "new_extraction_API_cost_usd": 0,
+    "old_model_usage_estimate_usd": 37.846032,
+    "conservative_reservation_usd": 178.0651464,
+    "usage_and_reservation_not_additive": true,
+    "actual_VM_storage_invoice_usd": null,
+    "zero_API_cost_not_zero_Azure_or_Codex_cost": true,
+    "infrastructure_caps_not_reset": true
+  },
+  "remaining_scope": {
+    "approximate_full_target_records": 500000000,
+    "full_delivery_unique_ads": null,
+    "full_delivery_missing_unique_field_inputs": null,
+    "full_coverage_complete": false,
+    "Revelio_and_future_increments_retained": true,
+    "new_inference_queue_admitted": false
+  },
+  "module_A_decision": {
+    "resume_permitted_under_existing_authorization_after_this_release_is_delivered": true,
+    "scope": "只整理已有核实的宏观结果和方法章节；本回执不授权新模型生产、改定义或新增估计。",
+    "must_not_claim": [
+      "全国entry份额已经可用",
+      "直接退出时间序列已交付",
+      "CREATED为正文产生时间",
+      "前后变化自动等于AI因果效应",
+      "Revelio匹配已经完成"
+    ],
+    "this_review_does_not_certify_Azure_sync_or_Git_publication": true
+  },
+  "actions_in_this_review": {
+    "modified_existing_release_files": false,
+    "modified_code": false,
+    "cloud_calls": 0,
+    "model_calls": 0,
+    "private_data_reads": 0,
+    "git_commit_or_push": false
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "at_utc": "2026-11-17T09:00:46.482157+00:00",
+  "status": "pass",
+  "scope": "synthetic_adapter_and_driver_tests_no_private_data",
+  "tests_run": 54,
+  "exit_code": 0,
+  "python_version": [
+    3,
+    10,
+    5
+  ],
+  "files_sha256": {
+    "test_cloud_materialize.py": "739c1d6df26862fc86df8aaf24134f3d48601212c045b41e78d09755bdd45451",
+    "cloud_refine_reconciliation.py": "00ae3289619b1d5c955d262bdf7d0ad210ad3137ae15537f72489cfdaedd890e",
+    "adapter.py": "da1e7542cd78a28559ae90688a83a45f1e8d36e597be8a9f50fb6d1eb36a64c1",
+    "test_adapter.py": "2f9b2f8849dab57bb2b2bff9867846222a9cf50269f409c0f95503e70794fd5d",
+    "cloud_preflight_executed_v1.py": "9c4ec522d48696a2e85c2298a6e0d942b2fb6261fae1d4fd4f37c9f60618863a",
+    "cloud_verify_materialization.py": "799bdf7a856ae0323b405e6346ba14e8ff4cce855ceb5d22e1371db615f47e8e",
+    "cloud_launch_materialization.py": "25392c0b8c80d45b5ad2583c251d957ca1e21353fae70760f98aaf0239a16a69",
+    "cloud_preflight.py": "e519562718c19f5f7e9d0e9ff2729bb68002151e6a666e5362663a1e5cbe5566",
+    "cloud_reconcile.py": "77d4cfe98e09bc46db020fe11376a6c61478935034a52de80d755ee96687cf88",
+    "cloud_materialize.py": "c6eaf44f0a1945b910fa8e4dccd0671b79e411b3aacd7db6f331d65a129baa3a",
+    "cloud_refine_reconciliation_failed_v2.py": "0774eec15bc24a6baa9dfa4842cc04202f74b0bda9348a557afaad51cc9b5a30",
+    "independent_adapter_synthetic_qa.py": "223507b8fee121d6b9ef0e0a5029a220ccd3df722aa94135064032a5efa1278d"
+  },
+  "real_data_requalification": false,
+  "source_or_acceptance_mutated": false,
+  "cloud_model_calls": 0,
+  "checks": [
+    "deny_before_payload_selection",
+    "exact_source_asset_and_ad_mask_scope",
+    "no_duplicate_analysis_rows_from_metadata_provenance",
+    "source_files_SHA_unchanged",
+    "no_overwrite_output",
+    "pinned_reconciliation_and_runtime_exclusions",
+    "do_not_reinfer_not_misused_as_blanket_reuse_exclusion"
+  ]
+}
