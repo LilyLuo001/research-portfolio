@@ -1,0 +1,1530 @@
+{
+  "version": "existing-asset-to-variable-reuse-inventory-v1",
+  "review_date": "2026-11-17",
+  "status": "read_only_public_metadata_schema_audit_not_cloud_payload_revalidation",
+  "scope_boundary": {
+    "public_repo_records_only": true,
+    "raw_ad_rows_read": 0,
+    "private_payloads_read": 0,
+    "network_or_cloud_calls": 0,
+    "new_model_calls": 0,
+    "git_modified": false,
+    "full_delivery_unique_ads": null,
+    "full_delivery_unique_missing_field_inputs": null,
+    "full_target_reduced": false
+  },
+  "independent_axes": {
+    "availability": "file/schema/receipt exists or has historicalcloudreadback; notquality",
+    "original_acceptance": "sameinput/schema/fieldmask originalstatus; maycontainunknown",
+    "new_semantic_qualification": "whetherthisexactnewresearchconstruct/routehaspassednewcriteria;notinferredfromoldacceptance"
+  },
+  "mapping_rules": [
+    "Preserve old candidate/output/reference alongside everynewderivedclaim; never overwrite frozenPRIMARY/finalmask",
+    "Direct_reuse inD65 means statedold-versionboundeduse, notpermissionto renamecandidateasnewtruth",
+    "Only deterministicrepresentationconversion maybe derivedwithoutnewsemanticdecision; changedobjecttaxonomy/pathinterpretation needs explicitnewmeasurementprovenance",
+    "Exactlyfullcontext+alljudgmentcontext+normalizer/schema compatibility required; neitherJOB_HASHnorpartialwindowSHA alonequalifiessemanticreuse",
+    "No-title dedup; no splitting500Mrawrowsinto5e8LLMcalls; keep row/ad/context/fieldunits distinct",
+    "Quarantine before raw/semantic retrieval, then acceptance/fieldmask, then value/quote/identity checks; missingcarrierorunknowndoesnotauthorize reprocessing",
+    "Do not use sourceabsence to infer not_mentioned; family not_applicable mustretainitsnative semantics",
+    "Revelio/historical computerization requiretheir ownactual sources; theseLinkUpassetsdonotdeliverworkerhistories orclassicalcomputerization data"
+  ],
+  "assets": [
+    {
+      "asset_id": "legacy_US_base_narrow",
+      "scope": {
+        "canonical_us_ads": 204774035,
+        "duration_evidence_rows": 131286035,
+        "engineering_usable_ads": 204768752,
+        "engineering_usable_rate": 0.9999742008306863
+      },
+      "availability": {
+        "state": "completed_historical_catalog_and_schema_available",
+        "version": "whole-corpus-old-narrow-v1",
+        "shards": 2464,
+        "catalog_sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+        "current_cloud_payload_read_this_audit": false
+      },
+      "original_acceptance": {
+        "state": "engineering_and_old_candidate_descriptive_release_accepted",
+        "not_semantic_gold": true
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "from": [
+            "JOB_HASH",
+            "SOURCE_FILE",
+            "SOURCE_ROW",
+            "RECORD_SOURCE_ROW"
+          ],
+          "to": "ad_identity_and_source_lineage",
+          "action": "direct_compatible_copy_with_uniqueness_and_manifest_scope"
+        },
+        {
+          "from": [
+            "CREATED",
+            "STATE",
+            "usable",
+            "DESCRIPTION_EMPTY",
+            "PARSE_ERROR",
+            "INPUT_EVIDENCE_TRUNCATED",
+            "ENRICHMENT_INCOMPLETE"
+          ],
+          "to": "observation_and_engineering_metadata",
+          "action": "direct_preserve_original_meaning"
+        },
+        {
+          "from": [
+            "exp_general_work_*",
+            "exp_specific_tool_*",
+            "exp_industry_domain_*",
+            "exp_object_unspecified_*"
+          ],
+          "to": "legacy_candidate_experience_flags",
+          "action": "copy_old_version_candidates_not_new_semantic_outcomes",
+          "notes": "specific_tool concept corresponds to tool_specific; object_unspecified remains unresolved, not general_work"
+        },
+        {
+          "from": [
+            "OBJECT_TYPE",
+            "MIN_YEARS",
+            "MAX_YEARS",
+            "DURATION_UNIT",
+            "BOUND_TYPE",
+            "REQUIREMENT_STRENGTH",
+            "EVIDENCE_ORDINAL"
+          ],
+          "to": "legacy_candidate_duration_claim",
+          "action": "reuse_clause_not_ad_minimum",
+          "notes": "No unconditional ad minimum from min of all clause values"
+        },
+        {
+          "from": [
+            "tech_*_detected",
+            "tech_*_use_explicit",
+            "tech_*_develop_explicit",
+            "tech_*_implement_explicit"
+          ],
+          "to": "legacy_technology_candidates",
+          "action": "retain_taxonomy_and_rule_version_not_new_technology_truth"
+        }
+      ],
+      "cautions": [
+        "exp_occupation_task_main is structurally unavailable; retain NA",
+        "exp_occupation_task_available is availability, not outcome",
+        "predictive_ai frozen all-zero vocabulary cannot measure absence",
+        "Candidate non-detection is not not_mentioned_after_full_review",
+        "Identity four-key not interchangeable with corpus text SHA",
+        "Typed lean base does not itself store complete normalized body"
+      ],
+      "evidence": [
+        {
+          "source": "base_receipt",
+          "pointer": "/coverage"
+        },
+        {
+          "source": "base_schema",
+          "pointer": "/field_limits"
+        },
+        {
+          "source": "old_reuse_map",
+          "pointer": "/comparisons"
+        }
+      ],
+      "source_field_groups": [
+        {
+          "group": "ad_schema",
+          "fields": [
+            "JOB_HASH",
+            "SOURCE_FILE",
+            "SOURCE_ROW",
+            "RECORD_SOURCE_ROW",
+            "CREATED",
+            "STATE",
+            "usable",
+            "DESCRIPTION_EMPTY",
+            "PARSE_ERROR",
+            "INPUT_EVIDENCE_TRUNCATED",
+            "ENRICHMENT_INCOMPLETE",
+            "exp_general_work_main",
+            "exp_general_work_required",
+            "exp_general_work_preferred",
+            "exp_general_work_broad",
+            "exp_general_work_exact_or_unspecified",
+            "exp_specific_tool_main",
+            "exp_specific_tool_required",
+            "exp_specific_tool_preferred",
+            "exp_specific_tool_broad",
+            "exp_specific_tool_exact_or_unspecified",
+            "exp_industry_domain_main",
+            "exp_industry_domain_required",
+            "exp_industry_domain_preferred",
+            "exp_industry_domain_broad",
+            "exp_industry_domain_exact_or_unspecified",
+            "exp_object_unspecified_main",
+            "exp_object_unspecified_required",
+            "exp_object_unspecified_preferred",
+            "exp_object_unspecified_broad",
+            "exp_object_unspecified_exact_or_unspecified",
+            "tech_traditional_software_detected",
+            "tech_generative_ai_detected",
+            "tech_predictive_ai_detected",
+            "tech_unspecified_ai_detected",
+            "tech_traditional_software_use_explicit",
+            "tech_traditional_software_develop_explicit",
+            "tech_traditional_software_implement_explicit",
+            "tech_generative_ai_use_explicit",
+            "tech_generative_ai_develop_explicit",
+            "tech_generative_ai_implement_explicit",
+            "tech_predictive_ai_use_explicit",
+            "tech_predictive_ai_develop_explicit",
+            "tech_predictive_ai_implement_explicit",
+            "tech_unspecified_ai_use_explicit",
+            "tech_unspecified_ai_develop_explicit",
+            "tech_unspecified_ai_implement_explicit",
+            "exp_occupation_task_main",
+            "exp_occupation_task_available"
+          ]
+        },
+        {
+          "group": "duration_schema",
+          "fields": [
+            "JOB_HASH",
+            "SOURCE_FILE",
+            "SOURCE_ROW",
+            "RECORD_SOURCE_ROW",
+            "EVIDENCE_ORDINAL",
+            "OBJECT_TYPE",
+            "MIN_YEARS",
+            "MAX_YEARS",
+            "DURATION_UNIT",
+            "BOUND_TYPE",
+            "REQUIREMENT_STRENGTH"
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "legacy_sparse_v6_audit",
+      "scope": {
+        "canonical_base_parent_ads": 204774035,
+        "row_inventory_sparse": true,
+        "complete_research_field_coverage": null
+      },
+      "availability": {
+        "state": "historically_retained_sparse_evidence_candidates",
+        "version": "stage_c_release_v1_v6_audit"
+      },
+      "original_acceptance": {
+        "state": "candidate_evidence_only"
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "legacy_entry_waiver_candidate",
+          "action": "reuse_affirmative_rows_with_object_scope"
+        },
+        {
+          "to": "legacy_qualification_alternative_candidate",
+          "action": "retain_equivalence_and_credential_branches_separately"
+        },
+        {
+          "to": "legacy_qualification_uncertainty",
+          "action": "reuse_flags_for_strata_not_semantic_label"
+        }
+      ],
+      "cautions": [
+        "No retained audit row does not mean no waiver/education/alternative",
+        "IS_UNCONDITIONAL_EXPERIENCE_REQUIREMENT structurally false for explicit-no-experience in old parser; not usable as measured zero",
+        "No single old DEGREE_OR gold field",
+        "No complete graduate/junior or current-duty inventory"
+      ],
+      "evidence": [
+        {
+          "source": "old_reuse_map",
+          "pointer": "/comparisons/1/field_map"
+        }
+      ],
+      "source_field_names": [
+        "MODULE",
+        "NO_EXPERIENCE_EXPLICIT",
+        "APPLICANT_CONTEXT_CANDIDATE",
+        "NEGATED_OR_OPTIONAL",
+        "QUALIFICATION_SCOPE_START",
+        "QUALIFICATION_SCOPE_END",
+        "EQUIVALENCE_TYPE",
+        "EQUIVALENT_EXPERIENCE",
+        "EQUIVALENT_CREDENTIAL",
+        "ALTERNATIVE_TRAINING_OR_EXPERIENCE",
+        "ALTERNATIVE_TRAINING_OR_EDUCATION",
+        "QUALIFICATION_RELATION_UNRESOLVED",
+        "LOCAL_PATH_SCOPE_APPLIED",
+        "MIXED_REQUIREMENT_SCOPE",
+        "CONTEXT_CONFLICT",
+        "AMBIGUOUS_DEGREE_ABBREVIATION"
+      ]
+    },
+    {
+      "asset_id": "D67_rulefirst_delta69",
+      "scope": {
+        "shards": 69,
+        "canonical_ads": 5804936,
+        "exact_old_matches": 5804936,
+        "old_usable_current_processed": 5804788,
+        "official_occupation": 5801980,
+        "common_support_occupations": 332,
+        "software_only_retained": 1230436,
+        "any_ai_retained": 109497
+      },
+      "availability": {
+        "state": "completed_69_shard_additive_overlay_and_metadata",
+        "version": "D67_candidate_rulefirst_20261008_v1.2_with_recorded_D57_patch",
+        "metadata_version": "d67-metadata64-v1",
+        "metadata_output_rows": 5804936,
+        "metadata_sha256": "058ab850fb88fe9497933771ffdc6b7a010d5ab0828ca6b6de269ff4d3866cb5"
+      },
+      "original_acceptance": {
+        "state": "D67_completed_and_accepted_for_descriptive_candidate_measurement_analysis",
+        "engineering_numerical_QA": "pass"
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "candidate_measurement_v2",
+          "action": "four_key_additive_overlay_keep_old_columns",
+          "notes": "Exactly overlaps5,804,936 old base ads; not additive coverage"
+        },
+        {
+          "from": "objects_json containing occupation_task",
+          "to": "occupation_task_candidate",
+          "action": "retain_candidate_status_not_new_semantic_qualified"
+        },
+        {
+          "from": "task_* and d57_current_duty_mentoring_candidate",
+          "to": "four_duty_candidates",
+          "action": "preserve_candidate_rule_meaning_and_evidence"
+        },
+        {
+          "from": "metadata69",
+          "to": "ad_metadata",
+          "action": "reuse_completed_join_no_rejoin_same69"
+        }
+      ],
+      "cautions": [
+        "69shards convenience wave not random sample",
+        "numeric old measure inD67 audit-only not D66 pooled old experience+audit",
+        "strict duty zero non-detection not actual no responsibility",
+        "Rulefirst general_work fallback not fully general human capital",
+        "A filled column does not prove new variable correctness"
+      ],
+      "evidence": [
+        {
+          "source": "delta_acceptance",
+          "pointer": "/status"
+        },
+        {
+          "source": "delta_metadata",
+          "pointer": "/output_rows"
+        },
+        {
+          "source": "old_reuse_map",
+          "pointer": "/comparisons"
+        }
+      ],
+      "source_field_groups": [
+        {
+          "group": "experience",
+          "fields": [
+            "objects_json",
+            "duration_kind",
+            "lower_years",
+            "upper_years",
+            "strict_lower",
+            "strength",
+            "scope",
+            "outcome_status",
+            "review_reasons_json",
+            "broad_*",
+            "narrow_*",
+            "numeric_duration_observed",
+            "conditional_or_alternative_experience_observed",
+            "experience_scope_unknown",
+            "unresolved_experience_observed"
+          ]
+        },
+        {
+          "group": "entry_and_qualification",
+          "fields": [
+            "explicit_no_experience",
+            "graduate_language",
+            "entry_junior_text",
+            "education_experience_alternative"
+          ]
+        },
+        {
+          "group": "tasks",
+          "fields": [
+            "task_independent_responsibility",
+            "task_client_ownership",
+            "task_people_supervision",
+            "d57_current_duty_mentoring_candidate"
+          ]
+        },
+        {
+          "group": "technology",
+          "fields": [
+            "technology",
+            "role_cue",
+            "negated",
+            "tech_group"
+          ]
+        },
+        {
+          "group": "metadata",
+          "fields": [
+            "COMPANY_ID",
+            "ONET_OCCUPATION_CODE",
+            "official_occupation_status",
+            "company_status",
+            "CREATED",
+            "geography_and_region_missing_states"
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "Records_structured_index",
+      "scope": {
+        "source_files": 269,
+        "raw_footer_rows": 356449214,
+        "index_shards": 1160,
+        "raw_rows_not_full_delivery_unique_ads": true
+      },
+      "availability": {
+        "state": "complete_existing_narrow_index_per_receipts",
+        "current_payload_read": false
+      },
+      "original_acceptance": {
+        "state": "row_conservation_and_existing_source_metadata_receipts"
+      },
+      "new_semantic_qualification": "not_applicable_to_structural_metadata__mapping_QA_still_required",
+      "reuse_mapping": [
+        {
+          "to": "record_identity_lifecycle_geography",
+          "action": "reuse_existing_index_no_text_reclean"
+        },
+        {
+          "to": "posting_cohort_period",
+          "from": "CREATED",
+          "action": "derived_first_observed_proxy_preserve_date_and_granularity"
+        }
+      ],
+      "cautions": [
+        "Index lacks TITLE/BASE_HASH/URL in its recorded columns; do not assume raw source schema equals index schema",
+        "Two regional index copies are not additive",
+        "CREATED not proof of current text version; LAST_UPDATED not necessarily body update",
+        "Source file unique row positions require source inventory context"
+      ],
+      "evidence": [
+        {
+          "source": "scope_reconciliation",
+          "pointer": "/record_index_reports"
+        },
+        {
+          "source": "scope_reconciliation",
+          "pointer": "/records_footer_manifests_distinct_logical_contents"
+        }
+      ],
+      "source_field_names": [
+        "JOB_HASH",
+        "COMPANY_ID",
+        "COUNTRY",
+        "STATE",
+        "CREATED",
+        "LAST_UPDATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "RECORD_SOURCE_ROW"
+      ]
+    },
+    {
+      "asset_id": "existing_macro_2016_2026",
+      "scope": {
+        "US_Records_all_history": 253210047,
+        "US_Records_2016_onward": 199644730,
+        "monthly_observations": 129,
+        "year_observations": 11
+      },
+      "availability": {
+        "state": "existing_Azure_run004_results_reexported_without_reestimation",
+        "source_series_sha256": {
+          "MONTHLY_US_2016_2026.json": "15cf63f27b14f033dc147625480e71d23c6d718107e812f8211d1ea10997302f",
+          "ANNUAL_US_2016_2026.json": "c8de21290f95791776f12f2c9c4ca27bab083ddf274c77013bb275df4e148300",
+          "PREPOST_CHANGE_PUBLIC.json": "76f748b1c9cc3ebe2848935567ca2a140f2a9d3be054df31a07b9a0834e84523",
+          "QA_PUBLIC.json": "d010e4edb89c39b966cfb7990a6aa66ef82a4a4bd2a11d80588f9c2dad680960"
+        }
+      },
+      "original_acceptance": {
+        "state": "prior_aggregate_QA_and_readback_reported",
+        "directly_opened_here": "repo public series and capabilities summary",
+        "external_run004_receipts_not_reopened": true
+      },
+      "new_semantic_qualification": "not_applicable_to_nonsemantic_aggregate__grouping_and_scope_remain_bound",
+      "reuse_mapping": [
+        {
+          "to": "opportunity_reallocation_baseline",
+          "action": "reuse_exact_existing_series_and_coverage_notice"
+        }
+      ],
+      "cautions": [
+        "active_missing_delete_open is one convention/sensitivity, not verified universally active stock",
+        "Direct DELETE_DATE exit dimensional table not yet delivered per public summary; stock-identity diagnostic not direct exits",
+        "Nationwideentry share not yet joined under same time/scope",
+        "2026September partial (data toSeptember6); annual2026 not full year",
+        "National record counts not hiring headcount orAI effects"
+      ],
+      "evidence": [
+        {
+          "source": "macro_series",
+          "pointer": "/monthly_columns"
+        },
+        {
+          "source": "base_capabilities",
+          "pointer": "/assets[id=G_existing_Records_macro_Azure_delivery]"
+        }
+      ],
+      "source_field_groups": [
+        {
+          "group": "monthly_columns",
+          "fields": [
+            "month",
+            "first_observed_advertisements",
+            "active_missing_delete_open",
+            "partial_boundary_month"
+          ]
+        },
+        {
+          "group": "annual_columns",
+          "fields": [
+            "year",
+            "first_observed_available",
+            "first_observed_complete_months",
+            "complete_months"
+          ]
+        },
+        {
+          "group": "other_receipted_outputs",
+          "fields": [
+            "snapshot occupation quarterly/annual composition",
+            "missing-delete active-stock sensitivity",
+            "pre/post descriptive comparison"
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "candidate_metadata_join_6010975",
+      "scope": {
+        "onet_match_exactly_one": 6008133,
+        "onet_missing": 2842,
+        "onet_multiple": 0,
+        "records_match_exactly_one": 6010975,
+        "rows": 6010975,
+        "separate_view": "linkup_candidate_metadata_join_v1",
+        "verification": "manifest-recorded SHA-256 required; files freshly size/footer/schema checked, not freshly SHA-rehashed"
+      },
+      "availability": {
+        "state": "separate_retained_candidate_view",
+        "view": "linkup_candidate_metadata_join_v1"
+      },
+      "original_acceptance": {
+        "state": "historical_size_footer_schema_and_manifest_SHA_receipt"
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "candidate_frame_metadata",
+          "action": "reuse_only_within_retained_candidate_frame"
+        }
+      ],
+      "cautions": [
+        "Not full204MRecordsONETwide table",
+        "Do not use6,010,975 as population denominator",
+        "Company scrape ID not automatically stable corporate enterprise"
+      ],
+      "evidence": [
+        {
+          "source": "base_receipt",
+          "pointer": "/metadata_scope"
+        },
+        {
+          "source": "base_schema",
+          "pointer": "/candidate_metadata_join_schema"
+        }
+      ],
+      "source_field_groups": [
+        {
+          "group": "JOB_HASH",
+          "fields": "string"
+        },
+        {
+          "group": "SOURCE_FILE",
+          "fields": "string"
+        },
+        {
+          "group": "SOURCE_ROW",
+          "fields": "int64"
+        },
+        {
+          "group": "RECORD_SOURCE_ROW",
+          "fields": "int64"
+        },
+        {
+          "group": "usable",
+          "fields": "bool"
+        },
+        {
+          "group": "DESCRIPTION_EMPTY",
+          "fields": "bool"
+        },
+        {
+          "group": "PARSE_ERROR",
+          "fields": "bool"
+        },
+        {
+          "group": "INPUT_EVIDENCE_TRUNCATED",
+          "fields": "bool"
+        },
+        {
+          "group": "ENRICHMENT_INCOMPLETE",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_general_work_main",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_general_work_required",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_general_work_preferred",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_general_work_broad",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_general_work_exact_or_unspecified",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_specific_tool_main",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_specific_tool_required",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_specific_tool_preferred",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_specific_tool_broad",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_specific_tool_exact_or_unspecified",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_industry_domain_main",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_industry_domain_required",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_industry_domain_preferred",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_industry_domain_broad",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_industry_domain_exact_or_unspecified",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_object_unspecified_main",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_object_unspecified_required",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_object_unspecified_preferred",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_object_unspecified_broad",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_object_unspecified_exact_or_unspecified",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_traditional_software_detected",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_generative_ai_detected",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_predictive_ai_detected",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_unspecified_ai_detected",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_traditional_software_use_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_traditional_software_develop_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_traditional_software_implement_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_generative_ai_use_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_generative_ai_develop_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_generative_ai_implement_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_predictive_ai_use_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_predictive_ai_develop_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_predictive_ai_implement_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_unspecified_ai_use_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_unspecified_ai_develop_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "tech_unspecified_ai_implement_explicit",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_occupation_task_main",
+          "fields": "bool"
+        },
+        {
+          "group": "exp_occupation_task_available",
+          "fields": "bool"
+        },
+        {
+          "group": "COMPANY_ID",
+          "fields": "decimal128(10, 0)"
+        },
+        {
+          "group": "CREATED",
+          "fields": "timestamp[us]"
+        },
+        {
+          "group": "OCCUPATION_MAJOR",
+          "fields": "string"
+        },
+        {
+          "group": "CENSUS_REGION",
+          "fields": "string"
+        },
+        {
+          "group": "CROSSES_2022_11_30",
+          "fields": "bool"
+        },
+        {
+          "group": "OBSERVATION_END",
+          "fields": "timestamp[us]"
+        },
+        {
+          "group": "OBSERVATION_CLOSED",
+          "fields": "bool"
+        },
+        {
+          "group": "DATE_COMPLETE",
+          "fields": "bool"
+        },
+        {
+          "group": "STALE_DELETE_OR_REAPPEARANCE",
+          "fields": "bool"
+        }
+      ]
+    },
+    {
+      "asset_id": "Formal800_final_reference",
+      "scope": {
+        "sample_ads": 800,
+        "unique_contexts": 719,
+        "mapped_to_fixed10k_ads": 1981,
+        "overlaps_fixed10k": true
+      },
+      "availability": {
+        "state": "final_validated_reference_and_masks_available_per_receipt",
+        "schema_sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+        "validated_payload_sha256": "2939a5846cb6d40f42af94465e764fedcad51b86fc3d387d04d142c51ff63860"
+      },
+      "original_acceptance": {
+        "state": "accepted_original_bounded_reference_with_final_masks",
+        "full_source_truth_certification": false
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "original_reference_v1",
+          "action": "reuse_final_adjudication_and_masks_not_raw_PRIMARY"
+        },
+        {
+          "to": "new_atomic_claims",
+          "action": "derive_only_logically_determined_structure_with_original_value_and_mask_retained",
+          "notes": "No new semantic qualification from syntactic conversion"
+        }
+      ],
+      "cautions": [
+        "800ads and719contexts different units;153audit and40root overlap",
+        "Final masks can preserveunknown; accepted not allknown",
+        "No completeeducation/licensing/training-receiver fields inFormal schema",
+        "Training_mentoring is responsibility dimension; not employer-provided onboarding"
+      ],
+      "evidence": [
+        {
+          "source": "formal_schema",
+          "pointer": "/properties"
+        },
+        {
+          "source": "formal_validation",
+          "pointer": "/claim_boundary"
+        },
+        {
+          "source": "historical_semantic",
+          "pointer": "/assets[asset_id=Formal800_final_reference]"
+        }
+      ],
+      "source_field_groups": [
+        {
+          "group": "record_id",
+          "fields": "string"
+        },
+        {
+          "group": "context_sha256",
+          "fields": "string"
+        },
+        {
+          "group": "document_status",
+          "fields": [
+            "reviewed_full",
+            "reviewed_partial",
+            "unresolved"
+          ]
+        },
+        {
+          "group": "experience_outcomes",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "experience_clauses",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "qualification_alternatives",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "entry_outcomes",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "entry_items",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "responsibility_outcomes",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "responsibility_items",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "technology_items",
+          "fields": [
+            "properties",
+            "enums"
+          ]
+        },
+        {
+          "group": "technology_inventory_status",
+          "fields": [
+            "explicit_mentions_recorded",
+            "not_mentioned_after_full_review",
+            "unknown"
+          ]
+        },
+        {
+          "group": "unresolved_notes",
+          "fields": "array"
+        }
+      ]
+    },
+    {
+      "asset_id": "fixed10k_Batch069_reference",
+      "scope": {
+        "ads": 10000,
+        "distinct_raw_texts": 7635,
+        "distinct_frozen_normalized_full_inputs": 7617,
+        "ad_field_rows": 70000,
+        "field_families": 7
+      },
+      "availability": {
+        "state": "final_field_provenance_ledger_available_and_attached_per_receipts",
+        "version": "fixed10k-semantic-production-batch069-v1",
+        "ledger_sha256": "794d76b2a6e913d7d08adab7e99bc96a3f57f8553c73518ae27b966a8fad86fb"
+      },
+      "original_acceptance": {
+        "state": "accepted_original_required_field_whitelist_plus_preserved_unknown_and_isolation",
+        "processable_remaining": 0,
+        "isolated_unfinished_contexts": 14
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "same_original_item_reference",
+          "action": "use_family_acceptance_masks_and_exact_context_bindings"
+        },
+        {
+          "to": "experience atomic attributes",
+          "action": "retain same-clause object/strength/conditionality/years/alternative_group/alternative_branch associations"
+        },
+        {
+          "to": "responsibility atoms",
+          "action": "retain dimension/subject/relation/conditionality association, do not use presence alone as current-duty truth"
+        }
+      ],
+      "cautions": [
+        "Seven-family statuses not equal13 independent outcome truths",
+        "not_applicable requires source-specific interpretation; do not globally recode to0/not_mentioned",
+        "Do not add6,486 continuation toFormal719 orlatest99",
+        "1002uncertain contexts not sum of all fieldunknowns",
+        "Paused historical progress text not authority over finalprocessable0"
+      ],
+      "evidence": [
+        {
+          "source": "batch069",
+          "pointer": "/field_status_ad_counts"
+        },
+        {
+          "source": "batch069_receipt",
+          "pointer": "/checks"
+        },
+        {
+          "source": "fixed10k_execution",
+          "pointer": "/A"
+        }
+      ],
+      "source_field_groups": [
+        {
+          "group": "families",
+          "fields": [
+            "current_responsibility_subject_and_relation",
+            "entry_wording_and_scope",
+            "experience_literal_years",
+            "experience_object",
+            "experience_strength",
+            "qualification_conditions_and_alternatives",
+            "technology_category_and_role"
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "fixed10k_metadata_append",
+      "scope": {
+        "ads": 10000,
+        "delete_date_available": 9702,
+        "last_updated_available": 2081
+      },
+      "availability": {
+        "state": "completed_metadata_append_original_labels_masks_weights_unchanged"
+      },
+      "original_acceptance": {
+        "state": "historical_join_and_numeric_QA_pass"
+      },
+      "new_semantic_qualification": "not_applicable_to_metadata__no_new_semantic_qualification",
+      "reuse_mapping": [
+        {
+          "to": "reference_sample_ad_metadata",
+          "action": "direct_reuse_10k_scope_preserve_conflict_checks"
+        }
+      ],
+      "cautions": [
+        "999ads company-major common support not all10k orUS",
+        "Metadata add does not solve text-date identification",
+        "NotReveliobridge"
+      ],
+      "evidence": [
+        {
+          "source": "fixed10k_metadata",
+          "pointer": "/metadata"
+        }
+      ],
+      "source_field_names": [
+        "COMPANY_ID",
+        "TITLE",
+        "STATE",
+        "CREATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "LAST_UPDATED",
+        "original_labels_masks_weights"
+      ]
+    },
+    {
+      "asset_id": "Pro_continuous_and_merged",
+      "scope": {
+        "historical_prepared_contexts": 48240,
+        "historic_accepted_receipts": 31700,
+        "merged_extra_original_acceptance_rows": 180,
+        "aggregate_scopes_not_additive": true
+      },
+      "availability": {
+        "state": "original_acceptance_receipts_and_many_values_attached_with_carrier_gaps",
+        "schema_sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+        "normalizer_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd"
+      },
+      "original_acceptance": {
+        "state": "acceptance_only_where_original_checkpoint_bound",
+        "original_masks_and_unknowns_preserved": true
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "original_reference_by_context_and_field",
+          "action": "consume_latest_original_completed_checkpoint_then_current_joined_values"
+        },
+        {
+          "to": "additional_ad_context_mapping",
+          "action": "exact_full_context_reuse_preserve_ad_identity_and_weights"
+        }
+      ],
+      "cautions": [
+        "SavedPRIMARY existence orpreparedmanifest notacceptance",
+        "31,700 not denominatorforwholeproject",
+        "Current integrated ledger supersedes stale source arithmetic",
+        "No newest-wins choice for67distinctPRIMARY conflicts",
+        "Protected aliases override reusable state"
+      ],
+      "evidence": [
+        {
+          "source": "historical_semantic",
+          "pointer": "/assets[asset_id=Pro_continuous_Azure_metadata_scope]"
+        },
+        {
+          "source": "integrated_contexts",
+          "pointer": "/context_states_by_asset_not_additive"
+        },
+        {
+          "source": "final_gaps",
+          "pointer": "/action_by_gap"
+        }
+      ],
+      "source_field_names": [
+        "record_id",
+        "context_sha256",
+        "document_status",
+        "experience_outcomes",
+        "experience_clauses",
+        "qualification_alternatives",
+        "entry_outcomes",
+        "entry_items",
+        "responsibility_outcomes",
+        "responsibility_items",
+        "technology_items",
+        "technology_inventory_status",
+        "unresolved_notes"
+      ]
+    },
+    {
+      "asset_id": "Astra_original_parent",
+      "scope": {
+        "original_accepted_contexts": 5,
+        "earlier2_included_not_additive": true
+      },
+      "availability": {
+        "state": "oldaccepted_values_recovered_and_bound_per_public_closure",
+        "saved_failure_locator_one_still_missing": true
+      },
+      "original_acceptance": {
+        "state": "original_frozen_engineering_acceptance_only"
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "original_reference_Astra",
+          "action": "retain_prioraccepted_and_exclude_repeat_initial_generation"
+        },
+        {
+          "to": "Astra_failed_output",
+          "action": "saved_unverified_or_missing_carrier_do_not_requeue_as_unread"
+        }
+      ],
+      "cautions": [
+        "Different from laterAstra50independent audit",
+        "Accepted5 not automatically newsemanticsqualified"
+      ],
+      "evidence": [
+        {
+          "source": "historical_semantic",
+          "pointer": "/assets[asset_id=Azure_Astra_original_accepted]"
+        },
+        {
+          "source": "final_gaps",
+          "pointer": "/saved_unattached_source_partition"
+        }
+      ],
+      "source_field_names": [
+        "record_id",
+        "context_sha256",
+        "document_status",
+        "experience_outcomes",
+        "experience_clauses",
+        "qualification_alternatives",
+        "entry_outcomes",
+        "entry_items",
+        "responsibility_outcomes",
+        "responsibility_items",
+        "technology_items",
+        "technology_inventory_status",
+        "unresolved_notes"
+      ]
+    },
+    {
+      "asset_id": "OpenCode_Kimi_parent_candidates",
+      "scope": {
+        "parent_allowlist": 1320,
+        "bulk_handled": 1309,
+        "bulk_engineering_pass_candidates": 1137,
+        "bulk_exceptions": 172,
+        "original_parent_statuses_from_later_union": {
+          "accepted": 5,
+          "not_reconciled": 47,
+          "quarantined": 42,
+          "saved_unverified": 1226
+        }
+      },
+      "availability": {
+        "state": "saved_candidates_and_some_failures_available_per_original_ledger",
+        "original_bulk_reference_in_public_summary_only": true
+      },
+      "original_acceptance": {
+        "state": "saved_unverified_not_promoted",
+        "production_promoted": 0
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "candidate_measurement_legacy_kimi",
+          "action": "reuse_existing_payload_and_engineering_result_no_paid_regeneration"
+        },
+        {
+          "to": "qualified_measurement",
+          "action": "not_authorized_by_engineering_pass_or_current_human_review_optout"
+        }
+      ],
+      "cautions": [
+        "Bulk1137+pilor/direct6=1143belongsolderbounded snapshot not6506global total",
+        "Final parent1226saved_unverified includesfailedoutputstatus recovery, not1226pass candidates",
+        "Original42parentprotected union override workerstatus",
+        "Kimi350later independentreference is not these1309new production"
+      ],
+      "evidence": [
+        {
+          "source": "historical_semantic",
+          "pointer": "/assets[asset_id=Kimi_bounded_production_candidates]"
+        },
+        {
+          "source": "integrated_contexts",
+          "pointer": "/context_states_by_asset_not_additive/Azure_parent"
+        }
+      ],
+      "source_field_names": [
+        "record_id",
+        "context_sha256",
+        "document_status",
+        "experience_outcomes",
+        "experience_clauses",
+        "qualification_alternatives",
+        "entry_outcomes",
+        "entry_items",
+        "responsibility_outcomes",
+        "responsibility_items",
+        "technology_items",
+        "technology_inventory_status",
+        "unresolved_notes"
+      ]
+    },
+    {
+      "asset_id": "unified_known_asset_ledger",
+      "scope": {
+        "contexts": 55882,
+        "ad_keys": 62414,
+        "fine_states": {
+          "accepted_original_scope_values_attached": 39298,
+          "accepted_original_scope_missing_carrier": 10,
+          "saved_unverified_values_attached": 6500,
+          "saved_unverified_missing_carrier": 6,
+          "status_not_reconciled": 10012,
+          "protected_quarantined": 56
+        }
+      },
+      "availability": {
+        "state": "latest_joined_values_with_CREATED_materialized",
+        "database_sha256": "fdcdfc86270c0391fef512dcdd641438606ec9ad2f00b0554c8bc9b1353f49a5",
+        "historical_index_sha256": "0344e94b9f2b75af74652a2f517c4e5c535d8090e1db62eec84b55afced1523a"
+      },
+      "original_acceptance": {
+        "state": "preserves_original_acceptance_not_new_global_acceptance",
+        "accepted_total": 39308,
+        "saved_unverified_total": 6506
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "reuse_authority_index",
+          "action": "lookup_exact_scope_field_version_mask_before_any_newclaim"
+        },
+        {
+          "to": "missing_field_workqueue",
+          "action": "not_reconciled_or_missingcarrier_notunprocessed; determine onlyafterassetlineage"
+        }
+      ],
+      "cautions": [
+        "39,298attached accepted +10carrier missing;6500attached saved+6carrier missing",
+        "10accepted missing tiedtoheldcredentialreviewcarrier; no bypass",
+        "10,012unreconciled cannot be counted as unread",
+        "56historicalprotected +5new runtimeexclusions separateoverlay",
+        "All62414CREATED matched says nothing aboutwhole500Mfields",
+        "Fieldcoverage register mixes source schema/family units; do not sumfamilies or treat knownlabelasnewsemantictruth"
+      ],
+      "evidence": [
+        {
+          "source": "final_gaps",
+          "pointer": "/fine_semantic_states"
+        },
+        {
+          "source": "final_state",
+          "pointer": "/database_sha256"
+        },
+        {
+          "source": "field_coverage",
+          "pointer": "/scope"
+        }
+      ],
+      "source_field_groups": [
+        {
+          "group": "axes",
+          "fields": [
+            "asset_source",
+            "full_input_context",
+            "ad_four_key",
+            "original_acceptance",
+            "original_family_mask",
+            "field_value",
+            "evidence_binding",
+            "original_primary_version",
+            "CREATED_join",
+            "quarantine_overlay"
+          ]
+        },
+        {
+          "group": "reference_coverage_pointer",
+          "fields": "field_coverage#/counts; source_schema_and_unit_preserved; notfullscope"
+        }
+      ]
+    },
+    {
+      "asset_id": "finite_qualification_and_shadow_diagnostics",
+      "scope": {
+        "Luna_selected": 500,
+        "development": 200,
+        "heldout": 300,
+        "Kimi_existing_reused": 150,
+        "Kimi_new": 350,
+        "Astra_audits": 50,
+        "shadow_source": "same500savedLuna"
+      },
+      "availability": {
+        "state": "immutable_saved_outputs_and_reports_archived",
+        "shadow_version": "field-local-shadow-v1"
+      },
+      "original_acceptance": {
+        "state": "diagnostic_or_reference_only_not_productionacceptance",
+        "newproduction": 0
+      },
+      "new_semantic_qualification": "not_qualified__old_decision_zero_fields__shadow_engineering_only",
+      "reuse_mapping": [
+        {
+          "to": "development_diagnostic_assets",
+          "action": "reuse_no_newinfer_no_promote"
+        },
+        {
+          "to": "atomic_adaptor_tests",
+          "action": "syntactic_recode_and_shadow_use_only_no_independentconfirmationclaim"
+        }
+      ],
+      "cautions": [
+        "Oldqualification0fields remains; noKimi/GPTfullproductioncertificate",
+        "Shadow189records/2140fullknownengineeringfields rescued fromglobalreject notnewcorrectsemanticrecords",
+        "Newrepresentationmustkeeporiginalvaluesandolddecision alongside"
+      ],
+      "evidence": [
+        {
+          "source": "qualification",
+          "pointer": "/machine_reference_qualified_fields"
+        },
+        {
+          "source": "shadow",
+          "pointer": "/measured_shadow"
+        }
+      ],
+      "source_field_names": [
+        "record_id",
+        "context_sha256",
+        "document_status",
+        "experience_outcomes",
+        "experience_clauses",
+        "qualification_alternatives",
+        "entry_outcomes",
+        "entry_items",
+        "responsibility_outcomes",
+        "responsibility_items",
+        "technology_items",
+        "technology_inventory_status",
+        "unresolved_notes"
+      ]
+    },
+    {
+      "asset_id": "supplemental_year_object_relations",
+      "scope": {
+        "candidate_relations": 2736,
+        "contexts": 1659,
+        "resolved": 801,
+        "explicit_non_experience": 1644,
+        "unknown": 291
+      },
+      "availability": {
+        "state": "historical_candidate_specific_reference_ledger_complete",
+        "exact_payload_not_opened_here": true
+      },
+      "original_acceptance": {
+        "state": "accepted_original_supplemental_relations_only"
+      },
+      "new_semantic_qualification": "not_certified_for_new_measurement_contract",
+      "reuse_mapping": [
+        {
+          "to": "candidate_specific_relation_supervision",
+          "action": "reuse_links_andcandidate_negatives_withfrozenmembership"
+        },
+        {
+          "to": "ad-level noexperience",
+          "action": "forbidden_mapping_fromcandidate_explicit_non_experience"
+        }
+      ],
+      "cautions": [
+        "Overlapsfixed10k references; not1659newads",
+        "Unknown291notnegativesorretryqueue",
+        "Doesnotdeliverallstrengthscopeoralternativebranchorresponsibilityrelations"
+      ],
+      "evidence": [
+        {
+          "source": "historical_semantic",
+          "pointer": "/assets[asset_id=supplemental_numeric_duration_relations]"
+        }
+      ],
+      "source_field_names": [
+        "candidate_id",
+        "same_original_context_and_split",
+        "resolved_object_link",
+        "explicit_non_experience",
+        "unknown",
+        "original_evidence_and_offsets"
+      ]
+    }
+  ],
+  "source_manifest": {
+    "base_receipt": {
+      "repository_path": "linkup/corpus_release_20261012/results/CORPUS_RELEASE_RECEIPT.json",
+      "sha256": "75e3afd8720ff8b174d0fe3a3b52fb7f8367c45305edecbcef78cc115181c921",
+      "bytes": 4314
+    },
+    "base_schema": {
+      "repository_path": "linkup/corpus_release_20261012/results/SCHEMA_PUBLIC.json",
+      "sha256": "a779d31376c1774a5b3c6be5963ea37ea1f8d35a016eb0ffe042282cf73fb2e0",
+      "bytes": 12420
+    },
+    "base_capabilities": {
+      "repository_path": "linkup/reuse_first_20261115/reuse_audit_20261116/EXISTING_BASE_CAPABILITIES_PUBLIC.json",
+      "sha256": "7f53925f9ccc6356942cd5e5b1d4e5519d64d23b56378eead70aed1831f71b54",
+      "bytes": 29135
+    },
+    "old_reuse_map": {
+      "repository_path": "linkup/analysis_transition_20260930/reuse_analysis_20261010/FIELD_REUSE_MAP_PUBLIC.json",
+      "sha256": "0127bcf981a110a0edafb66cfa7ddebd9d516c117e841af70a50c9d5fbfc1817",
+      "bytes": 19031
+    },
+    "delta_acceptance": {
+      "repository_path": "linkup/analysis_transition_20260930/reuse_expansion_20261010/ROOT_FINAL_ACCEPTANCE_AND_NEXT_PUBLIC.json",
+      "sha256": "23c5eb86328a1e70a106d65cac4795ea7e2fa43d98ec9b8699e168c56bcfd95b",
+      "bytes": 4225
+    },
+    "delta_metadata": {
+      "repository_path": "linkup/analysis_transition_20260930/reuse_expansion_20261010/public/final_results/metadata/METADATA69_RECEIPT_PUBLIC.json",
+      "sha256": "98e143d084cc5926ff9c1ae0bf4d0957a10a5b5f4a2b85c7860ddbb788912a9c",
+      "bytes": 1848
+    },
+    "scope_reconciliation": {
+      "repository_path": "linkup/reuse_first_20261115/execution_20261116/SCOPE_RECONCILIATION_PUBLIC.json",
+      "sha256": "aed3f14ecc3b010437cf3ed9b4bc07459f4632e641e95d8273414e709b32ef10",
+      "bytes": 7311
+    },
+    "macro_series": {
+      "repository_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+      "sha256": "2ab2854c18c3e44874131ccb23fdfe5e5fe2e3c769fd803e3776a02d02917ede",
+      "bytes": 11007
+    },
+    "formal_schema": {
+      "repository_path": "linkup/formal800_20261012/FORMAL800_REVIEW_SCHEMA.json",
+      "sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+      "bytes": 11586
+    },
+    "formal_validation": {
+      "repository_path": "linkup/formal800_20261012/receipts/FINAL719_VALIDATION_PUBLIC.json",
+      "sha256": "56977dbcf7533cc27720fd074dbc951e9c925996d63ce8c46461c700c3b4ce07",
+      "bytes": 1610
+    },
+    "historical_semantic": {
+      "repository_path": "linkup/reuse_first_20261115/reuse_audit_20261116/HISTORICAL_SEMANTIC_ASSETS_PUBLIC.json",
+      "sha256": "487785f6f1dcdddda8e00942e96de2b84e375a8024121f2f50d1bc6866b33d71",
+      "bytes": 44949
+    },
+    "batch069": {
+      "repository_path": "linkup/fixed10k_continuation_20261017/results/BATCH069_RESULTS_PUBLIC.json",
+      "sha256": "114bb3adb1a9af49136646fbce7d9d77a0b98c9c2146f1a18e9d1ca46a41cf85",
+      "bytes": 5413
+    },
+    "batch069_receipt": {
+      "repository_path": "linkup/fixed10k_continuation_20261017/receipts/BATCH069_FINALIZE_RECEIPT.json",
+      "sha256": "a7ea3c8c4a96172c0d32227240f324598f496479d82c24a17aaf1956aa70b65c",
+      "bytes": 3081
+    },
+    "fixed10k_execution": {
+      "repository_path": "linkup/fixed10k_continuation_20261017/EXECUTION_RESULTS_PUBLIC.json",
+      "sha256": "131737b45d8830e69de0f6c8063360f975d71c73245d70e602619a64fcdd4b72",
+      "bytes": 4943
+    },
+    "fixed10k_metadata": {
+      "repository_path": "linkup/metadata_research_20261026/ROOT_DECISION_PUBLIC.json",
+      "sha256": "9894c08cbe340d10856a697284d4d5f885f3e06a730feafd8325a989b40f809b",
+      "bytes": 3669
+    },
+    "integrated_contexts": {
+      "repository_path": "linkup/reuse_first_20261115/integration_20261116/INTEGRATION_FINAL_COMPACT_PUBLIC.json",
+      "sha256": "c71de72934bb63824723ebe1c666bdaa1574bc459ce63bce38956916ca3f6148",
+      "bytes": 1979
+    },
+    "field_coverage": {
+      "repository_path": "linkup/reuse_first_20261115/execution_20261116/FIELD_COVERAGE_REGISTER_PUBLIC.json",
+      "sha256": "50ecc0e1819450538d51d981ce796659736e5db5e45d77a96e1e209796e89e3a",
+      "bytes": 9111
+    },
+    "attached_values_initial": {
+      "repository_path": "linkup/reuse_first_20261115/execution_20261116/VALUES_ATTACHMENT_PUBLIC.json",
+      "sha256": "4eb9a1b21703bbf2ca5a5dac09682f076b829a51c04d388f6a74fb85f19cb303",
+      "bytes": 1477
+    },
+    "final_gaps": {
+      "repository_path": "linkup/reuse_first_20261115/execution_20261116/continuation02/final/GAP_REGISTER_PUBLIC.json",
+      "sha256": "375db99bf1f438d07adabaf2588d5ee2651a3cea8f6e175330886553e2c29c66",
+      "bytes": 2411
+    },
+    "final_state": {
+      "repository_path": "linkup/reuse_first_20261115/execution_20261116/continuation02/final/AZURE_RESEARCH_STATE.json",
+      "sha256": "149f6f9706f5d8be3472837aec625f09ea8bf52dcdd19763dd7556990dd39694",
+      "bytes": 1545
+    },
+    "qualification": {
+      "repository_path": "linkup/reuse_first_20261115/execution_20261116/continuation02/final/QUALIFICATION_DECISION_PUBLIC.json",
+      "sha256": "68a9bb9056b0395b2c222ebc26b2e06a652c45c64328fe30bcce411a0c964a12",
+      "bytes": 6446
+    },
+    "shadow": {
+      "repository_path": "linkup/reuse_first_20261115/measurement_protocol_20261117/PROTOCOL_STATUS_PUBLIC.json",
+      "sha256": "e8f2b759d9b23a0e399e4e086d97782f9bae4e6a85ef4059687c9e61870108ea",
+      "bytes": 1863
+    }
+  },
+  "limits": [
+    "No full unique delivery union inferred",
+    "Metadata summary referencingexternal_public treated assecondaryreceipted evidence, notfreshlyopenedexternalartifact",
+    "Sourcefieldinventories fromschema/code/publicmapping, notcount ofpopulatedrealvalues",
+    "Per-sourcecounts overlap andnotadditive"
+  ]
+}

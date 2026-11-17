@@ -1,0 +1,828 @@
+{
+  "dictionary_review_version": "revelio-and-history-variables-v1-draft",
+  "date": "2026-11-17",
+  "status": "design_and_reuse_review_not_executable_not_qualified",
+  "scope": {
+    "full_linkup_approximate_requested_rows": 500000000,
+    "verified_unique_count": null,
+    "future_increments": true,
+    "future_revelio": true,
+    "final_sample_substitution": false
+  },
+  "semantic_fields_not_vendor_column_claims": true,
+  "source_path_base": "repository_root",
+  "state_policy": {
+    "axes": [
+      "workflow",
+      "measurement",
+      "engineering",
+      "route_qualification"
+    ],
+    "unprocessed_not_unknown": true,
+    "model_reference_not_truth": true,
+    "human_review_required": false,
+    "quarantined_protection_preserved": true,
+    "historical_qualification_unchanged": true,
+    "new_qualification_claimed": false
+  },
+  "common_rules": [
+    "人员变量尚待真实交付及schema核验；既有方法不等于已计算变量。",
+    "期初风险率和入职者构成的事前截止时点不同，必须明确。",
+    "历史履历跨美国边界的既往职位不因当前美国研究资格而被截断。",
+    "不同目标资格分母的率不能相加；总外流另需共同来源分母与互斥事件表。",
+    "同公司/同职业/同行业分别为轴；人员事件不依赖LinkUp复杂资格抽取。",
+    "本文只给研究所需语义及旧资产复用入口，不声称任何实际coverage、match或流动结果。"
+  ],
+  "variables": [
+    {
+      "stable_id": "pe.identity",
+      "definition_version": "v1_draft",
+      "unit": "person-position key",
+      "definition": "稳定个人和职位身份及来源版本；仅定义语义需求，不指定未核验供应商列。",
+      "conditions": "先核验实际schema、人员框及一对多基数；保留完整可见历史，不只取成功转职者。",
+      "dependencies": {
+        "variable_ids": [],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "method_reusable_actual_data_pending",
+        "old_asset_or_rule": "R0稳定person/position语义字段；没有已构建人员键表。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "pe.position_interval",
+      "definition_version": "v1_draft",
+      "unit": "position interval and type",
+      "definition": "岗位起止日期、精度、实习类型及可排序的主职位/并行状态。",
+      "conditions": "月内无法排序、缺end、并行冲突单列；不把开放职位无限延长。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.identity"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧接口事件时钟、重叠区间和实习单列规则。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.history_quality",
+      "definition_version": "v1_draft",
+      "unit": "person-reference-time status",
+      "definition": "事前历史左截断、足够可见性、后续更新/观测状态分别记录。",
+      "conditions": "区分期初风险集时点与入职时点；没有更新不等于没有流动。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.identity",
+          "pe.position_interval"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧接口left-censoring及新合同follow-up条件。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.occupation_pair",
+      "definition_version": "v1_draft",
+      "unit": "person-reference-time origin and candidate-or-realized target codes",
+      "definition": "事前来源职业与目标职业的冻结分类及映射；风险集目标来自预设目的地集合，事件结果另标实际目的地。",
+      "conditions": "目标候选不依据将来成功进入选择；真实历史标题可按固定分类映射，不把现职回填过去或标题改名算转职。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.identity",
+          "pe.position_interval"
+        ],
+        "external_requirements": [
+          "实际职业映射及版本核验"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "R0职业族语义字段与映射合同。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "pe.industry_pair",
+      "definition_version": "v1_draft",
+      "unit": "person-event origin/destination industry codes",
+      "definition": "事件两端雇主岗位所属行业，分别保存有效期和未知。",
+      "conditions": "企业行业不等个人业务领域；分类漂移或企业重组不能自动算人员跨行业。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.identity",
+          "pe.position_interval"
+        ],
+        "external_requirements": [
+          "实际历史行业映射及雇主边界"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧接口industry-at-position规则。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.event_axes",
+      "definition_version": "v1_draft",
+      "unit": "person-window and target-occupation categories",
+      "definition": "内外雇主、首次可见/有既往历史、目标职业首次进入/返回/延续分别为正交轴。",
+      "conditions": "主事件口径预先冻结；已确认换雇主可独立成立，内部转岗才需职业变化证据；目标首次进入须历史充分。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.identity",
+          "pe.position_interval",
+          "pe.history_quality"
+        ],
+        "external_requirements": [
+          "历史雇主边界；职业轴依赖pe.occupation_pair"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "method_reusable_actual_data_pending",
+        "old_asset_or_rule": "R0三轴替代早期互相重叠事件分类；各轴独立缺失。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "pe.cross_occupation",
+      "definition_version": "v1_draft",
+      "unit": "event boolean",
+      "definition": "已确认事件中来源与目标职业不同。",
+      "conditions": "职业粒度与版本固定；非纯改名或编码变化。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.occupation_pair",
+          "pe.event_axes"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "人员职业路径旧定义；无已处理值。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "pe.cross_industry",
+      "definition_version": "v1_draft",
+      "unit": "event boolean",
+      "definition": "已确认事件中来源与目标行业不同。",
+      "conditions": "只要求该行业轴可判断；不等待职业映射或LinkUp资格关系。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.industry_pair",
+          "pe.event_axes"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "新五模块最小依赖；行业和职业分别编码。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "pe.total_work_months",
+      "definition_version": "v1_draft",
+      "unit": "person-reference-time months",
+      "definition": "截至指定事前时点，合规非实习就业区间的并集时长；实习另列。",
+      "conditions": "风险率按期初、入职构成按入职前；重叠月份不相加；左截断只作可见下界。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.position_interval",
+          "pe.history_quality"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。 可见月份为零不自动意味着真实零经验。",
+      "research_modules": [
+        "personnel_entry",
+        "experience_combinations"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧general_work union规则。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.target_experience_months",
+      "definition_version": "v1_draft",
+      "unit": "person-target-reference-time months by axis",
+      "definition": "同目标职业、同目标行业经历时长分轴取区间并集。",
+      "conditions": "两轴独立；未映射历史不得当作不同目标。观察不足保留下界与未知。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.position_interval",
+          "pe.history_quality"
+        ],
+        "external_requirements": [
+          "职业分量依赖pe.occupation_pair；行业分量依赖pe.industry_pair"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry",
+        "experience_combinations"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧occupation/task与industry/domain历史区间规则。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.task_distance",
+      "definition_version": "v1_draft",
+      "unit": "origin-target occupation distance",
+      "definition": "由事前固定任务版本与统一职业码构造的来源—目标距离。",
+      "conditions": "算法和尺度在看结果前冻结；没有来源的新人不赋最大距离。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.occupation_pair"
+        ],
+        "external_requirements": [
+          "生成式AI扩散前任务画像与跨码映射"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry",
+        "computerization_comparison"
+      ],
+      "reuse_mapping": {
+        "category": "external_history_or_measurement_pending",
+        "old_asset_or_rule": "恢复议程的任务相关性梯度；不是用实现流量训练距离。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.related_experience_months",
+      "definition_version": "v1_draft",
+      "unit": "person-target-reference-time weighted months",
+      "definition": "全可见事前历史按固定任务相关性加权的经历；上一职业距离另保留。",
+      "conditions": "重叠区间处理及权重公式先冻结；不是个人真实技能缺口。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.position_interval",
+          "pe.history_quality",
+          "pe.task_distance"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry",
+        "experience_combinations"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "原议程全历史相关经历核查；公式待冻结而非已测变量。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md"
+      ]
+    },
+    {
+      "stable_id": "pe.prior_tool_evidence",
+      "definition_version": "v1_draft",
+      "unit": "person-tool-reference-time evidence state",
+      "definition": "仅使用可定位到事前岗位与时间的工具经历证据。",
+      "conditions": "当前profile skills不能回填；工具存在、既往使用、年限绑定分别保留。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.position_interval",
+          "pe.history_quality"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "只有所需历史文本完整审阅后才可not_mentioned，且不等于不会；无历史文本/时间未定位为unknown。",
+      "research_modules": [
+        "personnel_entry",
+        "experience_combinations"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧specific_tool规则；不能复制LinkUp要求充当个人能力。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.education_before_event",
+      "definition_version": "v1_draft",
+      "unit": "person-reference-time credential state",
+      "definition": "在事前时点已完成、正在进行或无法确定时间的学历分别保存。",
+      "conditions": "不可利用未来学历反推入职前资格。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.identity",
+          "pe.position_interval"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。 没有教育记录不等于无学历。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧教育只用事前已知信息规则。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.experience_band",
+      "definition_version": "v1_draft",
+      "unit": "person-reference-time experience category",
+      "definition": "由实际可见总工龄及覆盖状态形成预先规定经验分层，用于研究中级群体。",
+      "conditions": "数值分界尚未冻结；不得用manager/junior或年龄代替，也不得因结果改界线。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.total_work_months",
+          "pe.history_quality"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "研究恢复报告中级以实际事前经历定义；不是现成供应商seniority。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.observed_event_count",
+      "definition_version": "v1_draft",
+      "unit": "events or persons per declared cell-window",
+      "definition": "满足冻结主事件规则的可见进入/转换人数；每人每窗口主事件最多一次。",
+      "conditions": "按已知轴分别汇总跨雇主/行业/职业；未知和未更新另列。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.event_axes",
+          "pe.history_quality"
+        ],
+        "external_requirements": [
+          "具体分组涉及的行业/职业轴；窗口与主职位规则"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "R0事件表设计；不需要LinkUp语义，也不需要风险率先可用。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "pe.entrant_composition",
+      "definition_version": "v1_draft",
+      "unit": "share among observed entrant denominator",
+      "definition": "指定可见进入者中各经验/路径组占比。",
+      "conditions": "保留历史不明组，明确条件分母；不是总体求职人口概率。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.observed_event_count"
+        ],
+        "external_requirements": [
+          "所用经历和路径变量，不要求无关维度"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "旧进入人数/构成与风险率分离。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "pe.target_risk_count",
+      "definition_version": "v1_draft",
+      "unit": "eligible persons N_sokt",
+      "definition": "期初来源职业和经验组中，未见目标职业既往经历且符合事前可观察规则的目标特定风险人数。",
+      "conditions": "保留未转移者；不根据后来成功或更新情况选风险集；资格依目标职业而变。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.history_quality",
+          "pe.occupation_pair",
+          "pe.total_work_months",
+          "pe.target_experience_months"
+        ],
+        "external_requirements": [
+          "预设目的地集合与期初人员框；只用该时点以前的目标职业历史决定资格，不要求任何未来事件已发生；缺失历史单列"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "原议程目标特定风险集；不是所有成功转职者人数。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.first_target_entry_count",
+      "definition_version": "v1_draft",
+      "unit": "eligible first-target events M_sokt",
+      "definition": "同一目标风险集中，在指定窗口按冻结首次主事件规则进入目标职业的人数。",
+      "conditions": "与N使用相同资格、经验时点、窗口和观察规则；保留零流量。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.target_risk_count",
+          "pe.observed_event_count"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "原目标职业首次进入计数口径。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.first_target_entry_rate",
+      "definition_version": "v1_draft",
+      "unit": "M_sokt / N_sokt",
+      "definition": "明确目标风险集内的记录进入率。",
+      "conditions": "N为正且事件观察条件满足才计算；N为零不填零率；未知后续不当已知未转移。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.target_risk_count",
+          "pe.first_target_entry_count"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "原风险集进入率；目标特定分母的列率不能相加为总外流率。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "pe.target_retention",
+      "definition_version": "v1_draft",
+      "unit": "person-event-horizon status",
+      "definition": "首次目标进入后，在预先规定后续时点是否仍处目标职业。",
+      "conditions": "可选扩展；只在足够后续可见窗口和职业映射下计算，不阻塞基本事件表。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.event_axes",
+          "pe.history_quality",
+          "pe.occupation_pair"
+        ],
+        "external_requirements": []
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "await_revelio_delivery_then_derive",
+        "old_asset_or_rule": "恢复议程留任条件性扩展，非已完成变量。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "bridge.entity_mapping",
+      "definition_version": "v1_draft",
+      "unit": "versioned cross-source mapping by axis",
+      "definition": "雇主/子公司、职业族、行业、地区桥表分别保存有效期、多重关系、匹配方法及状态。",
+      "conditions": "每个轴独立验收；旧LinkUp元数据可作为输入，但不能声称已连接Revelio；未知不硬连。",
+      "dependencies": {
+        "variable_ids": [],
+        "external_requirements": [
+          "实际两源列绑定与主体边界"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "opportunities",
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "linkup_inputs_reusable_crosswalk_or_derivation_pending",
+        "old_asset_or_rule": "LinkUp已存公司、职业、地区与原共同合同可复用；跨库实际桥表待核验。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "bridge.period_alignment",
+      "definition_version": "v1_draft",
+      "unit": "posting cohort period and position start period",
+      "definition": "分别存CREATED首次观察队列与人员事件期，按另存新版的预设滞后规则作聚合对照。",
+      "conditions": "旧R0取消季度键的合同不回写；新代理不证明历史正文时点，不能自动当相同日期。",
+      "dependencies": {
+        "variable_ids": [
+          "pe.position_interval"
+        ],
+        "external_requirements": [
+          "LinkUp CREATED及日期质量；预先冻结滞后配置"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "opportunities",
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "linkup_inputs_reusable_crosswalk_or_derivation_pending",
+        "old_asset_or_rule": "旧CREATED及事件时钟可作输入；新版双时间/滞后派生待实现。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    },
+    {
+      "stable_id": "bridge.common_support",
+      "definition_version": "v1_draft",
+      "unit": "source-specific and shared cell coverage",
+      "definition": "各自总体与共同雇主/职业/地区/指定时期单元的覆盖和可比较状态。",
+      "conditions": "所用桥表轴、两端研究量与时期分别满足条件；不以匹配成功筛掉总体覆盖账。",
+      "dependencies": {
+        "variable_ids": [
+          "bridge.entity_mapping"
+        ],
+        "external_requirements": [
+          "实际参与对照的LinkUp变量与Revelio变量；含时间对照时才依赖bridge.period_alignment，纯结构覆盖可独立计算"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "opportunities",
+        "personnel_entry"
+      ],
+      "reuse_mapping": {
+        "category": "linkup_inputs_reusable_crosswalk_or_derivation_pending",
+        "old_asset_or_rule": "原共同支持方法可复用；没有已match数量或占比。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/revelio_entry/REVELIO_R0_INPUT_CONTRACT.json"
+      ]
+    },
+    {
+      "stable_id": "hist.exposure_reference",
+      "definition_version": "v1_draft",
+      "unit": "occupation-index-version vector",
+      "definition": "单独保存外部AI暴露、历史RTI/任务或其他明确技术指标及适用年代，不相加成同一分数。",
+      "conditions": "保留原研究基准及版本；各指数含义与支持分开，不把文本AI提及当暴露或采用。",
+      "dependencies": {
+        "variable_ids": [],
+        "external_requirements": [
+          "外部指标文件、年份和职业跨码实查"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "computerization_comparison"
+      ],
+      "reuse_mapping": {
+        "category": "external_history_or_measurement_pending",
+        "old_asset_or_rule": "旧CPS/RTI和暴露方法及有限结果为复用入口；本次未核查实际源文件及覆盖。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/writing/RESEARCH_OBJECT_ONE_PAGE.md",
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md"
+      ]
+    },
+    {
+      "stable_id": "hist.diffusion_stage",
+      "definition_version": "v1_draft",
+      "unit": "technology-role-period stage or proxy",
+      "definition": "将技术成熟阶段与开发/实施/使用角色分开记录，明确外部依据或代理性质。",
+      "conditions": "时间线及阶段规则先冻结；雇主首次文本提及不自动是采用日，缺可靠阶段为unknown。",
+      "dependencies": {
+        "variable_ids": [],
+        "external_requirements": [
+          "已有LinkUp技术/角色变量作为外部输入；外部引入或扩散资料"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "computerization_comparison"
+      ],
+      "reuse_mapping": {
+        "category": "external_history_or_measurement_pending",
+        "old_asset_or_rule": "旧技术角色和软件/AI参考可兼容复用；成熟阶段本身仍待外部依据。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/writing/RESEARCH_OBJECT_ONE_PAGE.md"
+      ]
+    },
+    {
+      "stable_id": "hist.historical_outcome",
+      "definition_version": "v1_draft",
+      "unit": "historical occupation-period outcome with native unit",
+      "definition": "历史就业、工资或任务构成按原单位、人口、年代和分类保存，用于计算机化参照。",
+      "conditions": "真正历史年份和口径必须核验；工资需实测来源；不将2016–19改称计算机革命。",
+      "dependencies": {
+        "variable_ids": [],
+        "external_requirements": [
+          "真实历史资料、统一职业映射、结果人口与测量版本"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "computerization_comparison"
+      ],
+      "reuse_mapping": {
+        "category": "external_history_or_measurement_pending",
+        "old_asset_or_rule": "旧CPS成果及分类方法保留原范围；更早资料和可比历史量待核验，不宣称已齐。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/writing/RESEARCH_OBJECT_ONE_PAGE.md"
+      ]
+    },
+    {
+      "stable_id": "hist.comparison_spec",
+      "definition_version": "v1_draft",
+      "unit": "predeclared comparison estimand",
+      "definition": "指定当代技术组经验/任务比较或历史参照，列明所用结果、角色、时期、权重与共同支持。",
+      "conditions": "只依赖实际参与的变量；当代比较不等历史因果对照；不能为显著性调整分组。",
+      "dependencies": {
+        "variable_ids": [],
+        "external_requirements": [
+          "实际选用LinkUp结果与分组；如历史比较则hist.historical_outcome；如人员比较则对应pe变量"
+        ]
+      },
+      "unknown_vs_not_mentioned": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "research_modules": [
+        "computerization_comparison"
+      ],
+      "reuse_mapping": {
+        "category": "linkup_inputs_reusable_crosswalk_or_derivation_pending",
+        "old_asset_or_rule": "旧Q1/Q2、软件/GenAI角色和经验结果只作各自有界基准；新比较需对应变量合格。",
+        "actual_values_or_coverage_verified_here": false
+      },
+      "source_relative_paths": [
+        "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+        "linkup/analysis_transition_20260930/dual_source_execution_v2/writing/RESEARCH_OBJECT_ONE_PAGE.md",
+        "linkup/reuse_first_20261115/measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json"
+      ]
+    }
+  ],
+  "summary": {
+    "variables": 28,
+    "revelio_or_personnel": 21,
+    "cross_dataset": 3,
+    "historical_comparison": 4
+  },
+  "execution": {
+    "raw_ad_or_person_data_read": false,
+    "cloud_or_model_calls": false,
+    "production_started": false,
+    "git_written": false
+  }
+}

@@ -1,0 +1,2466 @@
+{
+  "dictionary_version": "1.0.0",
+  "date": "2026-11-17",
+  "status": "definition_and_reuse_inventory_release_not_production_qualification",
+  "modules": {
+    "A": "机会重新分配",
+    "B": "经历重新组合",
+    "C": "工作职责演变",
+    "D": "人员进入路径",
+    "E": "早期计算机化对比",
+    "X": "共用身份与来源"
+  },
+  "target_scale_approximate": 500000000,
+  "future_increments_and_revelio_retained": true,
+  "version_policy": "stable variable keys; breaking definition/denominator changes require major version; added nonbreaking variables minor; wording corrections patch; source measurement versions never overwritten",
+  "status_codes": {
+    "structural_reuse": "已有结构数据，可按原口径复用",
+    "partial_semantic_reuse": "已有部分语义，按原验收范围复用",
+    "proxy_only": "已有规则候选，不等于新语义变量",
+    "derive_pending": "已有部分输入，派生与连接待完成",
+    "new_definition": "新结构或分类，旧结果不能直接填满",
+    "external_pending": "待外部数据交付及字段核验",
+    "scope_pending": "全交付范围与覆盖待核清"
+  },
+  "reuse_guards": [
+    "先按保护集合排除；隔离项不得读取、推理或自动重跑",
+    "原四键身份映射保留；不能只用JOB_HASH或JOB_HASH+CREATED消除多对多",
+    "语义复用同时核验完整规范上下文指纹、原schema/指令版本和原字段验收掩码",
+    "同名列不是同义列；规则输出保持legacy_proxy版本，不晋升新语义真值",
+    "保留多个PRIMARY和冲突，不采用latest-wins；已审未知不变成否定或自动待重跑",
+    "字段缺失数按同一交付范围、去重单位和版本计算；不同资产覆盖不能相加"
+  ],
+  "variables": [
+    {
+      "variable_key": "lk.identity.ad_key",
+      "definition_version": "1.0.0",
+      "label_zh": "广告来源四键",
+      "modules": [
+        "X"
+      ],
+      "unit": "广告源记录",
+      "type": "tuple",
+      "definition_zh": "保留JOB_HASH、SOURCE_FILE、SOURCE_ROW、RECORD_SOURCE_ROW四元组及其上下文映射",
+      "allowed_values_or_units": "四键；跨来源多重对应单列",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "完整交付去重广告数仍未知，不能按五亿减US底库",
+      "dependencies": [],
+      "source_refs": [
+        "scope",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.identity.context",
+      "definition_version": "1.0.0",
+      "label_zh": "规范正文指纹",
+      "modules": [
+        "X"
+      ],
+      "unit": "规范完整上下文",
+      "type": "string",
+      "definition_zh": "按固定正文标准化版本计算的全文指纹；不是广告身份",
+      "allowed_values_or_units": "fingerprint + normalizer_version",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "复用时同时核对版本；不以同广告推定同正文",
+      "dependencies": [],
+      "source_refs": [
+        "scope",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.provenance.source",
+      "definition_version": "1.0.0",
+      "label_zh": "原成果来源与版本",
+      "modules": [
+        "X"
+      ],
+      "unit": "字段载体",
+      "type": "struct",
+      "definition_zh": "保留资产、原文件SHA、原行号、schema/指令/代码版本和掩码",
+      "allowed_values_or_units": "asset/source_sha/source_ordinal/version/mask",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "保留67组多PRIMARY；找不到载体不重跑",
+      "dependencies": [],
+      "source_refs": [
+        "scope",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.time.created",
+      "definition_version": "1.0.0",
+      "label_zh": "首次观察日期代理",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "datetime",
+      "definition_zh": "数据库CREATED作为岗位首次观察时间代理，绝不宣称正文生成时间",
+      "allowed_values_or_units": "保留原精度和日期质量",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "其余全量元数据连接和覆盖待核；不重连现有62,414键",
+      "dependencies": [],
+      "source_refs": [
+        "scope",
+        "base_capabilities"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.time.delete",
+      "definition_version": "1.0.0",
+      "label_zh": "删除/退出观察日期",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "datetime",
+      "definition_zh": "供应商记录的删除日期；不是已招到人时间",
+      "allowed_values_or_units": "原字段及其缺失/映射状态",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "按资产核字段存在与非空；全库宽表并非已留存",
+      "dependencies": [],
+      "source_refs": [
+        "base_capabilities",
+        "base_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.time.last_checked",
+      "definition_version": "1.0.0",
+      "label_zh": "最后检查日期",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "datetime",
+      "definition_zh": "最后一次来源检查时间，不能当作新增岗位时间",
+      "allowed_values_or_units": "原字段及其缺失/映射状态",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "按资产核字段存在与非空；全库宽表并非已留存",
+      "dependencies": [],
+      "source_refs": [
+        "base_capabilities",
+        "base_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.time.last_updated",
+      "definition_version": "1.0.0",
+      "label_zh": "最后更新日期",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "datetime",
+      "definition_zh": "来源更新记录时间，不自动表示重新招聘",
+      "allowed_values_or_units": "原字段及其缺失/映射状态",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "按资产核字段存在与非空；全库宽表并非已留存",
+      "dependencies": [],
+      "source_refs": [
+        "base_capabilities",
+        "base_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.company.vendor_id",
+      "definition_version": "1.0.0",
+      "label_zh": "供应商公司标识",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "string",
+      "definition_zh": "保留原供应商公司标识；不等于跨库统一雇主",
+      "allowed_values_or_units": "原字段及其缺失/映射状态",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "按资产核字段存在与非空；全库宽表并非已留存",
+      "dependencies": [],
+      "source_refs": [
+        "base_capabilities",
+        "base_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.job.title",
+      "definition_version": "1.0.0",
+      "label_zh": "原岗位名称",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "string",
+      "definition_zh": "保留原岗位名称，不直接据此认定经验或初级",
+      "allowed_values_or_units": "原字段及其缺失/映射状态",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "按资产核字段存在与非空；全库宽表并非已留存",
+      "dependencies": [],
+      "source_refs": [
+        "base_capabilities",
+        "base_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.geo",
+      "definition_version": "1.0.0",
+      "label_zh": "国家与地区",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "struct",
+      "definition_zh": "保留供应商地理字段及映射版本、未知状态",
+      "allowed_values_or_units": "原字段及其缺失/映射状态",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "按资产核字段存在与非空；全库宽表并非已留存",
+      "dependencies": [],
+      "source_refs": [
+        "base_capabilities",
+        "base_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.occupation",
+      "definition_version": "1.0.0",
+      "label_zh": "职业映射",
+      "modules": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "广告源记录",
+      "type": "struct",
+      "definition_zh": "职业代码及版本，未映射不硬补",
+      "allowed_values_or_units": "原字段及其缺失/映射状态",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "按资产核字段存在与非空；全库宽表并非已留存",
+      "dependencies": [],
+      "source_refs": [
+        "base_capabilities",
+        "base_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.industry",
+      "definition_version": "1.0.0",
+      "label_zh": "雇主行业及时间有效性",
+      "modules": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "unit": "雇主×时期",
+      "type": "code",
+      "definition_zh": "用版本化行业映射描述雇主所在行业，不用广告中要求的行业经验替代",
+      "allowed_values_or_units": "行业代码/层级/有效期/unknown",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "先核现有行业供应商字段和企业桥表；本轮未确认全量逐行可用",
+      "dependencies": [
+        "lk.company.vendor_id"
+      ],
+      "source_refs": [
+        "research_agenda"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.input.quality",
+      "definition_version": "1.0.0",
+      "label_zh": "原输入与工程可用性",
+      "modules": [
+        "X"
+      ],
+      "unit": "广告源记录",
+      "type": "struct",
+      "definition_zh": "保留空正文、解析错、证据截断与enrichment不完整标记，不将工程usable解释为语义准确",
+      "allowed_values_or_units": "usable/DESCRIPTION_EMPTY/PARSE_ERROR/INPUT_EVIDENCE_TRUNCATED/ENRICHMENT_INCOMPLETE",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "消费旧标记并保留原因；不能丢失不可用记录",
+      "dependencies": [],
+      "source_refs": [
+        "base_schema",
+        "base_capabilities"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.document.completeness",
+      "definition_version": "1.0.0",
+      "label_zh": "正文审阅完整性",
+      "modules": [
+        "X"
+      ],
+      "unit": "上下文",
+      "type": "enum",
+      "definition_zh": "原review的全文、部分或未决状态决定是否允许未提及断言",
+      "allowed_values_or_units": "reviewed_full/reviewed_partial/unresolved",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "仅补真实缺键；全量非空率尚未核清",
+      "dependencies": [],
+      "source_refs": [
+        "field_counts",
+        "formal_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.state.axes",
+      "definition_version": "1.0.0",
+      "label_zh": "字段状态与资格四轴",
+      "modules": [
+        "X"
+      ],
+      "unit": "上下文×变量×版本",
+      "type": "struct",
+      "definition_zh": "执行进度、测量状态、工程有效性、路线资格分别存储，隔离为独立保护",
+      "allowed_values_or_units": "workflow/measurement/engineering/route_qualification + quarantine",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "旧账本映射到新四轴，保留原状态；不能把未处理转未知",
+      "dependencies": [],
+      "source_refs": [
+        "five_module_contract",
+        "scope"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.evidence.ref",
+      "definition_version": "1.0.0",
+      "label_zh": "稳定证据编号和位置",
+      "modules": [
+        "B",
+        "C",
+        "E"
+      ],
+      "unit": "原子主张×证据",
+      "type": "struct",
+      "definition_zh": "由程序绑定完整规范正文的证据编号、起止位置、原文来源与重复位置歧义",
+      "allowed_values_or_units": "span_id/start/end/context_fingerprint/status",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "复用原引文/证据位置；新增稳定编号，不让模型重抄引文",
+      "dependencies": [
+        "lk.identity.context",
+        "lk.provenance.source"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "shadow"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.general_work",
+      "definition_version": "1.0.0",
+      "label_zh": "一般工作经历要求或偏好",
+      "modules": [
+        "B"
+      ],
+      "unit": "上下文×经历类别",
+      "type": "enum",
+      "definition_zh": "是否至少有一项申请者明确、非豁免的一般工作经历要求或偏好；明确豁免不构成present",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "要求与偏好由条款强度区分；四类经历可共存，不能相加成年限",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.occupation_task",
+      "definition_version": "1.0.0",
+      "label_zh": "职业/任务经历要求或偏好",
+      "modules": [
+        "B"
+      ],
+      "unit": "上下文×经历类别",
+      "type": "enum",
+      "definition_zh": "是否至少有一项申请者明确、非豁免的职业/任务经历要求或偏好；明确豁免不构成present",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "要求与偏好由条款强度区分；四类经历可共存，不能相加成年限",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.industry_domain",
+      "definition_version": "1.0.0",
+      "label_zh": "行业/领域经历要求或偏好",
+      "modules": [
+        "B"
+      ],
+      "unit": "上下文×经历类别",
+      "type": "enum",
+      "definition_zh": "是否至少有一项申请者明确、非豁免的行业/领域经历要求或偏好；明确豁免不构成present",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "要求与偏好由条款强度区分；四类经历可共存，不能相加成年限",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.tool_specific",
+      "definition_version": "1.0.0",
+      "label_zh": "工具特定经历要求或偏好",
+      "modules": [
+        "B"
+      ],
+      "unit": "上下文×经历类别",
+      "type": "enum",
+      "definition_zh": "是否至少有一项申请者明确、非豁免的工具特定经历要求或偏好；明确豁免不构成present",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "要求与偏好由条款强度区分；四类经历可共存，不能相加成年限",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.claim.item_anchor",
+      "definition_version": "1.0.0",
+      "label_zh": "原子主张的同条款锚点",
+      "modules": [
+        "B",
+        "C",
+        "E"
+      ],
+      "unit": "原载体×条款/条目",
+      "type": "struct",
+      "definition_zh": "以原文件SHA、原记录位置、数组路径和索引绑定所有原子，禁止不同条款的对象/年限/强度误拼",
+      "allowed_values_or_units": "source_sha + source_ordinal + array_path + item_index + context",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "从已有载体确定性生成；不是新的语义标签",
+      "dependencies": [
+        "lk.provenance.source",
+        "lk.identity.context"
+      ],
+      "source_refs": [
+        "attachment_code",
+        "formal_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.object",
+      "definition_version": "1.0.0",
+      "label_zh": "经历对象类别",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "enum",
+      "definition_zh": "每条经历主张的对象类别，保留unresolved",
+      "allowed_values_or_units": "general_work/occupation_task/industry_domain/tool_specific/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.object_label",
+      "definition_version": "1.0.0",
+      "label_zh": "对象原描述",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "string",
+      "definition_zh": "保留原模型/原文对象描述；只是显示与溯源，不以字符串全等裁定语义",
+      "allowed_values_or_units": "free_text",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.years_min",
+      "definition_version": "1.0.0",
+      "label_zh": "对象年限下界",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "number?",
+      "definition_zh": "仅为同一经历条款、同一对象绑定的字面年限下界",
+      "allowed_values_or_units": "年；null不是0",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "原值复制必须保留同一锚点及上述伴随属性；全局最低门槛还需完整资格路径，不跨条款取min。",
+      "full_delivery_missing_inputs": null,
+      "required_companion_bindings": [
+        "lk.exp.object",
+        "lk.exp.strength",
+        "lk.exp.conditionality",
+        "lk.qual.group_link",
+        "lk.qual.legacy_groups"
+      ]
+    },
+    {
+      "variable_key": "lk.exp.years_max",
+      "definition_version": "1.0.0",
+      "label_zh": "对象年限上界",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "number?",
+      "definition_zh": "同一经历条款的字面年限上界，不把无上界填0",
+      "allowed_values_or_units": "年；null可为未写上界或未知，结合关系状态",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "原值复制必须保留同一锚点及上述伴随属性；全局最低门槛还需完整资格路径，不跨条款取min。",
+      "full_delivery_missing_inputs": null,
+      "required_companion_bindings": [
+        "lk.exp.object",
+        "lk.exp.strength",
+        "lk.exp.conditionality",
+        "lk.qual.group_link",
+        "lk.qual.legacy_groups"
+      ]
+    },
+    {
+      "variable_key": "lk.exp.years_relation",
+      "definition_version": "1.0.0",
+      "label_zh": "年限数值关系",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "enum",
+      "definition_zh": "区分至少、区间、恰好、至多、未写和未决",
+      "allowed_values_or_units": "at_least/range/exact/at_most/not_stated/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "原值复制必须保留同一锚点及上述伴随属性；全局最低门槛还需完整资格路径，不跨条款取min。",
+      "full_delivery_missing_inputs": null,
+      "required_companion_bindings": [
+        "lk.exp.object",
+        "lk.exp.strength",
+        "lk.exp.conditionality",
+        "lk.qual.group_link",
+        "lk.qual.legacy_groups"
+      ]
+    },
+    {
+      "variable_key": "lk.exp.strength",
+      "definition_version": "1.0.0",
+      "label_zh": "经历要求强度",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "enum",
+      "definition_zh": "要求/优先/明确豁免作用于具体经历对象，不能跨对象传播",
+      "allowed_values_or_units": "required/preferred/explicitly_waived/unspecified/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.conditionality",
+      "definition_version": "1.0.0",
+      "label_zh": "经历适用条件状态",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "enum",
+      "definition_zh": "经历条款是否依赖其他条件；条件必须另保留",
+      "allowed_values_or_units": "unconditional/conditional/unspecified/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.qual.group_link",
+      "definition_version": "1.0.0",
+      "label_zh": "条款到资格分支连接",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源资格组及被引用条款",
+      "type": "struct",
+      "definition_zh": "保留条款与资格组、分支连接；null分支可为共享条件",
+      "allowed_values_or_units": "group/branch/null",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.qual.legacy_groups",
+      "definition_version": "1.0.0",
+      "label_zh": "原资格组和分支",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源资格组及被引用条款",
+      "type": "array",
+      "definition_zh": "保留旧组的AND/OR、分支条件文字和引文，不假装已解析任意嵌套逻辑",
+      "allowed_values_or_units": "group/relation/branches(condition,quotes)",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.bound_inclusivity",
+      "definition_version": "1.0.0",
+      "label_zh": "年限边界是否含等号",
+      "modules": [
+        "B"
+      ],
+      "unit": "同一源经历条款",
+      "type": "enum",
+      "definition_zh": "区分严格大于与至少；原schema未给完整独立开闭区间字段，不补猜",
+      "allowed_values_or_units": "inclusive/exclusive/unspecified/unknown",
+      "availability_code": "new_definition",
+      "availability_zh": "新结构或分类，旧结果不能直接填满",
+      "remaining_work_zh": "可保留D67 strict_lower候选；Formal年限不能自动补出开闭属性",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.exp.years_relation"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "delta_inventory"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.qual.condition_atoms",
+      "definition_version": "1.0.0",
+      "label_zh": "学历/证照等资格条件原子",
+      "modules": [
+        "B"
+      ],
+      "unit": "资格分支条件",
+      "type": "struct",
+      "definition_zh": "仅编码影响经验替代路径的学历、证照及其他明确条件；不把学历年数当工作年限",
+      "allowed_values_or_units": "typed_condition + value + negation + evidence + unresolved",
+      "availability_code": "new_definition",
+      "availability_zh": "新结构或分类，旧结果不能直接填满",
+      "remaining_work_zh": "旧branch.condition可复用文字，尚不能直接得到结构化学历/证照；只补研究所需条件",
+      "dependencies": [
+        "lk.qual.legacy_groups",
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.exp.object_concept",
+      "definition_version": "1.0.0",
+      "label_zh": "规范对象概念编号",
+      "modules": [
+        "B"
+      ],
+      "unit": "经历条款",
+      "type": "code",
+      "definition_zh": "在版本化对象词典中区分行业、职业任务、工具等概念；显示措辞与概念分开",
+      "allowed_values_or_units": "concept_code + dictionary_version + unresolved",
+      "availability_code": "new_definition",
+      "availability_zh": "新结构或分类，旧结果不能直接填满",
+      "remaining_work_zh": "旧object_detail不能仅靠换词序/相似度自动映射；需有限对象词典和歧义规则",
+      "dependencies": [
+        "lk.exp.object",
+        "lk.exp.object_label"
+      ],
+      "source_refs": [
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.qual.logic",
+      "definition_version": "1.0.0",
+      "label_zh": "可计算资格条件结构",
+      "modules": [
+        "B"
+      ],
+      "unit": "相关资格组",
+      "type": "logic_tree",
+      "definition_zh": "完整保留相关AND/OR、否定、共享条件及嵌套作用范围；不确定分支保持unknown",
+      "allowed_values_or_units": "atomic_nodes + typed_edges + completeness",
+      "availability_code": "new_definition",
+      "availability_zh": "新结构或分类，旧结果不能直接填满",
+      "remaining_work_zh": "复用旧组/引用；结构化树及完整性尚未完成，不擅自把AND换OR",
+      "dependencies": [
+        "lk.qual.group_link",
+        "lk.qual.legacy_groups",
+        "lk.qual.condition_atoms",
+        "lk.exp.strength"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "formal_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null,
+      "conditional_dependencies": {
+        "numeric_duration_condition": [
+          "lk.exp.years_min",
+          "lk.exp.years_max",
+          "lk.exp.years_relation",
+          "lk.exp.bound_inclusivity"
+        ]
+      }
+    },
+    {
+      "variable_key": "lk.entry.explicit_no_experience",
+      "definition_version": "1.0.0",
+      "label_zh": "明确无经验要求",
+      "modules": [
+        "A",
+        "B",
+        "C"
+      ],
+      "unit": "上下文×entry维度",
+      "type": "enum",
+      "definition_zh": "按冻结定义记录明确无经验要求表述；不是统一的初级岗位真值",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "未写经验不是零经验；指导junior不是招聘junior",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.entry.explicit_new_graduate",
+      "definition_version": "1.0.0",
+      "label_zh": "明确欢迎应届",
+      "modules": [
+        "A",
+        "B",
+        "C"
+      ],
+      "unit": "上下文×entry维度",
+      "type": "enum",
+      "definition_zh": "按冻结定义记录明确欢迎应届表述；不是统一的初级岗位真值",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "未写经验不是零经验；指导junior不是招聘junior",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.entry.current_student_internship",
+      "definition_version": "1.0.0",
+      "label_zh": "当前学生或实习",
+      "modules": [
+        "A",
+        "B",
+        "C"
+      ],
+      "unit": "上下文×entry维度",
+      "type": "enum",
+      "definition_zh": "按冻结定义记录当前学生或实习表述；不是统一的初级岗位真值",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "未写经验不是零经验；指导junior不是招聘junior",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.entry.explicit_junior_or_entry_label",
+      "definition_version": "1.0.0",
+      "label_zh": "明确初级/入门标签",
+      "modules": [
+        "A",
+        "B",
+        "C"
+      ],
+      "unit": "上下文×entry维度",
+      "type": "enum",
+      "definition_zh": "按冻结定义记录明确初级/入门标签表述；不是统一的初级岗位真值",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "未写经验不是零经验；指导junior不是招聘junior",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.entry.conditions",
+      "definition_version": "1.0.0",
+      "label_zh": "entry证据与条件",
+      "modules": [
+        "A",
+        "B",
+        "C"
+      ],
+      "unit": "entry条款",
+      "type": "array",
+      "definition_zh": "保存每个entry目标对应的适用条件和证据",
+      "allowed_values_or_units": "target/conditionality/quotes",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.independent_judgment",
+      "definition_version": "1.0.0",
+      "label_zh": "独立判断广义责任信号",
+      "modules": [
+        "C"
+      ],
+      "unit": "上下文×责任维度",
+      "type": "enum",
+      "definition_zh": "招聘岗位本人的明确独立判断当前职责、要求能力或既往经验均可为present；不是纯当前职责",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "严格当前职责必须用同item主体和关系；旧四类不是完整任务包",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.client_ownership",
+      "definition_version": "1.0.0",
+      "label_zh": "客户责任广义责任信号",
+      "modules": [
+        "C"
+      ],
+      "unit": "上下文×责任维度",
+      "type": "enum",
+      "definition_zh": "招聘岗位本人的明确客户责任当前职责、要求能力或既往经验均可为present；不是纯当前职责",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "严格当前职责必须用同item主体和关系；旧四类不是完整任务包",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.people_supervision",
+      "definition_version": "1.0.0",
+      "label_zh": "人员监督广义责任信号",
+      "modules": [
+        "C"
+      ],
+      "unit": "上下文×责任维度",
+      "type": "enum",
+      "definition_zh": "招聘岗位本人的明确人员监督当前职责、要求能力或既往经验均可为present；不是纯当前职责",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "严格当前职责必须用同item主体和关系；旧四类不是完整任务包",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.training_mentoring",
+      "definition_version": "1.0.0",
+      "label_zh": "培训指导广义责任信号",
+      "modules": [
+        "C"
+      ],
+      "unit": "上下文×责任维度",
+      "type": "enum",
+      "definition_zh": "招聘岗位本人的明确培训指导当前职责、要求能力或既往经验均可为present；不是纯当前职责",
+      "allowed_values_or_units": "present/not_mentioned/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "严格当前职责必须用同item主体和关系；旧四类不是完整任务包",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.subject",
+      "definition_version": "1.0.0",
+      "label_zh": "职责主体",
+      "modules": [
+        "C"
+      ],
+      "unit": "职责条款",
+      "type": "enum_or_struct",
+      "definition_zh": "区分招聘岗位本人、别人和公司整体",
+      "allowed_values_or_units": "advertised_worker/other_employee/employer_general/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.relation",
+      "definition_version": "1.0.0",
+      "label_zh": "职责与时间关系",
+      "modules": [
+        "C"
+      ],
+      "unit": "职责条款",
+      "type": "enum_or_struct",
+      "definition_zh": "区分当前职责、要求能力、既往经历、他人和雇主描述",
+      "allowed_values_or_units": "current_duty/required_capability/prior_experience/other_person/employer_description/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.conditions",
+      "definition_version": "1.0.0",
+      "label_zh": "职责条件与证据",
+      "modules": [
+        "C"
+      ],
+      "unit": "职责条款",
+      "type": "enum_or_struct",
+      "definition_zh": "职责条件必须附着到具体维度、主体及关系",
+      "allowed_values_or_units": "dimension/conditionality/quotes",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.duty.current",
+      "definition_version": "1.0.0",
+      "label_zh": "严格当前职责四维",
+      "modules": [
+        "C"
+      ],
+      "unit": "上下文×职责维度",
+      "type": "enum_vector",
+      "definition_zh": "仅同一item满足subject=advertised_worker且relation=current_duty才构成当前职责阳性；判定未提及须完整相关库存，partial或关系未决不能据此判无",
+      "allowed_values_or_units": "per_dimension present/not_mentioned/unknown",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "从兼容旧item确定性筛选并保留条件；不直接用responsibility_outcomes当当前职责",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.duty.subject",
+        "lk.duty.relation",
+        "lk.duty.conditions"
+      ],
+      "source_refs": [
+        "formal_instructions",
+        "formal_schema"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.task.activity",
+      "definition_version": "1.0.0",
+      "label_zh": "活动—对象任务原子",
+      "modules": [
+        "C",
+        "E"
+      ],
+      "unit": "任务条款",
+      "type": "struct",
+      "definition_zh": "记录当前岗位具体做什么及作用对象，覆盖执行、核验、协调等，不限原四职责",
+      "allowed_values_or_units": "activity/object/subject/time/condition/evidence",
+      "availability_code": "new_definition",
+      "availability_zh": "新结构或分类，旧结果不能直接填满",
+      "remaining_work_zh": "旧四职责只能提供局部信息，不能补出完整活动清单",
+      "dependencies": [
+        "lk.duty.subject",
+        "lk.duty.relation",
+        "lk.evidence.ref"
+      ],
+      "source_refs": [
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.task.code",
+      "definition_version": "1.0.0",
+      "label_zh": "版本化任务分类",
+      "modules": [
+        "C",
+        "D",
+        "E"
+      ],
+      "unit": "任务条款",
+      "type": "code",
+      "definition_zh": "将任务原子映射到冻结任务分类及版本，为任务变化/跨职业距离提供共同口径",
+      "allowed_values_or_units": "task_code/taxonomy_version/unmapped",
+      "availability_code": "new_definition",
+      "availability_zh": "新结构或分类，旧结果不能直接填满",
+      "remaining_work_zh": "需任务分类和独立确认；现有旧四职责不自动等同完整任务维度",
+      "dependencies": [
+        "lk.task.activity"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "research_agenda"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.tech.inventory",
+      "definition_version": "1.0.0",
+      "label_zh": "技术提及库存状态",
+      "modules": [
+        "C",
+        "E"
+      ],
+      "unit": "技术条款或上下文",
+      "type": "enum_or_text",
+      "definition_zh": "完整审阅下技术是否提及及是否未知",
+      "allowed_values_or_units": "explicit_mentions_recorded/not_mentioned_after_full_review/unknown",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "提及不等于采用；未提及不等于未采用",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.tech.entity",
+      "definition_version": "1.0.0",
+      "label_zh": "技术实体",
+      "modules": [
+        "C",
+        "E"
+      ],
+      "unit": "技术条款或上下文",
+      "type": "enum_or_text",
+      "definition_zh": "保留明确技术实体名称，显示文字不直接作为同义判断标准",
+      "allowed_values_or_units": "name + evidence",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "提及不等于采用；未提及不等于未采用",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.tech.family",
+      "definition_version": "1.0.0",
+      "label_zh": "技术类别",
+      "modules": [
+        "C",
+        "E"
+      ],
+      "unit": "技术条款或上下文",
+      "type": "enum_or_text",
+      "definition_zh": "区分传统软件、预测AI、GenAI及未决",
+      "allowed_values_or_units": "traditional_software_system/predictive_ml_ai/generative_ai/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "提及不等于采用；未提及不等于未采用",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.tech.role",
+      "definition_version": "1.0.0",
+      "label_zh": "技术与岗位角色关系",
+      "modules": [
+        "C",
+        "E"
+      ],
+      "unit": "技术条款或上下文",
+      "type": "enum_or_text",
+      "definition_zh": "区分开发技术、实施部署、用工具工作和背景提及",
+      "allowed_values_or_units": "develop_technology/implement_deploy_technology/use_tool_for_work/background_mention/unresolved",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "提及不等于采用；未提及不等于未采用",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "lk.tech.developed_object",
+      "definition_version": "1.0.0",
+      "label_zh": "实际开发对象",
+      "modules": [
+        "C",
+        "E"
+      ],
+      "unit": "技术条款或上下文",
+      "type": "enum_or_text",
+      "definition_zh": "保留开发的对象，避免把用Tableau制作报表判为开发Tableau",
+      "allowed_values_or_units": "free_text + context_note + evidence",
+      "availability_code": "partial_semantic_reuse",
+      "availability_zh": "已有部分语义，按原验收范围复用",
+      "remaining_work_zh": "保留兼容旧值；全交付覆盖与新增路线资格未完成",
+      "dependencies": [
+        "lk.claim.item_anchor"
+      ],
+      "source_refs": [
+        "formal_schema",
+        "field_counts",
+        "attachment_code"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "提及不等于采用；未提及不等于未采用",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "measure.new_ads",
+      "definition_version": "1.0.0",
+      "label_zh": "首次观察广告数量",
+      "modules": [
+        "A"
+      ],
+      "unit": "职业/企业/地区×时期",
+      "type": "count/rate/structured_measure",
+      "definition_zh": "按CREATED统计首次观察广告，先固定去重单位及来源覆盖",
+      "allowed_values_or_units": "预先冻结分母、时间窗口、条件与缺失政策",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "复用既有数量与职业构成；增量只补缺范围",
+      "dependencies": [
+        "lk.identity.ad_key",
+        "lk.time.created"
+      ],
+      "source_refs": [
+        "base_capabilities",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "measure.active_ads",
+      "definition_version": "1.0.0",
+      "label_zh": "期末活跃广告存量",
+      "modules": [
+        "A"
+      ],
+      "unit": "分组×时点",
+      "type": "count/rate/structured_measure",
+      "definition_zh": "按实际生命周期及删失政策构造时点活跃，不将更新算新增",
+      "allowed_values_or_units": "预先冻结分母、时间窗口、条件与缺失政策",
+      "availability_code": "structural_reuse",
+      "availability_zh": "已有结构数据，可按原口径复用",
+      "remaining_work_zh": "保留原missing-delete假设和同范围分母",
+      "dependencies": [
+        "lk.time.created",
+        "lk.time.delete",
+        "lk.time.last_checked"
+      ],
+      "source_refs": [
+        "base_capabilities",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "measure.exits",
+      "definition_version": "1.0.0",
+      "label_zh": "观察到的删除退出量",
+      "modules": [
+        "A"
+      ],
+      "unit": "分组×时期",
+      "type": "count/rate/structured_measure",
+      "definition_zh": "直接按合格删除日期计退出，删失与再出现单列",
+      "allowed_values_or_units": "预先冻结分母、时间窗口、条件与缺失政策",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "不能拿存量差代替直接退出量",
+      "dependencies": [
+        "lk.time.delete",
+        "lk.time.last_checked"
+      ],
+      "source_refs": [
+        "base_capabilities",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "measure.entry_share",
+      "definition_version": "1.0.0",
+      "label_zh": "明确entry表述份额",
+      "modules": [
+        "A"
+      ],
+      "unit": "分组×时期",
+      "type": "count/rate/structured_measure",
+      "definition_zh": "四个entry维度分别报告，若合成指标必须固定条件规则；仅在实际已审范围计算并披露全体覆盖",
+      "allowed_values_or_units": "预先冻结分母、时间窗口、条件与缺失政策",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "全国entry份额缺标签覆盖及拼接；不能用小样本替代全库",
+      "dependencies": [
+        "lk.entry.explicit_no_experience",
+        "lk.entry.explicit_new_graduate",
+        "lk.entry.current_student_internship",
+        "lk.entry.explicit_junior_or_entry_label"
+      ],
+      "source_refs": [
+        "base_capabilities",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "measure.experience_bundle",
+      "definition_version": "1.0.0",
+      "label_zh": "经历要求组合",
+      "modules": [
+        "B"
+      ],
+      "unit": "上下文或广告",
+      "type": "count/rate/structured_measure",
+      "definition_zh": "保留一般/职业/行业/工具经历的对象、年限、强度和条件联合结构，不相加重叠年限",
+      "allowed_values_or_units": "预先冻结分母、时间窗口、条件与缺失政策",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "按具体比较的依赖派生；不是对所有条款求一个min",
+      "dependencies": [
+        "lk.claim.item_anchor",
+        "lk.exp.object",
+        "lk.exp.years_min",
+        "lk.exp.years_max",
+        "lk.exp.years_relation",
+        "lk.exp.bound_inclusivity",
+        "lk.exp.strength",
+        "lk.exp.conditionality",
+        "lk.qual.logic"
+      ],
+      "source_refs": [
+        "base_capabilities",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "measure.cross_domain_openness",
+      "definition_version": "1.0.0",
+      "label_zh": "公开跨领域资格开放",
+      "modules": [
+        "B",
+        "D"
+      ],
+      "unit": "广告×来源经历类别",
+      "type": "count/rate/structured_measure",
+      "definition_zh": "只有明确接受相关/替代经历的证据才判公开开放；未要求行业经验不是接受转行",
+      "allowed_values_or_units": "预先冻结分母、时间窗口、条件与缺失政策",
+      "availability_code": "new_definition",
+      "availability_zh": "新结构或分类，旧结果不能直接填满",
+      "remaining_work_zh": "定义具体来源目标领域及替代证据；不能猜录用概率",
+      "dependencies": [
+        "lk.exp.object_concept",
+        "lk.exp.strength",
+        "lk.qual.logic"
+      ],
+      "source_refs": [
+        "base_capabilities",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "measure.task_mix",
+      "definition_version": "1.0.0",
+      "label_zh": "职责与任务构成",
+      "modules": [
+        "C",
+        "E"
+      ],
+      "unit": "分组×时期",
+      "type": "count/rate/structured_measure",
+      "definition_zh": "原四职责与扩展任务分类分版本统计；任何一项阳性与完整任务库存区分",
+      "allowed_values_or_units": "预先冻结分母、时间窗口、条件与缺失政策",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "旧四维统计无需等待扩展分类；扩展任务统计另依赖lk.task.code",
+      "dependencies": [
+        "lk.duty.current"
+      ],
+      "source_refs": [
+        "base_capabilities",
+        "five_module_contract"
+      ],
+      "missingness_rule": "未处理无测量值；未提及只用于已完整审阅文本；歧义/冲突为unknown；工程失败单列；数值缺失不是0。",
+      "interpretation_limit_zh": "",
+      "full_delivery_missing_inputs": null
+    },
+    {
+      "variable_key": "pe.identity",
+      "definition_version": "1.0.0",
+      "label_zh": "人员与职位身份",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-position key",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "稳定个人和职位身份及来源版本；仅定义语义需求，不指定未核验供应商列。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "先核验实际schema、人员框及一对多基数；保留完整可见历史，不只取成功转职者。",
+      "dependencies": [],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.position_interval",
+      "definition_version": "1.0.0",
+      "label_zh": "职位起止区间",
+      "modules": [
+        "D"
+      ],
+      "unit": "position interval and type",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "岗位起止日期、精度、实习类型及可排序的主职位/并行状态。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "月内无法排序、缺end、并行冲突单列；不把开放职位无限延长。",
+      "dependencies": [
+        "pe.identity"
+      ],
+      "source_refs": [
+        "person_history_source_16",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.history_quality",
+      "definition_version": "1.0.0",
+      "label_zh": "历史可观察性与左截断",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-reference-time status",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "事前历史左截断、足够可见性、后续更新/观测状态分别记录。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "区分期初风险集时点与入职时点；没有更新不等于没有流动。",
+      "dependencies": [
+        "pe.identity",
+        "pe.position_interval"
+      ],
+      "source_refs": [
+        "person_history_source_16",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.occupation_pair",
+      "definition_version": "1.0.0",
+      "label_zh": "来源目标职业",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-reference-time origin and candidate-or-realized target codes",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "事前来源职业与目标职业的冻结分类及映射；风险集目标来自预设目的地集合，事件结果另标实际目的地。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "目标候选不依据将来成功进入选择；真实历史标题可按固定分类映射，不把现职回填过去或标题改名算转职。",
+      "dependencies": [
+        "pe.identity",
+        "pe.position_interval"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "实际职业映射及版本核验"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.industry_pair",
+      "definition_version": "1.0.0",
+      "label_zh": "来源目标行业",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-event origin/destination industry codes",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "事件两端雇主岗位所属行业，分别保存有效期和未知。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "企业行业不等个人业务领域；分类漂移或企业重组不能自动算人员跨行业。",
+      "dependencies": [
+        "pe.identity",
+        "pe.position_interval"
+      ],
+      "source_refs": [
+        "person_history_source_16",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "实际历史行业映射及雇主边界"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.event_axes",
+      "definition_version": "1.0.0",
+      "label_zh": "人员事件正交轴",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-window and target-occupation categories",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "内外雇主、首次可见/有既往历史、目标职业首次进入/返回/延续分别为正交轴。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "主事件口径预先冻结；已确认换雇主可独立成立，内部转岗才需职业变化证据；目标首次进入须历史充分。",
+      "dependencies": [
+        "pe.identity",
+        "pe.position_interval",
+        "pe.history_quality"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "历史雇主边界；职业轴依赖pe.occupation_pair"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.cross_occupation",
+      "definition_version": "1.0.0",
+      "label_zh": "跨职业进入",
+      "modules": [
+        "D"
+      ],
+      "unit": "event boolean",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "已确认事件中来源与目标职业不同。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "职业粒度与版本固定；非纯改名或编码变化。",
+      "dependencies": [
+        "pe.occupation_pair",
+        "pe.event_axes"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.cross_industry",
+      "definition_version": "1.0.0",
+      "label_zh": "跨行业进入",
+      "modules": [
+        "D"
+      ],
+      "unit": "event boolean",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "已确认事件中来源与目标行业不同。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "只要求该行业轴可判断；不等待职业映射或LinkUp资格关系。",
+      "dependencies": [
+        "pe.industry_pair",
+        "pe.event_axes"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.total_work_months",
+      "definition_version": "1.0.0",
+      "label_zh": "事前总工作月数",
+      "modules": [
+        "D",
+        "B"
+      ],
+      "unit": "person-reference-time months",
+      "type": "nonnegative_number?",
+      "definition_zh": "截至指定事前时点，合规非实习就业区间的并集时长；实习另列。",
+      "allowed_values_or_units": "月；并行区间不重复累计；缺历史保持unknown",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "风险率按期初、入职构成按入职前；重叠月份不相加；左截断只作可见下界。",
+      "dependencies": [
+        "pe.position_interval",
+        "pe.history_quality"
+      ],
+      "source_refs": [
+        "person_history_source_16",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。 可见月份为零不自动意味着真实零经验。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。 可见月份为零不自动意味着真实零经验。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.target_experience_months",
+      "definition_version": "1.0.0",
+      "label_zh": "目标领域既往月数",
+      "modules": [
+        "D",
+        "B"
+      ],
+      "unit": "person-target-reference-time months by axis",
+      "type": "nonnegative_number?",
+      "definition_zh": "同目标职业、同目标行业经历时长分轴取区间并集。",
+      "allowed_values_or_units": "月；并行区间不重复累计；缺历史保持unknown",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "两轴独立；未映射历史不得当作不同目标。观察不足保留下界与未知。",
+      "dependencies": [
+        "pe.position_interval",
+        "pe.history_quality"
+      ],
+      "source_refs": [
+        "person_history_source_16",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "职业分量依赖pe.occupation_pair；行业分量依赖pe.industry_pair"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.task_distance",
+      "definition_version": "1.0.0",
+      "label_zh": "事前职业任务距离",
+      "modules": [
+        "D",
+        "E"
+      ],
+      "unit": "origin-target occupation distance",
+      "type": "nonnegative_number?",
+      "definition_zh": "由事前固定任务版本与统一职业码构造的来源—目标距离。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "算法和尺度在看结果前冻结；没有来源的新人不赋最大距离。",
+      "dependencies": [
+        "pe.occupation_pair"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "生成式AI扩散前任务画像与跨码映射"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.related_experience_months",
+      "definition_version": "1.0.0",
+      "label_zh": "相关经验月数",
+      "modules": [
+        "D",
+        "B"
+      ],
+      "unit": "person-target-reference-time weighted months",
+      "type": "nonnegative_number?",
+      "definition_zh": "全可见事前历史按固定任务相关性加权的经历；上一职业距离另保留。",
+      "allowed_values_or_units": "月；并行区间不重复累计；缺历史保持unknown",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "重叠区间处理及权重公式先冻结；不是个人真实技能缺口。",
+      "dependencies": [
+        "pe.position_interval",
+        "pe.history_quality",
+        "pe.task_distance"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "person_history_source_16"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.prior_tool_evidence",
+      "definition_version": "1.0.0",
+      "label_zh": "事前工具经历证据",
+      "modules": [
+        "D",
+        "B"
+      ],
+      "unit": "person-tool-reference-time evidence state",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "仅使用可定位到事前岗位与时间的工具经历证据。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "当前profile skills不能回填；工具存在、既往使用、年限绑定分别保留。",
+      "dependencies": [
+        "pe.position_interval",
+        "pe.history_quality"
+      ],
+      "source_refs": [
+        "person_history_source_16",
+        "five_module_contract"
+      ],
+      "missingness_rule": "只有所需历史文本完整审阅后才可not_mentioned，且不等于不会；无历史文本/时间未定位为unknown。",
+      "interpretation_limit_zh": "只有所需历史文本完整审阅后才可not_mentioned，且不等于不会；无历史文本/时间未定位为unknown。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.education_before_event",
+      "definition_version": "1.0.0",
+      "label_zh": "事件前学历",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-reference-time credential state",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "在事前时点已完成、正在进行或无法确定时间的学历分别保存。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "不可利用未来学历反推入职前资格。",
+      "dependencies": [
+        "pe.identity",
+        "pe.position_interval"
+      ],
+      "source_refs": [
+        "person_history_source_16",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。 没有教育记录不等于无学历。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。 没有教育记录不等于无学历。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.experience_band",
+      "definition_version": "1.0.0",
+      "label_zh": "经验阶段分层",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-reference-time experience category",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "由实际可见总工龄及覆盖状态形成预先规定经验分层，用于研究中级群体。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "数值分界尚未冻结；不得用manager/junior或年龄代替，也不得因结果改界线。",
+      "dependencies": [
+        "pe.total_work_months",
+        "pe.history_quality"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.observed_event_count",
+      "definition_version": "1.0.0",
+      "label_zh": "可见人员事件数",
+      "modules": [
+        "D"
+      ],
+      "unit": "events or persons per declared cell-window",
+      "type": "nonnegative_integer?",
+      "definition_zh": "满足冻结主事件规则的可见进入/转换人数；每人每窗口主事件最多一次。",
+      "allowed_values_or_units": "人数；unknown不为0",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "按已知轴分别汇总跨雇主/行业/职业；未知和未更新另列。",
+      "dependencies": [
+        "pe.event_axes",
+        "pe.history_quality"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "具体分组涉及的行业/职业轴；窗口与主职位规则"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.entrant_composition",
+      "definition_version": "1.0.0",
+      "label_zh": "入职者构成",
+      "modules": [
+        "D"
+      ],
+      "unit": "share among observed entrant denominator",
+      "type": "rate_or_rate_vector?",
+      "definition_zh": "指定可见进入者中各经验/路径组占比。",
+      "allowed_values_or_units": "[0,1]且有明确分母/窗口；分母0为not_applicable",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "保留历史不明组，明确条件分母；不是总体求职人口概率。",
+      "dependencies": [
+        "pe.observed_event_count"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "所用经历和路径变量，不要求无关维度"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.target_risk_count",
+      "definition_version": "1.0.0",
+      "label_zh": "目标进入风险集人数",
+      "modules": [
+        "D"
+      ],
+      "unit": "eligible persons N_sokt",
+      "type": "nonnegative_integer?",
+      "definition_zh": "期初来源职业和经验组中，未见目标职业既往经历且符合事前可观察规则的目标特定风险人数。",
+      "allowed_values_or_units": "人数；unknown不为0",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "保留未转移者；不根据后来成功或更新情况选风险集；资格依目标职业而变。",
+      "dependencies": [
+        "pe.history_quality",
+        "pe.occupation_pair",
+        "pe.total_work_months",
+        "pe.target_experience_months"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "预设目的地集合与期初人员框；只用该时点以前的目标职业历史决定资格，不要求任何未来事件已发生；缺失历史单列"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.first_target_entry_count",
+      "definition_version": "1.0.0",
+      "label_zh": "首次目标进入人数",
+      "modules": [
+        "D"
+      ],
+      "unit": "eligible first-target events M_sokt",
+      "type": "nonnegative_integer?",
+      "definition_zh": "同一目标风险集中，在指定窗口按冻结首次主事件规则进入目标职业的人数。",
+      "allowed_values_or_units": "人数；unknown不为0",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "与N使用相同资格、经验时点、窗口和观察规则；保留零流量。",
+      "dependencies": [
+        "pe.target_risk_count",
+        "pe.observed_event_count"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.first_target_entry_rate",
+      "definition_version": "1.0.0",
+      "label_zh": "首次目标进入率",
+      "modules": [
+        "D"
+      ],
+      "unit": "M_sokt / N_sokt",
+      "type": "rate_or_rate_vector?",
+      "definition_zh": "明确目标风险集内的记录进入率。",
+      "allowed_values_or_units": "[0,1]且有明确分母/窗口；分母0为not_applicable",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "N为正且事件观察条件满足才计算；N为零不填零率；未知后续不当已知未转移。",
+      "dependencies": [
+        "pe.target_risk_count",
+        "pe.first_target_entry_count"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "pe.target_retention",
+      "definition_version": "1.0.0",
+      "label_zh": "目标职业留存",
+      "modules": [
+        "D"
+      ],
+      "unit": "person-event-horizon status",
+      "type": "rate_or_rate_vector?",
+      "definition_zh": "首次目标进入后，在预先规定后续时点是否仍处目标职业。",
+      "allowed_values_or_units": "[0,1]且有明确分母/窗口；分母0为not_applicable",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "可选扩展；只在足够后续可见窗口和职业映射下计算，不阻塞基本事件表。",
+      "dependencies": [
+        "pe.event_axes",
+        "pe.history_quality",
+        "pe.occupation_pair"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "bridge.entity_mapping",
+      "definition_version": "1.0.0",
+      "label_zh": "跨库实体映射",
+      "modules": [
+        "A",
+        "D"
+      ],
+      "unit": "versioned cross-source mapping by axis",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "雇主/子公司、职业族、行业、地区桥表分别保存有效期、多重关系、匹配方法及状态。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "每个轴独立验收；旧LinkUp元数据可作为输入，但不能声称已连接Revelio；未知不硬连。",
+      "dependencies": [],
+      "source_refs": [
+        "person_history_source_15",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "实际两源列绑定与主体边界"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "bridge.period_alignment",
+      "definition_version": "1.0.0",
+      "label_zh": "两端时间对齐",
+      "modules": [
+        "A",
+        "D"
+      ],
+      "unit": "posting cohort period and position start period",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "分别存CREATED首次观察队列与人员事件期，按另存新版的预设滞后规则作聚合对照。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "旧R0取消季度键的合同不回写；新代理不证明历史正文时点，不能自动当相同日期。",
+      "dependencies": [
+        "pe.position_interval"
+      ],
+      "source_refs": [
+        "research_agenda",
+        "person_history_source_15",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "LinkUp CREATED及日期质量；预先冻结滞后配置"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "bridge.common_support",
+      "definition_version": "1.0.0",
+      "label_zh": "跨库共同支持",
+      "modules": [
+        "A",
+        "D"
+      ],
+      "unit": "source-specific and shared cell coverage",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "各自总体与共同雇主/职业/地区/指定时期单元的覆盖和可比较状态。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "所用桥表轴、两端研究量与时期分别满足条件；不以匹配成功筛掉总体覆盖账。",
+      "dependencies": [
+        "bridge.entity_mapping"
+      ],
+      "source_refs": [
+        "five_module_contract",
+        "person_history_source_15"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "实际参与对照的LinkUp变量与Revelio变量；含时间对照时才依赖bridge.period_alignment，纯结构覆盖可独立计算"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "hist.exposure_reference",
+      "definition_version": "1.0.0",
+      "label_zh": "历史技术暴露参照",
+      "modules": [
+        "E"
+      ],
+      "unit": "occupation-index-version vector",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "单独保存外部AI暴露、历史RTI/任务或其他明确技术指标及适用年代，不相加成同一分数。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "保留原研究基准及版本；各指数含义与支持分开，不把文本AI提及当暴露或采用。",
+      "dependencies": [],
+      "source_refs": [
+        "person_history_source_17",
+        "research_agenda"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "外部指标文件、年份和职业跨码实查"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "hist.diffusion_stage",
+      "definition_version": "1.0.0",
+      "label_zh": "技术扩散阶段",
+      "modules": [
+        "E"
+      ],
+      "unit": "technology-role-period stage or proxy",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "将技术成熟阶段与开发/实施/使用角色分开记录，明确外部依据或代理性质。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "时间线及阶段规则先冻结；雇主首次文本提及不自动是采用日，缺可靠阶段为unknown。",
+      "dependencies": [],
+      "source_refs": [
+        "research_agenda",
+        "person_history_source_17"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "已有LinkUp技术/角色变量作为外部输入；外部引入或扩散资料"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "hist.historical_outcome",
+      "definition_version": "1.0.0",
+      "label_zh": "真正历史结果",
+      "modules": [
+        "E"
+      ],
+      "unit": "historical occupation-period outcome with native unit",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "历史就业、工资或任务构成按原单位、人口、年代和分类保存，用于计算机化参照。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "external_pending",
+      "availability_zh": "待外部数据交付及字段核验",
+      "remaining_work_zh": "真正历史年份和口径必须核验；工资需实测来源；不将2016–19改称计算机革命。",
+      "dependencies": [],
+      "source_refs": [
+        "research_agenda",
+        "person_history_source_17"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "真实历史资料、统一职业映射、结果人口与测量版本"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    },
+    {
+      "variable_key": "hist.comparison_spec",
+      "definition_version": "1.0.0",
+      "label_zh": "技术比较口径",
+      "modules": [
+        "E"
+      ],
+      "unit": "predeclared comparison estimand",
+      "type": "versioned_struct_or_enum",
+      "definition_zh": "指定当代技术组经验/任务比较或历史参照，列明所用结果、角色、时期、权重与共同支持。",
+      "allowed_values_or_units": "分类和结构为目标规范；具体供应商列仍待实查绑定",
+      "availability_code": "derive_pending",
+      "availability_zh": "已有部分输入，派生与连接待完成",
+      "remaining_work_zh": "只依赖实际参与的变量；当代比较不等历史因果对照；不能为显著性调整分组。",
+      "dependencies": [],
+      "source_refs": [
+        "research_agenda",
+        "person_history_source_17",
+        "five_module_contract"
+      ],
+      "missingness_rule": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "interpretation_limit_zh": "结构或数值变量不使用not_mentioned；资料缺失或无法判断为unknown，未执行为unprocessed，不填零。",
+      "full_delivery_missing_inputs": null,
+      "external_dependencies": [
+        "实际选用LinkUp结果与分组；如历史比较则hist.historical_outcome；如人员比较则对应pe变量"
+      ],
+      "data_contract_status": "semantic_requirement_not_verified_vendor_schema"
+    }
+  ]
+}

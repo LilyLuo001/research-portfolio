@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-17T07:37:24.498766+00:00",
+  "created_utc": "2026-11-17T08:13:52.828869+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -86,13 +86,13 @@
     },
     {
       "file": "PUBLIC_COPY_MANIFEST.json",
-      "bytes": 132481,
-      "sha256": "1b979674e7c3fe89f5365268c903c465b179627397ed2391ca947ecbc429941b"
+      "bytes": 142742,
+      "sha256": "753966a05ca59a511112ce58d543374e6a34645daf62668800ef0ece73769f18"
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 21884,
-      "sha256": "266efd649d95585ab77ae8044434619da26200bb533c6ae29d7f825a3f4eef6b"
+      "bytes": 22994,
+      "sha256": "0b85fe7c98ee8807da39e1c622970756d1bf83c000ba55dd3cf30202415e2512"
     },
     {
       "file": "README.md",
@@ -1246,14 +1246,99 @@
     },
     {
       "file": "scan_public_git.py",
-      "bytes": 11115,
-      "sha256": "6479a4b70deb1891c111f5d297fbc14d3b4d792ee34ffc2963611daffbea3df3"
+      "bytes": 11123,
+      "sha256": "33ef514c0c973dba1c2d9c9d50563a14381af859e953cd47f9f3f1972219e227"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/ASSET_INVENTORY_PUBLIC.json",
+      "bytes": 51651,
+      "sha256": "092629489f63137990bd738b909d1121976dd3f0de4213fc46163f91fc07e753"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/BUILD_RECEIPT_PUBLIC.json",
+      "bytes": 2424,
+      "sha256": "9ab7a4ac0cb87b7af9922e98f9413a9b9f8df2977f4d5018821b43d0e1a849df"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/CLOUD_METADATA_CHECK_PUBLIC.json",
+      "bytes": 4939,
+      "sha256": "12b49e68c6c68996cc12e889e51bab2c34410d9d568ecef191d74a3bf0e93190"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/CLOUD_RELEASE_RECEIPT_PUBLIC.json",
+      "bytes": 1319,
+      "sha256": "a0c51430f29432c43104bd6379efbf528014baaeae61c457a14a75b4103b942d"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/DELIVERY_ZH.md",
+      "bytes": 6032,
+      "sha256": "e15b32ddc934978d8a3b037cd062c86f1dc4b97556f2c4f3d6bd54771551d623"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/FIELD_GAPS_PUBLIC.json",
+      "bytes": 5567,
+      "sha256": "b6050e123ebe13a9dcc7add94c312d4df4452b5e144eb52c52197e938a09b067"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/LEGACY_FIELD_COVERAGE_PUBLIC.json",
+      "bytes": 5398,
+      "sha256": "c2b5589dcd490f2d3c9e6b113bc7afc7e0ede4e95bd7b0fd114d3bd64292699e"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/RELEASE_QA_PUBLIC.json",
+      "bytes": 1231,
+      "sha256": "1e8070a28219351670cd6524f5884a702df7c30ace51fc2e6a1d86fc89808878"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/REUSE_MAPPING_PUBLIC.json",
+      "bytes": 97037,
+      "sha256": "afc8f99e9e2dfa6fdf7fa9a4f239ab87dcdb88cdab584d39cc2a8c3e52cda3db"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/REVELIO_REQUIREMENTS_PUBLIC.json",
+      "bytes": 39357,
+      "sha256": "f9cee2aa2b1c648f43057066c77768b665521d13c4e73256aa4e4eff90292ba3"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/SOURCES_AND_SCOPE_PUBLIC.json",
+      "bytes": 4924,
+      "sha256": "16561cca5a56c4935ef8e9c75d200aab61371f198e840582db4500714cdf230f"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/VARIABLE_DICTIONARY_PUBLIC.json",
+      "bytes": 109983,
+      "sha256": "f677417105159f977cf806c6f1cc97bdfad39c1648dd8ed3a84bcd3d3f1222b1"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/WORKBOOK_RECEIPT_PUBLIC.json",
+      "bytes": 928,
+      "sha256": "70104f62ed7f6f0d390cfba98bec78c2ab1266d89e73750259bade41c12ac404"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/build_dictionary.py",
+      "bytes": 38300,
+      "sha256": "180f7d49c151a091b504369a5a645f18801d86c5e914db832311d5a17cc1e7b6"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/build_workbook.mjs",
+      "bytes": 7831,
+      "sha256": "bd23c3e0ec395091f0307966236bb8f8316c9e9e21da34c9f963f6830b85999c"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/cloud_metadata_check.py",
+      "bytes": 2239,
+      "sha256": "23f0e54d4bcbc4a988acc7b72296d4e9affecad3533202637962a65b8fd965ef"
+    },
+    {
+      "file": "variable_dictionary_20261117_v1/finish_release.py",
+      "bytes": 11826,
+      "sha256": "d7ca6497ccdc2a272f51f648bf27b2ceacd12fb4ef215f49217c5846bace35ed"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 249,
+  "checked_file_count_excluding_this_receipt": 266,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 15,
+  "staged_file_count": 21,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,

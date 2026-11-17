@@ -103,7 +103,7 @@ def main() -> int:
         raise SystemExit("Invalid or duplicate allowlist names")
     for name in names:
         path = Path(name)
-        if path.is_absolute() or ".." in path.parts or path.suffix not in {".md", ".json", ".py", ".csv", ".tsv", ".sh"}:
+        if path.is_absolute() or ".." in path.parts or path.suffix not in {".md", ".json", ".py", ".mjs", ".csv", ".tsv", ".sh"}:
             raise SystemExit("Invalid allowlist entry")
     allowed = set(names)
     if not {ALLOWLIST_NAME, RECEIPT_NAME, Path(__file__).name} <= allowed:

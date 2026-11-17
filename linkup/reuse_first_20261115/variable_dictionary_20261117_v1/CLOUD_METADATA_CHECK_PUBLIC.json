@@ -1,0 +1,221 @@
+{
+  "at_utc": "2026-11-17T08:00:38.654623+00:00",
+  "purpose": "variable_dictionary_current_metadata_preflight",
+  "files": {
+    "state": {
+      "relative_to_migration": "execution_20261116/run001/AZURE_RESEARCH_STATE.json",
+      "exists": true,
+      "sha256": "149f6f9706f5d8be3472837aec625f09ea8bf52dcdd19763dd7556990dd39694",
+      "bytes": 1545
+    },
+    "gap": {
+      "relative_to_migration": "execution_20261116/run001/continuation02/final_checkpoint/GAP_REGISTER_PUBLIC.json",
+      "exists": true,
+      "sha256": "375db99bf1f438d07adabaf2588d5ee2651a3cea8f6e175330886553e2c29c66",
+      "bytes": 2411
+    },
+    "field_coverage": {
+      "relative_to_migration": "execution_20261116/run001/FIELD_COVERAGE_REGISTER_PUBLIC.json",
+      "exists": true,
+      "sha256": "50ecc0e1819450538d51d981ce796659736e5db5e45d77a96e1e209796e89e3a",
+      "bytes": 9111
+    },
+    "shadow": {
+      "relative_to_migration": "measurement_protocol_20261117/shadow001/SHADOW_DIAGNOSTIC_PUBLIC.json",
+      "exists": true,
+      "sha256": "84eff174261185c53e7d820b1976947c8ccc25e9d3e0f7b98319e776545ac56b",
+      "bytes": 5695
+    }
+  },
+  "current_state": {
+    "status": "fixed_qualification_complete_production_not_admitted",
+    "new_authorized_cap_usd": 450,
+    "stage3_cap_usd": 250,
+    "step4_released": false,
+    "step6_released": false,
+    "whole_delivery_unique_missing_field_inputs": null,
+    "new_production_accepted": 0
+  },
+  "scope_units": {
+    "delivery_Description_raw_rows": 298673078,
+    "delivery_Records_raw_rows": 356449214,
+    "canonical_US_base_ads": 204774035,
+    "existing_newer_rule_delta_ads_overlapping_base": 5804936,
+    "fine_semantic_context_union": 55882,
+    "full_delivery_unique_ads": null,
+    "full_delivery_unique_missing_field_model_inputs": null
+  },
+  "fine_semantic_states": {
+    "accepted_original_scope_values_attached": 39298,
+    "accepted_original_scope_missing_carrier": 10,
+    "saved_unverified_values_attached": 6500,
+    "saved_unverified_missing_carrier": 6,
+    "status_not_reconciled": 10012,
+    "protected_quarantined": 56
+  },
+  "db_schema_only": {
+    "document": [
+      {
+        "name": "d",
+        "type": "TEXT"
+      },
+      {
+        "name": "h",
+        "type": "TEXT"
+      },
+      {
+        "name": "k",
+        "type": "TEXT"
+      },
+      {
+        "name": "asset",
+        "type": "TEXT"
+      },
+      {
+        "name": "source_sha",
+        "type": "TEXT"
+      },
+      {
+        "name": "source_ordinal",
+        "type": "INTEGER"
+      },
+      {
+        "name": "original_accepted",
+        "type": "INTEGER"
+      },
+      {
+        "name": "document_json",
+        "type": "TEXT"
+      }
+    ],
+    "ad": [
+      {
+        "name": "k",
+        "type": "TEXT"
+      },
+      {
+        "name": "h",
+        "type": "TEXT"
+      },
+      {
+        "name": "source",
+        "type": "TEXT"
+      }
+    ],
+    "accepted_original_values": [
+      {
+        "name": "k",
+        "type": "TEXT"
+      },
+      {
+        "name": "h",
+        "type": "TEXT"
+      },
+      {
+        "name": "d",
+        "type": "TEXT"
+      },
+      {
+        "name": "asset",
+        "type": "TEXT"
+      },
+      {
+        "name": "source_sha",
+        "type": "TEXT"
+      },
+      {
+        "name": "source_ordinal",
+        "type": "INTEGER"
+      },
+      {
+        "name": "family",
+        "type": "TEXT"
+      },
+      {
+        "name": "status",
+        "type": "TEXT"
+      },
+      {
+        "name": "value_json",
+        "type": "TEXT"
+      }
+    ],
+    "saved_unverified_values": [],
+    "metadata_resolution": [
+      {
+        "name": "k",
+        "type": "TEXT"
+      },
+      {
+        "name": "created",
+        "type": "TEXT"
+      },
+      {
+        "name": "status",
+        "type": "TEXT"
+      },
+      {
+        "name": "evidence_count",
+        "type": "INTEGER"
+      },
+      {
+        "name": "distinct_created",
+        "type": "INTEGER"
+      },
+      {
+        "name": "has_source_conflict",
+        "type": "INTEGER"
+      }
+    ],
+    "accepted_values_with_created": [
+      {
+        "name": "k",
+        "type": "TEXT"
+      },
+      {
+        "name": "h",
+        "type": "TEXT"
+      },
+      {
+        "name": "d",
+        "type": "TEXT"
+      },
+      {
+        "name": "asset",
+        "type": "TEXT"
+      },
+      {
+        "name": "source_sha",
+        "type": "TEXT"
+      },
+      {
+        "name": "source_ordinal",
+        "type": "INTEGER"
+      },
+      {
+        "name": "family",
+        "type": "TEXT"
+      },
+      {
+        "name": "status",
+        "type": "TEXT"
+      },
+      {
+        "name": "value_json",
+        "type": "TEXT"
+      },
+      {
+        "name": "CREATED",
+        "type": "TEXT"
+      },
+      {
+        "name": "CREATED_join_status",
+        "type": "TEXT"
+      }
+    ]
+  },
+  "db_row_values_read": 0,
+  "raw_advertisement_files_read": 0,
+  "model_calls": 0,
+  "production_jobs_started": 0
+}

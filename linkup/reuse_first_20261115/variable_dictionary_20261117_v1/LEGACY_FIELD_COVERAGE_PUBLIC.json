@@ -1,0 +1,191 @@
+{
+  "status": "existing_index_field_status_counts_exported",
+  "source_report_sha256": "2c2a4c6b2f93f032f90fcf8ccac2b8eb43088c76a02dd94b42b18f8445eb7ead",
+  "units": {
+    "fixed10k": "original ad-by-field-family rows, 10000 ads per family",
+    "Pro": "unique accepted context-by-outcome dimension, 31690 projected of31700 accepted contexts",
+    "Pro_merged": "overlapping audited reference subset; do not add to Pro totals"
+  },
+  "field_status_counts": {
+    "Pro": {
+      "document_status": {
+        "reviewed_full": 29671,
+        "reviewed_partial": 1911,
+        "unresolved": 108
+      },
+      "entry_outcomes.current_student_internship": {
+        "not_mentioned": 29061,
+        "present": 620,
+        "unknown": 2009
+      },
+      "entry_outcomes.explicit_junior_or_entry_label": {
+        "not_mentioned": 28734,
+        "present": 956,
+        "unknown": 2000
+      },
+      "entry_outcomes.explicit_new_graduate": {
+        "not_mentioned": 29256,
+        "present": 415,
+        "unknown": 2019
+      },
+      "entry_outcomes.explicit_no_experience": {
+        "not_mentioned": 28115,
+        "present": 1563,
+        "unknown": 2012
+      },
+      "experience_outcomes.general_work": {
+        "not_mentioned": 26769,
+        "present": 2824,
+        "unknown": 2097
+      },
+      "experience_outcomes.industry_domain": {
+        "not_mentioned": 18916,
+        "present": 10852,
+        "unknown": 1922
+      },
+      "experience_outcomes.occupation_task": {
+        "not_mentioned": 10783,
+        "present": 19123,
+        "unknown": 1784
+      },
+      "experience_outcomes.tool_specific": {
+        "not_mentioned": 25384,
+        "present": 4270,
+        "unknown": 2036
+      },
+      "responsibility_outcomes.client_ownership": {
+        "not_mentioned": 24365,
+        "present": 5443,
+        "unknown": 1882
+      },
+      "responsibility_outcomes.independent_judgment": {
+        "not_mentioned": 16430,
+        "present": 13540,
+        "unknown": 1720
+      },
+      "responsibility_outcomes.people_supervision": {
+        "not_mentioned": 23082,
+        "present": 6737,
+        "unknown": 1871
+      },
+      "responsibility_outcomes.training_mentoring": {
+        "not_mentioned": 20921,
+        "present": 8927,
+        "unknown": 1842
+      },
+      "technology_inventory_status": {
+        "explicit_mentions_recorded": 14503,
+        "not_mentioned_after_full_review": 15509,
+        "unknown": 1678
+      }
+    },
+    "Pro_merged": {
+      "entry_outcomes.current_student_internship": {
+        "not_mentioned": 174,
+        "unknown": 6
+      },
+      "entry_outcomes.explicit_junior_or_entry_label": {
+        "not_mentioned": 171,
+        "present": 3,
+        "unknown": 6
+      },
+      "entry_outcomes.explicit_new_graduate": {
+        "not_mentioned": 174,
+        "unknown": 6
+      },
+      "entry_outcomes.explicit_no_experience": {
+        "not_mentioned": 165,
+        "present": 9,
+        "unknown": 6
+      },
+      "experience_outcomes.general_work": {
+        "not_mentioned": 156,
+        "present": 17,
+        "unknown": 7
+      },
+      "experience_outcomes.industry_domain": {
+        "not_mentioned": 109,
+        "present": 64,
+        "unknown": 7
+      },
+      "experience_outcomes.occupation_task": {
+        "not_mentioned": 76,
+        "present": 98,
+        "unknown": 6
+      },
+      "experience_outcomes.tool_specific": {
+        "not_mentioned": 147,
+        "present": 26,
+        "unknown": 7
+      },
+      "responsibility_outcomes.client_ownership": {
+        "not_mentioned": 152,
+        "present": 22,
+        "unknown": 6
+      },
+      "responsibility_outcomes.independent_judgment": {
+        "not_mentioned": 84,
+        "present": 90,
+        "unknown": 6
+      },
+      "responsibility_outcomes.people_supervision": {
+        "not_mentioned": 135,
+        "present": 40,
+        "unknown": 5
+      },
+      "responsibility_outcomes.training_mentoring": {
+        "not_mentioned": 123,
+        "present": 51,
+        "unknown": 6
+      }
+    },
+    "fixed10k": {
+      "current_responsibility_subject_and_relation": {
+        "candidate_only": 12,
+        "known": 8718,
+        "not_applicable": 916,
+        "unknown_or_conflict": 354
+      },
+      "entry_wording_and_scope": {
+        "candidate_only": 12,
+        "known": 587,
+        "not_applicable": 9387,
+        "unknown_or_conflict": 14
+      },
+      "experience_literal_years": {
+        "candidate_only": 12,
+        "known": 9241,
+        "not_applicable": 124,
+        "unknown_or_conflict": 623
+      },
+      "experience_object": {
+        "candidate_only": 12,
+        "known": 9418,
+        "not_applicable": 123,
+        "unknown_or_conflict": 447
+      },
+      "experience_strength": {
+        "candidate_only": 12,
+        "known": 9343,
+        "not_applicable": 123,
+        "unknown_or_conflict": 522
+      },
+      "qualification_conditions_and_alternatives": {
+        "candidate_only": 12,
+        "known": 9308,
+        "not_applicable": 123,
+        "unknown_or_conflict": 557
+      },
+      "technology_category_and_role": {
+        "candidate_only": 12,
+        "known": 8482,
+        "not_applicable": 32,
+        "partial": 4,
+        "unknown_or_conflict": 1470
+      }
+    }
+  },
+  "known_accepted_Pro_contexts_missing_status_projection": 10,
+  "unknown_and_partial_are_not_negatives": true,
+  "new_model_calls": 0
+}
