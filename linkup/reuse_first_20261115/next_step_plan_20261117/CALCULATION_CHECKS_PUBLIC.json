@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "checks": {
+    "old_500_completed": true,
+    "cloud_production_not_admitted": true,
+    "cloud_cost_matches_archived_reservations": true,
+    "cloud_cost_matches_archived_usage_estimate": true,
+    "no_stage_cap_reset": true,
+    "confirmation_formula_below_cap": true,
+    "pilot_formula_below_cap": true,
+    "old_per_model_budget_respected": true,
+    "confirmation_per_model_formula_below_caps": true,
+    "no_fabricated_full_delivery_quote": true,
+    "current_dictionary_is_definition_only": true
+  },
+  "count": 11,
+  "scope": "arithmetic_and_proposal_boundaries_not_model_qualification"
+}

@@ -1,0 +1,28 @@
+{
+  "at_utc": "2026-11-17T08:28:15.979191+00:00",
+  "mode": "read_only_existing_public_checkpoints",
+  "files": {
+    "state": {
+      "relative_path": "execution_20261116/run001/AZURE_RESEARCH_STATE.json",
+      "exists": true,
+      "sha256": "149f6f9706f5d8be3472837aec625f09ea8bf52dcdd19763dd7556990dd39694"
+    },
+    "cost": {
+      "relative_path": "execution_20261116/run001/continuation02/COST_PUBLIC.json",
+      "exists": false
+    }
+  },
+  "model_calls": 0,
+  "resources_created": 0,
+  "production_started": false,
+  "billing_api_queried": false,
+  "state": {
+    "status": "fixed_qualification_complete_production_not_admitted",
+    "new_authorized_cap_usd": 450,
+    "stage3_cap_usd": 250,
+    "step4_released": false,
+    "step6_released": false,
+    "whole_delivery_unique_missing_field_inputs": null,
+    "new_production_accepted": 0
+  }
+}

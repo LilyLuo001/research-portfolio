@@ -1,0 +1,312 @@
+{
+  "date_local": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "status": "proposal_only_no_new_inference_or_runtime_authorization",
+  "dictionary_version": "1.0.0",
+  "full_delivery_target_approximate_raw_records": 500000000,
+  "full_delivery_unique_ads": null,
+  "full_delivery_missing_unique_model_inputs": null,
+  "full_delivery_total_cost_usd": null,
+  "full_delivery_completion_date": null,
+  "source_files": [
+    {
+      "relative_to_reuse_first": "execution_20261116/EXECUTION_AUTHORIZATION_PUBLIC.json",
+      "sha256": "19f75095fc0db88dd19574b17084e4fd3b89ebad8a8b51fc568f76bf4680ed70"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/QUALIFICATION_LUNA_CONFIG_PUBLIC.json",
+      "sha256": "2ed4145138cf4d31b21052c1abb72bf76cb9542ae17d173edd1720c116e91007"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/continuation02/final/COST_PUBLIC.json",
+      "sha256": "ce4e877386d937b95ae8e13dab12a31673c5708f57e98e835aa64dca3d71baa5"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/continuation02/final/QUALIFICATION_DECISION_PUBLIC.json",
+      "sha256": "68a9bb9056b0395b2c222ebc26b2e06a652c45c64328fe30bcce411a0c964a12"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/continuation02/final/KIMI_FINAL_PUBLIC.json",
+      "sha256": "4b6bf8b9d4a0635fcc9ebf6073931a70e40d84ffbf3a49efb0b7d168400dae24"
+    },
+    {
+      "relative_to_reuse_first": "budget_plan_20261116/BUDGET_PLAN_PUBLIC.json",
+      "sha256": "b371fefe8b79d8369934eff77d71f0aa53886e97bd9fd1068e5d3b874aaea14d"
+    },
+    {
+      "relative_to_reuse_first": "measurement_protocol_20261117/PROTOCOL_STATUS_PUBLIC.json",
+      "sha256": "e8f2b759d9b23a0e399e4e086d97782f9bae4e6a85ef4059687c9e61870108ea"
+    },
+    {
+      "relative_to_reuse_first": "variable_dictionary_20261117_v1/RELEASE_QA_PUBLIC.json",
+      "sha256": "1e8070a28219351670cd6524f5884a702df7c30ace51fc2e6a1d86fc89808878"
+    },
+    {
+      "relative_to_reuse_first": "variable_dictionary_20261117_v1/FIELD_GAPS_PUBLIC.json",
+      "sha256": "b6050e123ebe13a9dcc7add94c312d4df4452b5e144eb52c52197e938a09b067"
+    },
+    {
+      "relative_to_reuse_first": "next_step_plan_20261117/CLOUD_CHECKPOINT_READONLY_PUBLIC.json",
+      "sha256": "6d80476e06b8c89c8fbf7cd2de5004219630e1fc84ada9dd3fc1fb3e6f6ace2e"
+    },
+    {
+      "relative_to_reuse_first": "next_step_plan_20261117/CLOUD_COST_READONLY_PUBLIC.json",
+      "sha256": "853e192747530abab3600771ddf0ea127910c6c53da823671480f84a8e3dc560"
+    }
+  ],
+  "existing_stage_budget": {
+    "total_cap_usd": 450,
+    "stage1_infrastructure_cap_usd": 25,
+    "stage2_infrastructure_cap_usd": 25,
+    "stage3_cap_usd": 250,
+    "stage4_conditional_cap_usd": 150,
+    "paper_cap_usd": 0,
+    "old_model_usage_estimate_usd": 37.846032,
+    "old_conservative_model_reservations_usd": 178.0651464,
+    "stage3_conservative_arithmetic_headroom_usd": 71.9348536,
+    "invoice_or_remaining_credit_verified": false,
+    "infrastructure_spend_assigned_to_this_stage_usd": null,
+    "do_not_add_usage_to_reservations_or_reset_infrastructure_caps": true
+  },
+  "proposed_next_work": [
+    {
+      "step": "A",
+      "work": "Incrementally reconcile known manifest/identity/field gaps; cap exceptional carrier searches; no raw-body rescan.",
+      "model": "none",
+      "budget_cap_within_existing_stage_usd": 25,
+      "window_working_hours": [
+        4,
+        8
+      ]
+    },
+    {
+      "step": "B",
+      "work": "Apply dictionary mappings to existing values and same-item evidence; add deterministic derived representations and field-local production adapters. Do not repeat completed attachment.",
+      "model": "none",
+      "budget_cap_within_existing_stage_usd": 25,
+      "window_working_hours": [
+        6,
+        12
+      ],
+      "overlaps_with": "A"
+    },
+    {
+      "step": "C",
+      "work": "Separate proposed v2 confirmation; at most 150 distinct unexposed eligible contexts, Luna candidate, independent Kimi, at most 6 Astra audits. Old 500 are development evidence only.",
+      "model": "Luna/Kimi/Astra",
+      "budget_cap_within_existing_stage_usd": 50,
+      "window_elapsed_hours": [
+        2,
+        6
+      ],
+      "new_protocol_required": true,
+      "old_500_input_authorization_not_reusable": true
+    },
+    {
+      "step": "D",
+      "work": "Only newly qualified dependencies, at most 10000 genuinely unprocessed unique inputs; first 100 count inside the 10000. Existing saved outputs remain reuse, not new production.",
+      "model": "Luna plus bounded Kimi/Astra audit",
+      "budget_cap_within_existing_stage_usd": 150,
+      "window_elapsed_hours": [
+        24,
+        72
+      ],
+      "conditional_not_currently_released": true
+    }
+  ],
+  "budget_proposal": {
+    "continuing_infrastructure_envelope_usd": 50,
+    "additional_confirmation_cap_usd": 50,
+    "existing_conditional_pilot_cap_usd": 150,
+    "combined_future_envelopes_usd": 250,
+    "maximum_old_model_reservations_plus_future_envelopes_usd": 428.0651464,
+    "not_an_extra_250_on_top_of_450": true,
+    "infrastructure_remainder_must_deduct_already_accrued_costs": true,
+    "new_confirmation_leg_caps_usd": {
+      "Luna": 1.5,
+      "Kimi": 40,
+      "Astra": 8.5
+    },
+    "new_confirmation_formula_bound_with_20pct_retry_usd": {
+      "Luna": 1.296,
+      "Kimi": 38.088,
+      "Astra": 7.2
+    },
+    "new_confirmation_formula_total_usd": 46.584,
+    "pilot_formula_bound_with_20pct_retry_usd": {
+      "Luna": 86.4,
+      "Kimi": 25.392,
+      "Astra": 24.0
+    },
+    "pilot_formula_total_usd": 135.792,
+    "price_basis_usd_per_million_input_output": {
+      "Luna": [
+        0.1,
+        0.5
+      ],
+      "Kimi": [
+        2.3,
+        11.5
+      ],
+      "Astra": [
+        12.5,
+        50.0
+      ]
+    },
+    "price_basis": "previously_recorded_Azure_public_rates_not_current_contract_or_invoice; Astra retains conservative input bound",
+    "per_call_input_output_token_caps": {
+      "Luna": [
+        12000,
+        12000
+      ],
+      "Kimi": [
+        12000,
+        16000
+      ],
+      "Astra": [
+        16000,
+        16000
+      ]
+    },
+    "forecast_new_model_usage_range_usd": [
+      35,
+      75
+    ],
+    "forecast_is_not_a_commitment_or_infrastructure_total": true,
+    "Codex_conversation_usage_not_automatically_controlled_by_job_caps": true,
+    "account_wide_credit_taxes_and_background_resource_costs_not_verified": true,
+    "confirmation_base_call_caps": {
+      "Luna": 150,
+      "Kimi": 150,
+      "Astra": 6
+    },
+    "confirmation_physical_call_caps_including_retries": {
+      "Luna": 180,
+      "Kimi": 180,
+      "Astra": 7
+    },
+    "pilot_base_call_caps": {
+      "Luna": 10000,
+      "Kimi": 100,
+      "Astra": 20
+    },
+    "pilot_physical_call_caps_including_retries": {
+      "Luna": 12000,
+      "Kimi": 120,
+      "Astra": 24
+    },
+    "requests_over_caps": "defer_without_truncating_required_evidence"
+  },
+  "flow_control": {
+    "project_schedule_tpm": 800000,
+    "deployment_schedule_tpm": {
+      "Luna": 80000,
+      "Kimi": 240000,
+      "Astra": 800000
+    },
+    "Astra_also_limited_by_project_remaining": true,
+    "last_observed_deployment_tpm": {
+      "Luna": 100000,
+      "Kimi": 300000,
+      "Astra": 1000000
+    },
+    "last_observed_deployment_rpm": {
+      "Luna": 100,
+      "Kimi": 300,
+      "Astra": 1000
+    },
+    "refresh_actual_limits_before_spend": true,
+    "count_estimated_input_plus_reserved_max_output_on_admission": true,
+    "candidate_concurrency_steps": [
+      1,
+      2,
+      4
+    ],
+    "max_physical_attempts_per_input_per_model": 2,
+    "temporary_failures_only_retry": true,
+    "protected_or_policy_blocked_no_retry_or_reroute": true,
+    "uncertain_transport_no_automatic_duplicate": true,
+    "failed_usage_unknown_keeps_reservation": true
+  },
+  "schedule": {
+    "first_reuse_and_gap_release_working_days": [
+      1,
+      2
+    ],
+    "conditional_integrated_pilot_release_elapsed_days": [
+      3,
+      5
+    ],
+    "conditions": [
+      "accessible manifests and carrier indexes",
+      "no new schema or access blockers",
+      "at least one route/measure qualifies",
+      "same resources available",
+      "bounded worker changes succeed"
+    ],
+    "new_completion_forecast_after_first_100_pilot_inputs": true,
+    "not_full_500M_completion_schedule": true
+  },
+  "observed_timing_and_cost": {
+    "Luna_latest_500_mean_billed_tokens": 5269.88,
+    "Luna_latest_500_mean_usage_price_usd": 0.0008586319999999999,
+    "Kimi_old_reference_inputs": 350,
+    "Kimi_old_reference_wall_seconds": 5641.05,
+    "Kimi_old_reference_concurrency": 4,
+    "Kimi_old_reference_inputs_per_minute": 3.7227,
+    "old_comprehensive_schema_not_new_route_benchmark": true,
+    "conditional_Luna_scenarios": [
+      {
+        "genuinely_missing_unique_calls": 10000,
+        "Luna_only_usage_price_estimate_usd": 8.59,
+        "billing_token_only_lower_bound_hours_at_80k_tpm": 10.98,
+        "not_wall_time_or_production_quote": true
+      },
+      {
+        "genuinely_missing_unique_calls": 100000,
+        "Luna_only_usage_price_estimate_usd": 85.86,
+        "billing_token_only_lower_bound_hours_at_80k_tpm": 109.79,
+        "not_wall_time_or_production_quote": true
+      },
+      {
+        "genuinely_missing_unique_calls": 1000000,
+        "Luna_only_usage_price_estimate_usd": 858.63,
+        "billing_token_only_lower_bound_hours_at_80k_tpm": 1097.89,
+        "not_wall_time_or_production_quote": true
+      }
+    ]
+  },
+  "simplifications": [
+    "no GPU",
+    "no training prerequisite",
+    "no repeat original 500 calls",
+    "no rerun base or overlapping D67",
+    "reuse current four-key CREATED join",
+    "reuse field-local validator and tests; test only changes",
+    "no model call solely to regenerate a saved carrier",
+    "no paper expansion",
+    "no timers",
+    "no wait for Revelio to process LinkUp available fields"
+  ],
+  "decision_contract": {
+    "freeze_measure_dependencies_and_metrics_before_confirmation": true,
+    "one_fixed_confirmation_not_iterative_pass_search": true,
+    "confirmed_evidence_and_key_integrity_required": true,
+    "machine_reference_agreement_not_true_accuracy": true,
+    "adequate_support_and_coverage_required_per_measure": true,
+    "rare_challenges_not_pooled_into_probability_error_estimates": true,
+    "no_whole_ad_or_89_variable_joint_gate": true,
+    "no_qualification_from_shadow_engineering_pass_alone": true,
+    "failed_new_fields_remain_explicitly_incomplete": true,
+    "all_five_research_modules_retained": true,
+    "human_audit_required": false
+  },
+  "executed_this_plan": {
+    "cloud_existing_public_checkpoint_reads": 2,
+    "raw_data_processing": false,
+    "model_calls": 0,
+    "production_started": false,
+    "billing_query": false,
+    "new_resources": 0
+  }
+}
