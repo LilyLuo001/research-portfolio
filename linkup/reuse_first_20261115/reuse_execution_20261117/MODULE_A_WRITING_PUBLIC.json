@@ -1,0 +1,104 @@
+{
+  "writing_version": "module-a-macro-chapter-v1",
+  "written_at_utc": "2026-11-17T11:20:23.482531+00:00",
+  "status": "draft_completed_for_root_review",
+  "authorization": {
+    "paper_resume_condition": "First-version delivery published and delivered to user before explicit parent follow-up authorizing Module A writing.",
+    "first_version_git_commit": "bc46e156ab2f6e51e8aaf105e51a217fe8f4c185",
+    "first_version_commit_exists_locally": true,
+    "remote_sha_verified_and_delivery_confirmed_by": "root explicit task message; no independent remote request by this writer",
+    "scope": "New independent English Module A macro chapter and writing receipt only; no new estimates or model API calls."
+  },
+  "chapter": {
+    "repository_relative_path": "linkup/reuse_first_20261115/reuse_execution_20261117/MODULE_A_MACRO_CHAPTER_EN.md",
+    "sha256": "59750d772d5aff4cc320e49d1cef9efb464af67d010f297a87cefcccc24d875a",
+    "prose_word_count": 931,
+    "all_text_word_tokens_including_table_values": 1119,
+    "tables": 3
+  },
+  "source_pins": [
+    {
+      "source": "inputs",
+      "repository_relative_path": "linkup/reuse_first_20261115/reuse_execution_20261117/MODULE_A_INPUTS_PUBLIC.json",
+      "sha256": "9db74ff64c5a1d3700c2247ecf7996ba8411c1f3d3456e3fe67ef41f24c4c6ec"
+    },
+    {
+      "source": "series",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_MACRO_SERIES_PUBLIC.json",
+      "sha256": "2ab2854c18c3e44874131ccb23fdfe5e5fe2e3c769fd803e3776a02d02917ede"
+    },
+    {
+      "source": "evidence",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_EVIDENCE_REGISTER_PUBLIC.json",
+      "sha256": "e196940e3071bf45234b472678010637287199a585c860afa67bdc82088b26c3"
+    },
+    {
+      "source": "old_draft",
+      "repository_relative_path": "linkup/reuse_first_20261115/integration_20261116/PAPER_DRAFT_EN.md",
+      "sha256": "b8352ccae5c2502e02a1ec971277fd25e530ad19251b394851186b4f39e34748"
+    },
+    {
+      "source": "task_framework",
+      "repository_relative_path": "linkup/reuse_first_20261115/reuse_execution_20261117/TASK_FRAMEWORK_DISCUSSION_ZH.md",
+      "sha256": "c73efd5c28aedaa9ae1e1acd65aac4ba5c66a1e31c192cfbaabcd18b4e08cf98"
+    },
+    {
+      "source": "research_agenda",
+      "repository_relative_path": "linkup/reuse_first_20261115/research_agenda_recovery_20261116/RESEARCH_AGENDA_AND_MEASUREMENT_ZH.md",
+      "sha256": "accab2d7a241c4fab31187b6b0e62512c87503b27efb893b4f0da5f280edf130"
+    }
+  ],
+  "table_provenance": [
+    {
+      "table": "A1",
+      "source": "series",
+      "json_pointer": "/annual_rows",
+      "columns_used": [
+        "year",
+        "first_observed_complete_months",
+        "complete_months"
+      ],
+      "transformation": "Presentation formatting only; 2026 row explicitly January-August."
+    },
+    {
+      "table": "A2",
+      "source": "inputs",
+      "json_pointer": "/equal_length_comparison_copied_without_recalculation",
+      "transformation": "Existing means rounded to one decimal and existing percentages to two; no newly estimated change."
+    },
+    {
+      "table": "A3",
+      "source": "inputs",
+      "json_pointer": "/occupation_comparison_copied_without_recalculation",
+      "transformation": "Existing counts and share changes reproduced; share changes rounded to three decimals; no new aggregation."
+    }
+  ],
+  "mechanical_and_scope_checks": {
+    "annual_rows_exact_copy": true,
+    "year2026_complete_months_not_full_year": true,
+    "prepost_levels_and_existing_changes_only": true,
+    "occupational_counts_and_shares_from_same_saved_summary": true,
+    "no_new_exit_or_entry_share_estimates": true,
+    "created_proxy_and_noncausal_notice_present": true,
+    "five_modules_retained": true,
+    "task_reorganization_hypotheses_not_claimed_results": true,
+    "original_source_files_unchanged": true,
+    "new_chapter_not_overwriting_old_draft": true
+  },
+  "interpretation_limits": [
+    "CREATED first-observed proxy, not certified historical text date",
+    "Delivered US advertisement records, not all US vacancies, hires or workers",
+    "2026 incomplete; no unequal-window annual comparison",
+    "Stock missing-date conventions distinct from direct exits",
+    "Snapshot occupational groups not historically validated classifications",
+    "No national explicit-entry share",
+    "No formal break test, causal effect, productivity or reinstatement estimate",
+    "No Revelio flow or advertisement-to-hire match claimed"
+  ],
+  "new_statistical_estimation": false,
+  "new_data_reads_or_cloud_jobs": false,
+  "new_model_api_calls": 0,
+  "old_draft_modified": false,
+  "git_commit_or_push_performed": false,
+  "independent_root_review_pending": true
+}
