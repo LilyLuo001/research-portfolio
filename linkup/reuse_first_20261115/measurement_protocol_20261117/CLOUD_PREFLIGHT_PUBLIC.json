@@ -1,0 +1,41 @@
+{
+  "purpose": "read_only_preflight_saved_output_diagnostic",
+  "files": {
+    "candidate_status": {
+      "exists": true,
+      "sha256": "992de26148ce7a4575b333a6c5971130af0d78252a89131a2e2ffcd16f7b0b9d"
+    },
+    "candidate_frame": {
+      "exists": true,
+      "sha256": "a0f917eec2a2730a815a0b1b91079141d9c3edb5bc6d9a71b42241855ad6ba78"
+    },
+    "candidate_schema": {
+      "exists": true,
+      "sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e"
+    },
+    "candidate_pins": {
+      "exists": true,
+      "sha256": "3565b641ba46ae011f1421e986cd0a8716a2e27f669a8066743c3b5026a7ffdf"
+    },
+    "exclusions": {
+      "exists": true,
+      "sha256": "05d47c86b030a8f5a4d091b49635b1481d70956d02f2c28501d7b08e668957d7"
+    },
+    "validator": {
+      "exists": true,
+      "sha256": "f7737143004374f9391a16ad2d1bab2fa47950c589232510045d1eee93bc2c20"
+    },
+    "old_state": {
+      "exists": true,
+      "sha256": "149f6f9706f5d8be3472837aec625f09ea8bf52dcdd19763dd7556990dd39694"
+    }
+  },
+  "candidate_status": "finite_benchmark_completed",
+  "completed": 500,
+  "exclusion_keys": [
+    "tasks",
+    "context_sha256"
+  ],
+  "jsonschema_installed": true,
+  "effective_uid": 1000
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-16T08:09:34.763727+00:00",
+  "created_utc": "2026-11-17T07:37:24.498766+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -86,13 +86,13 @@
     },
     {
       "file": "PUBLIC_COPY_MANIFEST.json",
-      "bytes": 125217,
-      "sha256": "0d3f174f24660c38e3e550b2ceb34957d8e83564876872c04c472ca7f1911d3b"
+      "bytes": 132481,
+      "sha256": "1b979674e7c3fe89f5365268c903c465b179627397ed2391ca947ecbc429941b"
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 21102,
-      "sha256": "076a901185eff4cf58a705723a19f9f57517aa2abf9b12b2dd72055e4baafdf9"
+      "bytes": 21884,
+      "sha256": "266efd649d95585ab77ae8044434619da26200bb533c6ae29d7f825a3f4eef6b"
     },
     {
       "file": "README.md",
@@ -1110,6 +1110,66 @@
       "sha256": "83827e1cb185eb197e66090d5d00e9c881639411411d95234422c9190ac194fd"
     },
     {
+      "file": "measurement_protocol_20261117/CLOUD_EXECUTION_RECEIPT_PUBLIC.json",
+      "bytes": 1165,
+      "sha256": "309c9d4c338fe0bb136a262bf3677fbcdef04d1c6274d0e651d5b7a89361fe52"
+    },
+    {
+      "file": "measurement_protocol_20261117/CLOUD_PREFLIGHT_PUBLIC.json",
+      "bytes": 1213,
+      "sha256": "d098cd17dd1e795b29b3963b1fb3948d2d061c052d1a34ebea79000f38878e34"
+    },
+    {
+      "file": "measurement_protocol_20261117/CODE_QA_PUBLIC.json",
+      "bytes": 1047,
+      "sha256": "9975efd948ec8d2d4a061c0db41bb49cf7d7f32badc4ec7793a1116b34cf56eb"
+    },
+    {
+      "file": "measurement_protocol_20261117/FIVE_MODULE_CONTRACT_PUBLIC.json",
+      "bytes": 15184,
+      "sha256": "8791c478f26d396b8f4a7f9602aff50159ee63314cae04ad68a8a3a4b6b08852"
+    },
+    {
+      "file": "measurement_protocol_20261117/PINS_PUBLIC.json",
+      "bytes": 855,
+      "sha256": "f02e2cde023d407d95258427dd2ae882d6eb0a91af395677c7820f12d2012b89"
+    },
+    {
+      "file": "measurement_protocol_20261117/PROTOCOL_AND_FACT_CHECK_ZH.md",
+      "bytes": 11583,
+      "sha256": "457f52645f7025beeae28877cb09f74e1faa66df72a61710d87651bde4b8d065"
+    },
+    {
+      "file": "measurement_protocol_20261117/PROTOCOL_STATUS_PUBLIC.json",
+      "bytes": 1863,
+      "sha256": "e8f2b759d9b23a0e399e4e086d97782f9bae4e6a85ef4059687c9e61870108ea"
+    },
+    {
+      "file": "measurement_protocol_20261117/REPORT_TRANSPORT_PUBLIC.json",
+      "bytes": 181,
+      "sha256": "f21c7eaed4f21008a40a142f827173abb61f50e7f6ad7dfe0f94761f78e1af7d"
+    },
+    {
+      "file": "measurement_protocol_20261117/SHADOW_DIAGNOSTIC_PUBLIC.json",
+      "bytes": 5695,
+      "sha256": "84eff174261185c53e7d820b1976947c8ccc25e9d3e0f7b98319e776545ac56b"
+    },
+    {
+      "file": "measurement_protocol_20261117/code/cloud_shadow_diagnostic.py",
+      "bytes": 8571,
+      "sha256": "6de7457e25a8ab45b7bd5d8a10799583145e0a217d63755077e0076055c04791"
+    },
+    {
+      "file": "measurement_protocol_20261117/code/field_validation.py",
+      "bytes": 10526,
+      "sha256": "f29d432ba0a614123190c7c14575fd4c49860ae3fbcc4c45b308c983f3a575a9"
+    },
+    {
+      "file": "measurement_protocol_20261117/code/test_field_validation.py",
+      "bytes": 12915,
+      "sha256": "930a082191a20d04b09c525526ea4b2046897c007e60e40948f94706b842d52c"
+    },
+    {
       "file": "research_agenda_recovery_20261116/AGENDA_STATUS_PUBLIC.json",
       "bytes": 1467,
       "sha256": "8147714ca8bde7edd751de8707cc6c706d7eadace3feb2955bf9cb50963c6bee"
@@ -1190,10 +1250,10 @@
       "sha256": "6479a4b70deb1891c111f5d297fbc14d3b4d792ee34ffc2963611daffbea3df3"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 237,
+  "checked_file_count_excluding_this_receipt": 249,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 9,
+  "staged_file_count": 15,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,

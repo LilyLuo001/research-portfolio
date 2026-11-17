@@ -1,0 +1,347 @@
+{
+  "contract_version": "five-module-dependency-contract-v1",
+  "date": "2026-11-17",
+  "status": "proposed_metadata_only_not_activated",
+  "purpose": "保留完整研究范围，以字段及关系的实际依赖决定测量和研究量可用性，不以十三项整体分数阻塞所有模块。",
+  "scope": {
+    "requested_linkup_record_scale": 500000000,
+    "scale_status": "user_requested_approximate_full_delivery_target_not_verified_unique_ad_or_context_count",
+    "coverage": [
+      "全部交付记录",
+      "后续增量",
+      "未来Revelio人员历史与跨库接口"
+    ],
+    "sampling_role": "开发、资格确认及审核，不替代最终全量覆盖",
+    "units_kept_distinct": [
+      "source_record",
+      "advertisement",
+      "text_context",
+      "field_measurement",
+      "person_event"
+    ],
+    "completion_caveat": "每条记录保留映射或明确例外；状态表全覆盖不等于各研究模块测量已完成。未处理不能改名未知以制造完成。",
+    "revelio_status": "future_delivery_and_schema_verification_required_no_personnel_results_claimed"
+  },
+  "four_separate_state_axes": {
+    "workflow": {
+      "values": [
+        "unprocessed",
+        "in_progress",
+        "saved_unverified",
+        "reviewed"
+      ],
+      "meaning": "实际执行与审阅进度；调用失败保留attempt及错误，不记完成或无提及。"
+    },
+    "measurement": {
+      "values": [
+        "explicit_positive",
+        "explicit_negative",
+        "not_mentioned",
+        "unknown"
+      ],
+      "unprocessed_value": null,
+      "not_mentioned": "所需上下文完整可用、该字段实际审阅完成且相关候选无未解冲突时，未发现定义中的明确表述；不等于现实中不要求。",
+      "explicit_negative": "明确否定且对象、主体及条件范围可确定；不同经验对象的否定不能互换。",
+      "unknown": "保留歧义、冲突、缺关系、输入不足、工程失败或源缺失原因；不是否定、零值或尚未执行的替代名称。",
+      "subfield_rule": "对象、数值、强度、关系及完整性分别记录；一个子字段未知不抹掉独立已知子字段。"
+    },
+    "engineering": {
+      "values": [
+        "valid",
+        "invalid",
+        "not_checked"
+      ],
+      "meaning": "来源、身份、证据、结构及依赖引用是否有效；工程有效不等于语义准确。"
+    },
+    "route_qualification": {
+      "values": [
+        "not_assessed",
+        "qualified",
+        "not_qualified",
+        "insufficient_support"
+      ],
+      "scope_keys": [
+        "route_version",
+        "field_or_relation_or_derived_measure",
+        "applicable_scope"
+      ],
+      "current_new_contract_status": "not_assessed",
+      "meaning": "资格只属于已评估的版本、字段或关系及适用范围，不由单条工程通过自动取得。"
+    }
+  },
+  "immutable_history_and_protection": {
+    "historical_statuses_and_results": "保留原accepted、reviewed_unknown、失败资格、原schema与证据，不回写为本合同通过。",
+    "quarantined": "独立保护控制；禁止自动重跑、降为普通unknown或绕过。",
+    "existing_accepted_values": "仅在身份、上下文和字段定义兼容时以原版本来源复用，不自动取得新版路线资格。"
+  },
+  "dependency_and_acceptance_rules": {
+    "graph": [
+      "source_identity",
+      "atomic_claim",
+      "local_relation_and_completeness",
+      "derived_research_measure"
+    ],
+    "root_failure": "正文身份或上下文错绑使该正文语义不可用，但不自动废掉独立正确的Records计数。无法可信解析封套时不得临时从自由文本捞值。",
+    "local_failure": "证据、对象或关系失败只传播到依赖它的后代；无依赖字段保留独立状态。",
+    "positive_evidence": "局部证实的正向证据可保留，但不表示全文完整审阅、其他子类为阴性或整族完成。",
+    "absence_and_completeness": "无提及、全无、完整集合与无条件资格等断言必须满足各自完整性条件；关键词无命中不足以支持全文无提及。",
+    "gates_kept_separate": [
+      "单条工程有效性",
+      "字段或关系路线资格",
+      "研究派生量依赖与覆盖",
+      "科学解释与比较支持"
+    ],
+    "release_rule": "只评估本研究量的必要依赖；一个模块或字段未通过不封锁无依赖模块，但依赖未满足的量不得强填。",
+    "no_automatic_release": true
+  },
+  "modules": [
+    {
+      "module": "opportunities",
+      "research_question": "哪些职业、岗位族、企业和地区的招聘机会数量与构成增加或减少？",
+      "required_fields_and_relations": {
+        "first_observed_counts": [
+          "来源与广告身份",
+          "样本国家和范围",
+          "CREATED及日期质量",
+          "广告去重单位",
+          "来源覆盖与时期完整性"
+        ],
+        "active_and_exit_counts": [
+          "广告身份",
+          "生命周期起止与观察字段",
+          "端点及未结束规则"
+        ],
+        "specific_composition": [
+          "对应分类及版本化映射",
+          "未映射状态"
+        ],
+        "semantic_group_counts_only": [
+          "参与分组的经验、职责或技术测量资格与完整性"
+        ]
+      },
+      "non_dependencies": [
+        "基础广告计数不依赖正文语义或Revelio",
+        "职业构成不等待无关经验关系",
+        "首次观察量不因活跃或退出定义未解而停止"
+      ],
+      "completion_conditions": [
+        "全量来源及广告单位可追溯、计数守恒且连接不膨胀",
+        "新增、活跃、退出及未知分别报告",
+        "按研究分组列明全量、可映射、已处理和未知分母"
+      ],
+      "interpretation_boundaries": [
+        "广告不是实际招聘人数或真实空缺人数",
+        "撤下不是岗位已填补",
+        "份额增加不等于数量增加",
+        "新观察角色不自动等于新创造岗位"
+      ]
+    },
+    {
+      "module": "experience_combinations",
+      "research_question": "相同总经验下，职业任务、行业领域、工具经历及公开接受的资格路径如何重新组合？",
+      "required_fields_and_relations": {
+        "experience_presence": [
+          "正文身份",
+          "原文证据",
+          "一般、职业任务、行业领域、工具对象",
+          "既往经验与知识、职责、背景区分"
+        ],
+        "object_specific_years": [
+          "数字、单位与范围",
+          "年限到对象的绑定"
+        ],
+        "required_preferred_or_waived": [
+          "强度与否定范围",
+          "相关条件路径"
+        ],
+        "unconditional_minimum_or_eligibility": [
+          "所有影响该量的相关分支",
+          "AND、OR、包含或等价关系",
+          "该资格组完整性"
+        ],
+        "explicit_cross_domain_openness": [
+          "所比较经历对象",
+          "明确接受相关或替代经历的证据",
+          "强度、主体与条件范围"
+        ]
+      },
+      "non_dependencies": [
+        "无关技术角色或职责",
+        "未进入具体比较的其他经历对象",
+        "实际人员进入率不以本模块通过为前提"
+      ],
+      "completion_conditions": [
+        "对象、数值、强度和关系独立有效且所用路线具对应资格",
+        "条件路径不能压成虚假的无条件最低年限",
+        "联合结果仅使用自身必要依赖并披露未知和覆盖"
+      ],
+      "interpretation_boundaries": [
+        "未提及行业经验不等于允许跨行业",
+        "公开要求不等于实际录用概率或经验工资回报",
+        "不同经验类别可重叠不能相加",
+        "中级title或年龄不替代实际工龄"
+      ]
+    },
+    {
+      "module": "duties",
+      "research_question": "岗位机会中的执行、判断、核验、客户责任、协调、监督与指导内容怎样变化？",
+      "required_fields_and_relations": {
+        "individual_duty": [
+          "正文身份与证据",
+          "活动及对象",
+          "招聘岗位主体",
+          "当前职责与既往经验或能力要求区分"
+        ],
+        "entry_duty_cooccurrence_only": [
+          "对应entry资格及条件",
+          "对应职责",
+          "同一上下文与预设联合口径"
+        ],
+        "complete_task_set": [
+          "所声明任务分类范围",
+          "各必要子类完整性"
+        ],
+        "technology_role_conditioned_only": [
+          "技术实体到角色的绑定",
+          "对应任务测量"
+        ]
+      },
+      "non_dependencies": [
+        "单项职责不等待经验年限、学历、entry或技术角色",
+        "总体任务率不等待技术分组",
+        "一项职责失败不抹掉独立其他职责"
+      ],
+      "completion_conditions": [
+        "有限任务字典、主体和时态定义版本化",
+        "各职责及使用它的联合量分别验收",
+        "any为真可由有效阳性确定；全无或完整计数需要相应全部必要子项已知"
+      ],
+      "interpretation_boundaries": [
+        "既有四职责不等于完整任务包",
+        "指导别人不等于雇主培训应聘者",
+        "当前职责不等于事前经验门槛",
+        "职责共现不自动证明历史高级化"
+      ]
+    },
+    {
+      "module": "personnel_entry",
+      "research_question": "新增与既有机会由哪些事前经历的人进入，他们如何跨行业、跨职业、返回或内部转岗？",
+      "required_fields_and_relations": {
+        "observed_entry_and_employer_flows": [
+          "实际Revelio交付与schema",
+          "稳定人员和职位身份",
+          "事件日期精度",
+          "去重、并行职位及雇主实体边界",
+          "事件观察状态"
+        ],
+        "cross_industry_flows": [
+          "可见事件",
+          "来源与目标行业映射及时间有效性"
+        ],
+        "cross_occupation_flows": [
+          "可见事件",
+          "来源与目标职业映射及版本"
+        ],
+        "experience_comparable_first_target_entry_rates": [
+          "事件与职业映射",
+          "事前就业区间并集及左截断",
+          "目标职业既往经历及首次进入资格",
+          "事前来源风险集",
+          "后续可观察性和未知状态"
+        ],
+        "task_distance_gradient_only": [
+          "对应进入率依赖",
+          "事前冻结任务映射及距离",
+          "来源目标比较支持"
+        ],
+        "cross_dataset_comparison_only": [
+          "两端具体研究量各自可用",
+          "已核验雇主、职业和地区桥表",
+          "另存版本的CREATED代理队列与事件时期",
+          "预先声明的滞后规则"
+        ]
+      },
+      "non_dependencies": [
+        "所有LinkUp语义字段不是人员流量或进入率的全局前置",
+        "跨行业流量不必等待职业映射；跨职业流量不必等待行业映射，联合研究才同时要求",
+        "风险集不足只阻止对应率，不自动取消可见人数或构成"
+      ],
+      "completion_conditions": [
+        "真实文件、键基数、事件、历史覆盖及映射经核验",
+        "内部外部、历史可见性、目标职业关系按正交轴保存",
+        "流量人数、构成和具有明确定义风险集的率分开",
+        "对照仅使用真实共同支持，缺失匹配不硬连"
+      ],
+      "interpretation_boundaries": [
+        "第一条可见履历不等于人生首次就业或零经验",
+        "没有新记录不等于没有流动",
+        "当前skills不能回填历史，重叠职位月份不能重复累计",
+        "入职者中跨界者占比不等于跨界者进入率；没有申请者数据不能叫录用率",
+        "不建立不存在的广告到员工配对；CREATED代理不证明历史正文日期",
+        "相对进入率改善不等于绝对机会增加"
+      ]
+    },
+    {
+      "module": "computerization_comparison",
+      "research_question": "软件化与生成式AI相关机会、任务和经历组合有何共同与不同，如何区分角色及技术成熟阶段？",
+      "required_fields_and_relations": {
+        "contemporary_comparison": [
+          "被比较的具体机会、经验或职责研究量",
+          "软件、预测AI、GenAI及不明类别",
+          "可比映射、分母与共同支持"
+        ],
+        "within_role_comparison_only": [
+          "技术实体到开发、实施、使用或其他预设角色的绑定"
+        ],
+        "personnel_comparison_only": [
+          "所用人员事件或率的独立依赖"
+        ],
+        "historical_computerization_reference": [
+          "真正历史资料及年份",
+          "兼容职业与任务映射",
+          "历史技术或任务测量",
+          "对应结果定义"
+        ]
+      },
+      "non_dependencies": [
+        "未参与比较的其他entry、经验或职责字段",
+        "不涉及人员的比较不等待Revelio",
+        "历史参照不以全部LinkUp语义通过为前提"
+      ],
+      "completion_conditions": [
+        "预先区分当代技术组比较与真正历史参照",
+        "所用分组、结果、角色和支持各自满足对应资格",
+        "同时披露总体与条件比较及技术角色和成熟阶段限制"
+      ],
+      "interpretation_boundaries": [
+        "AI提及不等于采用；未提及不等于未采用",
+        "当代软件组和GenAI前几年不是经典计算机革命反事实",
+        "成熟软件使用与早期AI开发的差异不能直接归为技术本性",
+        "分类准确或日期切点不自动建立AI因果识别"
+      ]
+    }
+  ],
+  "review_policy": {
+    "human_review_required": false,
+    "reference_type": "model_reference_not_truth",
+    "independence": "生产与独立模型审阅相互盲法；高级模型裁决仍可能共享错误。",
+    "audit_scope": "覆盖通过项、无命中、年份、职业及研究相关稀有关系；概率审计与挑战集分开。",
+    "metrics_required": [
+      "参照可判定范围内的precision及适用分母",
+      "候选unknown、弃答及工程失败保留在参照阳性分母的端到端recall",
+      "未知率与实际处理覆盖",
+      "参照未知或争议",
+      "关键分组偏差与支持"
+    ],
+    "support_rule": "支持不足只限制该字段、关系或依赖研究量，不伪造阴性，也不封锁无依赖已合格模块。",
+    "frozen_history": "不改旧资格阈值或失败结果；新版本的阈值、分层支持及确认样本须在新结果前冻结。"
+  },
+  "activation_guard": {
+    "old_qualification_modified": false,
+    "new_route_qualified_by_this_file": false,
+    "production_authorized_by_this_file": false,
+    "model_calls_or_cloud_jobs_requested": false,
+    "timers_or_resources_requested": false,
+    "paper_production_requested": false
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "at_utc": "2026-11-17T07:34:45.968132+00:00",
+  "status": "saved_output_shadow_diagnostic_complete",
+  "wall_seconds": 2.4106936778407544,
+  "scope": "same500_saved_Luna_outputs_diagnostic_only_not_independent_validation",
+  "counts": {
+    "frame_accounted": 500,
+    "saved_reviews_checked": 494,
+    "field_checks_completed": 483,
+    "legacy_invalid_records_with_at_least_one_full_known_field": 189,
+    "protected_skipped": 5,
+    "shared_input_invalid": 11,
+    "missing_saved_review": 1
+  },
+  "previous_status_counts_eligible_only": {
+    "frozen_validator_pass_candidate_only": 285,
+    "frozen_validation_failed_preserve_output": 209,
+    "invalid_json_preserved": 1
+  },
+  "per_field": {
+    "technology": {
+      "engineering_valid": 441,
+      "full_known_engineering_valid": 438,
+      "checked_quote_instances": 1375,
+      "full_known_from_legacy_invalid": 156,
+      "reviewed_unknown": 7,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 35,
+      "blocked_shared_input": 11
+    },
+    "experience.general_work": {
+      "engineering_valid": 452,
+      "full_known_engineering_valid": 449,
+      "checked_quote_instances": 117,
+      "full_known_from_legacy_invalid": 167,
+      "reviewed_unknown": 6,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 25,
+      "blocked_shared_input": 11
+    },
+    "experience.occupation_task": {
+      "engineering_valid": 368,
+      "full_known_engineering_valid": 364,
+      "checked_quote_instances": 1047,
+      "invalid_local": 111,
+      "full_known_from_legacy_invalid": 82,
+      "reviewed_unknown": 4,
+      "incomplete_or_shared_failure": 23,
+      "blocked_shared_input": 11
+    },
+    "experience.industry_domain": {
+      "engineering_valid": 406,
+      "full_known_engineering_valid": 405,
+      "checked_quote_instances": 369,
+      "full_known_from_legacy_invalid": 123,
+      "invalid_local": 73,
+      "reviewed_unknown": 4,
+      "incomplete_or_shared_failure": 23,
+      "blocked_shared_input": 11
+    },
+    "experience.tool_specific": {
+      "engineering_valid": 427,
+      "full_known_engineering_valid": 425,
+      "checked_quote_instances": 311,
+      "full_known_from_legacy_invalid": 143,
+      "reviewed_unknown": 5,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 51,
+      "blocked_shared_input": 11
+    },
+    "entry.explicit_no_experience": {
+      "engineering_valid": 469,
+      "full_known_engineering_valid": 469,
+      "checked_quote_instances": 26,
+      "full_known_from_legacy_invalid": 187,
+      "reviewed_unknown": 6,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 8,
+      "blocked_shared_input": 11
+    },
+    "entry.explicit_new_graduate": {
+      "engineering_valid": 471,
+      "full_known_engineering_valid": 471,
+      "checked_quote_instances": 6,
+      "full_known_from_legacy_invalid": 189,
+      "reviewed_unknown": 6,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 6,
+      "blocked_shared_input": 11
+    },
+    "entry.current_student_internship": {
+      "engineering_valid": 470,
+      "full_known_engineering_valid": 469,
+      "checked_quote_instances": 10,
+      "full_known_from_legacy_invalid": 188,
+      "reviewed_unknown": 7,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 6,
+      "blocked_shared_input": 11,
+      "full_reviewed_unknown": 1
+    },
+    "entry.explicit_junior_or_entry_label": {
+      "engineering_valid": 471,
+      "full_known_engineering_valid": 471,
+      "checked_quote_instances": 20,
+      "full_known_from_legacy_invalid": 189,
+      "reviewed_unknown": 6,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 6,
+      "blocked_shared_input": 11
+    },
+    "responsibility.independent_judgment": {
+      "engineering_valid": 456,
+      "full_known_engineering_valid": 451,
+      "checked_quote_instances": 501,
+      "full_known_from_legacy_invalid": 169,
+      "reviewed_unknown": 6,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 21,
+      "blocked_shared_input": 11
+    },
+    "responsibility.client_ownership": {
+      "engineering_valid": 463,
+      "full_known_engineering_valid": 462,
+      "checked_quote_instances": 109,
+      "full_known_from_legacy_invalid": 180,
+      "reviewed_unknown": 5,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 15,
+      "blocked_shared_input": 11
+    },
+    "responsibility.people_supervision": {
+      "engineering_valid": 467,
+      "full_known_engineering_valid": 466,
+      "checked_quote_instances": 186,
+      "full_known_from_legacy_invalid": 184,
+      "reviewed_unknown": 6,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 10,
+      "blocked_shared_input": 11
+    },
+    "responsibility.training_mentoring": {
+      "engineering_valid": 469,
+      "full_known_engineering_valid": 465,
+      "checked_quote_instances": 220,
+      "full_known_from_legacy_invalid": 183,
+      "reviewed_unknown": 6,
+      "incomplete_or_shared_failure": 23,
+      "invalid_local": 8,
+      "blocked_shared_input": 11
+    }
+  },
+  "new_model_calls": 0,
+  "new_accepted_records": 0,
+  "new_qualified_fields": 0,
+  "checked_eligible_outputs_and_control_pins_unchanged": true,
+  "runtime_policy_changed": false,
+  "protected_output_files_opened": 0,
+  "combined_source_frame_read_for_identity_filtering": true,
+  "partial_fields_never_counted_as_full_known": true,
+  "protected_skipped_before_review_access": true,
+  "not_semantic_accuracy_or_paraphrase_reassessment": true,
+  "private_diagnostic_sha256": "ba29e10423258898e58e3014f4ddc3c799a65bde6011ce758ccd3b35d213c3b0",
+  "output_relative_to_migration": "measurement_protocol_20261117/shadow001"
+}

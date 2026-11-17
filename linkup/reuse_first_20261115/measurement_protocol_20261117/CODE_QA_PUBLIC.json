@@ -1,0 +1,26 @@
+{
+  "at_utc": "2026-11-17T07:35:12.113613+00:00",
+  "scope": "local_synthetic_code_tests_no_research_data",
+  "tests_run": 24,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "success": true,
+  "hashes": {
+    "field_validation.py": "f29d432ba0a614123190c7c14575fd4c49860ae3fbcc4c45b308c983f3a575a9",
+    "test_field_validation.py": "930a082191a20d04b09c525526ea4b2046897c007e60e40948f94706b842d52c",
+    "cloud_shadow_diagnostic.py": "6de7457e25a8ab45b7bd5d8a10799583145e0a217d63755077e0076055c04791"
+  },
+  "independent_review": {
+    "adapter": "passed_after_cross_dimension_dependency_fix",
+    "runner": "passed_after_protected_output_pin_scan_fix"
+  },
+  "semantic_accuracy_certified": false,
+  "production_admission": false,
+  "test_dependency_hashes": {
+    "validator": "f7737143004374f9391a16ad2d1bab2fa47950c589232510045d1eee93bc2c20",
+    "candidate_schema": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e"
+  },
+  "synthetic_dependencies_match_cloud_pins": true,
+  "public_aggregate_conservation_checks": "pass"
+}
