@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_utc": "2026-11-18T14:27:59.221948+00:00",
+  "created_utc": "2026-11-18T15:46:45.580444+00:00",
   "root_repo_relative_path": "linkup/reuse_first_20261115",
   "status": "pass",
   "checked_files": [
@@ -91,8 +91,8 @@
     },
     {
       "file": "PUBLIC_GIT_ALLOWLIST.json",
-      "bytes": 51914,
-      "sha256": "f48cefc52ad53faefba589f04ecf078c47824bff84f6ad2e9afbc24fa7fac22f"
+      "bytes": 56534,
+      "sha256": "2045d5b27e21141ca993be37603ed5d83c6ea2af8c3765acde0f8714f82baac6"
     },
     {
       "file": "README.md",
@@ -1561,8 +1561,8 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/OUTCOMES_STATUS_ZH.md",
-      "bytes": 1620,
-      "sha256": "8697a2c8cf8b74b77737bbef9a444649494f36cf7305bd7dbf9b20d49e2d6a59"
+      "bytes": 2209,
+      "sha256": "31a75329cf4426874d64345c88c6b66d559b2619c1233426f85b5f8e5f411830"
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/PUBLIC_DELIVERY_MANIFEST.json",
@@ -1571,8 +1571,13 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/PUBLIC_OUTCOMES_MANIFEST.json",
-      "bytes": 31875,
-      "sha256": "d54962d28a5aab6e52c1cc33075c62c9480091ecfcca7899a7105b01f2723da2"
+      "bytes": 42896,
+      "sha256": "8262619aafb99310a284d9c2c260412c3ea6061e19132fb6450f2075aaf9f0f9"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/STAGE5_RESULT_ZH.md",
+      "bytes": 3640,
+      "sha256": "975ad623c3abf77af1fa54fdc67b3dcc67adf526cdbd798dd07bb79ed351a77f"
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/STATUS_ZH.md",
@@ -1580,14 +1585,44 @@
       "sha256": "50ff125ed32c0ad5088f5188e41c177cf9f496667ff4ca5842e3279e0f229607"
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/astra_transport_regression/ORIGINALS_BEFORE_PUBLIC.json",
+      "bytes": 2490,
+      "sha256": "2cdaf020f0228c74ea8b69c9f7bec91494b5f2747d17a5156d30672659db3b3b"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/astra_transport_regression/README.md",
+      "bytes": 4503,
+      "sha256": "e3762f458ca89f4e8191f5be39471bb98804c6e62ce7902e8f9bdcae91c79050"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/astra_transport_regression/REGRESSION_PUBLIC.json",
+      "bytes": 3348,
+      "sha256": "5b54c4d40da65e8523653095b7ebda400f6798d5342637d96211694004b4b4a6"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/astra_transport_regression/test_astra_transport_regression.py",
+      "bytes": 10991,
+      "sha256": "7165aceda6759a1fb97fc7f4c9794d70baf7928e0edfdfb21de94377806eb2ce"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/PILOT_READINESS_ZH.md",
+      "bytes": 8146,
+      "sha256": "e37b4d4b54904eb28158318c355e3fa111832d48af1dc8022203c4a0c3c969e4"
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/PUBLICATION_READINESS.md",
       "bytes": 4861,
       "sha256": "81ed8e41657e5ba3241e0c36f323855fe812eb5cdb419ba0562026a724a5da98"
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "bytes": 12148,
+      "sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce"
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "bytes": 25304,
-      "sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec"
+      "bytes": 27841,
+      "sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d"
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/stage5_astra_control.py",
@@ -1595,9 +1630,14 @@
       "sha256": "59aed3ec251dfa56bccb74e3a27b52d4eff96ded2207b09958a42154198f1fa1"
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/stage5_closure_control.py",
+      "bytes": 2892,
+      "sha256": "b31404729ca27818110c37ad3bb9d84929967e3ee48adf314e8cc7551525a5bc"
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/stage5_control.py",
-      "bytes": 19605,
-      "sha256": "b5b5e2e8097ce39ca3f23498763d91dbe93fa33a6a0fc16ccadf984129ec2e25"
+      "bytes": 21459,
+      "sha256": "9bb16e881ef5a2176e80fd3669d8cac222185b6b242e8618efd29e80056b4f44"
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/stage5_direct_control.py",
@@ -1663,6 +1703,26 @@
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/frame/test_fresh_inputs_synthetic.py",
       "bytes": 6170,
       "sha256": "48986152c23751dfcdf57bab898ab2941d2c38efe93665ac3a5f2fb2a5e2d8e0"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/pilot_preparation/ENGINEERING_PUBLIC.json",
+      "bytes": 1321,
+      "sha256": "4b06e566d6e5184342e782ead3f01ef9a98361e9d0a75b1c64de22fc1d974c14"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/pilot_preparation/README.md",
+      "bytes": 4440,
+      "sha256": "5cb81a86cf66eba8c37fc7911367bec56f9028bc513fdf9fbe70247d6913345c"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/pilot_preparation/release_mask.py",
+      "bytes": 10324,
+      "sha256": "ba00a5001b79c5e7e2e4e5833aa9225f5673ab288e00b4ea345501eef1ffa5ca"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/pilot_preparation/test_release_mask.py",
+      "bytes": 11591,
+      "sha256": "1dd6ca5a95f8c718fb3a58e893371949078a69550775a613b2fc57367d397d35"
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/protocol/ADAPTER_HANDOFF.md",
@@ -1745,6 +1805,41 @@
       "sha256": "1f6f2c9199cea1574ff5e4995bb48b03cf1fb9a3417aff0157c66511fb28c2d8"
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/ASTRA_DIAGNOSTIC_PUBLIC.json",
+      "bytes": 13470,
+      "sha256": "ad72a3b382f99d4d39a3d13edae1347f62f44fa9c0c9918286b9dcc74c97a7b6"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/ASTRA_DIAGNOSTIC_TRANSPORT_PUBLIC.json",
+      "bytes": 568,
+      "sha256": "a7b6dbfed014be84e8dcb963c45988f3294a847b8aa1bfd7d7e60b6690edd2e7"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/ASTRA_FAILURE_INSPECTION_PUBLIC.json",
+      "bytes": 571,
+      "sha256": "73567729f463837301dca45448e3fc4e40d66fc47fb6f8e127c9c0437e389182"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/ASTRA_FAILURE_INSPECTION_V2_PUBLIC.json",
+      "bytes": 633,
+      "sha256": "68d45a9ddf341edcfd7dc5fa9d990d0e8668a7a2bcd937dd423fb6c5fa274f26"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/ASTRA_FINAL_PUBLIC.json",
+      "bytes": 1434,
+      "sha256": "52b9d694d25f3d4a942f8f2c50456c5b03246af1da5de20abc0c6ee1d83b0fb0"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/ASTRA_LAUNCH_PUBLIC.json",
+      "bytes": 411,
+      "sha256": "7883bca37ee387dad5ef67931844f573cdd909afd4a834ea2a2964577733b98d"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/ASTRA_PREPARE_PUBLIC.json",
+      "bytes": 468,
+      "sha256": "4a78678f4cfa9e027ca0ec6025e14aba982411d219a42373fbc80b240e0dc3f6"
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/DIRECT_ARM_DEPLOYMENT_PUBLIC.json",
       "bytes": 666,
       "sha256": "e7f129c41c3508e759ae39cfc9295d025830e419bbcca95f67af755a982ba86b"
@@ -1805,6 +1900,11 @@
       "sha256": "526fa34701e908e1a967e7dde28f3f1af50570d923094d1cf8ae9c989632ba0f"
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/KIMI_FINAL_PUBLIC.json",
+      "bytes": 2196,
+      "sha256": "9efed53e219289abd3091d9ceb47dce6d8c4608cf0934225851fb761db18ac15"
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/KIMI_V1_INCIDENT_PUBLIC.json",
       "bytes": 745,
       "sha256": "29552cd88744b5895ae235a22829417f7768f398f107a269bac8d40b400089bb"
@@ -1840,9 +1940,14 @@
       "sha256": "581e332e7cfa1e73d2f107306a2cc8bb371d1d096d223159178a183cf076bb41"
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/PRIMARY_DECISION_INDEPENDENT_CHECK_PUBLIC.json",
+      "bytes": 8367,
+      "sha256": "a491ce2c06a2e51b2e29096ec31a20c8033349e843215cf36407225cb886d22c"
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/PROGRESS_PUBLIC.json",
-      "bytes": 1020,
-      "sha256": "64c3acf7e17689424f7428cf14330229a7088c24f0f94fcb335318484b9d9a35"
+      "bytes": 974,
+      "sha256": "d57f79d2f26783668c36182775ba4d36d8a5cdbec6dcb16926fcd3607a9782b3"
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/SCORING_BUNDLE_PRESENCE_PUBLIC.json",
@@ -1860,9 +1965,29 @@
       "sha256": "afe8cabee73e0ed0e703dfb95a8a1ce16d0419e6c2f8df27f1b43f0bf347de2d"
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/SCORING_PUBLIC.json",
+      "bytes": 223265,
+      "sha256": "54080e0cdb3bc11348eff7b0683bc062ff1a7517ba53a8bb92fdfb7228d5ab3f"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/SCORING_TRANSPORT_PUBLIC.json",
+      "bytes": 359,
+      "sha256": "47cbec393dd3424f03f794e5dcfbbd574aa944daa0d6f85bd439d503766e3348"
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/STAGE5_AUTHORIZATION_PUBLIC.json",
       "bytes": 1594,
       "sha256": "b220f929c266d839fc3839f1639d389c7e711df8d0f20f432717e6abcd8ed1bb"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/STAGE5_CLOSURE_PUBLIC.json",
+      "bytes": 555,
+      "sha256": "44350c0f0d8b64c5b4ec15f80f356eecc840e2d3801eff38d0a1f1a96cfd5c11"
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/receipts/STAGE5_OUTCOME_PUBLIC.json",
+      "bytes": 39721,
+      "sha256": "093131696cd0f2971d608e60d408402a8fbebac31b0daff3768b18ef097af9c2"
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/runtime/KIMI_ROUTE_PREFLIGHT_PUBLIC.json",
@@ -2415,10 +2540,10 @@
       "sha256": "d7ca6497ccdc2a272f51f648bf27b2ceacd12fb4ef215f49217c5846bace35ed"
     }
   ],
-  "checked_file_count_excluding_this_receipt": 482,
+  "checked_file_count_excluding_this_receipt": 507,
   "derived_receipt_excluded_from_own_content_hashes": true,
   "staged_check_requested": true,
-  "staged_file_count": 32,
+  "staged_file_count": 31,
   "synthetic_detector_self_tests": {
     "passed": 8,
     "total": 8,
@@ -2514,8 +2639,40 @@
       "review_reason": "Known public provider-protected thread marker used only to reject source paths before any content access; not a record ID or authorization to open the protected material."
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 136,
+      "literal_sha256": "906a7d2fdbdfc5ac3ac7565891597c636161c1d845441a78e70993f86cf5a125",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 137,
+      "literal_sha256": "2489dfac97c3b67e7295cbcc50f47c3202560b18993f287009744776f987784a",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 138,
+      "literal_sha256": "4cb618394caf926750e2f51b35d9635aeefa475b6996f8160f0634914c4ae153",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 139,
+      "literal_sha256": "210493e02e1fe9e02062581293a7d827ae94a981138ef740807b3205ca0a7415",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 21,
       "literal_sha256": "b84d2741eb2a3f851485101981e95eea1c28e042e2b9d0de1a386801798e3c6d",
@@ -2523,7 +2680,7 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 28,
       "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
@@ -2531,7 +2688,7 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 29,
       "literal_sha256": "2a3f365ed18208fdf1164cdd8c289f7111e6ac36640d57311408f96d93189e82",
@@ -2539,7 +2696,7 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 30,
       "literal_sha256": "b84d2741eb2a3f851485101981e95eea1c28e042e2b9d0de1a386801798e3c6d",
@@ -2547,9 +2704,9 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
-      "line": 330,
+      "line": 356,
       "literal_sha256": "8722d1933e373b0e355148b51f858d206e84dd7b4447d6d0fa019f24d09d886f",
       "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
     },
@@ -2658,8 +2815,40 @@
       "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
     },
     {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 136,
+      "literal_sha256": "906a7d2fdbdfc5ac3ac7565891597c636161c1d845441a78e70993f86cf5a125",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 137,
+      "literal_sha256": "2489dfac97c3b67e7295cbcc50f47c3202560b18993f287009744776f987784a",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 138,
+      "literal_sha256": "4cb618394caf926750e2f51b35d9635aeefa475b6996f8160f0634914c4ae153",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
+      "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/build_stage5_outcome.py",
+      "file_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "rule": "machine_private_absolute_path",
+      "line": 139,
+      "literal_sha256": "210493e02e1fe9e02062581293a7d827ae94a981138ef740807b3205ca0a7415",
+      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
+    },
+    {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 21,
       "literal_sha256": "b84d2741eb2a3f851485101981e95eea1c28e042e2b9d0de1a386801798e3c6d",
@@ -2667,7 +2856,7 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 28,
       "literal_sha256": "74c50b4a075a488ec0c6e70c0d354865cecac39c4e5d6a136f2a47875656daf6",
@@ -2675,7 +2864,7 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 29,
       "literal_sha256": "2a3f365ed18208fdf1164cdd8c289f7111e6ac36640d57311408f96d93189e82",
@@ -2683,7 +2872,7 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
       "line": 30,
       "literal_sha256": "b84d2741eb2a3f851485101981e95eea1c28e042e2b9d0de1a386801798e3c6d",
@@ -2691,26 +2880,10 @@
     },
     {
       "file": "reuse_execution_20261117/confirmation_stage5_20261118/control/publish_stage5_outcomes.py",
-      "file_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "file_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "rule": "machine_private_absolute_path",
-      "line": 330,
+      "line": 356,
       "literal_sha256": "8722d1933e373b0e355148b51f858d206e84dd7b4447d6d0fa019f24d09d886f",
-      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
-    },
-    {
-      "file": "reuse_execution_20261117/confirmation_stage5_20261118/runtime_direct_v4/stage5_common.py",
-      "file_sha256": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
-      "rule": "uuid_identifier",
-      "line": 132,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
-      "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
-    },
-    {
-      "file": "reuse_execution_20261117/confirmation_stage5_20261118/runtime_direct_v4/test_stage5_runtime.py",
-      "file_sha256": "ec58231b41dc1550d435b267e1f71f8a24345aecd17ac79fedac4fef22b86eac",
-      "rule": "uuid_identifier",
-      "line": 208,
-      "literal_sha256": "b01af4ee4739078408ff2ec1872fc0a17f46d25c875cba1a027bc198a8206632",
       "review_reason": "Fixed deny-only protection marker or explicitly scoped operational code path; no credential, advertisement identity, body, or model response."
     }
   ],

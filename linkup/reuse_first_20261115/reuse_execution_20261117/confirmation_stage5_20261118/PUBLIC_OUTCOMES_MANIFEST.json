@@ -2,15 +2,51 @@
   "Git_operations_performed": false,
   "actual_Azure_invoice_claimed": false,
   "field_quality_or_pilot_release_inferred": false,
-  "missing_future_or_unselected_files_not_inferred_complete": [
-    "ASTRA_DIAGNOSTIC_PUBLIC.json",
-    "ASTRA_FINAL_PUBLIC.json",
-    "KIMI_FINAL_PUBLIC.json",
-    "SCORING_PUBLIC.json",
-    "control/PILOT_READINESS_ZH.md"
-  ],
+  "missing_future_or_unselected_files_not_inferred_complete": [],
   "original_runtime_v1_and_initial_delivery_manifest_unchanged": true,
   "public_files": {
+    "STAGE5_RESULT_ZH.md": {
+      "bytes": 3640,
+      "published_sha256": "975ad623c3abf77af1fa54fdc67b3dcc67adf526cdbd798dd07bb79ed351a77f",
+      "source": "STAGE5_RESULT_ZH.md",
+      "source_sha256": "5c81d7a46a87ba58c4779f21adae84d98400d28830525f66b18423c25a34ef08",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "astra_transport_regression/ORIGINALS_BEFORE_PUBLIC.json": {
+      "bytes": 2490,
+      "published_sha256": "2cdaf020f0228c74ea8b69c9f7bec91494b5f2747d17a5156d30672659db3b3b",
+      "source": "astra_transport_regression/ORIGINALS_BEFORE_PUBLIC.json",
+      "source_sha256": "2cdaf020f0228c74ea8b69c9f7bec91494b5f2747d17a5156d30672659db3b3b",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "astra_transport_regression/README.md": {
+      "bytes": 4503,
+      "published_sha256": "e3762f458ca89f4e8191f5be39471bb98804c6e62ce7902e8f9bdcae91c79050",
+      "source": "astra_transport_regression/README.md",
+      "source_sha256": "e3762f458ca89f4e8191f5be39471bb98804c6e62ce7902e8f9bdcae91c79050",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "astra_transport_regression/REGRESSION_PUBLIC.json": {
+      "bytes": 3348,
+      "published_sha256": "5b54c4d40da65e8523653095b7ebda400f6798d5342637d96211694004b4b4a6",
+      "source": "astra_transport_regression/REGRESSION_PUBLIC.json",
+      "source_sha256": "5b54c4d40da65e8523653095b7ebda400f6798d5342637d96211694004b4b4a6",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "astra_transport_regression/test_astra_transport_regression.py": {
+      "bytes": 10991,
+      "published_sha256": "7165aceda6759a1fb97fc7f4c9794d70baf7928e0edfdfb21de94377806eb2ce",
+      "source": "astra_transport_regression/test_astra_transport_regression.py",
+      "source_sha256": "2f012e5ded2a7bc41d7515a2a8962a3e255df3c24a073fe11d89897b55e399cd",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "control/PILOT_READINESS_ZH.md": {
+      "bytes": 8146,
+      "published_sha256": "e37b4d4b54904eb28158318c355e3fa111832d48af1dc8022203c4a0c3c969e4",
+      "source": "control/PILOT_READINESS_ZH.md",
+      "source_sha256": "424a1b45b229ea06df99d2753e0cacd087864104489a304e9cc7a107351bcc7c",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
     "control/PUBLICATION_READINESS.md": {
       "bytes": 4861,
       "published_sha256": "81ed8e41657e5ba3241e0c36f323855fe812eb5cdb419ba0562026a724a5da98",
@@ -18,11 +54,18 @@
       "source_sha256": "81ed8e41657e5ba3241e0c36f323855fe812eb5cdb419ba0562026a724a5da98",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
+    "control/build_stage5_outcome.py": {
+      "bytes": 12148,
+      "published_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "source": "control/build_stage5_outcome.py",
+      "source_sha256": "70585af934596a961f6c246cd1cf51b673f16cd08fa8b363c033fc0222ca20ce",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
     "control/publish_stage5_outcomes.py": {
-      "bytes": 25304,
-      "published_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
+      "bytes": 27841,
+      "published_sha256": "b32db1d01dead659ae23ce2c3658b56d5ffb8fa8f18b7a98f30a8449bc2e4b0d",
       "source": "control/publish_stage5_outcomes.py",
-      "source_sha256": "e4ad251c4449e89f3c2582d6f91bec509f81983320a5b056770e99a758f3d037",
+      "source_sha256": "7d91b63114e61c568d4922ce4db8fa290781d90bd7a698b4077d23e58b56f57c",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
     "control/stage5_astra_control.py": {
@@ -32,11 +75,18 @@
       "source_sha256": "59aed3ec251dfa56bccb74e3a27b52d4eff96ded2207b09958a42154198f1fa1",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
+    "control/stage5_closure_control.py": {
+      "bytes": 2892,
+      "published_sha256": "b31404729ca27818110c37ad3bb9d84929967e3ee48adf314e8cc7551525a5bc",
+      "source": "control/stage5_closure_control.py",
+      "source_sha256": "b31404729ca27818110c37ad3bb9d84929967e3ee48adf314e8cc7551525a5bc",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
     "control/stage5_control.py": {
-      "bytes": 19605,
-      "published_sha256": "b5b5e2e8097ce39ca3f23498763d91dbe93fa33a6a0fc16ccadf984129ec2e25",
+      "bytes": 21459,
+      "published_sha256": "9bb16e881ef5a2176e80fd3669d8cac222185b6b242e8618efd29e80056b4f44",
       "source": "control/stage5_control.py",
-      "source_sha256": "b5b5e2e8097ce39ca3f23498763d91dbe93fa33a6a0fc16ccadf984129ec2e25",
+      "source_sha256": "9bb16e881ef5a2176e80fd3669d8cac222185b6b242e8618efd29e80056b4f44",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
     "control/stage5_direct_control.py": {
@@ -79,6 +129,34 @@
       "published_sha256": "e1a88de4d4c643e0b7b8851e3b1a1faca74dc23f0ef1ea9ad3d416aec19dd882",
       "source": "control/test_stage5_scoring_control.py",
       "source_sha256": "e1a88de4d4c643e0b7b8851e3b1a1faca74dc23f0ef1ea9ad3d416aec19dd882",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "pilot_preparation/ENGINEERING_PUBLIC.json": {
+      "bytes": 1321,
+      "published_sha256": "4b06e566d6e5184342e782ead3f01ef9a98361e9d0a75b1c64de22fc1d974c14",
+      "source": "pilot_preparation/ENGINEERING_PUBLIC.json",
+      "source_sha256": "3ce8f9742dfdcd2d158f702537028e25473642c54e30e8cfe129638f9eae4526",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "pilot_preparation/README.md": {
+      "bytes": 4440,
+      "published_sha256": "5cb81a86cf66eba8c37fc7911367bec56f9028bc513fdf9fbe70247d6913345c",
+      "source": "pilot_preparation/README.md",
+      "source_sha256": "5cb81a86cf66eba8c37fc7911367bec56f9028bc513fdf9fbe70247d6913345c",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "pilot_preparation/release_mask.py": {
+      "bytes": 10324,
+      "published_sha256": "ba00a5001b79c5e7e2e4e5833aa9225f5673ab288e00b4ea345501eef1ffa5ca",
+      "source": "pilot_preparation/release_mask.py",
+      "source_sha256": "ba00a5001b79c5e7e2e4e5833aa9225f5673ab288e00b4ea345501eef1ffa5ca",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "pilot_preparation/test_release_mask.py": {
+      "bytes": 11591,
+      "published_sha256": "1dd6ca5a95f8c718fb3a58e893371949078a69550775a613b2fc57367d397d35",
+      "source": "pilot_preparation/test_release_mask.py",
+      "source_sha256": "1dd6ca5a95f8c718fb3a58e893371949078a69550775a613b2fc57367d397d35",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
     "protocol/ADAPTER_HANDOFF.md": {
@@ -150,6 +228,55 @@
       "source": "protocol/test_cloud_score_adapter.py",
       "source_sha256": "e4e49afd32f95881495e03929b6c82bd72af751f214d4dd47d629364060a8d48",
       "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "receipts/ASTRA_DIAGNOSTIC_PUBLIC.json": {
+      "bytes": 13470,
+      "published_sha256": "ad72a3b382f99d4d39a3d13edae1347f62f44fa9c0c9918286b9dcc74c97a7b6",
+      "source": "ASTRA_DIAGNOSTIC_PUBLIC.json",
+      "source_sha256": "20831c4d79af18b77d711910c1595c3309d3086261a51470030fd3b60bcc6a1e",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/ASTRA_DIAGNOSTIC_TRANSPORT_PUBLIC.json": {
+      "bytes": 568,
+      "published_sha256": "a7b6dbfed014be84e8dcb963c45988f3294a847b8aa1bfd7d7e60b6690edd2e7",
+      "source": "control/ASTRA_DIAGNOSTIC_TRANSPORT_PUBLIC.json",
+      "source_sha256": "a7b6dbfed014be84e8dcb963c45988f3294a847b8aa1bfd7d7e60b6690edd2e7",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/ASTRA_FAILURE_INSPECTION_PUBLIC.json": {
+      "bytes": 571,
+      "published_sha256": "73567729f463837301dca45448e3fc4e40d66fc47fb6f8e127c9c0437e389182",
+      "source": "control/ASTRA_FAILURE_INSPECTION_PUBLIC.json",
+      "source_sha256": "57b9e3c7710224a745f62dcb913cb99b0b8e9b17661a88601172667b45ab4a25",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/ASTRA_FAILURE_INSPECTION_V2_PUBLIC.json": {
+      "bytes": 633,
+      "published_sha256": "68d45a9ddf341edcfd7dc5fa9d990d0e8668a7a2bcd937dd423fb6c5fa274f26",
+      "source": "control/ASTRA_FAILURE_INSPECTION_V2_PUBLIC.json",
+      "source_sha256": "1b732c1bad9ce4b756f2e6cca35308f99a3f3dc388640bce98fea74b343499bd",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/ASTRA_FINAL_PUBLIC.json": {
+      "bytes": 1434,
+      "published_sha256": "52b9d694d25f3d4a942f8f2c50456c5b03246af1da5de20abc0c6ee1d83b0fb0",
+      "source": "ASTRA_FINAL_PUBLIC.json",
+      "source_sha256": "ce9a8e65e4f3ab1ce459858ac9074334303c0afdedb17ec84acf24d63af654fb",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/ASTRA_LAUNCH_PUBLIC.json": {
+      "bytes": 411,
+      "published_sha256": "7883bca37ee387dad5ef67931844f573cdd909afd4a834ea2a2964577733b98d",
+      "source": "control/ASTRA_LAUNCH_PUBLIC.json",
+      "source_sha256": "7883bca37ee387dad5ef67931844f573cdd909afd4a834ea2a2964577733b98d",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/ASTRA_PREPARE_PUBLIC.json": {
+      "bytes": 468,
+      "published_sha256": "4a78678f4cfa9e027ca0ec6025e14aba982411d219a42373fbc80b240e0dc3f6",
+      "source": "control/ASTRA_PREPARE_PUBLIC.json",
+      "source_sha256": "4a78678f4cfa9e027ca0ec6025e14aba982411d219a42373fbc80b240e0dc3f6",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "receipts/DIRECT_ARM_DEPLOYMENT_PUBLIC.json": {
       "bytes": 666,
@@ -228,6 +355,13 @@
       "source_sha256": "526fa34701e908e1a967e7dde28f3f1af50570d923094d1cf8ae9c989632ba0f",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
+    "receipts/KIMI_FINAL_PUBLIC.json": {
+      "bytes": 2196,
+      "published_sha256": "9efed53e219289abd3091d9ceb47dce6d8c4608cf0934225851fb761db18ac15",
+      "source": "KIMI_FINAL_PUBLIC.json",
+      "source_sha256": "fc430ab35d658b604bb0c91a4795974bf25d7bba97e462b12c241d1ce95954ed",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
     "receipts/KIMI_V1_INCIDENT_PUBLIC.json": {
       "bytes": 745,
       "published_sha256": "29552cd88744b5895ae235a22829417f7768f398f107a269bac8d40b400089bb",
@@ -270,11 +404,18 @@
       "source_sha256": "b823c262d42ff042079fce8b8eb2145250f8c1cdcc5fbd4b5ac52a0ae09469c2",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
+    "receipts/PRIMARY_DECISION_INDEPENDENT_CHECK_PUBLIC.json": {
+      "bytes": 8367,
+      "published_sha256": "a491ce2c06a2e51b2e29096ec31a20c8033349e843215cf36407225cb886d22c",
+      "source": "control/PRIMARY_DECISION_INDEPENDENT_CHECK_PUBLIC.json",
+      "source_sha256": "d6d428ccba71b135d36aa2810ec170ba2d7291e206d3330fb3ebf2d7ec11cf64",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
     "receipts/PROGRESS_PUBLIC.json": {
-      "bytes": 1020,
-      "published_sha256": "64c3acf7e17689424f7428cf14330229a7088c24f0f94fcb335318484b9d9a35",
+      "bytes": 974,
+      "published_sha256": "d57f79d2f26783668c36182775ba4d36d8a5cdbec6dcb16926fcd3607a9782b3",
       "source": "PROGRESS_PUBLIC.json",
-      "source_sha256": "27c64c7defe2f44bfed2d2eb01ee594500458909155915dd22b0cbe8e6e86453",
+      "source_sha256": "ae366e964aeb8b5db77ff648c43c7150a17e64772a020603a3a98a2d979d75e8",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "receipts/SCORING_BUNDLE_PRESENCE_PUBLIC.json": {
@@ -296,6 +437,34 @@
       "published_sha256": "afe8cabee73e0ed0e703dfb95a8a1ce16d0419e6c2f8df27f1b43f0bf347de2d",
       "source": "control/SCORING_CONTROLLER_ENGINEERING_REVIEW_PUBLIC.json",
       "source_sha256": "afe8cabee73e0ed0e703dfb95a8a1ce16d0419e6c2f8df27f1b43f0bf347de2d",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/SCORING_PUBLIC.json": {
+      "bytes": 223265,
+      "published_sha256": "54080e0cdb3bc11348eff7b0683bc062ff1a7517ba53a8bb92fdfb7228d5ab3f",
+      "source": "SCORING_PUBLIC.json",
+      "source_sha256": "58c659a42536855e09877972036e0f30376bd8c475d53dc7b9b86c6c41130529",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/SCORING_TRANSPORT_PUBLIC.json": {
+      "bytes": 359,
+      "published_sha256": "47cbec393dd3424f03f794e5dcfbbd574aa944daa0d6f85bd439d503766e3348",
+      "source": "control/SCORING_TRANSPORT_PUBLIC.json",
+      "source_sha256": "aebfacac74cde38139d752c0eb2ebce537ec9cafb34218a91cc03d9dd157f99f",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/STAGE5_CLOSURE_PUBLIC.json": {
+      "bytes": 555,
+      "published_sha256": "44350c0f0d8b64c5b4ec15f80f356eecc840e2d3801eff38d0a1f1a96cfd5c11",
+      "source": "control/STAGE5_CLOSURE_PUBLIC.json",
+      "source_sha256": "004e44ff9da59fa32f9855a5883f454557d46495765ed7c61298395a066efdce",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/STAGE5_OUTCOME_PUBLIC.json": {
+      "bytes": 39721,
+      "published_sha256": "093131696cd0f2971d608e60d408402a8fbebac31b0daff3768b18ef097af9c2",
+      "source": "STAGE5_OUTCOME_PUBLIC.json",
+      "source_sha256": "94a82fafe675484ce7a708228c4dd649668c70953eda892aaf32df92b8ace555",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "runtime_direct_v3/DIRECT_REPAIR_PUBLIC.json": {
@@ -532,9 +701,30 @@
   },
   "published_code_not_claimed_identical_to_executed_bytes_after_literal_rendering": true,
   "raw_text_row_outputs_or_credentials_published": false,
-  "score_aggregate_receipt_included": false,
+  "score_aggregate_receipt_included": true,
   "status": "public_outcomes_snapshot_prepared",
   "terminal_leg_accounting": {
+    "Astra": {
+      "field_validation_complete": 0,
+      "input_tokens": 0,
+      "logical_calls": 6,
+      "output_tokens": 0,
+      "outputs_accounted": 6,
+      "physical_attempts": 6,
+      "reserved_usd": 5.4539,
+      "selected": 6,
+      "terminal_no_active_requests": true
+    },
+    "Kimi": {
+      "input_tokens": 462650,
+      "logical_calls": 135,
+      "output_tokens": 985864,
+      "outputs_accounted": 135,
+      "physical_attempts": 135,
+      "reserved_usd": 30.6696996,
+      "selected": 135,
+      "terminal_no_active_requests": true
+    },
     "Luna": {
       "field_validation_complete": 134,
       "input_tokens": 596816,

@@ -1,0 +1,175 @@
+{
+  "actual_primary_counts": {
+    "adequate_support_binary_pass_blocked_only_by_relation_gate": 0,
+    "adequate_support_but_metric_gate_below": 25,
+    "all_confirmation_measures_retain_135_slot_denominator": true,
+    "binary_metric_gate_pass_among_all_51": 0,
+    "blocking_reason_counts_nonadditive": {
+      "insufficient_positive_cases": 24,
+      "known_reference_coverage_below_gate": 2,
+      "outcome_macro_f1_below_gate": 43,
+      "outcome_precision_below_gate": 42,
+      "outcome_recall_below_gate": 45,
+      "supported_relation_f1_below_gate": 38,
+      "supported_relation_precision_below_gate": 36,
+      "supported_relation_recall_below_gate": 38
+    },
+    "challenge_slots": 0,
+    "eligible_measures": 0,
+    "frozen_frame_slots": 135,
+    "inconclusive_insufficient_positive_support": 24,
+    "inconclusive_reference_coverage_below_80_percent": 2,
+    "interpretation_zh": "26项是支持量或参考覆盖不足，不能统称已充分证实语义失败；25项支持充分但二分类指标未过。51项二分类指标本身均未同时通过，零合格并非新增关系门槛单独挡住本可通过的研究量。",
+    "missing_case_rows": 0,
+    "overlap_between_these_two_inconclusive_groups": 0,
+    "quarantined_after_freeze": 0,
+    "relation_metric_gate_pass_among_38_structured_measures": 0,
+    "support_or_reference_coverage_inconclusive": 26
+  },
+  "astra_diagnostic_limit": {
+    "HTTP400_input_json_errors": 6,
+    "all_51_diagnostic_measures_comparable_case_count": 0,
+    "cap_exhausted": true,
+    "field_validation_complete": 0,
+    "interpretation_zh": "6个已记账诊断位置全部是传输输入错误，不能当作不同意、同意、未知语义判断或0%准确率；没有新增裁决证据，原6次物理额度已用完。",
+    "original_physical_cap": 6,
+    "physical_attempts": 6,
+    "primary_gates_recomputed": false,
+    "primary_reference_overwritten": false,
+    "primary_scores_hash_still_original": true,
+    "returned_semantic_judgments": 0
+  },
+  "at_utc": "2026-11-18T15:44:43.450404+00:00",
+  "binding_checks": {
+    "all_four_frozen_bundle_members_match": true,
+    "all_measure_ids_equal_exact_field_plus_kind": true,
+    "confirmation_measure_ids_match_all_51_frozen_specs": true,
+    "eligible_list_matches_individual_confirmation_flags": true,
+    "field_and_legacy_validator_source_hashes_match_protocol": true,
+    "field_count": 13,
+    "frame_sha_matches_original_execution_freeze": true,
+    "independent_measure_count": 51,
+    "mention_measures_binary_gate_only": 13,
+    "protocol_version_matches": true,
+    "structured_measures_binary_plus_relation_gate": 38
+  },
+  "cloud_calls": 0,
+  "code_modified": false,
+  "decision": "no_independently_eligible_measure_pilot_remains_unreleased",
+  "independent_aggregate_recalculation": {
+    "all_102_blocking_reason_lists_and_gate_flags_reconstructed_match": true,
+    "binary_logic": "Positive precision >= .90, positive recall >= .80, two-class macro F1 >= .85; candidate unknown stays in false negatives against known reference.",
+    "challenge_can_qualify": false,
+    "discrepancies": [],
+    "exact_quote_span_diagnostic_used_as_gate": false,
+    "measure_partition_rows_checked": 102,
+    "partitions_checked": [
+      "confirmation",
+      "challenge"
+    ],
+    "reference_unknown_logic": "Exclude unknown reference from comparison counts; retain every slot in coverage denominator.",
+    "relation_atom_matching_itself_reverified": false,
+    "relation_logic": "Only the 38 require_claim_agreement=true measures additionally require source-unit atom precision >= .90, recall >= .80, F1 >= .85; these are atom metrics, not binary macro F1.",
+    "verified_from_confusion_counts": [
+      "known/unknown reference denominator",
+      "positive/negative support",
+      "reference and candidate status totals",
+      "both classes TP FP FN precision recall F1",
+      "two-class macro F1",
+      "known-reference coverage"
+    ],
+    "verified_from_reported_atom_counts": [
+      "source-unit relation precision recall F1",
+      "exact-span diagnostic precision recall F1"
+    ]
+  },
+  "limits_and_uncertainties": [
+    "Independent recalculation verifies aggregate arithmetic and frozen gate mapping, not record-level semantic correctness or source-evidence/atom matching.",
+    "No raw/private carrier was reopened; the public-to-private original score SHA is a retained receipt reference, not a new byte verification.",
+    "Kimi is an independent machine reference, not human gold; no population accuracy, historical comparability or causal qualification follows.",
+    "SCORING_PUBLIC status describes its pre-Astra scoring checkpoint; final Astra receipts determine the later transport outcome."
+  ],
+  "new_model_calls": 0,
+  "new_qualifications": 0,
+  "original_private_scores_sha256_as_referenced_by_public_only": "54bd84cf767d4fe6e67ec27fdb291286c4d7ef875a8340463ccc34a931fac244",
+  "private_score_bytes_reverified": false,
+  "production_admission": false,
+  "rules_modified": false,
+  "saved_slot_is_not_acceptance": {
+    "Kimi_incomplete_output_preserved": 1,
+    "Kimi_outputs_accounted": 135,
+    "Kimi_response_saved": 134,
+    "Luna_field_validation_completed": 134,
+    "Luna_outputs_accounted": 135,
+    "Luna_response_saved": 135,
+    "interpretation_zh": "135是固定位置与输出会计分母，不是135条语义验收；字段校验已执行也不等于该条全部字段工程或语义通过。",
+    "semantic_production_accepted": 0
+  },
+  "scope": "Read-only local public aggregate and SHA-pinned protocol/scorer/validators; no private input/output or source body access.",
+  "source_body_reads": 0,
+  "source_sha256": [
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "58c659a42536855e09877972036e0f30376bd8c475d53dc7b9b86c6c41130529"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "d43e2a065cc516772ae0c31d4fff2c7dc2860c41257002f247fa21748e2b8598"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "2c37e739154296ea969da4126fe92bc922a8d1e5c07c4a42bcca505e9caa5ae0"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "f29d432ba0a614123190c7c14575fd4c49860ae3fbcc4c45b308c983f3a575a9"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "f7737143004374f9391a16ad2d1bab2fa47950c589232510045d1eee93bc2c20"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "6ce6a23d909dfd018737d3fba998268eb59ef207a36880e2a001bd112a9dcda8"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "b823c262d42ff042079fce8b8eb2145250f8c1cdcc5fbd4b5ac52a0ae09469c2"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "fc430ab35d658b604bb0c91a4795974bf25d7bba97e462b12c241d1ce95954ed"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "ce9a8e65e4f3ab1ce459858ac9074334303c0afdedb17ec84acf24d63af654fb"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "20831c4d79af18b77d711910c1595c3309d3086261a51470030fd3b60bcc6a1e"
+    },
+    {
+      "path": "[private-runtime-path]",
+      "sha256": "1b732c1bad9ce4b756f2e6cca35308f99a3f3dc388640bce98fea74b343499bd"
+    }
+  ],
+  "static_mapping_review": {
+    "field_lookup": "observe reads validation.fields[spec.field]; evaluate pools by spec.id and summarizes each independently.",
+    "inventory_selectors": {
+      "entry": "entry_items.target",
+      "experience": "experience_clauses.object",
+      "responsibility": "responsibility_items.dimension",
+      "technology": "technology_items and technology_inventory_status"
+    },
+    "legitimate_shared_guards": "Source identity/schema failures can block all fields; unassignable family items or explicitly linked qualification clauses can block their affected dependency fields. These are frozen engineering guards, not an all-13 quality gate.",
+    "unrelated_fields_projected_to_unknown_placeholders_not_joint_pass_requirements": true,
+    "waiver_and_current_duty_distinctions_preserved_in_frozen_mapping": true,
+    "whole_13_field_joint_gate_found": false,
+    "wrong_field_to_gate_mapping_found": false
+  },
+  "status": "independent_public_aggregate_and_frozen_logic_check_completed_no_gate_change"
+}

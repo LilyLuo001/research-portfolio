@@ -34,6 +34,22 @@ OPERATING_PREFIXES = (
 # Missing future artifacts are reported and skipped; supplied names cannot
 # expand this list. The repaired six executables have separate v2 destinations.
 FILES = {
+    'STAGE5_OUTCOME_PUBLIC.json': 'receipts/STAGE5_OUTCOME_PUBLIC.json',
+    'STAGE5_RESULT_ZH.md': 'STAGE5_RESULT_ZH.md',
+    'control/build_stage5_outcome.py': 'control/build_stage5_outcome.py',
+    'control/stage5_closure_control.py': 'control/stage5_closure_control.py',
+    'control/STAGE5_CLOSURE_PUBLIC.json': 'receipts/STAGE5_CLOSURE_PUBLIC.json',
+    'control/ASTRA_PREPARE_PUBLIC.json': 'receipts/ASTRA_PREPARE_PUBLIC.json',
+    'control/ASTRA_LAUNCH_PUBLIC.json': 'receipts/ASTRA_LAUNCH_PUBLIC.json',
+    'control/ASTRA_FAILURE_INSPECTION_PUBLIC.json': 'receipts/ASTRA_FAILURE_INSPECTION_PUBLIC.json',
+    'control/ASTRA_FAILURE_INSPECTION_V2_PUBLIC.json': 'receipts/ASTRA_FAILURE_INSPECTION_V2_PUBLIC.json',
+    'control/ASTRA_DIAGNOSTIC_TRANSPORT_PUBLIC.json': 'receipts/ASTRA_DIAGNOSTIC_TRANSPORT_PUBLIC.json',
+    'control/SCORING_TRANSPORT_PUBLIC.json': 'receipts/SCORING_TRANSPORT_PUBLIC.json',
+    'control/PRIMARY_DECISION_INDEPENDENT_CHECK_PUBLIC.json': 'receipts/PRIMARY_DECISION_INDEPENDENT_CHECK_PUBLIC.json',
+    'astra_transport_regression/README.md': 'astra_transport_regression/README.md',
+    'astra_transport_regression/REGRESSION_PUBLIC.json': 'astra_transport_regression/REGRESSION_PUBLIC.json',
+    'astra_transport_regression/ORIGINALS_BEFORE_PUBLIC.json': 'astra_transport_regression/ORIGINALS_BEFORE_PUBLIC.json',
+    'astra_transport_regression/test_astra_transport_regression.py': 'astra_transport_regression/test_astra_transport_regression.py',
     'control/stage5_direct_v4_control.py': 'control/stage5_direct_v4_control.py',
     'control/stage5_scoring_control.py': 'control/stage5_scoring_control.py',
     'control/stage5_astra_control.py': 'control/stage5_astra_control.py',
@@ -43,6 +59,10 @@ FILES = {
     'control/SCORING_CONTROLLER_COMPANION_INSTALL_REVIEW_PUBLIC.json': 'receipts/SCORING_CONTROLLER_COMPANION_INSTALL_REVIEW_PUBLIC.json',
     'control/SCORING_BUNDLE_PRESENCE_PUBLIC.json': 'receipts/SCORING_BUNDLE_PRESENCE_PUBLIC.json',
     'control/PILOT_READINESS_ZH.md': 'control/PILOT_READINESS_ZH.md',
+    'pilot_preparation/release_mask.py': 'pilot_preparation/release_mask.py',
+    'pilot_preparation/test_release_mask.py': 'pilot_preparation/test_release_mask.py',
+    'pilot_preparation/README.md': 'pilot_preparation/README.md',
+    'pilot_preparation/ENGINEERING_PUBLIC.json': 'pilot_preparation/ENGINEERING_PUBLIC.json',
     'control/DIRECT_ARM_DEPLOYMENT_PUBLIC.json': 'receipts/DIRECT_ARM_DEPLOYMENT_PUBLIC.json',
     'control/IDENTITY_RESOLUTION_EVIDENCE_PUBLIC.json': 'receipts/IDENTITY_RESOLUTION_EVIDENCE_PUBLIC.json',
     'control/DIRECT_V4_PREPARE_PUBLIC.json': 'receipts/DIRECT_V4_PREPARE_PUBLIC.json',
@@ -271,6 +291,12 @@ def make_plan(scanner, only=None):
     for leg, x in legs.items():
         status.append(f"- {leg}：{x['outputs_accounted']} 个槽位完成记账，{x['physical_attempts']} 次物理请求，保守预留 ${x['reserved_usd']:.8f}。")
     if not legs: status.append('尚未纳入终态回执。')
+    if 'STAGE5_OUTCOME_PUBLIC.json' in objects:
+        outcome = objects['STAGE5_OUTCOME_PUBLIC.json']
+        need(outcome['eligible_measures'] == [] and outcome['Astra_failure']['diagnostic_judgments_received'] == 0, 'closing_decision_summary_changed')
+        status += ['', '**实际决定：51项独立研究量，26项支持/参考覆盖不足，25项支持足但指标未达标，合格项0，试产未启动。**',
+            'Astra的6个槽位均为HTTP400请求错误，没有审核答案；不能把终态记账称为审核完成。错误复盘与未应用修复另存。',
+            '当前阶段五模型进程已结束。详见STAGE5_RESULT_ZH.md；本轮主确认结束不等于五亿语义目标完成。']
     if 'control/DIRECT_V4_LAUNCH_PUBLIC.json' in objects:
         status += ['', '按用户最新指令，OpenCode 已停止；当前 Kimi 为现有 Azure VM 托管身份直接调用。v4 导入此前 11 次真实响应及全部预算，从剩余 124 条继续；不重复请求旧输入。ARM 部署与响应头均核实 300 万 TPM，本次固定确认仍使用原保守调度上限。',
             'v3 因返回模型短名与部署全名不同而保护暂停；部署身份核查及精确投影证据保留，旧账本不改。v4 只修正运行身份核验，不改变模型请求、输入、评分规则；厂商官方别名未宣称获证。',

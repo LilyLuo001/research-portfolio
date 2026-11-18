@@ -1,0 +1,1149 @@
+{
+  "Astra_failure": {
+    "HTTP_400_attempts": 6,
+    "cause": "Responses json_object requires json in input; instructions-only wording was insufficient.",
+    "diagnostic_judgments_received": 0,
+    "not_a_model_quality_or_permission_failure": true,
+    "originals_preserved": true,
+    "param": "input",
+    "previously_documented_regression_reintroduced": true,
+    "retry_or_recovery_launched": false,
+    "six_physical_attempt_cap_not_reset": true
+  },
+  "at_utc": "2026-11-18T15:43:26.745671+00:00",
+  "budget": {
+    "conservative_reserved_usd": 37.2664193,
+    "historical_plus_this_run_reservation_usd": 215.3315657,
+    "infrastructure_and_Codex_session_cost_not_included": true,
+    "invoice_verified": false,
+    "no_usage_not_treated_as_zero_actual_cost": true,
+    "old_step3_cap_usd": 250,
+    "phase_cap_usd": 450,
+    "pilot_cap_usd_not_spent": 150,
+    "reported_usage_priced_at_inherited_rates_usd": 12.5209276,
+    "reservation_and_priced_usage_not_added": true,
+    "stage5_cap_usd": 50
+  },
+  "direct_Kimi": {
+    "OpenCode_used_for_v4": false,
+    "authentication": "existing_VM_managed_identity",
+    "new_direct_v4_calls": 124,
+    "prior_calls_reused_not_replayed": 11,
+    "scheduled_TPM_during_fixed_confirmation": 240000,
+    "verified_TPM": 3000000
+  },
+  "duration": {
+    "direct_v4_seconds": 4382.539641,
+    "freeze_to_last_leg_terminal_seconds": 11711.71223
+  },
+  "eligible_measures": [],
+  "five_modules_retained": true,
+  "fixed_fresh_contexts": 135,
+  "fresh_candidate_rows": 150,
+  "gates_changed_after_outputs": false,
+  "human_gold_or_population_accuracy_claimed": false,
+  "independent_research_measures": 51,
+  "measure_decision_counts": {
+    "adequate_support_below_quality_gate": 25,
+    "insufficient_support_or_reference_coverage": 26
+  },
+  "measure_results_compact": [
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.general_work.mention",
+      "outcome_macro_f1": 0.6369949494949495,
+      "positive_precision": 0.42857142857142855,
+      "positive_recall": 0.3333333333333333,
+      "support": {
+        "not_mentioned": 101,
+        "present": 18
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.general_work.years",
+      "outcome_macro_f1": 0.7111650485436893,
+      "positive_precision": 0.5454545454545454,
+      "positive_recall": 0.46153846153846156,
+      "support": {
+        "not_mentioned": 106,
+        "present": 13
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.general_work.strength",
+      "outcome_macro_f1": 0.6203481392557023,
+      "positive_precision": 0.4,
+      "positive_recall": 0.3157894736842105,
+      "support": {
+        "not_mentioned": 100,
+        "present": 19
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.general_work.waiver",
+      "outcome_macro_f1": 0.4780701754385965,
+      "positive_precision": 0.0,
+      "positive_recall": 0.0,
+      "support": {
+        "not_mentioned": 118,
+        "present": 1
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.general_work.conditionality",
+      "outcome_macro_f1": 0.6203481392557023,
+      "positive_precision": 0.4,
+      "positive_recall": 0.3157894736842105,
+      "support": {
+        "not_mentioned": 100,
+        "present": 19
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.general_work.group",
+      "outcome_macro_f1": 0.5469691598723857,
+      "positive_precision": 0.3333333333333333,
+      "positive_recall": 0.1,
+      "support": {
+        "not_mentioned": 109,
+        "present": 10
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.general_work.clause_relation",
+      "outcome_macro_f1": 0.6203481392557023,
+      "positive_precision": 0.4,
+      "positive_recall": 0.3157894736842105,
+      "support": {
+        "not_mentioned": 100,
+        "present": 19
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.occupation_task.mention",
+      "outcome_macro_f1": 0.8105507631055077,
+      "positive_precision": 0.7971014492753623,
+      "positive_recall": 0.8088235294117647,
+      "support": {
+        "not_mentioned": 52,
+        "present": 68
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.occupation_task.years",
+      "outcome_macro_f1": 0.7976190476190477,
+      "positive_precision": 0.7380952380952381,
+      "positive_recall": 0.7380952380952381,
+      "support": {
+        "not_mentioned": 77,
+        "present": 42
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.occupation_task.strength",
+      "outcome_macro_f1": 0.7910322904467124,
+      "positive_precision": 0.7971014492753623,
+      "positive_recall": 0.7857142857142857,
+      "support": {
+        "not_mentioned": 50,
+        "present": 70
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.occupation_task.waiver",
+      "outcome_macro_f1": 0.45701357466063347,
+      "positive_precision": null,
+      "positive_recall": 0.0,
+      "support": {
+        "not_mentioned": 116,
+        "present": 4
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.occupation_task.conditionality",
+      "outcome_macro_f1": 0.7910322904467124,
+      "positive_precision": 0.7971014492753623,
+      "positive_recall": 0.7857142857142857,
+      "support": {
+        "not_mentioned": 50,
+        "present": 70
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.occupation_task.group",
+      "outcome_macro_f1": 0.6850282485875706,
+      "positive_precision": 0.75,
+      "positive_recall": 0.375,
+      "support": {
+        "not_mentioned": 88,
+        "present": 32
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.occupation_task.clause_relation",
+      "outcome_macro_f1": 0.7938995618469835,
+      "positive_precision": 0.7971014492753623,
+      "positive_recall": 0.7971014492753623,
+      "support": {
+        "not_mentioned": 50,
+        "present": 69
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 118,
+      "known_reference_coverage": 0.8740740740740741,
+      "measure": "experience.industry_domain.mention",
+      "outcome_macro_f1": 0.7379679144385026,
+      "positive_precision": 0.8108108108108109,
+      "positive_recall": 0.5882352941176471,
+      "support": {
+        "not_mentioned": 67,
+        "present": 51
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 118,
+      "known_reference_coverage": 0.8740740740740741,
+      "measure": "experience.industry_domain.years",
+      "outcome_macro_f1": 0.7252945252945253,
+      "positive_precision": 0.8461538461538461,
+      "positive_recall": 0.4230769230769231,
+      "support": {
+        "not_mentioned": 92,
+        "present": 26
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 118,
+      "known_reference_coverage": 0.8740740740740741,
+      "measure": "experience.industry_domain.strength",
+      "outcome_macro_f1": 0.7296712442779858,
+      "positive_precision": 0.8108108108108109,
+      "positive_recall": 0.5769230769230769,
+      "support": {
+        "not_mentioned": 66,
+        "present": 52
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 118,
+      "known_reference_coverage": 0.8740740740740741,
+      "measure": "experience.industry_domain.waiver",
+      "outcome_macro_f1": 0.46846846846846846,
+      "positive_precision": null,
+      "positive_recall": 0.0,
+      "support": {
+        "not_mentioned": 116,
+        "present": 2
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 118,
+      "known_reference_coverage": 0.8740740740740741,
+      "measure": "experience.industry_domain.conditionality",
+      "outcome_macro_f1": 0.7296712442779858,
+      "positive_precision": 0.8108108108108109,
+      "positive_recall": 0.5769230769230769,
+      "support": {
+        "not_mentioned": 66,
+        "present": 52
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 118,
+      "known_reference_coverage": 0.8740740740740741,
+      "measure": "experience.industry_domain.group",
+      "outcome_macro_f1": 0.5881895881895882,
+      "positive_precision": 0.6666666666666666,
+      "positive_recall": 0.2,
+      "support": {
+        "not_mentioned": 98,
+        "present": 20
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 118,
+      "known_reference_coverage": 0.8740740740740741,
+      "measure": "experience.industry_domain.clause_relation",
+      "outcome_macro_f1": 0.7296712442779858,
+      "positive_precision": 0.8108108108108109,
+      "positive_recall": 0.5769230769230769,
+      "support": {
+        "not_mentioned": 66,
+        "present": 52
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.tool_specific.mention",
+      "outcome_macro_f1": 0.7583333333333333,
+      "positive_precision": 0.5,
+      "positive_recall": 0.75,
+      "support": {
+        "not_mentioned": 104,
+        "present": 16
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.tool_specific.years",
+      "outcome_macro_f1": 0.4780701754385965,
+      "positive_precision": 0.0,
+      "positive_recall": 0.0,
+      "support": {
+        "not_mentioned": 118,
+        "present": 2
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.tool_specific.strength",
+      "outcome_macro_f1": 0.7583333333333333,
+      "positive_precision": 0.5,
+      "positive_recall": 0.75,
+      "support": {
+        "not_mentioned": 104,
+        "present": 16
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 120,
+      "known_reference_coverage": 0.8888888888888888,
+      "measure": "experience.tool_specific.waiver",
+      "outcome_macro_f1": 0.4827586206896552,
+      "positive_precision": null,
+      "positive_recall": null,
+      "support": {
+        "not_mentioned": 120
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.tool_specific.conditionality",
+      "outcome_macro_f1": 0.7478070175438596,
+      "positive_precision": 0.4782608695652174,
+      "positive_recall": 0.7333333333333333,
+      "support": {
+        "not_mentioned": 104,
+        "present": 15
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.tool_specific.group",
+      "outcome_macro_f1": 0.4823008849557522,
+      "positive_precision": null,
+      "positive_recall": 0.0,
+      "support": {
+        "not_mentioned": 115,
+        "present": 4
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 119,
+      "known_reference_coverage": 0.8814814814814815,
+      "measure": "experience.tool_specific.clause_relation",
+      "outcome_macro_f1": 0.7478070175438596,
+      "positive_precision": 0.4782608695652174,
+      "positive_recall": 0.7333333333333333,
+      "support": {
+        "not_mentioned": 104,
+        "present": 15
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "entry.explicit_no_experience.mention",
+      "outcome_macro_f1": 0.7752891951759784,
+      "positive_precision": 1.0,
+      "positive_recall": 0.4166666666666667,
+      "support": {
+        "not_mentioned": 117,
+        "present": 12
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "entry.explicit_no_experience.conditionality",
+      "outcome_macro_f1": 0.7752891951759784,
+      "positive_precision": 1.0,
+      "positive_recall": 0.4166666666666667,
+      "support": {
+        "not_mentioned": 117,
+        "present": 12
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "entry.explicit_new_graduate.mention",
+      "outcome_macro_f1": 0.49609375,
+      "positive_precision": null,
+      "positive_recall": null,
+      "support": {
+        "not_mentioned": 129
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "entry.explicit_new_graduate.conditionality",
+      "outcome_macro_f1": 0.49609375,
+      "positive_precision": null,
+      "positive_recall": null,
+      "support": {
+        "not_mentioned": 129
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "entry.current_student_internship.mention",
+      "outcome_macro_f1": 0.49609375,
+      "positive_precision": null,
+      "positive_recall": null,
+      "support": {
+        "not_mentioned": 129
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "entry.current_student_internship.conditionality",
+      "outcome_macro_f1": 0.49609375,
+      "positive_precision": null,
+      "positive_recall": null,
+      "support": {
+        "not_mentioned": 129
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "entry.explicit_junior_or_entry_label.mention",
+      "outcome_macro_f1": 0.8209366391184573,
+      "positive_precision": 0.8,
+      "positive_recall": 0.5714285714285714,
+      "support": {
+        "not_mentioned": 121,
+        "present": 7
+      }
+    },
+    {
+      "blocking_reasons": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "entry.explicit_junior_or_entry_label.conditionality",
+      "outcome_macro_f1": 0.8209366391184573,
+      "positive_precision": 0.8,
+      "positive_recall": 0.5714285714285714,
+      "support": {
+        "not_mentioned": 121,
+        "present": 7
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "responsibility.independent_judgment.mention",
+      "outcome_macro_f1": 0.7902777777777777,
+      "positive_precision": 0.9166666666666666,
+      "positive_recall": 0.75,
+      "support": {
+        "not_mentioned": 40,
+        "present": 88
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "responsibility.independent_judgment.strict_current_duty",
+      "outcome_macro_f1": 0.7578585780024629,
+      "positive_precision": 0.9152542372881356,
+      "positive_recall": 0.675,
+      "support": {
+        "not_mentioned": 48,
+        "present": 80
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "responsibility.independent_judgment.relations",
+      "outcome_macro_f1": 0.7902777777777777,
+      "positive_precision": 0.9166666666666666,
+      "positive_recall": 0.75,
+      "support": {
+        "not_mentioned": 40,
+        "present": 88
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "responsibility.client_ownership.mention",
+      "outcome_macro_f1": 0.8591434239701249,
+      "positive_precision": 0.8888888888888888,
+      "positive_recall": 0.6956521739130435,
+      "support": {
+        "not_mentioned": 106,
+        "present": 23
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "responsibility.client_ownership.strict_current_duty",
+      "outcome_macro_f1": 0.8591434239701249,
+      "positive_precision": 0.8888888888888888,
+      "positive_recall": 0.6956521739130435,
+      "support": {
+        "not_mentioned": 106,
+        "present": 23
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 129,
+      "known_reference_coverage": 0.9555555555555556,
+      "measure": "responsibility.client_ownership.relations",
+      "outcome_macro_f1": 0.8591434239701249,
+      "positive_precision": 0.8888888888888888,
+      "positive_recall": 0.6956521739130435,
+      "support": {
+        "not_mentioned": 106,
+        "present": 23
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_precision_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 127,
+      "known_reference_coverage": 0.9407407407407408,
+      "measure": "responsibility.people_supervision.mention",
+      "outcome_macro_f1": 0.9111584932480454,
+      "positive_precision": 0.875,
+      "positive_recall": 0.84,
+      "support": {
+        "not_mentioned": 102,
+        "present": 25
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 127,
+      "known_reference_coverage": 0.9407407407407408,
+      "measure": "responsibility.people_supervision.strict_current_duty",
+      "outcome_macro_f1": 0.8569139194139194,
+      "positive_precision": 0.7619047619047619,
+      "positive_recall": 0.7619047619047619,
+      "support": {
+        "not_mentioned": 106,
+        "present": 21
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_precision_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 126,
+      "known_reference_coverage": 0.9333333333333333,
+      "measure": "responsibility.people_supervision.relations",
+      "outcome_macro_f1": 0.8966666666666667,
+      "positive_precision": 0.8695652173913043,
+      "positive_recall": 0.8,
+      "support": {
+        "not_mentioned": 101,
+        "present": 25
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_recall_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "responsibility.training_mentoring.mention",
+      "outcome_macro_f1": 0.9083333333333334,
+      "positive_precision": 1.0,
+      "positive_recall": 0.7560975609756098,
+      "support": {
+        "not_mentioned": 87,
+        "present": 41
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_recall_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "responsibility.training_mentoring.strict_current_duty",
+      "outcome_macro_f1": 0.9156569256355429,
+      "positive_precision": 1.0,
+      "positive_recall": 0.7692307692307693,
+      "support": {
+        "not_mentioned": 89,
+        "present": 39
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "responsibility.training_mentoring.relations",
+      "outcome_macro_f1": 0.8355281591482209,
+      "positive_precision": 1.0,
+      "positive_recall": 0.6226415094339622,
+      "support": {
+        "not_mentioned": 75,
+        "present": 53
+      }
+    },
+    {
+      "blocking_reasons": [
+        "outcome_macro_f1_below_gate"
+      ],
+      "decision": "adequate_support_below_quality_gate",
+      "known_reference_cases": 128,
+      "known_reference_coverage": 0.9481481481481482,
+      "measure": "technology.mention",
+      "outcome_macro_f1": 0.809186505038703,
+      "positive_precision": 0.9113924050632911,
+      "positive_recall": 0.8181818181818182,
+      "support": {
+        "not_mentioned": 40,
+        "present": 88
+      }
+    },
+    {
+      "blocking_reasons": [
+        "known_reference_coverage_below_gate",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 69,
+      "known_reference_coverage": 0.5111111111111111,
+      "measure": "technology.family_role",
+      "outcome_macro_f1": 0.8384506376948512,
+      "positive_precision": 0.8275862068965517,
+      "positive_recall": 0.8275862068965517,
+      "support": {
+        "not_mentioned": 40,
+        "present": 29
+      }
+    },
+    {
+      "blocking_reasons": [
+        "known_reference_coverage_below_gate",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "decision": "insufficient_support_or_reference_coverage",
+      "known_reference_cases": 69,
+      "known_reference_coverage": 0.5111111111111111,
+      "measure": "technology.exact_named_relation",
+      "outcome_macro_f1": 0.8384506376948512,
+      "positive_precision": 0.8275862068965517,
+      "positive_recall": 0.8275862068965517,
+      "support": {
+        "not_mentioned": 40,
+        "present": 29
+      }
+    }
+  ],
+  "model_legs": {
+    "Astra": {
+      "at_utc": "2026-11-18T15:35:16.975969+00:00",
+      "attempt_states": {
+        "http_error_terminal": 6
+      },
+      "input_tokens": 0,
+      "logical_calls": 6,
+      "output_sha256": "9b9dfbdce93aab7d9f2f8f6e07a884ddc84642eba223167ae268bfb9fe82fa53",
+      "output_tokens": 0,
+      "outputs_accounted": 6,
+      "physical_attempts": 6,
+      "reported_usage_priced_at_inherited_rates_usd": 0.0,
+      "reserved_usd": 5.4539,
+      "selected": 6
+    },
+    "Kimi": {
+      "at_utc": "2026-11-18T15:31:23.614682+00:00",
+      "attempt_states": {
+        "incomplete_output_preserved": 1,
+        "response_saved": 134
+      },
+      "input_tokens": 462650,
+      "logical_calls": 135,
+      "output_sha256": "9c3454636902066a27ee955d1255c30f0cc7490013cd9eee621e3ec73c2af8fd",
+      "output_tokens": 985864,
+      "outputs_accounted": 135,
+      "physical_attempts": 135,
+      "reported_usage_priced_at_inherited_rates_usd": 12.401531,
+      "reserved_usd": 30.6696996,
+      "selected": 135
+    },
+    "Luna": {
+      "at_utc": "2026-11-18T13:31:18.861963+00:00",
+      "attempt_states": {
+        "response_saved": 135
+      },
+      "input_tokens": 596816,
+      "logical_calls": 135,
+      "output_sha256": "73298346792b0343cdba21d1f502d07509d33363b36006b3724751490c4dea40",
+      "output_tokens": 119430,
+      "outputs_accounted": 135,
+      "physical_attempts": 135,
+      "reported_usage_priced_at_inherited_rates_usd": 0.1193966,
+      "reserved_usd": 1.1428197,
+      "selected": 135
+    }
+  },
+  "new_confirmation_sample_drawn": false,
+  "new_production_accepted": 0,
+  "physical_attempts_all_legs": 276,
+  "pilot_launched": false,
+  "primary_reference_overwritten": false,
+  "prior_exposed_rows_excluded_without_replacement": 15,
+  "sources_sha256": {
+    "ASTRA_DIAGNOSTIC_PUBLIC.json": "20831c4d79af18b77d711910c1595c3309d3086261a51470030fd3b60bcc6a1e",
+    "ASTRA_FINAL_PUBLIC.json": "ce9a8e65e4f3ab1ce459858ac9074334303c0afdedb17ec84acf24d63af654fb",
+    "EXECUTION_FREEZE_PUBLIC.json": "6ce6a23d909dfd018737d3fba998268eb59ef207a36880e2a001bd112a9dcda8",
+    "KIMI_FINAL_PUBLIC.json": "fc430ab35d658b604bb0c91a4795974bf25d7bba97e462b12c241d1ce95954ed",
+    "LUNA_FINAL_PUBLIC.json": "b823c262d42ff042079fce8b8eb2145250f8c1cdcc5fbd4b5ac52a0ae09469c2",
+    "SCORING_PUBLIC.json": "58c659a42536855e09877972036e0f30376bd8c475d53dc7b9b86c6c41130529",
+    "control/ASTRA_FAILURE_INSPECTION_V2_PUBLIC.json": "1b732c1bad9ce4b756f2e6cca35308f99a3f3dc388640bce98fea74b343499bd",
+    "control/DIRECT_V4_LAUNCH_PUBLIC.json": "2898326d9845a399d8c27b5995fb450fcf2794fd4ad69b766bcb80b13d5a2bef",
+    "control/SCORING_TRANSPORT_PUBLIC.json": "aebfacac74cde38139d752c0eb2ebce537ec9cafb34218a91cc03d9dd157f99f",
+    "protocol/PROTOCOL_FREEZE.json": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11"
+  },
+  "stage5_model_workers_still_running": false,
+  "status": "primary_confirmation_scored_no_pilot_admission_Astra_diagnostic_unavailable",
+  "whole_corpus_completed": false
+}

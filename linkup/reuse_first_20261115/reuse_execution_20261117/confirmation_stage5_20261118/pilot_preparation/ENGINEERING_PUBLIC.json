@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-11-18T14:36:15.638494+00:00",
+  "cloud_calls": 0,
+  "derived_scientific_qualification_granted": false,
+  "errors": 0,
+  "failures": 0,
+  "frozen_protocol_members_verified_unchanged": 4,
+  "model_calls": 0,
+  "production_admission": false,
+  "protocol_bundle_sha256": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11",
+  "real_rows_or_bodies_read": 0,
+  "real_scores_read": 0,
+  "remaining_external_controls": [
+    "trusted_original_score_lineage",
+    "same_row_source_output_validation_observation_binding",
+    "verified_fresh_and_genuinely_missing_queue",
+    "project_exclusive_claims",
+    "shared_budget_and_rate_controls",
+    "approved_complete_derived_dependency_definition"
+  ],
+  "runtime_files_modified": false,
+  "source_sha256": {
+    "README.md": "5cb81a86cf66eba8c37fc7911367bec56f9028bc513fdf9fbe70247d6913345c",
+    "release_mask.py": "ba00a5001b79c5e7e2e4e5833aa9225f5673ab288e00b4ea345501eef1ffa5ca",
+    "test_release_mask.py": "1dd6ca5a95f8c718fb3a58e893371949078a69550775a613b2fc57367d397d35"
+  },
+  "status": "offline_unlaunched_release_mask_synthetic_tests_passed",
+  "test_command": "python3 -B -m unittest -v test_release_mask.py",
+  "tested_aggregate": "generated_by_original_SHA_verified_field_score.summarize",
+  "tests_passed": 17,
+  "tests_run": 17
+}

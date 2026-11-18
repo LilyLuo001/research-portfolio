@@ -176,6 +176,12 @@ assert cp.returncode==0,'Kimi_cloud_validation_failed_details_retained'
 r=json.loads(cp.stdout);(K/'VALIDATION_PUBLIC.json').write_text(json.dumps(r,sort_keys=True)+'\n');print(json.dumps(r))
 '''
 def main():
+ if len(sys.argv)==2 and sys.argv[1]=='close_stage5':
+  import stage5_closure_control as closure
+  return closure.dispatch(sys.argv[1],control,BASE)
+ if len(sys.argv)==2 and sys.argv[1]=='inspect_astra_failure':
+  source=BASE+'''\nimport re,collections\nA=C/'astra_diagnostic_v1';db=sqlite3.connect((A/'ADMISSION_PRIVATE.sqlite3').as_uri()+'?mode=ro',uri=True);db.row_factory=sqlite3.Row;rows=[dict(x) for x in db.execute('select * from attempts order by id')];db.close();counts=collections.Counter();messages=[]\nfor x in rows:\n d=json.loads(x['detail']);p=A/'results'/x['case_id']/('HTTP_%04d_PRIVATE.bin'%x['id']);raw=p.read_bytes();assert hashlib.sha256(raw).hexdigest()==d['raw_sha256'];obj=json.loads(raw);e=obj.get('error',{});code=e.get('code') if isinstance(e,dict) else None;param=e.get('param') if isinstance(e,dict) else None\n safe=lambda v: v if isinstance(v,str) and re.fullmatch(r'[A-Za-z][A-Za-z0-9_.-]{0,95}',v) else None\n msg=e.get('message','') if isinstance(e,dict) else '';flags={k:(k in msg.lower()) for k in ['json_object','json_schema','unsupported','not supported','store','reasoning','authentication','permission','maximum','token']};flags['exact_previously_documented_json_input_error']=(msg=="Response input messages must contain the word 'json' in some form to use 'text.format' of type 'json_object'.")\n counts[json.dumps({'http_status':d.get('http_status'),'code':safe(code),'param':safe(param),'message_keyword_flags':flags},sort_keys=True)]+=1\nprint(json.dumps({'status':'saved_Astra_HTTP_errors_inspected_no_new_calls','errors':[dict(json.loads(k),count=v) for k,v in counts.items()],'raw_error_bodies_preserved':True,'new_model_calls':0}))\n'''
+  r=control.vm(source,'stage5_astra_error_inspect_'+str(time.time_ns()));control.save(D/'control/ASTRA_FAILURE_INSPECTION_V2_PUBLIC.json',r);print(json.dumps(r));return
  if len(sys.argv)==2 and sys.argv[1] in ['prepare_astra','launch_astra','status_astra','diagnose_astra','download_astra']:
   import stage5_astra_control as astra
   return astra.dispatch(sys.argv[1],control,BASE)

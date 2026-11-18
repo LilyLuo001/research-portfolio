@@ -1,0 +1,75 @@
+{
+  "at_utc": "2026-11-18T15:45:15.802413+00:00",
+  "authorization": "None for patch application, retries, recovery, cap changes, model calls or launch.",
+  "changes": {
+    "lines_replaced": 2,
+    "original_source_json_suffix_bytes_preserved": true,
+    "other_payload_fields_unchanged": true,
+    "payload_prefix": "Return JSON.\n",
+    "policies_rates_budgets_and_cap_unchanged": true,
+    "quarantine_preserved": true,
+    "stop_scope": "first non-filter Astra HTTP400; conservative admission stop, not error classification"
+  },
+  "diagnosis": "known Responses json_object input transport regression; not evidence of model failure",
+  "diagnostics_complete": false,
+  "live_runtime_launches": 0,
+  "new_cloud_commands": 0,
+  "new_model_calls": 0,
+  "observed_incident": {
+    "field_validation_complete": 0,
+    "http400_input_validation_rejections": 6,
+    "model_outputs": 0,
+    "outputs_accounted": 6,
+    "physical_attempts": 6,
+    "physical_request_cap": 6,
+    "remaining_physical_attempts": 0,
+    "reserved_usd_not_invoice": 5.4539
+  },
+  "offline_tests": {
+    "existing_fixture_reused": true,
+    "failed": 0,
+    "identity": "synthetic workflow module; real helper never imported",
+    "known400_fake_calls": 1,
+    "network": "synthetic opener plus denied socket connections",
+    "passed": 13,
+    "provider_acceptance_verified": false,
+    "remaining_synthetic_slots_unprocessed": 5,
+    "results_sha256": "16f2acee3b56c385330fba53c34331fd3006b7914e01c6e0a92a76ca3b359b64",
+    "run": 13,
+    "runtime_compilation": "memory only, no runtime copy installed",
+    "skipped": 0
+  },
+  "physical_cap_reset": false,
+  "public_artifact_sha256": {
+    "ASTRA_TRANSPORT_FIX_UNAPPLIED.patch": "f2f633d78303be293f6c9a8864c7c6078c256f44a4299aa3ea95941f959c30b0",
+    "OFFLINE_TEST_RESULTS.txt": "16f2acee3b56c385330fba53c34331fd3006b7914e01c6e0a92a76ca3b359b64",
+    "ORIGINALS_BEFORE_PUBLIC.json": "2cdaf020f0228c74ea8b69c9f7bec91494b5f2747d17a5156d30672659db3b3b",
+    "README.md": "e3762f458ca89f4e8191f5be39471bb98804c6e62ce7902e8f9bdcae91c79050",
+    "test_astra_transport_regression.py": "2f012e5ded2a7bc41d7515a2a8962a3e255df3c24a073fe11d89897b55e399cd"
+  },
+  "publisher": {
+    "allowlist_candidates": [
+      "README.md",
+      "REGRESSION_PUBLIC.json",
+      "ORIGINALS_BEFORE_PUBLIC.json",
+      "test_astra_transport_regression.py"
+    ],
+    "fenced_copy_byte_identical": true,
+    "fenced_diff": "README.md",
+    "standalone_patch_sha256": "f2f633d78303be293f6c9a8864c7c6078c256f44a4299aa3ea95941f959c30b0",
+    "tests_read_fenced_diff_without_standalone_patch": true
+  },
+  "read_only_independent_review": "No blocking findings; offline proof only, no provider acceptance or rerun authorization.",
+  "runtime_patch_applied": false,
+  "source_data_modified": false,
+  "status": "unapplied_minimal_transport_proposal_offline_verified",
+  "unchanged_originals": {
+    "all_evidence_hashes_equal_before": true,
+    "all_runtime_hashes_equal_before": true,
+    "public_evidence_files_verified": 4,
+    "runtime_files_verified": 17,
+    "snapshot_sha256": "2cdaf020f0228c74ea8b69c9f7bec91494b5f2747d17a5156d30672659db3b3b",
+    "stage5_cloud_worker_sha256": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common_sha256": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808"
+  }
+}
