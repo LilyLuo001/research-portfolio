@@ -1,0 +1,75 @@
+{
+  "status": "bounded_live_profile_not_global_completion_quote",
+  "at_utc": "2026-11-18T17:10:04.671919+00:00",
+  "physical_rows_prepared": 1000,
+  "new_unique_contexts_prepared": 885,
+  "old_or_duplicate_rows_not_reinferred": 115,
+  "first100_physical_projection_exists": true,
+  "first100_projection_sha256": "46035a33e19874610d2c78aff91fb48c112df49ea82b41f57b8e9ac2bad5e2cb",
+  "pilot_reserved_usd": 2.8061724,
+  "CPU": {
+    "new_unique_inputs": 885,
+    "wall_seconds": 3.737366860732436,
+    "short_run_candidates_per_second": 236.79773299711894,
+    "hypothetical_500m_single_process_CPU_kernel_days": 24.438734965032147,
+    "not_end_to_end_or_sustained_burst_VM_forecast": true,
+    "model_API_cost": 0
+  },
+  "conditional_scenarios_not_forecast": [
+    {
+      "hypothetical_new_unique_Luna_inputs": 500000,
+      "Luna_priced_usage_usd_if_current_mix_persists": 403.39308510638296,
+      "Luna_continuous_channel_days_if_current_rate_persists": 75.11343082160126,
+      "excludes_Kimi_Astra_VM_storage_IO_retries": true
+    },
+    {
+      "hypothetical_new_unique_Luna_inputs": 5000000,
+      "Luna_priced_usage_usd_if_current_mix_persists": 4033.93085106383,
+      "Luna_continuous_channel_days_if_current_rate_persists": 751.1343082160125,
+      "excludes_Kimi_Astra_VM_storage_IO_retries": true
+    },
+    {
+      "hypothetical_new_unique_Luna_inputs": 50000000,
+      "Luna_priced_usage_usd_if_current_mix_persists": 40339.3085106383,
+      "Luna_continuous_channel_days_if_current_rate_persists": 7511.343082160126,
+      "excludes_Kimi_Astra_VM_storage_IO_retries": true
+    },
+    {
+      "hypothetical_new_unique_Luna_inputs": 500000000,
+      "Luna_priced_usage_usd_if_current_mix_persists": 403393.08510638296,
+      "Luna_continuous_channel_days_if_current_rate_persists": 75113.43082160126,
+      "excludes_Kimi_Astra_VM_storage_IO_retries": true
+    }
+  ],
+  "global_hold": null,
+  "Luna": {
+    "physical_attempts": 94,
+    "unique_claimed_contexts": 94,
+    "states": {
+      "field_local_validation_complete": 94
+    },
+    "returned_usage_requests": 94,
+    "input_tokens": 417214,
+    "output_tokens": 68233,
+    "priced_usage_usd_not_invoice": 0.0758379,
+    "configured_input_usd_per_million": 0.1,
+    "configured_output_usd_per_million": 0.5,
+    "reserved_usd": 0.7965232,
+    "mean_priced_usage_usd_per_returned_request": 0.000806786170212766,
+    "mean_upper_tokens_per_request": 36736.51063829787,
+    "request_latency_median_seconds": 6.093655109405518,
+    "observed_limit_token_headers": [
+      "250000",
+      "None"
+    ],
+    "post_rate_upgrade_completed_requests": 75,
+    "post_rate_upgrade_span_seconds": 973.4700634479523,
+    "post_rate_upgrade_completions_per_hour": 277.35829804943546
+  },
+  "other_models_usage_priced_usd": {
+    "Kimi": 0.27827240000000003,
+    "Astra": 0.0980375
+  },
+  "cloud_profile_path": "/home/linkup/migration/pilot_economic_20261119/run01/reports/PROFILE_1795021804628431213_PUBLIC.json",
+  "cloud_profile_sha256": "a4357ea01f77c7e9a4f01c4ca5f6b34d7319f705f3dc75564484a41671ccf444"
+}

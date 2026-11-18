@@ -96,6 +96,28 @@ B=C/'preparation/batch0001';cpu=read(B/'CPU_RULE_RECEIPT_PUBLIC.json');m=read(B/
 print(json.dumps({'CPU':cpu,'physical_rows':m['physical_rows'],'state_counts':m['state_counts']}))
 '''
         target=P/'control/CPU_BATCH0001_PUBLIC.json'
+    elif action=='checkpoint':
+        source=BASE+r'''
+state=read(C/'control/FINITE_PIPELINE_STATE_PUBLIC.json')
+projection=C/'projection/batch0001/PHYSICAL_PROJECTION_PUBLIC.json'
+r={'pipeline':state,'first100_projection':read(projection) if projection.exists() else None}
+if r['first100_projection']:
+ p=r['first100_projection'];r['field_coverage']={k:{'known':v.get('0',0)+v.get('1',0),'positive':v.get('1',0),'unknown':v.get('unknown',0)} for k,v in p.pop('field_physical_counts').items()}
+print(json.dumps(r))
+'''
+        target=P/'control'/f'CHECKPOINT_{time.time_ns()}_PUBLIC.json'
+    elif action=='profile':
+        source=BASE+r'''
+out=C/'reports'/('PROFILE_'+str(time.time_ns())+'_PUBLIC.json')
+cp=subprocess.run([sys.executable,'-B',str(C/'control/profile_run.py'),'--directory',str(C),'--out',str(out)],capture_output=True,text=True,timeout=90)
+(C/'control'/(out.stem+'_EXECUTION_PRIVATE.json')).write_text(json.dumps({'returncode':cp.returncode,'stdout':cp.stdout,'stderr':cp.stderr}))
+assert cp.returncode==0,'profile_failed_private_diagnostic_retained'
+r=read(out)
+keys=['status','at_utc','physical_rows_prepared','new_unique_contexts_prepared','old_or_duplicate_rows_not_reinferred','first100_physical_projection_exists','first100_projection_sha256','pilot_reserved_usd','CPU','conditional_scenarios_not_forecast','global_hold']
+result={k:r[k] for k in keys};result['Luna']=r['models']['Luna'];result['other_models_usage_priced_usd']={k:r['models'][k]['priced_usage_usd_not_invoice'] for k in ['Kimi','Astra']};result['cloud_profile_path']=str(out);result['cloud_profile_sha256']=sha(out)
+print(json.dumps(result))
+'''
+        target=P/'control'/f'PROFILE_{time.time_ns()}_PUBLIC.json'
     else:raise SystemExit('unknown_action')
     compile(source,'<finite-pilot-control>','exec')
     result=control.vm(source,'economic_pilot_'+action+'_'+str(time.time_ns()))

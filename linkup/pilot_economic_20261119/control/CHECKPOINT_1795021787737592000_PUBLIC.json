@@ -1,0 +1,134 @@
+{
+  "pipeline": {
+    "active_worker_pids": [],
+    "at_utc": "2026-11-18T17:09:30.150481+00:00",
+    "child_log": "FINITE_0003_batch0002_luna_PRIVATE.log",
+    "child_pid": 161107,
+    "completed_batches": [
+      "batch0001"
+    ],
+    "controller_pid": 160896,
+    "current_batch": "batch0001",
+    "end_cursor_exclusive": {
+      "row_offset": 53804,
+      "shard_ordinal": 0
+    },
+    "events": 3,
+    "last_committed_batch": "batch0002",
+    "last_committed_manifest_sha256": "e4fb30ae960aaf2ddca7777a3df35a47dfa4f2de524ddeeb0378390e8b2e5a50",
+    "physical_rows_prepared": 1000,
+    "policy_sha256": "1f02319e19ef5a0dfb30949916058ad14ee7ee35511bf2ed07f15ccb32d815a9",
+    "stage": "batch0002_luna",
+    "started_epoch": 1795020984.5299895,
+    "status": "executing_batch0002_luna",
+    "version": "economic-finite-pipeline-20261119-v1"
+  },
+  "first100_projection": {
+    "status": "versioned_physical_projection_complete",
+    "through_batch": "batch0001",
+    "physical_rows": 100,
+    "unique_new_contexts_prepared": 93,
+    "physical_row_conservation": true,
+    "mapping_coverage": 1.0,
+    "semantic_physical_state_counts": {
+      "field_local_validation_complete": 93,
+      "not_reconciled": 1,
+      "saved_unverified": 1,
+      "old_context_unresolved": 5
+    },
+    "sha256": {
+      "CONTEXT_MEASUREMENTS_PRIVATE.jsonl": "538f2459485f5a666c618d29527ff1b28fb7de3658c35684e3ff1027c9288085",
+      "PHYSICAL_INCREMENT_PRIVATE.jsonl": "8a775e8716be634d0036bbe8d5a43af1d9fa70799de594edd55180431dd5517b"
+    },
+    "source_manifests": [
+      {
+        "batch_id": "batch0001",
+        "sha256": "1cb635faf0ead79e434a7f62fc4a4ebf65673d20e5333445ded9f370e22d3ee7"
+      }
+    ],
+    "policy_sha256": "1f02319e19ef5a0dfb30949916058ad14ee7ee35511bf2ed07f15ccb32d815a9",
+    "projection_code_sha256": "6cc6bc1be22a006db51fb527d66ff6c41cfa2755506e89f6c763206867225c8f",
+    "old_outputs_changed": false,
+    "model_calls": 0,
+    "structured_relation_atoms_certified": false,
+    "population_accuracy_claimed": false,
+    "elapsed_seconds": 0.11833135294727981
+  },
+  "field_coverage": {
+    "experience.occupation_task.mention": {
+      "known": 71,
+      "positive": 38,
+      "unknown": 29
+    },
+    "entry.explicit_junior_or_entry_label.mention": {
+      "known": 89,
+      "positive": 0,
+      "unknown": 11
+    },
+    "entry.explicit_junior_or_entry_label.conditionality": {
+      "known": 89,
+      "positive": 0,
+      "unknown": 11
+    },
+    "responsibility.client_ownership.mention": {
+      "known": 89,
+      "positive": 17,
+      "unknown": 11
+    },
+    "responsibility.client_ownership.strict_current_duty": {
+      "known": 89,
+      "positive": 17,
+      "unknown": 11
+    },
+    "responsibility.client_ownership.relations": {
+      "known": 89,
+      "positive": 18,
+      "unknown": 11
+    },
+    "responsibility.people_supervision.mention": {
+      "known": 89,
+      "positive": 14,
+      "unknown": 11
+    },
+    "responsibility.people_supervision.strict_current_duty": {
+      "known": 89,
+      "positive": 14,
+      "unknown": 11
+    },
+    "responsibility.people_supervision.relations": {
+      "known": 89,
+      "positive": 14,
+      "unknown": 11
+    },
+    "responsibility.training_mentoring.mention": {
+      "known": 90,
+      "positive": 16,
+      "unknown": 10
+    },
+    "responsibility.training_mentoring.strict_current_duty": {
+      "known": 90,
+      "positive": 16,
+      "unknown": 10
+    },
+    "responsibility.training_mentoring.relations": {
+      "known": 90,
+      "positive": 18,
+      "unknown": 10
+    },
+    "technology.mention": {
+      "known": 88,
+      "positive": 56,
+      "unknown": 12
+    },
+    "technology.family_role": {
+      "known": 81,
+      "positive": 49,
+      "unknown": 19
+    },
+    "technology.exact_named_relation": {
+      "known": 81,
+      "positive": 49,
+      "unknown": 19
+    }
+  }
+}
