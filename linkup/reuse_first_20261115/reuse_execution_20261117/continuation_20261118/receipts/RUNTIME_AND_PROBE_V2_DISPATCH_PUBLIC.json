@@ -1,0 +1,473 @@
+{
+  "at_utc": "2026-11-18T04:48:01.575956+00:00",
+  "bootstrap": {
+    "additional_dependencies_installed": [],
+    "at_utc": "2026-11-18T04:48:00.539743+00:00",
+    "automatic_retries": 0,
+    "bootstrap_sha256": "db717844bab4ccf5c874337e0d4c3f397694475e558666c29644c3b2bbafdf6e",
+    "downloaded_wheel": {
+      "bytes": 42087026,
+      "sha256": "b4c4156a625f1e35d6c0b2132635a237708944eb41df5fbe7d50f20d20c17832"
+    },
+    "elapsed_seconds": 1.025,
+    "expanded_bytes": 138448704,
+    "extracted_file_count": 770,
+    "extracted_manifest_sha256": "d469d99e26f53f7da2236b5da844f6fa6ee01b901d2fc4623b19ba74a791284d",
+    "global_environment_policy": "no_pip_no_site_no_global_writes_process_local_sys_path",
+    "global_python_environment_modified": false,
+    "host_glibc": [
+      2,
+      39
+    ],
+    "import_test": {
+      "all_pyarrow_modules_isolated": true,
+      "footer_only_read_metadata_passed": true,
+      "numpy_loaded": false,
+      "synthetic_columns": 1,
+      "synthetic_rows": 2,
+      "version": "19.0.1"
+    },
+    "import_test_code_sha256": "0c918e2afa65351b39e466991f3bf5b884074eed6ca42b9f1611d91e6b22eac8",
+    "limits": {
+      "ZIP_members": 20000,
+      "expanded_bytes": 419430400,
+      "import_test_seconds": 30,
+      "metadata_bytes": 2097152,
+      "setup_seconds": 180,
+      "wheel_bytes": 104857600
+    },
+    "metadata": {
+      "bytes": 44112,
+      "sha256": "6fb0e33ca8b495901e1799a056520d8eaca64b7bc5ff2ffe4756055900d862b6"
+    },
+    "metadata_url": "https://pypi.org/pypi/pyarrow/19.0.1/json",
+    "new_cloud_resources": 0,
+    "new_model_calls": 0,
+    "official_SHA256_verified": true,
+    "package": "pyarrow",
+    "purpose": "isolated_CPU_Parquet_footer_metadata_only",
+    "python": "3.12.3",
+    "selected_wheel": {
+      "advertised_bytes": 42087026,
+      "advertised_sha256": "b4c4156a625f1e35d6c0b2132635a237708944eb41df5fbe7d50f20d20c17832",
+      "filename": "pyarrow-19.0.1-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "platform_tags": [
+        "manylinux_2_28_x86_64"
+      ],
+      "selected_glibc_floor": [
+        2,
+        28
+      ],
+      "url": "https://files.pythonhosted.org/packages/27/2e/29bb28a7102a6f71026a9d70d1d61df926887e36ec797f2e6acfd2dd3867/pyarrow-19.0.1-cp312-cp312-manylinux_2_28_x86_64.whl"
+    },
+    "status": "isolated_pinned_runtime_ready",
+    "version": "19.0.1",
+    "isolated_directory_relative_to_migration": "scope_continuation_20261117/run001/parquet_runtime_20261118_run001/libraries"
+  },
+  "probe": {
+    "at_utc": "2026-11-18T04:48:01.629768+00:00",
+    "status": "bounded_narrow_schema_probe",
+    "identity_type": "existing_VM_managed_identity",
+    "metadata_only": true,
+    "source_bodies_read": 0,
+    "new_model_calls": 0,
+    "new_resources": 0,
+    "network_bytes_read": 10995,
+    "files": [
+      {
+        "asset": "existing_base_ad",
+        "recorded_content_sha256": "60497897e15de3b9a69ab12010f34bf0fcb2c82d0c6f1e5963777418e4ce9234",
+        "expected_size": 11817,
+        "whole_content_sha_recomputed": false,
+        "locator_identity": "existing_verified_ledger_SHA_and_size",
+        "duplicate_verified_locator_count": 4,
+        "source_container": "scnet-kunshan",
+        "status": "live_Blob_footer_schema_read",
+        "footer_sha256": "11d3f0516b140e80f2c29f72efd523a37f9e51f78276ba2e8fe1fc2095206d4b",
+        "footer_bytes": 9015,
+        "footer_rows": 0,
+        "row_groups": 1,
+        "columns": [
+          {
+            "name": "JOB_HASH",
+            "type": "string"
+          },
+          {
+            "name": "SOURCE_FILE",
+            "type": "string"
+          },
+          {
+            "name": "SOURCE_ROW",
+            "type": "int64"
+          },
+          {
+            "name": "RECORD_SOURCE_ROW",
+            "type": "int64"
+          },
+          {
+            "name": "CREATED",
+            "type": "timestamp[ms]"
+          },
+          {
+            "name": "STATE",
+            "type": "string"
+          },
+          {
+            "name": "usable",
+            "type": "bool"
+          },
+          {
+            "name": "DESCRIPTION_EMPTY",
+            "type": "bool"
+          },
+          {
+            "name": "PARSE_ERROR",
+            "type": "bool"
+          },
+          {
+            "name": "INPUT_EVIDENCE_TRUNCATED",
+            "type": "bool"
+          },
+          {
+            "name": "ENRICHMENT_INCOMPLETE",
+            "type": "bool"
+          },
+          {
+            "name": "exp_general_work_main",
+            "type": "bool"
+          },
+          {
+            "name": "exp_general_work_required",
+            "type": "bool"
+          },
+          {
+            "name": "exp_general_work_preferred",
+            "type": "bool"
+          },
+          {
+            "name": "exp_general_work_broad",
+            "type": "bool"
+          },
+          {
+            "name": "exp_general_work_exact_or_unspecified",
+            "type": "bool"
+          },
+          {
+            "name": "exp_specific_tool_main",
+            "type": "bool"
+          },
+          {
+            "name": "exp_specific_tool_required",
+            "type": "bool"
+          },
+          {
+            "name": "exp_specific_tool_preferred",
+            "type": "bool"
+          },
+          {
+            "name": "exp_specific_tool_broad",
+            "type": "bool"
+          },
+          {
+            "name": "exp_specific_tool_exact_or_unspecified",
+            "type": "bool"
+          },
+          {
+            "name": "exp_industry_domain_main",
+            "type": "bool"
+          },
+          {
+            "name": "exp_industry_domain_required",
+            "type": "bool"
+          },
+          {
+            "name": "exp_industry_domain_preferred",
+            "type": "bool"
+          },
+          {
+            "name": "exp_industry_domain_broad",
+            "type": "bool"
+          },
+          {
+            "name": "exp_industry_domain_exact_or_unspecified",
+            "type": "bool"
+          },
+          {
+            "name": "exp_object_unspecified_main",
+            "type": "bool"
+          },
+          {
+            "name": "exp_object_unspecified_required",
+            "type": "bool"
+          },
+          {
+            "name": "exp_object_unspecified_preferred",
+            "type": "bool"
+          },
+          {
+            "name": "exp_object_unspecified_broad",
+            "type": "bool"
+          },
+          {
+            "name": "exp_object_unspecified_exact_or_unspecified",
+            "type": "bool"
+          },
+          {
+            "name": "tech_traditional_software_detected",
+            "type": "bool"
+          },
+          {
+            "name": "tech_generative_ai_detected",
+            "type": "bool"
+          },
+          {
+            "name": "tech_predictive_ai_detected",
+            "type": "bool"
+          },
+          {
+            "name": "tech_unspecified_ai_detected",
+            "type": "bool"
+          },
+          {
+            "name": "tech_traditional_software_use_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_traditional_software_develop_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_traditional_software_implement_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_generative_ai_use_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_generative_ai_develop_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_generative_ai_implement_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_predictive_ai_use_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_predictive_ai_develop_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_predictive_ai_implement_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_unspecified_ai_use_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_unspecified_ai_develop_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "tech_unspecified_ai_implement_explicit",
+            "type": "bool"
+          },
+          {
+            "name": "exp_occupation_task_main",
+            "type": "bool"
+          },
+          {
+            "name": "exp_occupation_task_available",
+            "type": "bool"
+          }
+        ],
+        "full_source_rows_read": 0
+      },
+      {
+        "asset": "existing_Records_narrow_index",
+        "recorded_content_sha256": "1601a43505081b70336a6fe309c0e503b7f3d9606077b1f2fec789086f053a03",
+        "expected_size": 7775,
+        "whole_content_sha_recomputed": false,
+        "locator_identity": "existing_verified_ledger_SHA_and_size",
+        "duplicate_verified_locator_count": 1,
+        "source_container": "scnet-kunshan",
+        "status": "live_Blob_footer_schema_read",
+        "footer_sha256": "c1c208858f674701082e1807bb5bc874f1a5d831505755aef9c1135008fca901",
+        "footer_bytes": 1980,
+        "footer_rows": 82,
+        "row_groups": 1,
+        "columns": [
+          {
+            "name": "JOB_HASH",
+            "type": "string"
+          },
+          {
+            "name": "COMPANY_ID",
+            "type": "decimal128(10, 0)"
+          },
+          {
+            "name": "COUNTRY",
+            "type": "string"
+          },
+          {
+            "name": "STATE",
+            "type": "string"
+          },
+          {
+            "name": "CREATED",
+            "type": "timestamp[ms]"
+          },
+          {
+            "name": "LAST_UPDATED",
+            "type": "timestamp[ms]"
+          },
+          {
+            "name": "LAST_CHECKED",
+            "type": "timestamp[ms]"
+          },
+          {
+            "name": "DELETE_DATE",
+            "type": "timestamp[ms]"
+          },
+          {
+            "name": "RECORD_SOURCE_ROW",
+            "type": "uint64"
+          }
+        ],
+        "full_source_rows_read": 0
+      }
+    ],
+    "pyarrow_available": true,
+    "one_cached_publication_receipt": {
+      "sha256": "05eee028edb1057ac3452f7db4472a31e66ffdaecee039662f9637c410f3ae3b",
+      "bytes": 10200,
+      "shape": {
+        "bytes": "int",
+        "files": "int",
+        "remote_path": "str",
+        "remote_storage_accounted_bytes": "int",
+        "shard_complete": {
+          "accounting": {
+            "canonical_usa_rows": "int",
+            "disposition_counts": {
+              "record_unmatched": "int"
+            },
+            "raw_rows": "int",
+            "region": "str",
+            "row_conservation": "bool",
+            "shard_id": "str",
+            "sidecar_rows": "int",
+            "sidecar_sha256": "str",
+            "sidecar_source_files": {
+              "type": "list",
+              "length": 1,
+              "first_type": "str"
+            },
+            "source_bytes": "int",
+            "source_file": "str",
+            "source_hash_recomputed": "bool",
+            "source_sha256_cached": "str"
+          },
+          "code_sha256": {
+            "enrichment": "str",
+            "lean_writer": "str",
+            "parser": "str"
+          },
+          "lean_complete": {
+            "chunks": {
+              "type": "list",
+              "length": 1,
+              "first_type": {
+                "cpu_parse_seconds": "float",
+                "description_empty_rows": "int",
+                "enrichment_incomplete_rows": "int",
+                "experience_rows": "int",
+                "output_bytes": "int",
+                "outputs": "dict",
+                "parse_errors": "int",
+                "processed_rows": "int",
+                "requested_rows": "int",
+                "start": "int",
+                "status": "str",
+                "technology_rows": "int",
+                "truncated_rows": "int",
+                "v6_audit_rows": "int",
+                "wall_seconds": "float",
+                "write_seconds": "float"
+              }
+            },
+            "created_utc": "str",
+            "dcu_provenance": {
+              "adapter_sha256": "str",
+              "architecture": "str",
+              "backend": "str",
+              "batch_rows": "int",
+              "executable_sha256": "str",
+              "frozen_enrichment_sha256": "str",
+              "frozen_v5_sha256": "str",
+              "frozen_v6_sha256": "str",
+              "hip_source_sha256": "str",
+              "prefilter_sha256": "str"
+            },
+            "dcu_timing": {
+              "calls": "int",
+              "kernel_milliseconds": "int",
+              "rows": "int",
+              "subprocess_wall_seconds": "int"
+            },
+            "description_empty_rows": "int",
+            "enrichment_incomplete_rows": "int",
+            "enrichment_sha256": "str",
+            "experience_rows": "int",
+            "max_rss_kb": "int",
+            "output_bytes": "int",
+            "output_cap_bytes": "int",
+            "parse_errors": "int",
+            "parser_sha256": "str",
+            "processed_rows": "int",
+            "schemas": {
+              "ad_status": "str",
+              "experience": "str",
+              "technology": "str",
+              "v6_audit": "str"
+            },
+            "source": "str",
+            "source_bytes": "int",
+            "source_sha256": "str",
+            "stage_wall_seconds": {
+              "cpu_parse": "float",
+              "cpu_parse_and_write": "float",
+              "cpu_parse_worker_max": "float",
+              "gpu_calls": "float",
+              "normalize": "float",
+              "write": "float",
+              "write_worker_max": "float"
+            },
+            "status": "str",
+            "technology_rows": "int",
+            "truncated_rows": "int",
+            "v6_audit_rows": "int",
+            "wall_seconds": "float",
+            "workers": "int"
+          },
+          "status": "str"
+        },
+        "shard_complete_sha256": "str",
+        "shard_id": "str",
+        "source_deleted_after_verification": "bool",
+        "source_manifest_sha256": "str",
+        "status": "str"
+      },
+      "raw_data_read": false,
+      "all_shard_accounting_repeated": false
+    },
+    "elapsed_seconds": 2.569809701992199
+  },
+  "new_model_calls": 0,
+  "new_resources": 0,
+  "probe_returncode": 0
+}

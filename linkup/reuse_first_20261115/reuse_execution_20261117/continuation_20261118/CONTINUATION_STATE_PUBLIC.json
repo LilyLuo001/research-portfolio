@@ -1,0 +1,85 @@
+{
+  "at_utc": "2026-11-18T04:57:17.764477+00:00",
+  "status": "review_delivery_and_bounded_reuse_continuation_complete_global_identity_reconciliation_continues",
+  "accepted_research_positioning": {
+    "core": [
+      "B_experience_recombination",
+      "D_worker_entry_paths"
+    ],
+    "support": [
+      "A_opportunity_reallocation",
+      "C_task_evolution"
+    ],
+    "extension": [
+      "E_historical_comparison"
+    ]
+  },
+  "completed": {
+    "existing_Module_A_draft_delivered_unchanged": true,
+    "existing_reuse_table_preview_delivered": true,
+    "provider_to_base_source_bindings": 2464,
+    "evidence_atoms_previously_checked": 126000,
+    "evidence_atoms_newly_checked": 54888,
+    "evidence_atoms_total_checked": 180888,
+    "old_prefix_exact_equality_QA_passed": true,
+    "real_small_base_rows_aggregated": 29,
+    "real_small_Records_rows_aggregated": 82,
+    "new_semantic_acceptances": 0,
+    "new_model_calls": 0
+  },
+  "unchanged_existing_assets": {
+    "US_base_ad_count": 204774035,
+    "overlapping_newer_field_increment_ad_count": 5804936,
+    "reused_carrier_contexts": 45710,
+    "variable_and_evidence_atoms": 2963270,
+    "structural_ad_four_keys": 62414,
+    "source_reuse_database_sha256": "6f77e3ee4e39d9e60e9eec7731c891c632a528440587450105af3ca1580b5b01"
+  },
+  "new_private_outputs_relative_to_migration": {
+    "source_binding": "source_binding_20261118/run002/DESCRIPTION_TO_BASE_SOURCE_BINDING_PRIVATE.jsonl",
+    "source_binding_sha256": "70dadccd266bb70131c40d2573a6d8f81af1978951a7331137fadc134c45f11a",
+    "evidence_readiness": "evidence_readiness_20261117/run002/EVIDENCE_READINESS_V1_PRIVATE.sqlite",
+    "evidence_readiness_sha256": "59c404fbdee0fc190bbeb20619c563b608845b8db421df1fcba32edd66aab92e",
+    "real_data_statistics": "scope_identity_slice_20261118/run001/SMALL_DATA_STATS_PUBLIC.json"
+  },
+  "remaining": {
+    "full_delivery_unique_ads": null,
+    "full_delivery_unique_normalized_contexts": null,
+    "global_net_missing_inputs_by_field": null,
+    "Records_Description_base_ad_identity_join": "pending_bounded_narrow_index_join",
+    "Revelio_delivery_and_match": "not_verified_pending_external_data",
+    "new_confirmation_route": "not_executed_pending_frozen_150_or_fewer_unexposed_inputs"
+  },
+  "budget": {
+    "phase_cap_usd": 450,
+    "caps_not_reset": true,
+    "new_extraction_model_calls": 0,
+    "new_extraction_model_charge_usd": 0,
+    "new_VM_or_GPU_resources": 0,
+    "marginal_existing_VM_storage_cost": "not_a_final_invoice_or_exact_stage_attribution",
+    "historical_model_reservation_usd": 178.0651464,
+    "historical_priced_model_usage_usd": 37.846032,
+    "reservation_and_priced_usage_not_additive": true,
+    "confirmation_max_inputs": 150,
+    "confirmation_cap_usd": 50,
+    "conditional_pilot_max_inputs": 10000,
+    "conditional_pilot_cap_usd": 150,
+    "conditional_pilot_released": false
+  },
+  "boundaries": [
+    "No body rescan or old-ad extraction rerun",
+    "Source-file provenance binding is not an advertisement-level join",
+    "Retained evidence declarations are not source-text offset or semantic revalidation",
+    "All accepted/saved/unknown/protected states remain unchanged",
+    "No human annotation required",
+    "No timer restored",
+    "Approximate 500M target retained, not asserted to be verified unique advertisements",
+    "CREATED is first-observed-time proxy, not automatic AI causal evidence"
+  ],
+  "latest_run_state": {
+    "source": "receipts/CONTINUATION_FINAL_QA_PUBLIC.json",
+    "related_running_processes": [],
+    "current_bounded_jobs_completed": true,
+    "model_production_running": false
+  }
+}

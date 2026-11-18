@@ -1,0 +1,145 @@
+{
+  "at_utc": "2026-11-18T04:52:32.431620+00:00",
+  "status": "two_small_derived_data_files_read_and_aggregated",
+  "identity_type": "existing_VM_managed_identity",
+  "execution_channel": "existing_VM_Agent_RunCommand_as_linkup",
+  "files": [
+    {
+      "asset": "existing_base_ad",
+      "rows": 29,
+      "source_bytes": 18572,
+      "source_sha256": "8fdc060f81e70e0087644a317ce1d3e648bc4abc40fe7f142b9da9a8958dbe72",
+      "whole_file_SHA_verified": true,
+      "decoded_columns": [
+        "JOB_HASH",
+        "SOURCE_FILE",
+        "SOURCE_ROW",
+        "RECORD_SOURCE_ROW",
+        "CREATED"
+      ],
+      "JOB_HASH_unique": 29,
+      "CREATED_min": "2015-10-16T17:43:00",
+      "CREATED_max": "2026-02-26T01:33:00",
+      "full_dataset_or_representative_sample": false,
+      "four_key_unique": 29,
+      "four_key_duplicate_rows": 0,
+      "source_file_unique": 1,
+      "nonempty_base_chosen_after_empty_schema_probe": true,
+      "field_null_counts": [
+        {
+          "field_name": "JOB_HASH",
+          "null_count": 0
+        },
+        {
+          "field_name": "SOURCE_FILE",
+          "null_count": 0
+        },
+        {
+          "field_name": "SOURCE_ROW",
+          "null_count": 0
+        },
+        {
+          "field_name": "RECORD_SOURCE_ROW",
+          "null_count": 0
+        },
+        {
+          "field_name": "CREATED",
+          "null_count": 0
+        }
+      ]
+    },
+    {
+      "asset": "existing_Records_narrow_index",
+      "rows": 82,
+      "source_bytes": 7775,
+      "source_sha256": "1601a43505081b70336a6fe309c0e503b7f3d9606077b1f2fec789086f053a03",
+      "whole_file_SHA_verified": true,
+      "decoded_columns": [
+        "JOB_HASH",
+        "COMPANY_ID",
+        "COUNTRY",
+        "STATE",
+        "CREATED",
+        "LAST_UPDATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "RECORD_SOURCE_ROW"
+      ],
+      "JOB_HASH_unique": 82,
+      "CREATED_min": "2024-07-31T15:37:00",
+      "CREATED_max": "2026-08-31T14:05:00",
+      "full_dataset_or_representative_sample": false,
+      "COUNTRY_counts": {
+        "AUS": 6,
+        "USA": 48,
+        "IND": 4,
+        "RUS": 1,
+        "HKG": 1,
+        "FRA": 1,
+        "DEU": 5,
+        "ISR": 1,
+        "ESP": 1,
+        "DNK": 1,
+        "ECU": 1,
+        "GBR": 3,
+        "NLD": 1,
+        "SWE": 1,
+        "SAU": 1,
+        "FIN": 1,
+        "PER": 1,
+        "SVK": 1,
+        "NPL": 1,
+        "CHN": 1,
+        "CAN": 1
+      },
+      "field_null_counts": [
+        {
+          "field_name": "JOB_HASH",
+          "null_count": 0
+        },
+        {
+          "field_name": "COMPANY_ID",
+          "null_count": 0
+        },
+        {
+          "field_name": "COUNTRY",
+          "null_count": 0
+        },
+        {
+          "field_name": "STATE",
+          "null_count": 12
+        },
+        {
+          "field_name": "CREATED",
+          "null_count": 0
+        },
+        {
+          "field_name": "LAST_UPDATED",
+          "null_count": 66
+        },
+        {
+          "field_name": "LAST_CHECKED",
+          "null_count": 0
+        },
+        {
+          "field_name": "DELETE_DATE",
+          "null_count": 1
+        },
+        {
+          "field_name": "RECORD_SOURCE_ROW",
+          "null_count": 0
+        }
+      ]
+    }
+  ],
+  "network_bytes_read": 38766,
+  "elapsed_seconds": 6.3728236788883805,
+  "new_model_calls": 0,
+  "new_semantic_acceptance": 0,
+  "raw_advertisement_bodies_read": 0,
+  "new_resources": 0,
+  "old_results_modified": false,
+  "global_gap_count_inferred": false,
+  "arbitrary_base_to_Records_join_attempted": false,
+  "time_boundary": "CREATED is a first-observed-time proxy; changes do not establish AI causality."
+}

@@ -1,0 +1,76 @@
+{
+  "at_utc": "2026-11-18T04:53:00.948431+00:00",
+  "returncode": 0,
+  "code_sha256": "bb735f03492421dea465d1c100ac28821454f00c53ad04499f11e3d250e91830",
+  "worker_summary": {
+    "status": "source_mapping_examined_with_unresolved",
+    "processed": 2464,
+    "remaining": 0,
+    "mapping_status_counts": {
+      "unresolved_source_binding": 2464
+    },
+    "distinct_provider_entries_bound": 0,
+    "publication_receipt_bytes_read": 317184716,
+    "elapsed_seconds": 2.7065584608353674,
+    "receipt_sha256": "ebc64564220b937145fa8a3f33dcfbc2e2e8f242e4cb72426989f3660c9e2334",
+    "model_calls": 0,
+    "network_calls": 0
+  },
+  "new_model_calls": 0,
+  "new_resources": 0,
+  "report": {
+    "at_utc": "2026-11-18T04:53:00.938150+00:00",
+    "status": "source_mapping_examined_with_unresolved",
+    "source_mapping_scope": "selected_existing_Description_provider_files_to_existing_US_base_shards",
+    "target_base_shards": 2464,
+    "processed_cached_publication_receipts": 2464,
+    "remaining_cached_publication_receipts": 0,
+    "mapping_status_counts": {
+      "unresolved_source_binding": 2464
+    },
+    "unresolved_reason_counts": {
+      "cached_source_sections_disagree": 2464
+    },
+    "path_binding_counts": {},
+    "distinct_source_SHA_bound": 0,
+    "distinct_provider_entries_bound": 0,
+    "provider_entries_with_multiple_base_bindings": 0,
+    "all_provider_entries_bound_once": false,
+    "publication_receipt_bytes_read": 317184716,
+    "register_metadata_bytes_read": 6116109,
+    "max_publication_receipt_bytes": 402653184,
+    "max_receipts": 2464,
+    "max_single_receipt_bytes": 1048576,
+    "cap_basis_prior_publication_receipt_bytes": 317184716,
+    "cap_authorization": "root_explicit_384MiB_cached_metadata_window_not_financial_budget_reset",
+    "elapsed_seconds": 2.7065584608353674,
+    "wall_limit_seconds": 120,
+    "memory_limit_bytes": 1073741824,
+    "outputs": [
+      {
+        "file": "SOURCE_BINDING_INPUT_PINS_PRIVATE.json",
+        "bytes": 198173,
+        "sha256": "5299b2a613216755a766727ec5357a52bbaa972f113a2c5e19f2556911feeff9"
+      },
+      {
+        "file": "DESCRIPTION_TO_BASE_SOURCE_BINDING_PRIVATE.jsonl",
+        "bytes": 909216,
+        "sha256": "8d75cb0bdcca4d94c1fc69e63b30c1f5d730cc4f347ecb95f90544de85d92434"
+      }
+    ],
+    "code_sha256": "bb735f03492421dea465d1c100ac28821454f00c53ad04499f11e3d250e91830",
+    "source_inputs_opened_for_writing": 0,
+    "previous_registers_overwritten": 0,
+    "source_body_files_read": 0,
+    "source_body_content_SHA_recomputed": false,
+    "network_calls": 0,
+    "model_calls": 0,
+    "new_resources": 0,
+    "new_semantically_accepted": 0,
+    "new_advertisement_identity_joins": 0,
+    "global_unique_ads": null,
+    "global_per_field_missing_inputs": null,
+    "stage1_stage2_and_phase_budgets_reset": false,
+    "interpretation": "Existing cached receipt declarations now bind provider source files to base shards. Not a new source-body hash check, advertisement-level join or semantic acceptance."
+  }
+}

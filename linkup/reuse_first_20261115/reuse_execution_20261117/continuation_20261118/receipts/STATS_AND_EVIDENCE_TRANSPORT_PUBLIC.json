@@ -1,0 +1,36 @@
+{
+  "at_utc": "2026-11-18T04:52:37.972496+00:00",
+  "runs": [
+    {
+      "script": "cloud_small_data_stats.py",
+      "returncode": 0
+    },
+    {
+      "script": "cloud_evidence_prefix_qa.py",
+      "returncode": 0
+    }
+  ],
+  "http_status": 201,
+  "blob_relative_path": "review-delivery/20261118/continuation_reports_6ca6973e3e02ead0.zip",
+  "bytes": 5103,
+  "sha256": "6ca6973e3e02ead09275d0cbbe496e3e7ae6be522e6b1d117355077e2ce2be97",
+  "files": {
+    "EVIDENCE_READINESS_V1_PUBLIC.json": {
+      "sha256": "8674bc8c7a778513cc7b83a531af7c9a1ba0236b7450a223f44886ddaca8aef3",
+      "bytes": 2444
+    },
+    "EVIDENCE_READINESS_V2_PUBLIC.json": {
+      "sha256": "a04ade7e860eba1544f1da07512ce04ed09fb003e970a5dd8263474ed1c53161",
+      "bytes": 3726
+    },
+    "PREFIX_QA_PUBLIC.json": {
+      "sha256": "811d8b7250d219ee0a8ac7c7f5287487b2fd1dae0dfdd07e9e008cd88be000ae",
+      "bytes": 490
+    },
+    "SMALL_DATA_STATS_PUBLIC.json": {
+      "sha256": "cd411e2488c445dcd653634aedd5a09bf0542f607708127a4264f419b0493372",
+      "bytes": 2829
+    }
+  },
+  "model_calls": 0
+}

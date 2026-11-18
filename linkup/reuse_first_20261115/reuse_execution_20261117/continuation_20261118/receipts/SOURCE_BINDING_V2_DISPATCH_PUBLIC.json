@@ -1,0 +1,78 @@
+{
+  "at_utc": "2026-11-18T04:55:52.509897+00:00",
+  "returncode": 0,
+  "code_sha256": "010499bd6b90302e474f046ca648e84e65d0e5415f8dd99eb4e04c2352514675",
+  "worker_summary": {
+    "status": "source_mapping_complete",
+    "processed": 2464,
+    "remaining": 0,
+    "mapping_status_counts": {
+      "source_provenance_bound": 2464
+    },
+    "distinct_provider_entries_bound": 2464,
+    "publication_receipt_bytes_read": 317184716,
+    "elapsed_seconds": 1.7891927110031247,
+    "receipt_sha256": "3ea31864e6b0e64a763a360aa461b775d6ef4f6246f0c0c9f74fa9930cb54906",
+    "model_calls": 0,
+    "network_calls": 0
+  },
+  "new_model_calls": 0,
+  "new_resources": 0,
+  "report": {
+    "at_utc": "2026-11-18T04:55:52.497588+00:00",
+    "status": "source_mapping_complete",
+    "source_mapping_scope": "selected_existing_Description_provider_files_to_existing_US_base_shards",
+    "mapping_version": "v2_original_raw_canonical_lean_stage_semantics",
+    "prior_v1_false_same_source_assumption_preserved": true,
+    "target_base_shards": 2464,
+    "processed_cached_publication_receipts": 2464,
+    "remaining_cached_publication_receipts": 0,
+    "mapping_status_counts": {
+      "source_provenance_bound": 2464
+    },
+    "unresolved_reason_counts": {},
+    "path_binding_counts": {
+      "identical_raw_basename_SHA_size_distinct_roots_preserved": 2464
+    },
+    "distinct_source_SHA_bound": 2464,
+    "distinct_provider_entries_bound": 2464,
+    "provider_entries_with_multiple_base_bindings": 0,
+    "all_provider_entries_bound_once": true,
+    "publication_receipt_bytes_read": 317184716,
+    "register_metadata_bytes_read": 6116109,
+    "max_publication_receipt_bytes": 402653184,
+    "max_receipts": 2464,
+    "max_single_receipt_bytes": 1048576,
+    "cap_basis_prior_publication_receipt_bytes": 317184716,
+    "cap_authorization": "root_explicit_384MiB_cached_metadata_window_not_financial_budget_reset",
+    "elapsed_seconds": 1.7891927110031247,
+    "wall_limit_seconds": 120,
+    "memory_limit_bytes": 1073741824,
+    "outputs": [
+      {
+        "file": "SOURCE_BINDING_INPUT_PINS_PRIVATE.json",
+        "bytes": 198173,
+        "sha256": "5299b2a613216755a766727ec5357a52bbaa972f113a2c5e19f2556911feeff9"
+      },
+      {
+        "file": "DESCRIPTION_TO_BASE_SOURCE_BINDING_PRIVATE.jsonl",
+        "bytes": 5374728,
+        "sha256": "70dadccd266bb70131c40d2573a6d8f81af1978951a7331137fadc134c45f11a"
+      }
+    ],
+    "code_sha256": "010499bd6b90302e474f046ca648e84e65d0e5415f8dd99eb4e04c2352514675",
+    "source_inputs_opened_for_writing": 0,
+    "previous_registers_overwritten": 0,
+    "source_body_files_read": 0,
+    "source_body_content_SHA_recomputed": false,
+    "network_calls": 0,
+    "model_calls": 0,
+    "new_resources": 0,
+    "new_semantically_accepted": 0,
+    "new_advertisement_identity_joins": 0,
+    "global_unique_ads": null,
+    "global_per_field_missing_inputs": null,
+    "stage1_stage2_and_phase_budgets_reset": false,
+    "interpretation": "Original accounting binds raw Description SHA to provider; sidecar SOURCE_FILE and original canonical/lean/base conservation carry the publication stage bridge. Lean input is a distinct canonical-USA intermediate, not raw Description. No new body SHA check, advertisement join or semantic acceptance."
+  }
+}

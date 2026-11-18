@@ -1,0 +1,54 @@
+{
+  "status": "bounded_private_preview_exported",
+  "version": "reuse-review-export-v1.0.0",
+  "at_utc": "2026-11-17T12:29:47.820973+00:00",
+  "source_published_sha256": "6f77e3ee4e39d9e60e9eec7731c891c632a528440587450105af3ca1580b5b01",
+  "source_sha_basis": "published_materialization_and_independent_QA",
+  "source_sha_recomputed_this_run": false,
+  "source_actual_sha256_this_run": null,
+  "source_stat_before": {
+    "bytes": 5550370816,
+    "mtime_ns": 1794911743946000290,
+    "inode": 1843500,
+    "device": 2049
+  },
+  "source_stat_after": {
+    "bytes": 5550370816,
+    "mtime_ns": 1794911743946000290,
+    "inode": 1843500,
+    "device": 2049
+  },
+  "source_stat_unchanged": true,
+  "source_sqlite_mode": "ro_and_query_only_and_read_authorizer",
+  "runtime_exclusions_sha256": "05d47c86b030a8f5a4d091b49635b1481d70956d02f2c28501d7b08e668957d7",
+  "protection_checked_before_payload": true,
+  "selection": "deterministic_round_robin_by_source_asset_not_representative_or_accuracy_sample",
+  "counts": {
+    "source_carriers": 50,
+    "bound_ad_keys": 50,
+    "variable_atoms": 398,
+    "metadata_atoms": 100,
+    "combined_atoms": 498
+  },
+  "variable_definitions": 89,
+  "limits": {
+    "source_carriers": 50,
+    "combined_atoms": 500
+  },
+  "full_variable_table_scanned": false,
+  "source_document_metadata_scanned": true,
+  "source_or_acceptance_modified": false,
+  "new_semantic_judgments": 0,
+  "new_model_calls": 0,
+  "human_semantic_acceptance_required": false,
+  "preview_not_full_table": true,
+  "source_sha_not_rechecked_by_default": true,
+  "elapsed_seconds_before_serialization": 2.99,
+  "private_output_sha256": {
+    "REUSE_TABLE_PREVIEW_PRIVATE.json": "c22a61278a01cbfcfb934f1f21aaea699e0d778e739e6047ec7a9111c4d13dab",
+    "REUSE_TABLE_PREVIEW_PRIVATE.html": "5baddc503c117ab10778b6a681c2ac45115bd7179a5da41ff4053222c2775d9f"
+  },
+  "private_records_excluded_from_public_receipt": true,
+  "private_outputs_must_not_enter_git_or_terminal": true,
+  "elapsed_seconds": 3.036
+}

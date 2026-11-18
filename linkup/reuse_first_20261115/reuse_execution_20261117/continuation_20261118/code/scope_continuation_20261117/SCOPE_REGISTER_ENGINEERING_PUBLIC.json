@@ -1,0 +1,17 @@
+{
+  "at_utc": "2026-11-17T12:26:09.155154+00:00",
+  "status": "synthetic_metadata_engineering_tests_passed_cloud_not_executed",
+  "tests_passed": 14,
+  "inputs": "synthetic_only",
+  "code_sha256": "611f3c03a0e6881e70e0902c0a395d6b40bf945bf491e40590ce9cd420b68d4e",
+  "test_sha256": "5bb86290d88690befd7678d2655c83e134234434f99fbe4ed88c8b878a5a844e",
+  "network_calls": 0,
+  "model_calls": 0,
+  "cloud_execution_performed": false,
+  "source_metadata_shapes_checked": "root PREFLIGHT_CLOUD_PUBLIC.json and SCOPE_SHAPES2_PUBLIC.json",
+  "known_limits": [
+    "Provider-file to base-shard mapping not in combined accounting",
+    "Global row/context identity join not performed",
+    "Index metadata versions retained, not silently selected"
+  ]
+}

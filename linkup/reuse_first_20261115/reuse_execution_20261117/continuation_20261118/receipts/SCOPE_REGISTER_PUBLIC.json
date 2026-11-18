@@ -1,0 +1,102 @@
+{
+  "at_utc": "2026-11-17T12:27:18.825941+00:00",
+  "status": "source_version_metadata_register_complete_row_identity_bridge_pending",
+  "scope": "already verified two provider manifests and existing base/Records metadata, not all future deliveries",
+  "counts": {
+    "provider_files": {
+      "Job Descriptions": 2464,
+      "Job Records": 269
+    },
+    "provider_bytes": {
+      "Job Descriptions": 652027698428,
+      "Job Records": 63291244154
+    },
+    "Records_source_metadata_keys": 269,
+    "Records_source_footer_rows_once": 356449214,
+    "Records_source_bytes_once": 63291244154,
+    "Records_sources_with_unique_provider_name_size_binding": 269,
+    "Records_sources_with_derived_report": 269,
+    "Records_source_reports_preserved": 542,
+    "Records_source_reports_without_footer_source_binding": 0,
+    "Records_derived_schema_version_count_distribution": {
+      "2": 269
+    },
+    "Records_index_manifest_versions": 4,
+    "Records_inventory_files": 1160,
+    "Records_inventory_rows_not_additive": 356449214,
+    "Records_inventory_source_binding_statuses": {
+      "unique_basename_size_rows_source_metadata_match": 1160
+    },
+    "base_shards": 2464,
+    "base_canonical_US_ads_from_receipts": 204774035,
+    "description_raw_rows_from_combined_accounting": 298673078,
+    "description_source_bytes_from_combined_accounting": 652027698428,
+    "Description_provider_files_with_existing_source_SHA_binding": 2464,
+    "exact_provider_Description_file_to_base_shard_bindings": 0,
+    "global_unique_ads": null,
+    "global_unique_normalized_contexts": null,
+    "global_per_field_missing_inputs": null
+  },
+  "metadata_files_read": 562,
+  "metadata_bytes_read": 4713213,
+  "outputs": [
+    {
+      "file": "PROVIDER_SCOPE_REGISTER_PRIVATE.json",
+      "bytes": 2004197,
+      "sha256": "b2cc4f283c0bb9d96cdd21c8e61ffb61f7bd05c5d9798b34f494abd32eb34e54"
+    },
+    {
+      "file": "RECORDS_SOURCE_VERSION_REGISTER_PRIVATE.json",
+      "bytes": 1363668,
+      "sha256": "7fcfdb151db924d48b5af7ff449e9fec0e7282593f1ea882bb4d6d2f9379399d"
+    },
+    {
+      "file": "RECORDS_INDEX_VERSIONS_PRIVATE.json",
+      "bytes": 4538,
+      "sha256": "2c46ef9792fb426d9d9fe060358112af6c5843e3d54bb2954c8cebd5aa0aa2a8"
+    },
+    {
+      "file": "RECORDS_EXECUTION_INVENTORIES_PRIVATE.json",
+      "bytes": 1064379,
+      "sha256": "b8a3b347ca4c23e62e11f65be6144c4e61a70bc4b7d2324450a5f01f542a193a"
+    },
+    {
+      "file": "DESCRIPTION_ALLOCATION_METADATA_PRIVATE.json",
+      "bytes": 1119268,
+      "sha256": "787dedb148009098c40bf3f3ec7ad94cf46effba9f41f1986b4282f2753d924f"
+    },
+    {
+      "file": "BASE_SHARD_SCOPE_REGISTER_PRIVATE.json",
+      "bytes": 1931508,
+      "sha256": "4983ba1007ee81227094479acff3c07cd5bc7bd3b5cb21c811c6b2c69c0b4f6a"
+    },
+    {
+      "file": "INPUT_PINS_PRIVATE.json",
+      "bytes": 123039,
+      "sha256": "7b35c738bc7664cad0e4c76ea41b737141207618c7800b6dc8b555cedebd208b"
+    }
+  ],
+  "row_unit_warning": "Description rows, Records rows, US base ads and derivative index rows are not additive.",
+  "completion_limits": [
+    "No source row or advertisement key union/join executed.",
+    "Provider name/size metadata matching is not a content-SHA or ad-identity match.",
+    "Description source hashes are reused from a pinned existing allocation manifest; raw files were not rehashed.",
+    "No full normalized-context hash index established.",
+    "Fine semantic states and existing value reuse are preserved, not recomputed."
+  ],
+  "next_dependency": "Inspect an existing complete Records output inventory and base-ad schema; choose a provenance-pinned narrow-column join only after explicit source-row linkage exists.",
+  "inputs_unchanged": true,
+  "raw_advertisement_files_read": 0,
+  "individual_receipt_rescans": 0,
+  "network_calls": 0,
+  "model_calls": 0,
+  "old_ledger_writes": 0,
+  "new_resources": 0,
+  "elapsed_seconds": 0.43720745015889406,
+  "max_wall_seconds": 300,
+  "max_address_space_bytes": 1073741824,
+  "code_sha256": "611f3c03a0e6881e70e0902c0a395d6b40bf945bf491e40590ce9cd420b68d4e",
+  "infrastructure_cap_not_reset": true,
+  "new_model_queue_released": false,
+  "publication_note": "Type-only schema shape inventory omitted; original report and its SHA remain recorded."
+}

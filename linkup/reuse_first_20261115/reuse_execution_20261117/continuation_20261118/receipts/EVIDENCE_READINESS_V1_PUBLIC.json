@@ -1,0 +1,58 @@
+{
+  "version": "retained-evidence-readiness-v1",
+  "at_utc": "2026-11-17T12:38:49.090099+00:00",
+  "status": "time_cap_reached_cursor_preserved",
+  "total_evidence_atoms": 180888,
+  "excluded_evidence_atoms": 0,
+  "missing_context_identity_atoms": 0,
+  "processable_evidence_atoms": 180888,
+  "processed_evidence_atoms": 126000,
+  "remaining_allowed_evidence_atoms": 54888,
+  "cursor_rowid": 2037729,
+  "excluded_context_union": 191,
+  "state_counts": {
+    "all_quotes_have_retained_repeated_position_declarations": 2829,
+    "all_quotes_have_retained_single_position_declarations": 107337,
+    "retained_quotes_without_offset_declarations": 15834
+  },
+  "trace_counts": {
+    "complete_retained_source_anchor_binding": 126000
+  },
+  "original_workflow_counts": {
+    "accepted_original_scope": 101274,
+    "missing_original_mask": 1492,
+    "reviewed_unknown": 121,
+    "saved_unverified": 23113
+  },
+  "original_measurement_counts": {
+    "known": 101274,
+    "missing_original_mask": 24455,
+    "unknown_or_conflict": 271
+  },
+  "elapsed_seconds_cumulative": 300.158792429138,
+  "max_atoms_cumulative": 200000,
+  "max_seconds_cumulative": 300,
+  "memory_limit_bytes": 1073741824,
+  "output_database_bytes": 487383040,
+  "output_database_sha256": "d0193724c1d5c6d95d42c03872bf18d55b6b4e4b5fc6125cf0ec358176821bf8",
+  "output_hash_status": "complete",
+  "output_hash_elapsed_seconds": 3.399152680998668,
+  "output_hash_separate_time_cap_seconds": 30,
+  "source_size_and_mtime_unchanged": true,
+  "source_database_sha256_from_previous_release": "6f77e3ee4e39d9e60e9eec7731c891c632a528440587450105af3ca1580b5b01",
+  "source_database_SHA_rehashed_this_run": false,
+  "runtime_exclusions_sha256": "05d47c86b030a8f5a4d091b49635b1481d70956d02f2c28501d7b08e668957d7",
+  "no_raw_documents_read": true,
+  "offsets_reverified_against_text": false,
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "original_mask_and_measurement_states_preserved": true,
+  "entire_delivery_or_all_variables_complete": false,
+  "bounded_order_not_a_probability_sample": true,
+  "notes": [
+    "Counts concern evidence atoms, not advertisements or complete variable coverage.",
+    "Same-item declared offsets are retained claims, never a new source-text or semantic verification.",
+    "Repeated occurrences are all preserved; no occurrence is chosen as the true one.",
+    "Current readiness does not change accepted, saved, unknown or protected states."
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "at_utc": "2026-11-18T04:55:19.859978+00:00",
+  "status": "v2_synthetic_stage_semantics_tests_passed_cloud_not_executed_by_author",
+  "tests_passed": 30,
+  "files": {
+    "cloud_bind_description_sources_v2.py": "010499bd6b90302e474f046ca648e84e65d0e5415f8dd99eb4e04c2352514675",
+    "test_cloud_bind_description_sources_v2.py": "57542ffdcf3c983b2f5f39a185ac9269339b593748b8fc6b8a6ac0bf698adfaa"
+  },
+  "producer_sources": {
+    "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/regional_runner.py": {
+      "sha256": "6f5286b4786c97fc8c46240b7cfc5bfc0ff846219b1554bcac1b509650422280",
+      "reviewed_line_range": [
+        195,
+        225
+      ]
+    },
+    "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/prepare_shard_input.py": {
+      "sha256": "d43914ca1bde75ff6372b32da6d516441434662db0f3b237d9e02e4f6d6b2c18",
+      "reviewed_line_range": [
+        37,
+        125
+      ]
+    },
+    "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py": {
+      "sha256": "67c22e5db1d61f7a909235150a0254f9af9bd2ccd6f1958aa6d7a555e32b99d5",
+      "reviewed_line_range": [
+        250,
+        268
+      ]
+    },
+    "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/verified_transfer.py": {
+      "sha256": "6e19b043271082fe3d64a2d3cdbbd10f8ab5d84d9ac6f3112568420d293e43a0",
+      "reviewed_line_range": [
+        127,
+        140
+      ]
+    }
+  },
+  "correction": {
+    "v1_assumption": "accounting raw Description SHA/bytes/name must equal lean source SHA/bytes/name",
+    "v1_assumption_incorrect": true,
+    "v1_outputs_preserved_not_source_coverage": true,
+    "original_pipeline": "raw Description plus frozen disposition sidecar -> filtered canonical_usa.parquet -> lean output -> published base",
+    "raw_source_binding": "accounting.source_sha256_cached/source_bytes/source_file -> existing provider/allocation",
+    "stage_bridge_checks": [
+      "published_verified shard_id",
+      "complete original stage statuses",
+      "sidecar_source_files == [accounting.source_file]",
+      "raw_rows == sidecar_rows and original row_conservation",
+      "canonical_usa_rows == lean.processed_rows == existing base ad_rows"
+    ],
+    "lean_source": "SHA/size/path retained separately as canonical-USA intermediate; equality with raw or disposition SHA is neither required nor claimed",
+    "research_definition_changes": false
+  },
+  "max_receipt_bytes": 402653184,
+  "historically_recorded_receipt_bytes": 317184716,
+  "max_single_receipt_bytes": 1048576,
+  "max_files": 2464,
+  "wall_seconds": 120,
+  "memory_bytes": 1073741824,
+  "cloud_calls_by_author": 0,
+  "model_calls": 0,
+  "body_reads": 0,
+  "git_actions": 0,
+  "financial_budget_reset": false,
+  "literal_completion_status_proof": {
+    "publication.status": {
+      "literal": "published_verified",
+      "source": "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/verified_transfer.py",
+      "line": 134
+    },
+    "shard_complete.status": {
+      "literal": "complete",
+      "source": "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/regional_runner.py",
+      "line": 223
+    },
+    "lean_complete.status": {
+      "literal": "complete",
+      "source": "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py",
+      "line": 261
+    }
+  }
+}

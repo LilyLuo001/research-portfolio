@@ -1,0 +1,79 @@
+{
+  "version": "retained-evidence-readiness-resume-v2",
+  "at_utc": "2026-11-18T04:52:15.355707+00:00",
+  "status": "all_current_allowed_evidence_atoms_audited_not_reverified",
+  "excluded_evidence_atoms": 0,
+  "missing_context_identity_atoms": 0,
+  "processable_evidence_atoms": 180888,
+  "total_evidence_atoms": 180888,
+  "processed_evidence_atoms": 180888,
+  "remaining_allowed_evidence_atoms": 0,
+  "inherited_processed_evidence_atoms": 126000,
+  "newly_audited_evidence_atoms": 54888,
+  "inherited_cursor_rowid": 2037729,
+  "cursor_rowid": 2963270,
+  "elapsed_seconds_cumulative": 470.7505397940986,
+  "historical_elapsed_seconds_preserved": 300.158792429138,
+  "additional_engineering_elapsed_seconds": 170.5917473649606,
+  "additional_window_wall_seconds": 172.4936704589054,
+  "additional_window_seconds": 300,
+  "effective_cumulative_time_cap_seconds": 600.158792429138,
+  "inherited_original_time_cap_seconds": 300,
+  "max_atoms_cumulative": 200000,
+  "memory_limit_bytes": 1073741824,
+  "excluded_context_union": 191,
+  "state_counts": {
+    "all_quotes_have_retained_repeated_position_declarations": 4033,
+    "all_quotes_have_retained_single_position_declarations": 153786,
+    "retained_quotes_without_offset_declarations": 23069
+  },
+  "trace_counts": {
+    "complete_retained_source_anchor_binding": 180888
+  },
+  "original_workflow_counts": {
+    "accepted_original_scope": 144892,
+    "missing_original_mask": 2260,
+    "reviewed_unknown": 183,
+    "saved_unverified": 33553
+  },
+  "original_measurement_counts": {
+    "known": 144892,
+    "missing_original_mask": 35586,
+    "unknown_or_conflict": 410
+  },
+  "output_database_bytes": 698875904,
+  "output_database_sha256": "59c404fbdee0fc190bbeb20619c563b608845b8db421df1fcba32edd66aab92e",
+  "output_hash_status": "complete",
+  "prior_directory_stat_unchanged": true,
+  "source_size_and_mtime_unchanged": true,
+  "source_database_sha256_from_previous_release": "6f77e3ee4e39d9e60e9eec7731c891c632a528440587450105af3ca1580b5b01",
+  "source_database_SHA_rehashed_this_run": false,
+  "runtime_exclusions_sha256": "05d47c86b030a8f5a4d091b49635b1481d70956d02f2c28501d7b08e668957d7",
+  "no_raw_documents_read": true,
+  "offsets_reverified_against_text": false,
+  "new_model_calls": 0,
+  "new_production_accepted": 0,
+  "original_mask_and_measurement_states_preserved": true,
+  "entire_delivery_or_all_variables_complete": false,
+  "bounded_order_not_a_probability_sample": true,
+  "resume_provenance": {
+    "version": "retained-evidence-readiness-resume-v2",
+    "authorization": "user_continue_2026-11-18_Asia_Shanghai",
+    "prior_database_sha256": "d0193724c1d5c6d95d42c03872bf18d55b6b4e4b5fc6125cf0ec358176821bf8",
+    "prior_report_sha256": "8674bc8c7a778513cc7b83a531af7c9a1ba0236b7450a223f44886ddaca8aef3",
+    "private_provenance_sha256": "5b78d10eed99b73c1f72bdc71c1c54601c0ad20c7347f46c60f517b7e0f48f42",
+    "inherited_elapsed_seconds": 300.158792429138,
+    "additional_window_seconds": 300,
+    "effective_cumulative_time_cap_seconds": 600.158792429138,
+    "max_atoms_cumulative_unchanged": 200000,
+    "legacy_parser_code_sha256": "4f302676a07a62d4ac0cc80316963d86d7aad4c5ce2072d68ca66f693955c2a1",
+    "resume_code_sha256": "bec0f772e2f1a1e46185288f93b9998b3cb72249b905b26dd71006a73fc4f8f3",
+    "financial_envelope_usd_unchanged": 450
+  },
+  "notes": [
+    "Evidence atoms are not distinct advertisements or complete field coverage.",
+    "Saved offsets remain unverified declarations; no new semantic acceptance is granted.",
+    "Original pins remain historical. The separate explicit resume authorization controls this segment.",
+    "The finalized database hash is computed only after SQLite closes; no digest is claimed on timeout."
+  ]
+}

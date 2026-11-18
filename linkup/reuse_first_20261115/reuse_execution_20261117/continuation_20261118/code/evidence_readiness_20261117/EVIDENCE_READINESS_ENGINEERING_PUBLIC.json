@@ -1,0 +1,40 @@
+{
+  "at_utc": "2026-11-17T12:33:08.820310+00:00",
+  "status": "synthetic_engineering_tests_passed_not_cloud_execution_or_semantic_qualification",
+  "tests_run": 24,
+  "tests_passed": 24,
+  "code_sha256": {
+    "cloud_evidence_readiness.py": "4f302676a07a62d4ac0cc80316963d86d7aad4c5ce2072d68ca66f693955c2a1",
+    "test_evidence_readiness.py": "fec8c3ceecfc85564d37337ecdbb471006260991afeb07a13c3293a21bcb14f3"
+  },
+  "real_shape_probe_sha256": "30917b8aa1c7f3a4e326803a0077e92991687a112bf7dee818b1f9f56cebf6a9",
+  "shape_probe_consumed_only_names_and_types": true,
+  "default_max_atoms_cumulative": 200000,
+  "engineering_cap_change": "Root increased the finite engineering cap from 100000 to 200000 to cover the already-known 180888 evidence atoms in one run. No research, budget, model or semantic acceptance change.",
+  "scan_time_cap_seconds_cumulative": 300,
+  "address_space_limit_bytes": 1073741824,
+  "new_sidecar_hash_time_cap_seconds": 30,
+  "original_database_rehash": false,
+  "stdout_is_compact_summary_only": true,
+  "test_properties": [
+    "all_protection_sources_filter_before_payload_parse",
+    "missing_protection_fails_closed",
+    "source_anchor_checked_before_value_read",
+    "exact_pointer_and_quote_binding",
+    "same_quote_elsewhere_not_a_binding",
+    "duplicate_pointer_not_arbitrarily_chosen",
+    "all_repeated_occurrences_retained",
+    "boolean_or_wrong_unit_or_wrong_length_offsets_not_well_formed",
+    "unknown_resolution_shape_not_guessed",
+    "empty_quotes_not_negative",
+    "atomic_timeout_rollback_preserves_cursor",
+    "existing_variable_key_range_index_used",
+    "source_bytes_unchanged_in_synthetic_run",
+    "idempotent_bounded_resume_no_duplicates",
+    "saved_unknown_states_preserved",
+    "output_SHA_matches_actual_closed_sidecar"
+  ],
+  "cloud_calls": 0,
+  "new_model_calls": 0,
+  "old_results_or_masks_modified": false
+}

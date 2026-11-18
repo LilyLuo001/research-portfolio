@@ -1,0 +1,433 @@
+{
+  "schema": [
+    {
+      "table": "source_document",
+      "description_zh": "来源载体表：fixed10k 可为广告×字段族，其他可为原 review 载体。",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "d",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "h",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "k",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "asset",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "source_sha",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "source_ordinal",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "original_accepted",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "mask_binding_state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "adaptation_state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ]
+    },
+    {
+      "table": "context_state",
+      "description_zh": "原上下文状态；先排除保护/隔离，再读取载荷。",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "h",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "original_state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "carrier_present",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "original_protected",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "reuse_excluded",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "audit_resolution",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ]
+    },
+    {
+      "table": "variable_value",
+      "description_zh": "长格式变量原子表；不是一行一个广告，不可直接 count 当广告总数。",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "d",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "h",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "k",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "variable_key",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "source_path",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "item_anchor_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "dimension",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "value_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "value_present",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "measurement_state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "workflow_state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "engineering_state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "eligible_original_scope",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "derived",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "original_mask",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "metadata_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ]
+    },
+    {
+      "table": "ad_binding",
+      "description_zh": "已有身份/日期绑定；本次未匹配、未补齐、未消除来源版本差异。",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "k",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "h",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 2
+        },
+        {
+          "cid": 2,
+          "name": "original_source",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 3
+        },
+        {
+          "cid": 3,
+          "name": "created",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "created_state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ]
+    },
+    {
+      "table": "metadata_value",
+      "description_zh": "已有结构化元数据值；与变量原子共同受 500 行上限约束。",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "k",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "variable_key",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "source_sha",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "source_ordinal",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "physical_column",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "value_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "state",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ]
+    },
+    {
+      "table": "dictionary_definition",
+      "description_zh": "已发布变量定义；保留五个研究模块，不把预览当全集字段。",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "variable_key",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "definition_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ]
+    }
+  ],
+  "field_notes_zh": {
+    "d": "原来源载体标识；不是唯一广告数或新生产数。",
+    "h": "既有上下文指纹；不单独创建广告到人的匹配。",
+    "k": "既有广告身份键，可能为空；没有重算 JOB_HASH 或四键。",
+    "asset": "原来源资产。",
+    "source_sha": "原来源载体/文件的 SHA；保留来源版本。",
+    "source_ordinal": "原来源中的序号。",
+    "original_accepted": "原来源验收标志，未经本次导出升级。",
+    "mask_binding_state": "原适配过程的 mask 绑定状态。",
+    "adaptation_state": "原适配工程状态，不是语义质量认证。",
+    "value_json": "数据库中原封不动的 JSON 文本；不将 null/unknown 转为否定。",
+    "measurement_state": "原测量状态，与工作流验收状态分开保留。",
+    "workflow_state": "原工作流状态；saved_unverified 仍未验收。",
+    "engineering_state": "原工程兼容状态，不代表完整覆盖。",
+    "eligible_original_scope": "仅原范围内工程可兼容，不是新的准确率认证。",
+    "derived": "原有确定性派生标志，本次不新增派生。",
+    "original_mask": "保留原状态/mask。",
+    "source_path": "原字段路径；不是本次重新抽取。",
+    "item_anchor_json": "原同项关系锚点 JSON 文本。",
+    "metadata_json": "原版本、依赖 mask、路线和完整性信息 JSON 文本。",
+    "created": "CREATED 为首次观察岗位发布时间代理，不证明正文产生时间。",
+    "created_state": "既有日期连接状态，缺失/冲突不升级。",
+    "original_source": "既有广告绑定的来源；只展示最多一个既有绑定。",
+    "state": "元数据原状态；保留冲突和空值。"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "at_utc": "2026-11-18T04:57:53.632630+00:00",
+  "status": "pass",
+  "suites": [
+    {
+      "test_directory": "evidence_readiness_20261117",
+      "tests_run": 24,
+      "returncode": 0
+    },
+    {
+      "test_directory": "evidence_resume_20261118",
+      "tests_run": 15,
+      "returncode": 0
+    },
+    {
+      "test_directory": "identity_next_step_20261118",
+      "tests_run": 54,
+      "returncode": 0
+    },
+    {
+      "test_directory": "parquet_runtime_20261118",
+      "tests_run": 27,
+      "returncode": 0
+    },
+    {
+      "test_directory": "review_delivery_20261117",
+      "tests_run": 16,
+      "returncode": 0
+    },
+    {
+      "test_directory": "scope_continuation_20261117",
+      "tests_run": 14,
+      "returncode": 0
+    }
+  ],
+  "synthetic_tests_only": true,
+  "cloud_execution_or_semantic_acceptance_not_implied": true,
+  "files": {
+    "code/evidence_resume_20261118/cloud_evidence_resume.py": "bec0f772e2f1a1e46185288f93b9998b3cb72249b905b26dd71006a73fc4f8f3",
+    "code/evidence_resume_20261118/test_evidence_resume.py": "3e5f978237b481e8aecf38e2f0746b4fb6b2c3b968898119a22c0e74ff17ebdd",
+    "code/scope_continuation_20261117/test_cloud_scope_register.py": "3fe3d5ac25e7b1ff747558e8628f378bfd570c5372b8aac336ec340759cf1e32",
+    "code/scope_continuation_20261117/cloud_scope_register.py": "611f3c03a0e6881e70e0902c0a395d6b40bf945bf491e40590ce9cd420b68d4e",
+    "code/continuation_dispatch_20261118/cloud_continuation_final_qa.py": "32a786049271aff63519164d6bb4dbb5c583a8bb87fe53da484b8200611dc514",
+    "code/continuation_dispatch_20261118/cloud_narrow_schema_v2.py": "0a8616dd17b6414f4f7d2a2261274bf677c95ea8b6be6be7eaab4eea841ae4e4",
+    "code/continuation_dispatch_20261118/cloud_small_data_stats.py": "81d1aef50e74158e1087796f99b1332883db295174362b2567aea47a97e94375",
+    "code/continuation_dispatch_20261118/cloud_evidence_prefix_qa.py": "fec5657689f9cfac26c92a19d8d38bbe58ddacfacd7c8fe6ef438e99ab897d07",
+    "code/evidence_readiness_20261117/cloud_evidence_readiness.py": "4f302676a07a62d4ac0cc80316963d86d7aad4c5ce2072d68ca66f693955c2a1",
+    "code/evidence_readiness_20261117/test_evidence_readiness.py": "fec8c3ceecfc85564d37337ecdbb471006260991afeb07a13c3293a21bcb14f3",
+    "code/identity_next_step_20261118/cloud_bind_description_sources.py": "bb735f03492421dea465d1c100ac28821454f00c53ad04499f11e3d250e91830",
+    "code/identity_next_step_20261118/test_cloud_bind_description_sources_v2.py": "57542ffdcf3c983b2f5f39a185ac9269339b593748b8fc6b8a6ac0bf698adfaa",
+    "code/identity_next_step_20261118/test_cloud_bind_description_sources.py": "f24217126e36a38d6bfd4e0d879ee69c2a4eeb296e93ea1ced0aa76ff1a357e4",
+    "code/identity_next_step_20261118/cloud_bind_description_sources_v2.py": "010499bd6b90302e474f046ca648e84e65d0e5415f8dd99eb4e04c2352514675",
+    "code/review_delivery_20261117/test_export_reuse_review.py": "da106f4628795b791d4f2c57729c744283e0115c79e15e148894017b450c4a35",
+    "code/review_delivery_20261117/export_reuse_review.py": "bbc1d76a88f0e794d5237721dd21314bb5d2fe09b06745aae0c9bfdf7e31de74",
+    "code/parquet_runtime_20261118/bootstrap_pyarrow_no_pip.py": "db717844bab4ccf5c874337e0d4c3f397694475e558666c29644c3b2bbafdf6e",
+    "code/parquet_runtime_20261118/test_bootstrap_synthetic.py": "8a8a64ec6222dbfd7bdcbbd9889e735ef1f419ff82b26f72ea28eb5109dd58ac"
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "at_utc": "2026-11-17T12:24:57.484242+00:00",
+  "status": "read_only_confirmation_readiness_review_completed_not_a_launch_or_qualification",
+  "new_model_calls": 0,
+  "cloud_calls": 0,
+  "private_rows_read": 0,
+  "old_definitions_or_results_modified": false,
+  "current_phase_cap_usd": 450,
+  "confirmation_cap_distinct_inputs": 150,
+  "confirmation_cap_usd": 50,
+  "conditional_pilot_cap_distinct_inputs": 10000,
+  "conditional_pilot_released": false,
+  "principal_findings_zh": [
+    "第一版复用落表与字段旁路工程检查已完成，不应重复跑；它们没有给 Luna 或任何新路线补发语义合格证明。",
+    "全范围净缺口是全量补缺报价和最终覆盖的必要条件，但不是一个有边界、范围写明的150条独立确认的逻辑前置。",
+    "有限确认仍必须有精确候选身份、未暴露证明、已知全账本排重、保护排除及独占领取；目前已读公开回执没有提供一份已验收可调用的新候选队列。",
+    "旧1309有限队列已结束，旧500是已暴露开发诊断材料；10012待对账或identity-only不是未处理证明，不能为凑150重新调用。",
+    "B核心的经验类别/年限/强度旧值可复用；新的对象概念、条件原子、可计算资格逻辑及跨域开放指标仍需要明确新表示和独立确认，不能退回只做entry作为全部研究完成。"
+  ],
+  "can_continue_without_new_model_qualification": [
+    {
+      "group": "结构身份与生命周期",
+      "keys": [
+        "lk.identity.ad_key",
+        "lk.identity.context",
+        "lk.provenance.source",
+        "lk.time.created",
+        "lk.time.delete",
+        "lk.time.last_checked",
+        "lk.time.last_updated",
+        "lk.company.vendor_id",
+        "lk.job.title",
+        "lk.geo",
+        "lk.occupation"
+      ],
+      "operation": "复用已有结构值；仅对尚未建立的来源/版本/广告映射做窄列连接。现有62414四键CREATED连接不重做。字段有源列与非空状态分开。"
+    },
+    {
+      "group": "原范围已验语义",
+      "keys": [
+        "lk.exp.general_work",
+        "lk.exp.occupation_task",
+        "lk.exp.industry_domain",
+        "lk.exp.tool_specific",
+        "lk.exp.object",
+        "lk.exp.object_label",
+        "lk.exp.years_min",
+        "lk.exp.years_max",
+        "lk.exp.years_relation",
+        "lk.exp.strength",
+        "lk.exp.conditionality",
+        "lk.qual.group_link",
+        "lk.qual.legacy_groups",
+        "lk.entry.explicit_no_experience",
+        "lk.entry.explicit_new_graduate",
+        "lk.entry.current_student_internship",
+        "lk.entry.explicit_junior_or_entry_label",
+        "lk.duty.subject",
+        "lk.duty.relation",
+        "lk.duty.conditions",
+        "lk.tech.inventory",
+        "lk.tech.family",
+        "lk.tech.role"
+      ],
+      "operation": "按原验收范围、同item锚点和原mask继续使用；不从一个known族推定每个新变量已知。已有saved_unverified原子只保留待核验状态，不伪装为已验。"
+    },
+    {
+      "group": "已完成的确定性派生，不应重做",
+      "keys": [
+        "lk.claim.item_anchor",
+        "lk.duty.current"
+      ],
+      "operation": "现有adapter已生成源位置item_anchor，并按同item subject=advertised_worker及relation=current_duty派生严格当前职责。版本1已有193548条lk.duty.current原子覆盖45709上下文；该数不是全部字段完整/语义合格上下文数。"
+    },
+    {
+      "group": "可继续的无模型工程缺口",
+      "keys": [
+        "lk.evidence.ref"
+      ],
+      "operation": "adapter.evidence当前仅搬运quotes/evidence_resolution，明确标记retained_original_not_reverified_against_full_text。先盘点已有定位是否含全部位置，再对未具备定位的允许字段使用已存在的完整输入绑定稳定span IDs；全部重复命中位置保留，不任取一次。只追加独立证据侧表，原标签不变。"
+    },
+    {
+      "group": "研究量的有限依赖派生",
+      "keys": [
+        "measure.entry_share",
+        "measure.task_mix"
+      ],
+      "operation": "在原已验、完整可比范围且分母写明时，可复用或派生四个entry维度、四类严格当前职责构成；这不是全国entry份额或扩展完整任务清单。已有结果直接复用，新增分析另按根端当前授权决定。"
+    }
+  ],
+  "new_confirmation_or_definition_required": [
+    {
+      "group": "旧定义的新量产路线",
+      "keys": [
+        "lk.exp.object",
+        "lk.exp.years_min",
+        "lk.exp.years_max",
+        "lk.exp.years_relation",
+        "lk.exp.strength",
+        "lk.exp.conditionality",
+        "lk.qual.group_link",
+        "lk.duty.subject",
+        "lk.duty.relation",
+        "lk.tech.family",
+        "lk.tech.role"
+      ],
+      "reason": "旧人工/模型原范围值可复用，不代表Luna填充新输入的路线已合格；现有资格回执qualified_fields仍为0。"
+    },
+    {
+      "group": "B核心新关系表示",
+      "keys": [
+        "lk.exp.object_concept",
+        "lk.qual.condition_atoms",
+        "lk.qual.logic",
+        "measure.cross_domain_openness",
+        "measure.experience_bundle"
+      ],
+      "reason": "当前没有新定义投影；需冻结有限概念范围、相关资格条件类型、AND/OR及共享/否定作用域、完整性、来源目标领域及明确替代证据。自由词序差不能直接判错，但AND与OR或缺条件是实质差异。"
+    },
+    {
+      "group": "年限开闭边界",
+      "keys": [
+        "lk.exp.bound_inclusivity"
+      ],
+      "reason": "Formal原schema不能自动补出严格大于或含等号；D67 strict_lower仅为旧候选。只有依赖开闭边界的量具需要该项资格，经验提及等无依赖量具不因它停机。"
+    },
+    {
+      "group": "C扩展任务",
+      "keys": [
+        "lk.task.activity",
+        "lk.task.code"
+      ],
+      "reason": "原四职责不是完整任务库存；活动原子与冻结分类需实现及确认，但不阻塞原四维统计。"
+    },
+    {
+      "group": "D外部数据",
+      "keys": [
+        "pe.identity",
+        "bridge.entity_mapping",
+        "bridge.period_alignment",
+        "bridge.common_support"
+      ],
+      "reason": "依赖实际Revelio交付及版本化映射，不是LinkUp追加模型调用可代替的缺口。"
+    }
+  ],
+  "v2_freeze_missing_before_any_paid_confirmation": [
+    {
+      "artifact": "new_v2_measure_contract",
+      "missing": "逐研究量的变量依赖、操作定义、schema/prompt/concept或task版本、匹配单位，以及明确的数值门槛/最低正负样本支持/参考覆盖/分组失败处置。当前协议只声明要冻结，没有已执行的具体v2合同。"
+    },
+    {
+      "artifact": "source_evidence_and_atomic_relation_adapter",
+      "missing": "稳定正文span IDs及重复位置表示、主张到对象/年限/强度/条件边的原子关系、证据完整性状态；已有item_anchor是源位置身份，不是跨载体语义等价键。"
+    },
+    {
+      "artifact": "sealed_finite_eligibility_frame",
+      "missing": "不超过150的精确身份清单及来源输入SHA，排除旧20/旧500等已暴露确认材料、保护/政策阻断/已审unknown、已完成字段、活跃领取与不明状态。若只对真正新字段做独立确认，必须显式说明字段级目的和范围，不得冒称旧广告的新生产。"
+    },
+    {
+      "artifact": "fixed_probability_and_challenge_design",
+      "missing": "确认前固定概率样本与稀有挑战的分开用途、抽样范围与分母，支持不足的字段不宣称通过，不为凑阳性回看结果后替换样本。"
+    },
+    {
+      "artifact": "blind_reference_and_bounded_adjudication",
+      "missing": "Kimi盲审独立输入，不看Luna答案；不超过6个Astra基础裁决，不确定保留；参考本身不称真值。旧500只用于开发，不重新发证。"
+    },
+    {
+      "artifact": "one_shot_runtime_and_budget_lock",
+      "missing": "将字段局部适配器接入新运行器并做合成测试，候选/Luna150、Kimi150、Astra6基础调用上限，物理调用含重试分别180/180/7；保留旧消耗/预留并刷新实际限额，计输入加最大输出占额、持久独占claim、SHA和原子落盘、不确定传输不自动重复。"
+    },
+    {
+      "artifact": "post_confirmation_release_decision",
+      "missing": "一次结束按独立研究量放行；不合格依赖明确未完成但不阻塞无依赖量具。最多1万试产仅用本次合格依赖、可核实未处理身份，前100包含在1万之内。不得自动换样本/模型/定义再考。"
+    }
+  ],
+  "finite_queue_vs_global_gap": {
+    "global_net_gap_required_before_bounded_confirmation": false,
+    "global_net_gap_required_before_full_production_quote_or_completion_claim": true,
+    "finite_queue_proven_ready_in_reviewed_public_artifacts": false,
+    "why": "有限路线确认的效度由它自己的预先范围、抽样、排重和盲审决定，不由全五亿分母决定；但一个未出现在小账本里的身份不自动等于全项目未处理。",
+    "valid_minimum_path": "先从既有prepared manifest或真实未消费游标定位一个明确有限来源批次；仅按元数据对当前全部已知accepted/saved/unknown/quarantine和已暴露集合做反连接及独占领取。身份、字段、完整输入SHA全部可证后，可在声明的有限范围做≤150确认，同时另行推进全范围总账。",
+    "not_allowed_substitutes": [
+      "old_1309_completed_queue",
+      "old_500_exposed_frame",
+      "10012_status_unreconciled",
+      "identity_without_event",
+      "20_experience_projection_absences_in_current_sidecar"
+    ],
+    "current_known_source_pointers": [
+      "execution_20261116/run001/qualification_frame_v1/FRAME_PRIVATE.json",
+      "reuse_first_20261115/run01/benchmark20/SELECTION_PRIVATE.json",
+      "integration_20261116/run001/revision003/STATUS_INDEX_PRIVATE.sqlite",
+      "execution_20261116/run001/stage2/REMAINING_SOURCE_LOCATORS_PRIVATE.json",
+      "AZURE_RESEARCH_IDENTITIES_PRIVATE.json"
+    ],
+    "pointers_are_for_exclusion_and_locator_reuse_not_ready_new_queue": true
+  },
+  "next_smallest_zero_model_deliverable": {
+    "name": "field_local_dependency_coverage_and_evidence_ready_register",
+    "inputs": "read-only existing LINKUP_REUSED_VARIABLES_V1_PRIVATE.sqlite, original masks and existing prepared-input locator manifests",
+    "outputs": "按variable_key/item_anchor/原workflow与measurement状态列可复用、证据位置已齐、证据定位待补、已保存待核验、真正未处理、unknown及保护；同源位置确定性派生只做未完成部分。",
+    "first_check": "检查lk.evidence.ref里已有evidence_resolution的结构和覆盖，先复用现成offset；不要再次对全部45710上下文读取正文。",
+    "does_not_create_new_production_acceptance": true
+  },
+  "inputs_sha256": [
+    {
+      "relative_to_reuse_first": "next_step_plan_20261117/PLAN_PUBLIC.json",
+      "sha256": "56dbea63112e3f2095e3b5b46d4501308c6cc9f6746f0d2d99eba8cd405df3e4"
+    },
+    {
+      "relative_to_reuse_first": "reuse_execution_20261117/AUTHORIZATION_PUBLIC.json",
+      "sha256": "46990c87f4d6c08b165c10d672feb73a593efac59ffaf175e5498a8456460b2e"
+    },
+    {
+      "relative_to_reuse_first": "measurement_protocol_20261117/PROTOCOL_STATUS_PUBLIC.json",
+      "sha256": "e8f2b759d9b23a0e399e4e086d97782f9bae4e6a85ef4059687c9e61870108ea"
+    },
+    {
+      "relative_to_reuse_first": "measurement_protocol_20261117/PROTOCOL_AND_FACT_CHECK_ZH.md",
+      "sha256": "457f52645f7025beeae28877cb09f74e1faa66df72a61710d87651bde4b8d065"
+    },
+    {
+      "relative_to_reuse_first": "variable_dictionary_20261117_v1/VARIABLE_DICTIONARY_PUBLIC.json",
+      "sha256": "f677417105159f977cf806c6f1cc97bdfad39c1648dd8ed3a84bcd3d3f1222b1"
+    },
+    {
+      "relative_to_reuse_first": "variable_dictionary_20261117_v1/REUSE_MAPPING_PUBLIC.json",
+      "sha256": "afc8f99e9e2dfa6fdf7fa9a4f239ab87dcdb88cdab584d39cc2a8c3e52cda3db"
+    },
+    {
+      "relative_to_reuse_first": "variable_dictionary_20261117_v1/FIELD_GAPS_PUBLIC.json",
+      "sha256": "b6050e123ebe13a9dcc7add94c312d4df4452b5e144eb52c52197e938a09b067"
+    },
+    {
+      "relative_to_reuse_first": "variable_dictionary_20261117_v1/SOURCES_AND_SCOPE_PUBLIC.json",
+      "sha256": "16561cca5a56c4935ef8e9c75d200aab61371f198e840582db4500714cdf230f"
+    },
+    {
+      "relative_to_reuse_first": "reuse_execution_20261117/FIELD_GAPS_V1_PUBLIC.json",
+      "sha256": "768946550014e1767cf3da0756bc4c46acff3e7a365469ba9354749bec6ff782"
+    },
+    {
+      "relative_to_reuse_first": "reuse_execution_20261117/code/adapter.py",
+      "sha256": "da1e7542cd78a28559ae90688a83a45f1e8d36e597be8a9f50fb6d1eb36a64c1"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/QUALIFICATION_FRAME_PUBLIC.json",
+      "sha256": "019d321e8ca81b69430382f17541eb6f0033e5efbad4d53e1d39d354c478c32a"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/code/cloud_freeze_qualification_frame.py",
+      "sha256": "9f2f6248e1c94b9a974d4080243fd24252a2b12bc72c3d47a0a235ddf255d959"
+    },
+    {
+      "relative_to_reuse_first": "execution_20261116/code/cloud_prepare_qualification_inputs.py",
+      "sha256": "729f7dc4ddff80f202297f93aeffacd45b50d3e4abe3d9f5041a8589431d87d0"
+    },
+    {
+      "relative_to_reuse_first": "code/cloud_prepare_benchmark.py",
+      "sha256": "53ed8bfbcd9bf865e7ef35536c15f2128685d0913f24eddee1688f9423a01c8a"
+    }
+  ]
+}

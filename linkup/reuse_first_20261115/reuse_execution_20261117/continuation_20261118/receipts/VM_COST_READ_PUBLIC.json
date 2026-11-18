@@ -1,0 +1,70 @@
+{
+  "at_utc": "2026-11-17T12:23:47.261945+00:00",
+  "identity_type": "existing_ARM_service_principal",
+  "scope": "existing_VM_compute_and_attached_managed_disks",
+  "read_only": true,
+  "new_resources": 0,
+  "status": "success",
+  "filtered_resource_count": 2,
+  "columns": [
+    {
+      "name": "PreTaxCost",
+      "type": "Number"
+    },
+    {
+      "name": "UsageDate",
+      "type": "Number"
+    },
+    {
+      "name": "ServiceName",
+      "type": "String"
+    },
+    {
+      "name": "Currency",
+      "type": "String"
+    }
+  ],
+  "rows": [
+    [
+      0.0395635458827019,
+      20261116,
+      "Bandwidth",
+      "USD"
+    ],
+    [
+      0.1742646,
+      20261116,
+      "Storage",
+      "USD"
+    ],
+    [
+      1.2615243152,
+      20261116,
+      "Virtual Machines",
+      "USD"
+    ],
+    [
+      0.0380325976759195,
+      20261117,
+      "Bandwidth",
+      "USD"
+    ],
+    [
+      0.0504262,
+      20261117,
+      "Storage",
+      "USD"
+    ],
+    [
+      0.2621243152,
+      20261117,
+      "Virtual Machines",
+      "USD"
+    ]
+  ],
+  "next_page_present": false,
+  "not_final_invoice": true,
+  "not_exact_stage_attribution": true,
+  "excludes_unlinked_resources_and_model_services": true,
+  "service_names_returned_by_cost_query_preserved": true
+}
