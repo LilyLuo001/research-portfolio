@@ -3,9 +3,11 @@
   "actual_Azure_invoice_claimed": false,
   "field_quality_or_pilot_release_inferred": false,
   "missing_future_or_unselected_files_not_inferred_complete": [
+    "ASTRA_DIAGNOSTIC_PUBLIC.json",
     "ASTRA_FINAL_PUBLIC.json",
     "KIMI_FINAL_PUBLIC.json",
-    "SCORING_PUBLIC.json"
+    "SCORING_PUBLIC.json",
+    "control/PILOT_READINESS_ZH.md"
   ],
   "original_runtime_v1_and_initial_delivery_manifest_unchanged": true,
   "public_files": {
@@ -17,24 +19,45 @@
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "control/publish_stage5_outcomes.py": {
-      "bytes": 22037,
-      "published_sha256": "1d4cf30b9da2768da6e13ae542ddf25975b5618e01c83d427053ec99794fc5b9",
+      "bytes": 25304,
+      "published_sha256": "260923bf2df2f2912cf179d0e7bae67a5c474df4c32d20e126bfb7c8d0feeeec",
       "source": "control/publish_stage5_outcomes.py",
-      "source_sha256": "f1d30d6eca34830e4ff5c55a03989df44f668e322ab527d7c9cc79937352ac95",
+      "source_sha256": "e4ad251c4449e89f3c2582d6f91bec509f81983320a5b056770e99a758f3d037",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "control/stage5_astra_control.py": {
+      "bytes": 27143,
+      "published_sha256": "59aed3ec251dfa56bccb74e3a27b52d4eff96ded2207b09958a42154198f1fa1",
+      "source": "control/stage5_astra_control.py",
+      "source_sha256": "59aed3ec251dfa56bccb74e3a27b52d4eff96ded2207b09958a42154198f1fa1",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
     "control/stage5_control.py": {
-      "bytes": 17891,
-      "published_sha256": "c4f6f1659192cb36b63c1158b03cccdb23693d4887779a31004270944a79ddab",
+      "bytes": 19605,
+      "published_sha256": "b5b5e2e8097ce39ca3f23498763d91dbe93fa33a6a0fc16ccadf984129ec2e25",
       "source": "control/stage5_control.py",
-      "source_sha256": "c4f6f1659192cb36b63c1158b03cccdb23693d4887779a31004270944a79ddab",
+      "source_sha256": "b5b5e2e8097ce39ca3f23498763d91dbe93fa33a6a0fc16ccadf984129ec2e25",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
     "control/stage5_direct_control.py": {
-      "bytes": 8837,
-      "published_sha256": "82b37fafc9e57f5c41405c7461460d5226386e50571c5121517ad381f1cb10a0",
+      "bytes": 13687,
+      "published_sha256": "593d5acc36aaaed157315cd071ccea6e4551eba4f2e99f56e30be711d2abf5a3",
       "source": "control/stage5_direct_control.py",
-      "source_sha256": "82b37fafc9e57f5c41405c7461460d5226386e50571c5121517ad381f1cb10a0",
+      "source_sha256": "593d5acc36aaaed157315cd071ccea6e4551eba4f2e99f56e30be711d2abf5a3",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "control/stage5_direct_v4_control.py": {
+      "bytes": 6947,
+      "published_sha256": "29e658b2c96e66015679a41f3645adc2b07e25217f4eb60931caedd0327ea99f",
+      "source": "control/stage5_direct_v4_control.py",
+      "source_sha256": "29e658b2c96e66015679a41f3645adc2b07e25217f4eb60931caedd0327ea99f",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "control/stage5_scoring_control.py": {
+      "bytes": 6453,
+      "published_sha256": "dbb49d48058979215a5900fa8fb0837bd5de30796555b94c2a82868568eb11e2",
+      "source": "control/stage5_scoring_control.py",
+      "source_sha256": "dbb49d48058979215a5900fa8fb0837bd5de30796555b94c2a82868568eb11e2",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
     "control/stage5_transport_repair_control.py": {
@@ -42,6 +65,20 @@
       "published_sha256": "08b19d2172d96d310399044e6659ae525e686ad28b1003902eb115b8fcca11ce",
       "source": "control/stage5_transport_repair_control.py",
       "source_sha256": "08b19d2172d96d310399044e6659ae525e686ad28b1003902eb115b8fcca11ce",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "control/test_stage5_astra_control.py": {
+      "bytes": 18741,
+      "published_sha256": "97b5fdf18a1339850c05ce8faa0d5944ca8bdb2feefe6173480191041d0ffae3",
+      "source": "control/test_stage5_astra_control.py",
+      "source_sha256": "97b5fdf18a1339850c05ce8faa0d5944ca8bdb2feefe6173480191041d0ffae3",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "control/test_stage5_scoring_control.py": {
+      "bytes": 9554,
+      "published_sha256": "e1a88de4d4c643e0b7b8851e3b1a1faca74dc23f0ef1ea9ad3d416aec19dd882",
+      "source": "control/test_stage5_scoring_control.py",
+      "source_sha256": "e1a88de4d4c643e0b7b8851e3b1a1faca74dc23f0ef1ea9ad3d416aec19dd882",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
     "protocol/ADAPTER_HANDOFF.md": {
@@ -56,6 +93,13 @@
       "published_sha256": "2b948764f9c13d240fc10d9bfdea65b767c32aeccff437aae41d0ae48f03cc67",
       "source": "protocol/ADAPTER_VERIFICATION_PUBLIC.json",
       "source_sha256": "465a233f03e2ee344415879227196f32726a93a5a7117df3c637bc83d601c373",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "protocol/DIRECT_NEXT_STAGE_COMMANDS.md": {
+      "bytes": 2657,
+      "published_sha256": "0ccdf1b37d198ead25a367fafc6f1d85555a31e245cdcf379a6f4f901da028fc",
+      "source": "protocol/DIRECT_NEXT_STAGE_COMMANDS.md",
+      "source_sha256": "8541c10d8b391c9d352fedaefaf04fdc0a3a2cbe0aca97bca1ab3d86ac0df631",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "protocol/NEXT_STAGE_COMMANDS.md": {
@@ -107,6 +151,13 @@
       "source_sha256": "e4e49afd32f95881495e03929b6c82bd72af751f214d4dd47d629364060a8d48",
       "transformation": "Python AST preserved; loopback string syntax only"
     },
+    "receipts/DIRECT_ARM_DEPLOYMENT_PUBLIC.json": {
+      "bytes": 666,
+      "published_sha256": "e7f129c41c3508e759ae39cfc9295d025830e419bbcca95f67af755a982ba86b",
+      "source": "control/DIRECT_ARM_DEPLOYMENT_PUBLIC.json",
+      "source_sha256": "25352e137d33a6c8ab2088b0fe2f2da322764263561a95e78204bd1b55035870",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
     "receipts/DIRECT_KIMI_AUTH_PROBE_PUBLIC.json": {
       "bytes": 510,
       "published_sha256": "7b9d9225d38cbb54dc05ec2cc87e537ac4b0589fd69428e6570bafdd1dcf7df0",
@@ -140,6 +191,27 @@
       "published_sha256": "1e555655848226b451cc426cfa317759763b4468a83480df1025c47f11956023",
       "source": "control/DIRECT_TRANSITION_IMPORT_PUBLIC.json",
       "source_sha256": "916b93d12b2b70ba0bea82e502dda6fb34637b2d7f9098bc727b6d1ead11dbd5",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/DIRECT_V4_LAUNCH_PUBLIC.json": {
+      "bytes": 611,
+      "published_sha256": "e547e187f5a27de34e34b9dec364c96f08e8dbe6239cf1292357bdf406ab69a5",
+      "source": "control/DIRECT_V4_LAUNCH_PUBLIC.json",
+      "source_sha256": "2898326d9845a399d8c27b5995fb450fcf2794fd4ad69b766bcb80b13d5a2bef",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/DIRECT_V4_PREPARE_PUBLIC.json": {
+      "bytes": 1781,
+      "published_sha256": "77d9c951e75a8a92a0cf752d34cfcb92a229dc42d11660ce3d019122a6e262a0",
+      "source": "control/DIRECT_V4_PREPARE_PUBLIC.json",
+      "source_sha256": "3bea586045a7ee471a06846c636575c81d422637a966163cbb21c75ae9d8988f",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/IDENTITY_RESOLUTION_EVIDENCE_PUBLIC.json": {
+      "bytes": 858,
+      "published_sha256": "f72b8a2101f05e0d2f4a23c2f2832f2693b8a2b5c41cdd6c7788fae82661af7f",
+      "source": "control/IDENTITY_RESOLUTION_EVIDENCE_PUBLIC.json",
+      "source_sha256": "4c31b9b1756d0e8b8cbade5d600c5d768b840fbf0e43d559f5e23e0f3a9d8a2f",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "receipts/KIMI_DIRECT_TRANSITION_PACKAGE_PUBLIC.json": {
@@ -184,6 +256,13 @@
       "source_sha256": "ef781ed914e075fc96112646bc47358f22c7060adbd7a8884e338ffd589df465",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
+    "receipts/KIMI_V3_HOLD_FINAL_PUBLIC.json": {
+      "bytes": 1997,
+      "published_sha256": "4a330383fc5ea46b7d865929dc7003c3a72429063c1f32c307ec6122dec587fc",
+      "source": "control/KIMI_V3_HOLD_FINAL_PUBLIC.json",
+      "source_sha256": "8506cee30b4e2eb1d5b59b33d2c82df5cb8e120f1dff3f881574514ccf2e42f6",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
     "receipts/LUNA_FINAL_PUBLIC.json": {
       "bytes": 1460,
       "published_sha256": "581e332e7cfa1e73d2f107306a2cc8bb371d1d096d223159178a183cf076bb41",
@@ -192,10 +271,31 @@
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "receipts/PROGRESS_PUBLIC.json": {
-      "bytes": 729,
-      "published_sha256": "98121b38ad4ffc3e006e28c13ea395535f0476739fe888638158468fcc8af63c",
+      "bytes": 1020,
+      "published_sha256": "64c3acf7e17689424f7428cf14330229a7088c24f0f94fcb335318484b9d9a35",
       "source": "PROGRESS_PUBLIC.json",
-      "source_sha256": "db39d111bc18212f3d0bb775449963ea87faf1970e6a09464429ea9a49dc1c47",
+      "source_sha256": "27c64c7defe2f44bfed2d2eb01ee594500458909155915dd22b0cbe8e6e86453",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/SCORING_BUNDLE_PRESENCE_PUBLIC.json": {
+      "bytes": 469,
+      "published_sha256": "103f7f322b9af0ad1c659d78e75715a05c148852342032b3ed57c78197c4b573",
+      "source": "control/SCORING_BUNDLE_PRESENCE_PUBLIC.json",
+      "source_sha256": "72d6551d8906a3759d8f7a11aaa10789394648cc887bfc1f04ebf9e266cecbbd",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/SCORING_CONTROLLER_COMPANION_INSTALL_REVIEW_PUBLIC.json": {
+      "bytes": 2120,
+      "published_sha256": "673b755f5b44d03fbe482b30e3a0ce6680c7de0e194f6b09f2cb9c6a126bb39c",
+      "source": "control/SCORING_CONTROLLER_COMPANION_INSTALL_REVIEW_PUBLIC.json",
+      "source_sha256": "09228cad1668324ffabe2d0f336439ca7245e7b0e0dbe54198be83b593c45517",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "receipts/SCORING_CONTROLLER_ENGINEERING_REVIEW_PUBLIC.json": {
+      "bytes": 1498,
+      "published_sha256": "afe8cabee73e0ed0e703dfb95a8a1ce16d0419e6c2f8df27f1b43f0bf347de2d",
+      "source": "control/SCORING_CONTROLLER_ENGINEERING_REVIEW_PUBLIC.json",
+      "source_sha256": "afe8cabee73e0ed0e703dfb95a8a1ce16d0419e6c2f8df27f1b43f0bf347de2d",
       "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
     },
     "runtime_direct_v3/DIRECT_REPAIR_PUBLIC.json": {
@@ -272,6 +372,83 @@
       "bytes": 21398,
       "published_sha256": "ec58231b41dc1550d435b267e1f71f8a24345aecd17ac79fedac4fef22b86eac",
       "source": "runtime_direct_v3/test_stage5_runtime.py",
+      "source_sha256": "6c1b30a6dbd31ecba25ef9ca59f6ad44cb7288d744e5e04cc7f944e8e903b6dc",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/DIRECT_REPAIR_PUBLIC.json": {
+      "bytes": 5863,
+      "published_sha256": "e6bcd78b94c792bade5f39686b9de15e5e0af9910ed89dbbb2a488875732603c",
+      "source": "runtime_direct_v4/DIRECT_REPAIR_PUBLIC.json",
+      "source_sha256": "a6a45c5c599bd8188e219c82015512cda1cac2dcc765c62775e6e78db98cab07",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "runtime_direct_v4/README.md": {
+      "bytes": 4180,
+      "published_sha256": "8d8436e1cea039fe5ca101edcd05ffbf38d34bbb6a25aa609dfaf75381aa10c6",
+      "source": "runtime_direct_v4/README.md",
+      "source_sha256": "8d8436e1cea039fe5ca101edcd05ffbf38d34bbb6a25aa609dfaf75381aa10c6",
+      "transformation": "Public strings omit machine paths and fixed protection marker; aggregate values preserved"
+    },
+    "runtime_direct_v4/stage5_cloud_worker.py": {
+      "bytes": 12276,
+      "published_sha256": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+      "source": "runtime_direct_v4/stage5_cloud_worker.py",
+      "source_sha256": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/stage5_common.py": {
+      "bytes": 27197,
+      "published_sha256": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+      "source": "runtime_direct_v4/stage5_common.py",
+      "source_sha256": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/stage5_kimi_gateway.py": {
+      "bytes": 13687,
+      "published_sha256": "b3aefbf3804b8d5ea5028907219b5382bd9446c0e58e617bcb5fdcba9d613e22",
+      "source": "runtime_direct_v4/stage5_kimi_gateway.py",
+      "source_sha256": "2b12dc3991091985a166e388a9c50587044838a73fe7486e6539a6f233931a3c",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/stage5_kimi_worker.py": {
+      "bytes": 36929,
+      "published_sha256": "2eaa3b7100a21668b5a1f8580590817402248c508f42b68547c2af6bce831001",
+      "source": "runtime_direct_v4/stage5_kimi_worker.py",
+      "source_sha256": "2eaa3b7100a21668b5a1f8580590817402248c508f42b68547c2af6bce831001",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/stage5_prepare.py": {
+      "bytes": 5243,
+      "published_sha256": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+      "source": "runtime_direct_v4/stage5_prepare.py",
+      "source_sha256": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/stage5_validate_kimi.py": {
+      "bytes": 3266,
+      "published_sha256": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a",
+      "source": "runtime_direct_v4/stage5_validate_kimi.py",
+      "source_sha256": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/test_stage5_direct.py": {
+      "bytes": 15858,
+      "published_sha256": "863c92b9b65d9dc4671cef340e0c377147ecf805485cb110c1ee201f73dfb03c",
+      "source": "runtime_direct_v4/test_stage5_direct.py",
+      "source_sha256": "863c92b9b65d9dc4671cef340e0c377147ecf805485cb110c1ee201f73dfb03c",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/test_stage5_identity.py": {
+      "bytes": 8275,
+      "published_sha256": "0a6364e00c7482a0f93bd29e8ef5d7eb3be74466a9ed1ef99f34590199468d43",
+      "source": "runtime_direct_v4/test_stage5_identity.py",
+      "source_sha256": "ef62928a3af3ed4936994ed90a8cf36a0a826b759fb1337ef52fa6bed798ba4f",
+      "transformation": "Python AST preserved; loopback string syntax only"
+    },
+    "runtime_direct_v4/test_stage5_runtime.py": {
+      "bytes": 21398,
+      "published_sha256": "ec58231b41dc1550d435b267e1f71f8a24345aecd17ac79fedac4fef22b86eac",
+      "source": "runtime_direct_v4/test_stage5_runtime.py",
       "source_sha256": "6c1b30a6dbd31ecba25ef9ca59f6ad44cb7288d744e5e04cc7f944e8e903b6dc",
       "transformation": "Python AST preserved; loopback string syntax only"
     },

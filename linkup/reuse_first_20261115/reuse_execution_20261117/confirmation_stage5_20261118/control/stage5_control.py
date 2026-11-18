@@ -176,7 +176,22 @@ assert cp.returncode==0,'Kimi_cloud_validation_failed_details_retained'
 r=json.loads(cp.stdout);(K/'VALIDATION_PUBLIC.json').write_text(json.dumps(r,sort_keys=True)+'\n');print(json.dumps(r))
 '''
 def main():
- if len(sys.argv)==2 and sys.argv[1] in ['import_direct_transition','prepare_direct_kimi','launch_direct_kimi','status_direct_kimi']:
+ if len(sys.argv)==2 and sys.argv[1] in ['prepare_astra','launch_astra','status_astra','diagnose_astra','download_astra']:
+  import stage5_astra_control as astra
+  return astra.dispatch(sys.argv[1],control,BASE)
+ if len(sys.argv)==2 and sys.argv[1]=='fetch_astra_final':
+  source=BASE+'''\nA=C/'astra_diagnostic_v1';x=read(A/'ASTRA_FINAL_PUBLIC.json');assert x['terminal_no_active_requests'] and x['selected']<=6 and x['outputs_accounted']==x['selected'];assert sha(A/'OUTPUTS_PRIVATE.jsonl')==x['output_sha256'];assert len(json.dumps(x))<4096;print(json.dumps(x))\n'''
+  r=control.vm(source,'stage5_astra_final_'+str(time.time_ns()));control.save(D/'ASTRA_FINAL_PUBLIC.json',r);print(json.dumps(r));return
+ if len(sys.argv)==2 and sys.argv[1]=='inspect_scoring_readiness':
+  source=BASE+'''\nP=C/'protocol';freeze=read(P/'PROTOCOL_FREEZE.json');items={}\nfor n,h in freeze['files'].items():\n p=P/n;items[n]={'exists':p.is_file(),'matches_frozen_sha':bool(p.is_file() and sha(p)==h)}\nprint(json.dumps({'status':'read_only_scoring_bundle_presence','files':items,'model_calls':0,'file_writes':0}))\n'''
+  r=control.vm(source,'stage5_scoring_presence_'+str(time.time_ns()));control.save(D/'control/SCORING_BUNDLE_PRESENCE_PUBLIC.json',r);print(json.dumps(r));return
+ if len(sys.argv)==2 and sys.argv[1] in ['score_direct_kimi','download_scoring']:
+  import stage5_scoring_control as scoring
+  return scoring.dispatch(sys.argv[1],control,BASE)
+ if len(sys.argv)==2 and sys.argv[1] in ['prepare_direct_kimi_v4','launch_direct_kimi_v4','status_direct_kimi_v4']:
+  import stage5_direct_v4_control as v4
+  return v4.dispatch(sys.argv[1],control,BASE)
+ if len(sys.argv)==2 and sys.argv[1] in ['import_direct_transition','prepare_direct_kimi','launch_direct_kimi','status_direct_kimi','inspect_direct_identity','inspect_arm_kimi','prepare_v4_transition']:
   import stage5_direct_control as direct
   return direct.dispatch(sys.argv[1],control,BASE)
  if len(sys.argv)==2 and sys.argv[1]=='probe_direct_kimi':

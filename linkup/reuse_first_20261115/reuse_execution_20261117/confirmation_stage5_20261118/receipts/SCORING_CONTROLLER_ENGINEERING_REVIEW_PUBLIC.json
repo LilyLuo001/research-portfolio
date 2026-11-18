@@ -1,0 +1,34 @@
+{
+  "actual_CLI_phase_exit_codes": {
+    "FROZEN_PRIMARY_SCORE_EXECUTION_PRIVATE.json": 0,
+    "JOIN_EXECUTION_PRIVATE.json": 0,
+    "KIMI_VALIDATION_EXECUTION_PRIVATE.json": 0,
+    "REPORT_EXECUTION_PRIVATE.json": 0
+  },
+  "actual_model_outputs_read_for_scoring": 0,
+  "all_primary_artifacts_created": true,
+  "at_utc": "2026-11-18T14:24:27.544853+00:00",
+  "authentication_calls": 0,
+  "canonical_path_alias_comparison_pass": true,
+  "change": "Resolve both generated scorer paths before equality comparison; no other controller code change.",
+  "cloud_commands": 0,
+  "controller_resume_preserves_artifacts": true,
+  "controller_sha256": "75465a128690f68fc432a4214601d462fcf8b4aa6988fd9fd068491473b4a65f",
+  "frozen_protocol_bundle_sha256": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11",
+  "frozen_protocol_files_unchanged": true,
+  "generated_cloud_source_executed_locally_only": true,
+  "limitations": [
+    "Live cloud storage upload/download branch was not exercised.",
+    "Tests use synthetic model outputs only; this is not the real confirmation score."
+  ],
+  "live_worker_or_runtime_modified": false,
+  "new_model_calls": 0,
+  "nonterminal_receipt_rejected": true,
+  "protocol_adapter_diagnostic_unit_tests_passed": 39,
+  "status": "scoring_controller_engineering_review_pass",
+  "storage_branch_disabled_in_fixture": true,
+  "synthetic_preparation_exit": 0,
+  "synthetic_production_admission": false,
+  "synthetic_slots": 135,
+  "synthetic_validated_slots": 135
+}

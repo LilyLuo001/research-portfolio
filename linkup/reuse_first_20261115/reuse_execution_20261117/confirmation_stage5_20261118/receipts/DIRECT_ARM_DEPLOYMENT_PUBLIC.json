@@ -1,0 +1,30 @@
+{
+  "account": "rg-linkup",
+  "deployment": "linkup-kimi-k3-1-pro",
+  "endpoint": "https://rg-linkup.cognitiveservices.azure.com/",
+  "identity_type": "existing_ARM_service_principal",
+  "model": {
+    "format": "MoonshotAI",
+    "name": "Kimi-K3.1-Pro",
+    "version": "2026-11-04"
+  },
+  "new_model_calls": 0,
+  "provisioning_state": "Succeeded",
+  "rate_limits": [
+    {
+      "count": 3000,
+      "key": "request",
+      "renewalPeriod": 60
+    },
+    {
+      "count": 3000000,
+      "key": "token",
+      "renewalPeriod": 60
+    }
+  ],
+  "sku": {
+    "capacity": 3000,
+    "name": "GlobalStandard"
+  },
+  "status": "existing_deployment_ARM_metadata_verified"
+}

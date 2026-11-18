@@ -1,0 +1,45 @@
+{
+  "actual_model_outputs_scored": 0,
+  "all_frozen_members_revalidated_after_install": true,
+  "at_utc": "2026-11-18T14:26:40.657077+00:00",
+  "authentication_calls": 0,
+  "cloud_commands": 0,
+  "cloud_presence_probe_sha256": "72d6551d8906a3759d8f7a11aaa10789394648cc887bfc1f04ebf9e266cecbbd",
+  "confirmed_packaging_gap": [
+    "README.md",
+    "test_field_score.py"
+  ],
+  "controller_sha256": "dbb49d48058979215a5900fa8fb0837bd5de30796555b94c2a82868568eb11e2",
+  "existing_freeze_corruption_rejected_without_replacement": true,
+  "existing_mismatched_file_rejected_not_overwritten": true,
+  "existing_protocol_freeze_sha256_required": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11",
+  "frozen_protocol_and_scorer_files_unchanged": true,
+  "full_135_synthetic_pipeline_passed": true,
+  "installed_only_if_missing_with_frozen_sha": {
+    "README.md": "61860cc0e7751fad5533fbb3394699f2b4a52c8d77efb2e5c26e068d74124294",
+    "test_field_score.py": "1f6f2c9199cea1574ff5e4995bb48b03cf1fb9a3417aff0157c66511fb28c2d8"
+  },
+  "live_worker_or_runtime_modified": false,
+  "local_companion_corruption_rejected_before_dispatch": true,
+  "missing_companions_reproduced_from_original_installer_manifest": true,
+  "new_model_calls": 0,
+  "no_refreeze": true,
+  "nonterminal_input_rejected": true,
+  "prior_engineering_review_sha256": "afe8cabee73e0ed0e703dfb95a8a1ce16d0419e6c2f8df27f1b43f0bf347de2d",
+  "real_offline_CLI_phases": [
+    "stage5_prepare",
+    "stage5_validate_kimi",
+    "cloud_score_adapter join",
+    "field_score",
+    "cloud_score_adapter report"
+  ],
+  "resume_idempotent": true,
+  "retained_test_sha256": "e1a88de4d4c643e0b7b8851e3b1a1faca74dc23f0ef1ea9ad3d416aec19dd882",
+  "static_original_installer_sha256": "c118229738ae008f9e56455efcbd3d7c6288b3edf6a3217870bf3c711c7bce8d",
+  "status": "missing_frozen_companion_install_engineering_verified",
+  "storage_branch_disabled_in_fixture": true,
+  "test_command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest test_stage5_scoring_control -v",
+  "test_working_directory": "[private-runtime-path]",
+  "tests_failed": 0,
+  "tests_passed": 5
+}

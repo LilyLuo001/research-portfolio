@@ -1,0 +1,114 @@
+{
+  "at_utc": "2026-11-18T14:16:41.434084+00:00",
+  "code_sha256": {
+    "stage5_cloud_worker.py": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common.py": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+    "stage5_kimi_gateway.py": "2b12dc3991091985a166e388a9c50587044838a73fe7486e6539a6f233931a3c",
+    "stage5_kimi_worker.py": "2eaa3b7100a21668b5a1f8580590817402248c508f42b68547c2af6bce831001",
+    "stage5_prepare.py": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+    "stage5_validate_kimi.py": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a"
+  },
+  "credentials_read_or_printed": false,
+  "frozen_v3_code_sha256": {
+    "stage5_cloud_worker.py": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common.py": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+    "stage5_kimi_gateway.py": "2b12dc3991091985a166e388a9c50587044838a73fe7486e6539a6f233931a3c",
+    "stage5_kimi_worker.py": "c031c3e8c1160a5a2525adf8a49e7ac33744d969155a9c6b8048f046f3e7c3df",
+    "stage5_prepare.py": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+    "stage5_validate_kimi.py": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a"
+  },
+  "identity_scope": {
+    "ARM_evidence_sha256": "25352e137d33a6c8ab2088b0fe2f2da322764263561a95e78204bd1b55035870",
+    "ARM_model": {
+      "format": "MoonshotAI",
+      "name": "Kimi-K3.1-Pro",
+      "version": "2026-11-04"
+    },
+    "approved_endpoint": "https://rg-linkup.openai.azure.com/openai/v1/chat/completions",
+    "deployment": "linkup-kimi-k3-1-pro",
+    "diagnostic_evidence_sha256": "53a21f941e4ae8a69996e76b41e2b18c192f0ee0adb0e542e2ead169cba7832f",
+    "exact_held_response_pins": {
+      "attempt_id": 11,
+      "detail_sha256": "655b1a095cf8aaabbc62c142551fa1cc9dd78a5a6a1919c5266b9c417dc3de6d",
+      "prior_closure_sha256": "a91d6dcce81e13dfd4bde1ffe1c59ff8a0b04845392ee1aa1b1dff8b4b6ff26e",
+      "prior_input_pins_sha256": "88d75264a90b91bff5f74ebe3b599ff48acb00f79708477bc76ba9071e9e8c54",
+      "request_sha256": "323ff63a22dd938c8635d4faeec0bd9be9d06aa14fd5f4eaeb72ae33802bb33d",
+      "visible_response_sha256": "33338d045fed89bf2ae01435313704df3e0addd9e78846e738115e5ef144f955"
+    },
+    "exact_returned_identifier": "Kimi-K3.1",
+    "future_short_identifier_requires_validated_pinned_identity_resolution": true,
+    "held_response_evidence_sha256": "4c31b9b1756d0e8b8cbade5d600c5d768b840fbf0e43d559f5e23e0f3a9d8a2f",
+    "no_prefix_casefold_or_arbitrary_alias_acceptance": true,
+    "official_alias_claim": false
+  },
+  "instructions_sha256": "8d8436e1cea039fe5ca101edcd05ffbf38d34bbb6a25aa609dfaf75381aa10c6",
+  "known_prior_totals": {
+    "actual_cloud_projection_executed_by_this_repair": false,
+    "all_prior_admitted_contexts_permanently_skipped": true,
+    "combined_Kimi_accounting_no_double_count": true,
+    "complete_visible_responses_to_reuse": 11,
+    "logical_calls": 11,
+    "physical_attempts": 11,
+    "reserved_nano": 2474896600,
+    "untouched_contexts_remaining": 124
+  },
+  "limitations": [
+    "The short provider identifier is scoped to independently verified deployment metadata, not asserted to be an officially documented alias.",
+    "Root must execute the offline creator and importer against the actual sealed cloud prior snapshot and verify the resulting11-row projection before launch."
+  ],
+  "new_model_calls": 0,
+  "only_changed_runtime_files": [
+    "stage5_kimi_worker.py"
+  ],
+  "processes_killed": 0,
+  "projection": {
+    "all_other_holds_remain_blocked": true,
+    "attempt_id_context_request_timestamp_usage_token_cost_fields_preserved": true,
+    "model_request_replayed": false,
+    "new_ledger_state": "response_saved",
+    "only_exact_matched_state_changed": true,
+    "prior_context_table_retains_original_state": true,
+    "prior_detail_bytes_and_actual_returned_identifier_preserved": true,
+    "resolution_sha_bound_in_import_receipt_and_database": true,
+    "source_state": "returned_model_identity_mismatch_hold",
+    "source_v3_files_and_receipts_unchanged": true
+  },
+  "runtime_directory": "[private-runtime-path]",
+  "science_and_limits": {
+    "Kimi_cap_usd_including_prior": 40,
+    "Kimi_logical_cap_including_prior": 150,
+    "Kimi_physical_cap_including_prior": 180,
+    "Kimi_scheduled_TPM": 240000,
+    "OpenCode_used": false,
+    "aggregate_scheduled_TPM": 800000,
+    "direct_Azure_MI_only": true,
+    "equivalence_proof_sha256": "ef15fa443dec89bf174e9af7d8eeff3e35ec823045c1fed616c9d6eb478b98f4",
+    "new_stage_aggregate_cap_usd": 50,
+    "payload_equivalence": {
+      "model_calls": 0,
+      "payload_hash_manifest_sha256": "d1f15784f4b1b7e6f1c7c568364ecc1c7ff2dc433833525c8ba06d63db4101a3",
+      "roster_sha256": "f36abb72675c8ac7fa34b3b7bf72b5d3bdbe93338146e5e9655f2cf0d3bc9faa",
+      "selected": 135,
+      "status": "all_frozen_direct_request_bytes_unchanged",
+      "v3_v4_nonstream_bytes_equal": 135
+    },
+    "schema_instructions_roster_source_validators_quality_gates_unchanged": true
+  },
+  "scientific_runtime_version": "stage5-bounded-serial-v1",
+  "status": "v4_exact_identity_resolution_offline_verified_not_launched",
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest test_stage5_runtime test_stage5_direct test_stage5_identity -v",
+    "errors": 0,
+    "failures": 0,
+    "identity_test_sha256": "ef62928a3af3ed4936994ed90a8cf36a0a826b759fb1337ef52fa6bed798ba4f",
+    "inherited_direct_tests_passed": 16,
+    "new_identity_tests_passed": 13,
+    "passed": 46,
+    "run": 49,
+    "skipped_obsolete_OpenCode_tests": 3,
+    "synthetic_only": true,
+    "test_log_sha256": "b5bfefde005fd7a65d724d0010c59c57bc0bd2d3085cfb523cd73e6e2cc1975d"
+  },
+  "transport_revision": "stage5-kimi-direct-azure-v4",
+  "worker_launches": 0
+}

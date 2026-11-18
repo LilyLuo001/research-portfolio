@@ -6,10 +6,15 @@
   "Kimi": {
     "OpenCode_active": false,
     "direct_identity": "existing_VM_managed_identity",
-    "direct_worker_launched": true,
-    "remaining": 125,
-    "requests_completed_reused": 10,
-    "reserved_usd_including_prior": 2.2454877,
+    "direct_worker_process_active": true,
+    "in_flight": 1,
+    "physical_attempts_including_prior": 23,
+    "prior_reused_provider_calls": 11,
+    "remaining_without_saved_response": 113,
+    "requests_with_response_saved": 22,
+    "reserved_usd_including_prior": 5.180083,
+    "roster_slots_total": 135,
+    "scheduled_TPM": 240000,
     "verified_TPM": 3000000
   },
   "Luna": {
@@ -18,10 +23,11 @@
     "requests_completed": 135,
     "semantic_production_accepted": 0
   },
-  "at_utc": "2026-11-18T14:03:42.915942+00:00",
+  "at_utc": "2026-11-18T14:23:57.854984+00:00",
   "budget_stage5_cap_usd": 50,
   "field_quality_gate": "not_scored_yet",
   "originals_preserved": true,
   "pilot_released": false,
-  "status": "direct_Azure_Kimi_launched_not_complete"
+  "status": "direct_Azure_Kimi_v4_running_not_complete",
+  "status_source_sha256": "e876c7664ac6f7efec8a49c395465d7186f21d5c4c8e1497ac5910f02874d759"
 }

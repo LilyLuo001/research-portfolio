@@ -34,6 +34,33 @@ OPERATING_PREFIXES = (
 # Missing future artifacts are reported and skipped; supplied names cannot
 # expand this list. The repaired six executables have separate v2 destinations.
 FILES = {
+    'control/stage5_direct_v4_control.py': 'control/stage5_direct_v4_control.py',
+    'control/stage5_scoring_control.py': 'control/stage5_scoring_control.py',
+    'control/stage5_astra_control.py': 'control/stage5_astra_control.py',
+    'control/test_stage5_astra_control.py': 'control/test_stage5_astra_control.py',
+    'control/test_stage5_scoring_control.py': 'control/test_stage5_scoring_control.py',
+    'control/SCORING_CONTROLLER_ENGINEERING_REVIEW_PUBLIC.json': 'receipts/SCORING_CONTROLLER_ENGINEERING_REVIEW_PUBLIC.json',
+    'control/SCORING_CONTROLLER_COMPANION_INSTALL_REVIEW_PUBLIC.json': 'receipts/SCORING_CONTROLLER_COMPANION_INSTALL_REVIEW_PUBLIC.json',
+    'control/SCORING_BUNDLE_PRESENCE_PUBLIC.json': 'receipts/SCORING_BUNDLE_PRESENCE_PUBLIC.json',
+    'control/PILOT_READINESS_ZH.md': 'control/PILOT_READINESS_ZH.md',
+    'control/DIRECT_ARM_DEPLOYMENT_PUBLIC.json': 'receipts/DIRECT_ARM_DEPLOYMENT_PUBLIC.json',
+    'control/IDENTITY_RESOLUTION_EVIDENCE_PUBLIC.json': 'receipts/IDENTITY_RESOLUTION_EVIDENCE_PUBLIC.json',
+    'control/DIRECT_V4_PREPARE_PUBLIC.json': 'receipts/DIRECT_V4_PREPARE_PUBLIC.json',
+    'control/DIRECT_V4_LAUNCH_PUBLIC.json': 'receipts/DIRECT_V4_LAUNCH_PUBLIC.json',
+    'control/KIMI_V3_HOLD_FINAL_PUBLIC.json': 'receipts/KIMI_V3_HOLD_FINAL_PUBLIC.json',
+    'runtime_direct_v4/stage5_common.py': 'runtime_direct_v4/stage5_common.py',
+    'runtime_direct_v4/stage5_cloud_worker.py': 'runtime_direct_v4/stage5_cloud_worker.py',
+    'runtime_direct_v4/stage5_kimi_gateway.py': 'runtime_direct_v4/stage5_kimi_gateway.py',
+    'runtime_direct_v4/stage5_kimi_worker.py': 'runtime_direct_v4/stage5_kimi_worker.py',
+    'runtime_direct_v4/stage5_prepare.py': 'runtime_direct_v4/stage5_prepare.py',
+    'runtime_direct_v4/stage5_validate_kimi.py': 'runtime_direct_v4/stage5_validate_kimi.py',
+    'runtime_direct_v4/test_stage5_direct.py': 'runtime_direct_v4/test_stage5_direct.py',
+    'runtime_direct_v4/test_stage5_identity.py': 'runtime_direct_v4/test_stage5_identity.py',
+    'runtime_direct_v4/test_stage5_runtime.py': 'runtime_direct_v4/test_stage5_runtime.py',
+    'runtime_direct_v4/DIRECT_REPAIR_PUBLIC.json': 'runtime_direct_v4/DIRECT_REPAIR_PUBLIC.json',
+    'runtime_direct_v4/README.md': 'runtime_direct_v4/README.md',
+    'protocol/DIRECT_NEXT_STAGE_COMMANDS.md': 'protocol/DIRECT_NEXT_STAGE_COMMANDS.md',
+    'ASTRA_DIAGNOSTIC_PUBLIC.json': 'receipts/ASTRA_DIAGNOSTIC_PUBLIC.json',
     'control/stage5_direct_control.py': 'control/stage5_direct_control.py',
     'control/DIRECT_KIMI_AUTH_PROBE_PUBLIC.json': 'receipts/DIRECT_KIMI_AUTH_PROBE_PUBLIC.json',
     'control/DIRECT_ROUTE_AMENDMENT_PUBLIC.json': 'receipts/DIRECT_ROUTE_AMENDMENT_PUBLIC.json',
@@ -244,11 +271,15 @@ def make_plan(scanner, only=None):
     for leg, x in legs.items():
         status.append(f"- {leg}：{x['outputs_accounted']} 个槽位完成记账，{x['physical_attempts']} 次物理请求，保守预留 ${x['reserved_usd']:.8f}。")
     if not legs: status.append('尚未纳入终态回执。')
-    if 'control/DIRECT_LAUNCH_PUBLIC.json' in objects:
+    if 'control/DIRECT_V4_LAUNCH_PUBLIC.json' in objects:
+        status += ['', '按用户最新指令，OpenCode 已停止；当前 Kimi 为现有 Azure VM 托管身份直接调用。v4 导入此前 11 次真实响应及全部预算，从剩余 124 条继续；不重复请求旧输入。ARM 部署与响应头均核实 300 万 TPM，本次固定确认仍使用原保守调度上限。',
+            'v3 因返回模型短名与部署全名不同而保护暂停；部署身份核查及精确投影证据保留，旧账本不改。v4 只修正运行身份核验，不改变模型请求、输入、评分规则；厂商官方别名未宣称获证。',
+            '启动不等于完成；实际运行终态、字段结果与试产状态以本快照所含回执为准。']
+    elif 'control/DIRECT_LAUNCH_PUBLIC.json' in objects:
         status += ['', '按用户最新指令，OpenCode 已停止；Kimi 改为现有 Azure VM 托管身份直接调用。旧通道 10 条已完成响应及预算已导入，剩余 125 条从真实断点继续。实际响应头核实配额为 300 万 TPM，本次确认仍使用冻结的保守调度上限。',
             '直连启动只代表任务已派发，完成情况以最终账本与评分回执为准；不得把启动或已保存直接视为字段合格。']
     status += ['', '字段评分以纳入的独立汇总回执为准；本发布器不推断合格字段、不放行试产、不把机器间一致性写成人工或全库准确率。金额为运行账本预留，未声称核验 Azure 发票。',
-        '', '传输修复与直连版分别保存在 runtime_transport_v2 与 runtime_direct_v3；此前版本保留但不再启动 OpenCode。Python 公开副本只改变回环地址字符串的字面书写；AST 和字符串值保持相同，原执行字节和 SHA 仍单独保留。',
+        '', '历史传输版、首个直连版及身份核验修正版分别保存在 runtime_transport_v2、runtime_direct_v3、runtime_direct_v4；此前版本保留但不再启动 OpenCode。Python 公开副本只改变回环地址字符串的字面书写；AST 和字符串值保持相同，原执行字节和 SHA 仍单独保留。',
         '', '所有来源均为明确列出的公开汇总、代码和交接文件。正文、逐条身份、输出内容、私有映射和凭据不发布。', '']
     rendered['OUTCOMES_STATUS_ZH.md'], _ = scanned_bytes('\n'.join(status), '.md', PUB_REL+'/OUTCOMES_STATUS_ZH.md', scanner)
     plan = {'files': {name: sha(data) for name, data in sorted(rendered.items())}, 'sources': copies,
