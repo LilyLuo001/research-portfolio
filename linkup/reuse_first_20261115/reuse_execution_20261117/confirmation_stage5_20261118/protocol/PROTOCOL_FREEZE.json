@@ -1,0 +1,21 @@
+{
+  "version": "stage5-protocol-bundle-freeze-v1",
+  "frozen_at_utc": "2026-11-18T11:54:27.842470+00:00",
+  "confirmation_outputs_observed": false,
+  "actual_input_frame_frozen_by_this_subtask": false,
+  "files": {
+    "CONFIRMATION_PROTOCOL.json": "d43e2a065cc516772ae0c31d4fff2c7dc2860c41257002f247fa21748e2b8598",
+    "field_score.py": "2c37e739154296ea969da4126fe92bc922a8d1e5c07c4a42bcca505e9caa5ae0",
+    "test_field_score.py": "1f6f2c9199cea1574ff5e4995bb48b03cf1fb9a3417aff0157c66511fb28c2d8",
+    "README.md": "61860cc0e7751fad5533fbb3394699f2b4a52c8d77efb2e5c26e068d74124294"
+  },
+  "synthetic_verification": {
+    "command": "python3 -m unittest -v test_field_score.py",
+    "tests_run": 21,
+    "failures": 0,
+    "errors": 0,
+    "real_records_read": 0,
+    "model_calls": 0
+  },
+  "source_artifacts_hash_verified_against_protocol": true
+}

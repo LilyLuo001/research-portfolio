@@ -1,0 +1,545 @@
+{
+  "version": "stage5-field-local-confirmation-v1-20261118",
+  "status": "frozen_before_fresh_confirmation_outputs",
+  "authorization": {
+    "fresh_input_cap": 150,
+    "total_confirmation_cap_usd": 50,
+    "candidate": "Luna",
+    "blind_reference": "Kimi",
+    "astra_adjudication_cases_max": 6,
+    "astra_physical_calls_max": 6,
+    "human_labels_required": false,
+    "later_pilot_unique_inputs_max": 10000,
+    "pilot_only_newly_qualified_dependencies": true,
+    "old_outputs_must_not_be_reopened_or_overwritten": true
+  },
+  "schema": "linkup/formal800_20261012/FORMAL800_REVIEW_SCHEMA.json",
+  "frozen_validator": "linkup/formal800_20261012/code/validate_reviews.py",
+  "field_validator": "linkup/reuse_first_20261115/measurement_protocol_20261117/code/field_validation.py",
+  "source_files": [
+    {
+      "path": "linkup/formal800_20261012/FORMAL800_REVIEW_SCHEMA.json",
+      "sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e"
+    },
+    {
+      "path": "linkup/formal800_20261012/REVIEW_INSTRUCTIONS.md",
+      "sha256": "f13e1c431b4018fb7d1e2f1dc985dece69f092a8713c7ef673497a0fbd728d26"
+    },
+    {
+      "path": "linkup/formal800_20261012/code/validate_reviews.py",
+      "sha256": "f7737143004374f9391a16ad2d1bab2fa47950c589232510045d1eee93bc2c20"
+    },
+    {
+      "path": "linkup/reuse_first_20261115/measurement_protocol_20261117/code/field_validation.py",
+      "sha256": "f29d432ba0a614123190c7c14575fd4c49860ae3fbcc4c45b308c983f3a575a9"
+    },
+    {
+      "path": "linkup/reuse_first_20261115/measurement_protocol_20261117/PROTOCOL_AND_FACT_CHECK_ZH.md",
+      "sha256": "457f52645f7025beeae28877cb09f74e1faa66df72a61710d87651bde4b8d065"
+    },
+    {
+      "path": "linkup/reuse_first_20261115/execution_20261116/continuation02/final/code/qualification_metrics.py",
+      "sha256": "33f354aa7dda0c117032f4cbc06c4bba427eb50727372528980471570b809d11"
+    },
+    {
+      "path": "linkup/reuse_first_20261115/next_step_plan_20261117/PLAN_PUBLIC.json",
+      "sha256": "56dbea63112e3f2095e3b5b46d4501308c6cc9f6746f0d2d99eba8cd405df3e4"
+    }
+  ],
+  "frame_contract": {
+    "freeze_before_first_model_request": true,
+    "one_fixed_confirmation_no_resampling_or_pass_search": true,
+    "old_500_development_only_never_confirmation": true,
+    "prior_candidate_reference_audit_contexts_and_protected_contexts_excluded_before_body_access": true,
+    "row_fields": [
+      "record_id",
+      "context_sha256",
+      "partition",
+      "protected",
+      "fresh_never_exposed",
+      "source_units_sha256"
+    ],
+    "partitions": [
+      "confirmation",
+      "challenge"
+    ],
+    "all_rows_unique_by_record_id_and_context_sha256": true,
+    "total_including_challenges_max": 150,
+    "partition_assignment_frozen_before_outputs": true,
+    "challenge_excluded_from_primary_support_coverage_and_gates": true,
+    "missing_failed_unknown_and_late_quarantined_rows_remain_accounted": true,
+    "source_unit_inventory_computed_before_outputs": true,
+    "sampling_scope": "This fixed fresh frame only. A bounded cursor window is not automatically a probability sample. No population accuracy or probability error estimate is certified."
+  },
+  "gate": {
+    "precision_min": 0.9,
+    "recall_min": 0.8,
+    "macro_f1_min": 0.85,
+    "known_reference_coverage_min": 0.8,
+    "minimum_known_cases_per_field": 50,
+    "minimum_positive_cases_per_field": 20,
+    "minimum_negative_cases_per_field": 20
+  },
+  "scoring_contract": {
+    "unit": "one independently specified research measure",
+    "no_13_field_joint_gate": true,
+    "unknown_reference": "Exclude from truth comparisons but retain in full denominator for known-reference coverage. Reference is an independent machine, not truth.",
+    "unknown_candidate": "Retain as abstention against known reference, including recall false negatives. Missing and engineering-invalid are separately counted, not relabeled reviewed unknown.",
+    "not_mentioned": "Full-document review completed and no expression of this precise measure was found; never employer reality or explicit denial.",
+    "explicit_negative": "Represented experience explicitly_waived claims and entry explicit_no_experience are separate supported measures; never erase them into absence. Other negation concepts not encoded in Formal800 are not inferred.",
+    "partial_reading": "Retain source positives with partial status; no complete inventory or nonmention qualification.",
+    "primary_binary_metrics": "Positive precision, positive recall and two-class macro F1; candidate unknown contributes false negatives. Fixed support and reference coverage gates apply separately to every measure.",
+    "structured_measures": "Also require source-unit-supported atom precision >= .90, recall >= .80 and micro F1 >= .85. This extra conservative claim gate is separate from the binary macro F1.",
+    "cosmetic_exclusions": [
+      "experience_clauses.object_detail",
+      "qualification_alternatives.branches.condition"
+    ],
+    "cosmetic_values_preserved_in_original_reviews": true,
+    "source_units": "Deterministic line or sentence/semicolon units in field_score.source_units, Unicode offsets; precomputed SHA-bound input inventory.",
+    "evidence": "Unchanged validator checks each exact quote exists and retains all occurrences. Primary structured claims need equal represented values and at least one shared frozen source unit, with maximum one-to-one matching. No fuzzy quote repair.",
+    "quote_boundaries": "Exact source span agreement is diagnostic only. Different valid boundaries within the same support unit do not fail the primary score.",
+    "source_unit_limitation": "Coarse unit support does not identify named concepts within a sentence or prove interpretation. A long or repeated quote can map to several units; all mappings are retained and no unique span is claimed.",
+    "group_relations": "Ignore arbitrary group/branch IDs, branch order and condition display prose. Preserve OR versus AND, all declared branches, branch/shared membership, represented clause values, and branch/clause evidence support with one-to-one branch matching. No semantic parse of degree/condition prose.",
+    "predeclared_unresolved": "Unresolved components lower measure-specific reference coverage. Independent represented measures remain eligible for scoring.",
+    "no_post_output_definition_or_synonym_changes": true
+  },
+  "reference_and_adjudication": {
+    "kimi_sees_candidate": false,
+    "kimi_uses_same_schema_and_instructions": true,
+    "primary_score_reference": "Original independent Kimi; immutable, including unknowns and failures.",
+    "astra_selection": "After frozen primary scoring, take at most six cases with known semantic disagreement or reviewed/unresolved semantic reference unknown, in ascending digest_json([protocol version, record_id, context_sha256]) order. Missing/transport/engineering failures alone do not trigger Astra. Ties break by record_id. No hand-picking outcomes.",
+    "astra_context": "Same complete frozen input and unchanged schema/instructions; blind to candidate and reference labels.",
+    "astra_effect": "Separate bounded diagnostic adjudication, never overwrite Kimi or tune the primary confirmation gate. Unresolved disputes stay unresolved.",
+    "no_human_gold_claim": true
+  },
+  "measures": [
+    {
+      "id": "experience.general_work.mention",
+      "field": "experience.general_work",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit non-waived experience mention in the frozen broad family; full-document absence otherwise."
+    },
+    {
+      "id": "experience.general_work.years",
+      "field": "experience.general_work",
+      "kind": "years",
+      "require_claim_agreement": true,
+      "description": "Literal clause years bound/relation by frozen broad family and source unit; no named-object taxonomy or unconditional posting minimum."
+    },
+    {
+      "id": "experience.general_work.strength",
+      "field": "experience.general_work",
+      "kind": "strength",
+      "require_claim_agreement": true,
+      "description": "Clause strength by frozen broad family and source unit, including explicitly_waived distinct from missing expression."
+    },
+    {
+      "id": "experience.general_work.waiver",
+      "field": "experience.general_work",
+      "kind": "waiver",
+      "require_claim_agreement": true,
+      "description": "Explicitly waived broad-family experience claim; absence means no waiver expressed, not an affirmative requirement."
+    },
+    {
+      "id": "experience.general_work.conditionality",
+      "field": "experience.general_work",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Clause conditionality and any represented group/branch/shared scope."
+    },
+    {
+      "id": "experience.general_work.group",
+      "field": "experience.general_work",
+      "kind": "group",
+      "require_claim_agreement": true,
+      "description": "Represented OR/AND group, complete declared branch inventory, selected/shared scope and evidence; degree/condition concepts are not computed."
+    },
+    {
+      "id": "experience.general_work.clause_relation",
+      "field": "experience.general_work",
+      "kind": "clause_relation",
+      "require_claim_agreement": true,
+      "description": "Joint represented category/year/strength/conditionality/group relation supported in source units; not exact object-concept or full computable B logic."
+    },
+    {
+      "id": "experience.occupation_task.mention",
+      "field": "experience.occupation_task",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit non-waived experience mention in the frozen broad family; full-document absence otherwise."
+    },
+    {
+      "id": "experience.occupation_task.years",
+      "field": "experience.occupation_task",
+      "kind": "years",
+      "require_claim_agreement": true,
+      "description": "Literal clause years bound/relation by frozen broad family and source unit; no named-object taxonomy or unconditional posting minimum."
+    },
+    {
+      "id": "experience.occupation_task.strength",
+      "field": "experience.occupation_task",
+      "kind": "strength",
+      "require_claim_agreement": true,
+      "description": "Clause strength by frozen broad family and source unit, including explicitly_waived distinct from missing expression."
+    },
+    {
+      "id": "experience.occupation_task.waiver",
+      "field": "experience.occupation_task",
+      "kind": "waiver",
+      "require_claim_agreement": true,
+      "description": "Explicitly waived broad-family experience claim; absence means no waiver expressed, not an affirmative requirement."
+    },
+    {
+      "id": "experience.occupation_task.conditionality",
+      "field": "experience.occupation_task",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Clause conditionality and any represented group/branch/shared scope."
+    },
+    {
+      "id": "experience.occupation_task.group",
+      "field": "experience.occupation_task",
+      "kind": "group",
+      "require_claim_agreement": true,
+      "description": "Represented OR/AND group, complete declared branch inventory, selected/shared scope and evidence; degree/condition concepts are not computed."
+    },
+    {
+      "id": "experience.occupation_task.clause_relation",
+      "field": "experience.occupation_task",
+      "kind": "clause_relation",
+      "require_claim_agreement": true,
+      "description": "Joint represented category/year/strength/conditionality/group relation supported in source units; not exact object-concept or full computable B logic."
+    },
+    {
+      "id": "experience.industry_domain.mention",
+      "field": "experience.industry_domain",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit non-waived experience mention in the frozen broad family; full-document absence otherwise."
+    },
+    {
+      "id": "experience.industry_domain.years",
+      "field": "experience.industry_domain",
+      "kind": "years",
+      "require_claim_agreement": true,
+      "description": "Literal clause years bound/relation by frozen broad family and source unit; no named-object taxonomy or unconditional posting minimum."
+    },
+    {
+      "id": "experience.industry_domain.strength",
+      "field": "experience.industry_domain",
+      "kind": "strength",
+      "require_claim_agreement": true,
+      "description": "Clause strength by frozen broad family and source unit, including explicitly_waived distinct from missing expression."
+    },
+    {
+      "id": "experience.industry_domain.waiver",
+      "field": "experience.industry_domain",
+      "kind": "waiver",
+      "require_claim_agreement": true,
+      "description": "Explicitly waived broad-family experience claim; absence means no waiver expressed, not an affirmative requirement."
+    },
+    {
+      "id": "experience.industry_domain.conditionality",
+      "field": "experience.industry_domain",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Clause conditionality and any represented group/branch/shared scope."
+    },
+    {
+      "id": "experience.industry_domain.group",
+      "field": "experience.industry_domain",
+      "kind": "group",
+      "require_claim_agreement": true,
+      "description": "Represented OR/AND group, complete declared branch inventory, selected/shared scope and evidence; degree/condition concepts are not computed."
+    },
+    {
+      "id": "experience.industry_domain.clause_relation",
+      "field": "experience.industry_domain",
+      "kind": "clause_relation",
+      "require_claim_agreement": true,
+      "description": "Joint represented category/year/strength/conditionality/group relation supported in source units; not exact object-concept or full computable B logic."
+    },
+    {
+      "id": "experience.tool_specific.mention",
+      "field": "experience.tool_specific",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit non-waived experience mention in the frozen broad family; full-document absence otherwise."
+    },
+    {
+      "id": "experience.tool_specific.years",
+      "field": "experience.tool_specific",
+      "kind": "years",
+      "require_claim_agreement": true,
+      "description": "Literal clause years bound/relation by frozen broad family and source unit; no named-object taxonomy or unconditional posting minimum."
+    },
+    {
+      "id": "experience.tool_specific.strength",
+      "field": "experience.tool_specific",
+      "kind": "strength",
+      "require_claim_agreement": true,
+      "description": "Clause strength by frozen broad family and source unit, including explicitly_waived distinct from missing expression."
+    },
+    {
+      "id": "experience.tool_specific.waiver",
+      "field": "experience.tool_specific",
+      "kind": "waiver",
+      "require_claim_agreement": true,
+      "description": "Explicitly waived broad-family experience claim; absence means no waiver expressed, not an affirmative requirement."
+    },
+    {
+      "id": "experience.tool_specific.conditionality",
+      "field": "experience.tool_specific",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Clause conditionality and any represented group/branch/shared scope."
+    },
+    {
+      "id": "experience.tool_specific.group",
+      "field": "experience.tool_specific",
+      "kind": "group",
+      "require_claim_agreement": true,
+      "description": "Represented OR/AND group, complete declared branch inventory, selected/shared scope and evidence; degree/condition concepts are not computed."
+    },
+    {
+      "id": "experience.tool_specific.clause_relation",
+      "field": "experience.tool_specific",
+      "kind": "clause_relation",
+      "require_claim_agreement": true,
+      "description": "Joint represented category/year/strength/conditionality/group relation supported in source units; not exact object-concept or full computable B logic."
+    },
+    {
+      "id": "entry.explicit_no_experience.mention",
+      "field": "entry.explicit_no_experience",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "entry.explicit_no_experience.conditionality",
+      "field": "entry.explicit_no_experience",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "entry.explicit_new_graduate.mention",
+      "field": "entry.explicit_new_graduate",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "entry.explicit_new_graduate.conditionality",
+      "field": "entry.explicit_new_graduate",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "entry.current_student_internship.mention",
+      "field": "entry.current_student_internship",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "entry.current_student_internship.conditionality",
+      "field": "entry.current_student_internship",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "entry.explicit_junior_or_entry_label.mention",
+      "field": "entry.explicit_junior_or_entry_label",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "entry.explicit_junior_or_entry_label.conditionality",
+      "field": "entry.explicit_junior_or_entry_label",
+      "kind": "conditionality",
+      "require_claim_agreement": true,
+      "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+    },
+    {
+      "id": "responsibility.independent_judgment.mention",
+      "field": "responsibility.independent_judgment",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.independent_judgment.strict_current_duty",
+      "field": "responsibility.independent_judgment",
+      "kind": "strict_current_duty",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.independent_judgment.relations",
+      "field": "responsibility.independent_judgment",
+      "kind": "relations",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.client_ownership.mention",
+      "field": "responsibility.client_ownership",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.client_ownership.strict_current_duty",
+      "field": "responsibility.client_ownership",
+      "kind": "strict_current_duty",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.client_ownership.relations",
+      "field": "responsibility.client_ownership",
+      "kind": "relations",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.people_supervision.mention",
+      "field": "responsibility.people_supervision",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.people_supervision.strict_current_duty",
+      "field": "responsibility.people_supervision",
+      "kind": "strict_current_duty",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.people_supervision.relations",
+      "field": "responsibility.people_supervision",
+      "kind": "relations",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.training_mentoring.mention",
+      "field": "responsibility.training_mentoring",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.training_mentoring.strict_current_duty",
+      "field": "responsibility.training_mentoring",
+      "kind": "strict_current_duty",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "responsibility.training_mentoring.relations",
+      "field": "responsibility.training_mentoring",
+      "kind": "relations",
+      "require_claim_agreement": true,
+      "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+    },
+    {
+      "id": "technology.mention",
+      "field": "technology",
+      "kind": "mention",
+      "require_claim_agreement": false,
+      "description": "Explicit inventory, represented technology family/role, or conservative exact recorded name/developed-object relation respectively; no new technology-name synonym taxonomy."
+    },
+    {
+      "id": "technology.family_role",
+      "field": "technology",
+      "kind": "family_role",
+      "require_claim_agreement": true,
+      "description": "Explicit inventory, represented technology family/role, or conservative exact recorded name/developed-object relation respectively; no new technology-name synonym taxonomy."
+    },
+    {
+      "id": "technology.exact_named_relation",
+      "field": "technology",
+      "kind": "exact_named_relation",
+      "require_claim_agreement": true,
+      "description": "Explicit inventory, represented technology family/role, or conservative exact recorded name/developed-object relation respectively; no new technology-name synonym taxonomy."
+    }
+  ],
+  "modules": [
+    {
+      "module": "A",
+      "name": "opportunity_redistribution",
+      "priority": "support",
+      "dependencies": [
+        "existing identity/source/date/coverage metadata",
+        "only actually used occupation/industry group mappings"
+      ],
+      "stage5_effect": "Independent counts may continue under existing metadata qualification; no semantic joint gate. CREATED is first-observed proxy."
+    },
+    {
+      "module": "B",
+      "name": "experience_recombination",
+      "priority": "core",
+      "dependencies": [
+        "only the participating experience measure IDs",
+        "technology.family_role only for technology comparisons"
+      ],
+      "stage5_effect": "Release only independently passing represented category/year/strength/group dependencies; exact named-object concepts and full computable alternatives remain unqualified."
+    },
+    {
+      "module": "C",
+      "name": "responsibility_evolution",
+      "priority": "support",
+      "dependencies": [
+        "responsibility.<dimension>.strict_current_duty or the explicitly selected relation measure",
+        "technology.family_role only for grouped comparisons"
+      ],
+      "stage5_effect": "Keep current duties separate from capability and prior experience; unrelated experience errors do not block."
+    },
+    {
+      "module": "D",
+      "name": "personnel_entry_paths",
+      "priority": "core",
+      "dependencies": [
+        "Revelio event and industry/occupation mappings",
+        "complete prior history and risk sets for first-entry rates",
+        "entry.<dimension> measures only when advertisement eligibility is actually used"
+      ],
+      "stage5_effect": "Advertisement entry labels are supporting LinkUp measures and do not substitute for person-level flows/history. Revelio route remains independently qualified/versioned."
+    },
+    {
+      "module": "E",
+      "name": "comparison_with_early_computerization",
+      "priority": "extension",
+      "dependencies": [
+        "the actual outcome measures compared",
+        "technology.family_role",
+        "period/support metadata",
+        "real historical-source measurements"
+      ],
+      "stage5_effect": "Only participating dependencies apply; modern extraction never certifies historical comparability or AI causality."
+    }
+  ],
+  "not_qualified_by_this_test": [
+    "new exact object-concept taxonomy",
+    "named object-to-years identity beyond represented source-unit broad-family claims",
+    "full computable B degree/condition/alternative logic",
+    "unconditional posting-wide minimum years",
+    "complete person-level D history or flows",
+    "historical comparability or causal effects",
+    "whole-corpus/population accuracy",
+    "automatic whole-record or whole-module production admission"
+  ],
+  "operational_handoff": {
+    "cases_jsonl": "record_id, context_sha256, packet (original exact Formal800 packet including assignment), candidate and reference (original unchanged Formal800 objects or null), optional candidate_processing_status/reference_processing_status/protection_blocked.",
+    "frame_freeze_json": "frame_sha256, protocol_bundle_sha256 (file SHA of PROTOCOL_FREEZE.json), frozen_before_first_request=true; external runner provides trustworthy time/order/freshness/blindness evidence.",
+    "protected_handling": "Resolve protection membership before loading original packet/review files. A post-freeze quarantine row must contain metadata only and keeps its slot; scorer checks protection_blocked before packet/review access.",
+    "production": "Scorer reports eligible measure dependencies only; external bounded runtime checks authorization, identity, versions, nonduplicate queue, budgets and participating dependencies. No later input admitted merely because one unrelated field passes."
+  }
+}

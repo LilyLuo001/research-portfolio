@@ -1,0 +1,45 @@
+{
+  "status": "fresh_frame_and_runtime_frozen_no_model_calls",
+  "at_utc": "2026-11-18T12:20:05.263739+00:00",
+  "frame_count": 135,
+  "frame_freeze": {
+    "frame_sha256": "bdf3279fff1d121a073b87368aa62d7bd1b39213f9896ab45337de313e55fe11",
+    "protocol_bundle_sha256": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11",
+    "frozen_before_first_request": true,
+    "at_utc": "2026-11-18T12:20:05.263739+00:00",
+    "source_preparation_receipt_sha256": "3584d93d8c49d7dcc9eee91b5dad2df99fb9896cd969e768f0de62269c6638db",
+    "context_count": 135,
+    "freshness_scope": "recorded_project_exposure_manifests_and_original_10000_reference_only",
+    "machine_calls_at_freeze": 0
+  },
+  "Luna_single_attempt_max_reservation_usd": 1.1428197,
+  "Luna_request_bytes_min": 19911,
+  "Luna_request_bytes_max": 40329,
+  "old_budget_rechecked_from_live_ledger": {
+    "Luna": {
+      "reserved_usd": 4.2373731,
+      "physical_attempts": 500
+    },
+    "Astra": {
+      "reserved_usd": 90.75229999999999,
+      "physical_attempts": 100
+    },
+    "Kimi": {
+      "reserved_usd": 83.0754733,
+      "physical_attempts": 350
+    }
+  },
+  "old_total_reservation_usd": 178.0651464,
+  "new_cap_usd": 50,
+  "phase_cap_usd": 450,
+  "related_processes": [],
+  "runtime_input_pin_sha256": "48ff03447e2feccb1663f43758f4daad0ad26c94230a3e81d52ccac28a3bde37",
+  "old_ledger_pins": {
+    "execution_20261116/run001/qualification500_v1/luna_revision002/ATTEMPTS_PRIVATE.jsonl": "8bb76acc937351ae1dafa202ad927deed535436d2ae3954c8dfc4af5cdbcc68b",
+    "execution_20261116/run001/qualification500_v1/astra_audit50_v1/ATTEMPTS_PRIVATE.jsonl": "c496ab386103ee64d640cdeff71c02e589021f33c6daf61dd5b861d36ba49f2d",
+    "execution_20261116/run001/qualification500_v1/astra_audit50_transport_recovery_v1/ATTEMPTS_PRIVATE.jsonl": "f1786f7e795a4a93ccec89fcd53946f0bb8db2833dfc708bf75e607b0f5b4a27",
+    "execution_20261116/run001/continuation02/final_checkpoint/KIMI_FINAL_PUBLIC.json": "4b6bf8b9d4a0635fcc9ebf6073931a70e40d84ffbf3a49efb0b7d168400dae24"
+  },
+  "model_calls": 0,
+  "conditional_trial_released": false
+}

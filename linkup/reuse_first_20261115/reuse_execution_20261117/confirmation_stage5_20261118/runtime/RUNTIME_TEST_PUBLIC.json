@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "at_utc": "2026-11-18T12:17:47.613804+00:00",
+  "tests": 20,
+  "exit_code": 0,
+  "suite_output": "test_astra_can_only_take_shared_roster_subset (test_stage5_runtime.RuntimeTests) ... ok\ntest_astra_sixth_physical_attempt_is_final_cap (test_stage5_runtime.RuntimeTests) ... ok\ntest_atomic_exclusive_claim_one_winner (test_stage5_runtime.RuntimeTests) ... ok\ntest_config_preflight_emits_no_credentials_or_model_calls (test_stage5_runtime.RuntimeTests) ... ok\ntest_confirmed_retry_twice_then_stop_and_no_refund (test_stage5_runtime.RuntimeTests) ... ok\ntest_conservative_cost_and_physical_caps (test_stage5_runtime.RuntimeTests) ... ok\ntest_fixed_dollars_and_distinct_model_capabilities (test_stage5_runtime.RuntimeTests) ... ok\ntest_kimi_cannot_change_shared_roster (test_stage5_runtime.RuntimeTests) ... ok\ntest_kimi_gateway_exact_source_no_real_network (test_stage5_runtime.RuntimeTests) ... ok\ntest_legacy_gateway_source_change_rejected (test_stage5_runtime.RuntimeTests) ... ok\ntest_legacy_route_requires_exact_url_and_configuration (test_stage5_runtime.RuntimeTests) ... ok\ntest_outputs_cannot_claim_another_frame_or_replace_slot (test_stage5_runtime.RuntimeTests) ... ok\ntest_predecessor_quarantine_required_and_metadata_only (test_stage5_runtime.RuntimeTests) ... ok\ntest_predecessor_sha_checked_before_body_parsing (test_stage5_runtime.RuntimeTests) ... ok\ntest_prepare_merges_quarantine_and_keeps_denominator_slots (test_stage5_runtime.RuntimeTests) ... ok\ntest_responses_envelope_and_duplicate_json (test_stage5_runtime.RuntimeTests) ... ok\ntest_rolling_window_and_serial_handoff_survive_restart (test_stage5_runtime.RuntimeTests) ... ok\ntest_source_binding_protection_and_frozen_pin (test_stage5_runtime.RuntimeTests) ... ok\ntest_uncertain_restart_holds_all_new_calls (test_stage5_runtime.RuntimeTests) ... ok\ntest_usage_breach_holds_next_call (test_stage5_runtime.RuntimeTests) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 0.215s\n\nOK\n",
+  "code_sha256": {
+    "stage5_cloud_worker.py": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common.py": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+    "stage5_kimi_gateway.py": "918d78b4369a266082d7aaa5779724945edd94f58e72488ee93d23c9f65ecd3c",
+    "stage5_kimi_worker.py": "576ff2ac7af1a4872cc056e8c1432e1c65cffa4accf0aabb6e09f025246034a7",
+    "stage5_prepare.py": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+    "stage5_validate_kimi.py": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a",
+    "test_stage5_runtime.py": "46c465e0a9b7e606099134662e503479ffdcdba367265ddb533ca0f9cb261c54"
+  },
+  "new_model_calls": 0,
+  "network_calls": 0,
+  "real_ports_bound": 0,
+  "synthetic_tests_real_credential_files_read": 0,
+  "credential_values_printed": false,
+  "actual_inference_worker_launched": false,
+  "new_cloud_resources": 0,
+  "old_ledgers_modified": false,
+  "independent_audit_fix": "Kimi outbound envelope reconstructed from frozen prompt; CLI side context discarded",
+  "protocol_alignment": "Astra physical cap6 matches stricter frozen protocol; no protocol change",
+  "frame_binding": "Luna/Kimi same frozen roster; Astra subset; predecessor FINAL and exclusion export SHA pinned; outputs roster-bound",
+  "quarantine_propagation": "predecessor verification precedes body reads; blocked slots retain identity only and denominator coverage",
+  "route_preflight_fix": "exact saved bulk1309 loopback URL and config/public-receipt/source hashes; no arbitrary origin broadening",
+  "read_only_actual_route_preflight_receipt": "KIMI_ROUTE_PREFLIGHT_PUBLIC.json",
+  "actual_route_preflight_receipt_sha256": "4a9d1f859f444e00d0c3dc650177c20c32bb8e3e4e7582422e2d3528c790faab"
+}

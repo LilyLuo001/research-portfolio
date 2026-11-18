@@ -1,0 +1,53 @@
+{
+  "at_utc": "2026-11-18T11:49:00.586849+00:00",
+  "status": "user_authorized_stage5_preflight_not_model_launch",
+  "max_new_distinct_inputs": 150,
+  "candidate": "existing_Azure_Luna",
+  "independent_reference": "existing_OpenCode_Azure_Kimi",
+  "max_Astra_blind_adjudications": 6,
+  "new_confirmation_cap_usd": 50,
+  "per_leg_caps_usd": {
+    "Luna": 2,
+    "Kimi": 40,
+    "Astra": 8
+  },
+  "old_stage3_cap_usd": 250,
+  "old_conservative_model_reservations_usd": 178.0651464,
+  "old_priced_usage_usd_not_additive": 37.846032,
+  "phase_total_cap_usd_unchanged": 450,
+  "maximum_old_plus_new_reservation_usd": 228.0651464,
+  "actual_old_ledger_recheck_required_before_inference": true,
+  "input_exclusions": [
+    "all_known_prior_prepared_contexts",
+    "all_known_accepted_saved_unknown_quarantined",
+    "all_recorded_development_and_model_exposure",
+    "provider_retry_forbidden_contexts"
+  ],
+  "freshness_requires_full_normalized_input_SHA": true,
+  "old500_not_reused_for_confirmation": true,
+  "human_annotation_required": false,
+  "physical_call_limits": {
+    "Luna": 180,
+    "Kimi": 180,
+    "Astra": 7
+  },
+  "base_call_limits": {
+    "Luna": 150,
+    "Kimi": 150,
+    "Astra": 6
+  },
+  "TPM_deployment_ceiling": {
+    "Luna": 100000,
+    "Kimi": 300000,
+    "Astra": 1000000
+  },
+  "TPM_project_ceiling": 1000000,
+  "serial_legs": true,
+  "timers_resumed": false,
+  "new_paid_resources": false,
+  "conditional_trial_limit": 10000,
+  "conditional_trial_cap_usd": 150,
+  "conditional_trial_released": false,
+  "no_all_corpus_completion_quote": true,
+  "current_model_calls": 0
+}

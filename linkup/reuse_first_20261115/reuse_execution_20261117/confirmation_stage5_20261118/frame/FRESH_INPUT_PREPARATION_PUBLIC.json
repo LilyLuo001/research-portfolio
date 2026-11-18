@@ -1,0 +1,44 @@
+{
+  "at_utc": "2026-11-18T12:17:36.618671+00:00",
+  "canonical_window_rows": 150,
+  "elapsed_seconds": 9.816095222951844,
+  "end_cursor_exclusive": {
+    "row_offset": 52804,
+    "shard_ordinal": 0
+  },
+  "fresh_complete_unique_contexts": 135,
+  "live_exposure_recheck_pass": true,
+  "live_metadata_files": 65,
+  "model_calls": 0,
+  "network_bytes_read": 20799509,
+  "new_resources": 0,
+  "no_rejected_row_replacement": true,
+  "normalizer_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+  "old_reference_whole_SHA_verified": true,
+  "old_results_changed": false,
+  "original_reference_rows_excluded": 10000,
+  "original_reference_unique_contexts_excluded": 7617,
+  "outputs": {
+    "EXCLUSIONS_PRIVATE.json": "3ac3218d1e7f2e20a96daeb7ab235b7b42b8f7fd3f6f70fbc2e66dd87f8a2681",
+    "FRAME_PRIVATE.json": "9163bc3838158f53338844c27f8481ca809a53bb1b70eefdc9f43ab8da536f0a",
+    "INPUTS_PRIVATE.jsonl": "9c8370481b9da8810b86c4950b1a12bf4315c4d8502f4c02966082acc3eb32d5",
+    "REJECTED_WINDOW_ROWS_PRIVATE.json": "4391ad2b9397961e8e7d5cf3c32a63f209be1e1d6eef16ca436c586de8ad9b10",
+    "SOURCE_LOCATORS_PRIVATE.json": "39f09abd11d9effe3866eae40bc2a13c3219a40c2290c6b31989b3e9ccf042b2"
+  },
+  "protected_payload_reads": 0,
+  "raw_text_exported_off_Azure": false,
+  "rejected_without_replacement": {
+    "previously_known_or_exposed_context_SHA": 15
+  },
+  "scorer_sha256": "2c37e739154296ea969da4126fe92bc922a8d1e5c07c4a42bcca505e9caa5ae0",
+  "source_full_file_downloaded": false,
+  "source_provenance": "verified_snapshot_ledger_SHA_size_stable_ETag_projected_byte_ranges_and_JOB_HASH_SOURCE_ROW_checks",
+  "source_row_groups_decode_other_rows_at_storage_granularity": true,
+  "source_values_selected_max": 150,
+  "start_cursor": {
+    "row_offset": 52654,
+    "shard_ordinal": 0
+  },
+  "status": "fresh_finite_inputs_prepared_no_model_calls",
+  "total_known_contexts_excluded": 55882
+}

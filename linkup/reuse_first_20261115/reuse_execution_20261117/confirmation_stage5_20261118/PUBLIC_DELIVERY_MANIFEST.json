@@ -1,0 +1,165 @@
+{
+  "status": "bounded_stage5_execution_started_not_complete",
+  "frame_count": 135,
+  "canonical_window_count": 150,
+  "prior_exposed_excluded_without_replacement": 15,
+  "historical_contexts_excluded": 55882,
+  "historical_10000_reference_unique_contexts": 7617,
+  "machine_confirmation_cap_usd": 50,
+  "per_leg_caps_usd": {
+    "Luna": 2,
+    "Kimi": 40,
+    "Astra": 8
+  },
+  "effective_Astra_physical_cap": 6,
+  "conditional_pilot_released": false,
+  "whole_corpus_production_released": false,
+  "input_text_or_row_results_published": false,
+  "public_files": {
+    "runtime/stage5_prepare.py": {
+      "executed_or_working_source_sha256": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+      "published_sha256": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/RUNTIME_TEST_PUBLIC.json": {
+      "executed_or_working_source_sha256": "f4a45e79a510b1459fe01b811001f4f48b99356d5192716b2071793761616f98",
+      "published_sha256": "f4a45e79a510b1459fe01b811001f4f48b99356d5192716b2071793761616f98",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/stage5_validate_kimi.py": {
+      "executed_or_working_source_sha256": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a",
+      "published_sha256": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/test_stage5_runtime.py": {
+      "executed_or_working_source_sha256": "46c465e0a9b7e606099134662e503479ffdcdba367265ddb533ca0f9cb261c54",
+      "published_sha256": "a3d7c4fa2c0e791e042a912f013906bc60868beac19134f9007cca9e9710bf6c",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/README.md": {
+      "executed_or_working_source_sha256": "9e2763d93de63f2cb80b578695c5461a4dbce293badecbfe9b68848a7b5d3b5c",
+      "published_sha256": "5cd18a4fe50a623cb2eacfcb1d8ea147767698b7046931dfaddc0e0213f18e84",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/KIMI_ROUTE_PREFLIGHT_PUBLIC.json": {
+      "executed_or_working_source_sha256": "4a9d1f859f444e00d0c3dc650177c20c32bb8e3e4e7582422e2d3528c790faab",
+      "published_sha256": "4a9d1f859f444e00d0c3dc650177c20c32bb8e3e4e7582422e2d3528c790faab",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/stage5_common.py": {
+      "executed_or_working_source_sha256": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+      "published_sha256": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/stage5_cloud_worker.py": {
+      "executed_or_working_source_sha256": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+      "published_sha256": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/stage5_kimi_gateway.py": {
+      "executed_or_working_source_sha256": "918d78b4369a266082d7aaa5779724945edd94f58e72488ee93d23c9f65ecd3c",
+      "published_sha256": "f8e1f72ecfc85ab83aa881ff6e55e3bb5060a2bf0f22780e884c8da2b7bd93e2",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "runtime/stage5_kimi_worker.py": {
+      "executed_or_working_source_sha256": "576ff2ac7af1a4872cc056e8c1432e1c65cffa4accf0aabb6e09f025246034a7",
+      "published_sha256": "e15b0795445e6432fe8b729892e00f5e326286a80f2b649cd2e60b9ad7d00d80",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "frame/smoke_probe_synthetic.py": {
+      "executed_or_working_source_sha256": "4ee811e19d1fd81aa78bf622935b635fbaa669557638bcf97de4f1c2e5e26d7f",
+      "published_sha256": "4ee811e19d1fd81aa78bf622935b635fbaa669557638bcf97de4f1c2e5e26d7f",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "frame/test_fresh_inputs_synthetic.py": {
+      "executed_or_working_source_sha256": "48986152c23751dfcdf57bab898ab2941d2c38efe93665ac3a5f2fb2a5e2d8e0",
+      "published_sha256": "48986152c23751dfcdf57bab898ab2941d2c38efe93665ac3a5f2fb2a5e2d8e0",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "frame/FRAME_PROBE_PUBLIC.json": {
+      "executed_or_working_source_sha256": "ac3e94fa4c68683283de8af664f1133e2de5d0c13425261f94f1a85fa27bdfb6",
+      "published_sha256": "ac3e94fa4c68683283de8af664f1133e2de5d0c13425261f94f1a85fa27bdfb6",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "frame/README.md": {
+      "executed_or_working_source_sha256": "38df651156239a7f36c41e7840dfe96aab376b4dedf3073c701117a6fce9aec0",
+      "published_sha256": "38df651156239a7f36c41e7840dfe96aab376b4dedf3073c701117a6fce9aec0",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "frame/cloud_prepare_fresh_inputs.py": {
+      "executed_or_working_source_sha256": "b1eeceea00b49820134dbd2eb6f695c158631f6c9ae92fd24f802f8ee8837e58",
+      "published_sha256": "b1eeceea00b49820134dbd2eb6f695c158631f6c9ae92fd24f802f8ee8837e58",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "frame/FRESH_INPUT_PREPARATION_PUBLIC.json": {
+      "executed_or_working_source_sha256": "3584d93d8c49d7dcc9eee91b5dad2df99fb9896cd969e768f0de62269c6638db",
+      "published_sha256": "3584d93d8c49d7dcc9eee91b5dad2df99fb9896cd969e768f0de62269c6638db",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "frame/cloud_probe_finite_frame.py": {
+      "executed_or_working_source_sha256": "4021399a0f6aa0b7b273e9501390563df5bef5481befcb564e6934c65dd4dc99",
+      "published_sha256": "4021399a0f6aa0b7b273e9501390563df5bef5481befcb564e6934c65dd4dc99",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/CLI_SMOKE_RECEIPT.json": {
+      "executed_or_working_source_sha256": "572a326dcc09fe51fb433fc52a294dbfb485e88adde7daddf95e5d370ec2f0fa",
+      "published_sha256": "572a326dcc09fe51fb433fc52a294dbfb485e88adde7daddf95e5d370ec2f0fa",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/PROTOCOL_FREEZE.json": {
+      "executed_or_working_source_sha256": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11",
+      "published_sha256": "fdf07cec40eef5ce3ed1ac4e2cb7bcf435403ccbaa7aa240f6625b9d27792f11",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/README.md": {
+      "executed_or_working_source_sha256": "61860cc0e7751fad5533fbb3394699f2b4a52c8d77efb2e5c26e068d74124294",
+      "published_sha256": "61860cc0e7751fad5533fbb3394699f2b4a52c8d77efb2e5c26e068d74124294",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/test_field_score.py": {
+      "executed_or_working_source_sha256": "1f6f2c9199cea1574ff5e4995bb48b03cf1fb9a3417aff0157c66511fb28c2d8",
+      "published_sha256": "1f6f2c9199cea1574ff5e4995bb48b03cf1fb9a3417aff0157c66511fb28c2d8",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/ADAPTER_HANDOFF.md": {
+      "executed_or_working_source_sha256": "fb05f03b22ee616ec1ec017086c129129c7d7bb7f0825180e45fc29c8f5bbbe5",
+      "published_sha256": "fb05f03b22ee616ec1ec017086c129129c7d7bb7f0825180e45fc29c8f5bbbe5",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/cloud_score_adapter.py": {
+      "executed_or_working_source_sha256": "35c99007979e854b4ff7b04b80574c1fad94b0517817870e748745f53b6b60f6",
+      "published_sha256": "35c99007979e854b4ff7b04b80574c1fad94b0517817870e748745f53b6b60f6",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/CONFIRMATION_PROTOCOL.json": {
+      "executed_or_working_source_sha256": "d43e2a065cc516772ae0c31d4fff2c7dc2860c41257002f247fa21748e2b8598",
+      "published_sha256": "d43e2a065cc516772ae0c31d4fff2c7dc2860c41257002f247fa21748e2b8598",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/field_score.py": {
+      "executed_or_working_source_sha256": "2c37e739154296ea969da4126fe92bc922a8d1e5c07c4a42bcca505e9caa5ae0",
+      "published_sha256": "2c37e739154296ea969da4126fe92bc922a8d1e5c07c4a42bcca505e9caa5ae0",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "protocol/test_cloud_score_adapter.py": {
+      "executed_or_working_source_sha256": "e4e49afd32f95881495e03929b6c82bd72af751f214d4dd47d629364060a8d48",
+      "published_sha256": "e4e49afd32f95881495e03929b6c82bd72af751f214d4dd47d629364060a8d48",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "receipts/STAGE5_AUTHORIZATION_PUBLIC.json": {
+      "executed_or_working_source_sha256": "b220f929c266d839fc3839f1639d389c7e711df8d0f20f432717e6abcd8ed1bb",
+      "published_sha256": "b220f929c266d839fc3839f1639d389c7e711df8d0f20f432717e6abcd8ed1bb",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "receipts/EXECUTION_FREEZE_PUBLIC.json": {
+      "executed_or_working_source_sha256": "6ce6a23d909dfd018737d3fba998268eb59ef207a36880e2a001bd112a9dcda8",
+      "published_sha256": "6ce6a23d909dfd018737d3fba998268eb59ef207a36880e2a001bd112a9dcda8",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    },
+    "receipts/LAUNCH_LUNA_1795004527634380000_PUBLIC.json": {
+      "executed_or_working_source_sha256": "22b516045188b838575434c1711494f586e3f9d0a1b48182174490c0e63e153e",
+      "published_sha256": "5f1d66e4764e6174dba3a8a3458bda782d8272fb3f902bd3908a0d6f5dbc21db",
+      "transform": "Python loopback string syntax only (value-equivalent); docs/receipts omit machine paths. Original frozen executable bytes remain in Azure, with separate SHA pins."
+    }
+  }
+}
