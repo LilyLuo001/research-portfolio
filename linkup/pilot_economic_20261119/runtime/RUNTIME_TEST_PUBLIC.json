@@ -1,0 +1,61 @@
+{
+  "at_utc": "2026-11-18T16:41:26.959139+00:00",
+  "default_checkpoint_logical_ceiling": 100,
+  "default_concurrency": 2,
+  "economic_quality_claim": false,
+  "explicit_continuation_required": true,
+  "field_local_failures_do_not_discard_other_valid_fields": true,
+  "file_sha256": {
+    "OFFLINE_TEST_RESULTS.txt": "a5b39ecbf4cb18c8dfd0d234d37fb4e24aff163b013ca6c0a76540e416676319",
+    "ORIGINALS_BEFORE_PUBLIC.json": "3c1491bccda3ec71487b995691331ca9d3fbfc31e4ff846cf4c3bba287c201f3",
+    "README.md": "5776c38479c46b7fafcc5616ddb92f7d0f0efe392711d8339517bdb3443cb3fb",
+    "pilot_common.py": "b98f6da6e313035f2673810f0fb5a9f6a67f9a4e8a906e610f7f272cb33df77f",
+    "pilot_worker.py": "2cb02e880b6fd33636e19d31776ac6f44d6cbde53a466d395d554458e2a13e3c",
+    "test_pilot_runtime.py": "81197ace7d15d72b93df94d68edb5d629411c2b8d91eeffec371255cd66e2aa9"
+  },
+  "hard_limits": {
+    "Astra": {
+      "logical": 20,
+      "physical": 20,
+      "scheduled_tpm": 800000,
+      "usd": 15
+    },
+    "Kimi": {
+      "logical": 100,
+      "physical": 100,
+      "scheduled_tpm": 720000,
+      "usd": 25
+    },
+    "Luna": {
+      "logical": 10000,
+      "physical": 12000,
+      "scheduled_tpm": 80000,
+      "usd": 110
+    },
+    "aggregate_scheduled_tpm": 800000,
+    "aggregate_usd": 150,
+    "phase_cap_usd": 450,
+    "phase_infrastructure_reserved_nano": 50000000000,
+    "phase_max_including_pilot_nano": 415331565700,
+    "phase_prior_model_reserved_nano": 215331565700,
+    "prior_confirmation_separate_reserved_nano": 37266419300
+  },
+  "new_cloud_commands_by_runtime_agent": 0,
+  "new_model_calls_by_runtime_agent": 0,
+  "original_files_verified_unchanged": 31,
+  "original_runtime_edits": 0,
+  "physical_mappings_never_prompted": true,
+  "production_admission_claim": false,
+  "protocol_version": "economic-pilot-20261119-v1",
+  "runtime_launches_by_runtime_agent": 0,
+  "scientific_payloads_unchanged_except_Astra_transport_prefix": true,
+  "status": "new_versioned_runtime_ready_offline_verified_not_launched_by_runtime_agent",
+  "tests": {
+    "failed": 0,
+    "identity_synthetic": true,
+    "passed": 25,
+    "real_network_forbidden": true,
+    "run": 25,
+    "skipped": 0
+  }
+}

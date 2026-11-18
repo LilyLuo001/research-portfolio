@@ -1,0 +1,40 @@
+{
+  "status": "new_pilot_read_only_probe",
+  "at_utc": "2026-11-18T16:34:40.576824+00:00",
+  "host": "linkup-transfer",
+  "execution_user": "linkup",
+  "control_identity": "existing_ARM_service_principal_to_VM_Agent",
+  "data_model_identity": "existing_VM_managed_identity",
+  "related_processes": [],
+  "prior_stage5_legs": {
+    "Luna": {
+      "physical_attempts": 135,
+      "logical_calls": 135,
+      "reserved_usd": 1.1428197,
+      "outputs_accounted": 135
+    },
+    "Kimi": {
+      "physical_attempts": 135,
+      "logical_calls": 135,
+      "reserved_usd": 30.6696996,
+      "outputs_accounted": 135
+    },
+    "Astra": {
+      "physical_attempts": 6,
+      "logical_calls": 6,
+      "reserved_usd": 5.4539,
+      "outputs_accounted": 6
+    }
+  },
+  "prior_stage5_score_sha256": "58c659a42536855e09877972036e0f30376bd8c475d53dc7b9b86c6c41130529",
+  "actual_next_cursor": {
+    "row_offset": 52804,
+    "shard_ordinal": 0
+  },
+  "prior_frame_sha256": "bdf3279fff1d121a073b87368aa62d7bd1b39213f9896ab45337de313e55fe11",
+  "pilot_directory_exists": false,
+  "pilot_ledger_exists": false,
+  "new_model_calls": 0,
+  "new_resources": 0,
+  "source_body_reads": 0
+}

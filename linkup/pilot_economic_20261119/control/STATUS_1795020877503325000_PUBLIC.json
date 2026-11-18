@@ -1,0 +1,53 @@
+{
+  "status": "live_pilot_snapshot",
+  "at_utc": "2026-11-18T16:54:40.217292+00:00",
+  "active_pids": [
+    160780
+  ],
+  "legs": {
+    "Luna": {
+      "logical_calls": 29,
+      "physical_attempts": 29,
+      "states": {
+        "field_local_validation_complete": 29
+      },
+      "reserved_usd": 0.2461676,
+      "input_tokens": 129298,
+      "output_tokens": 22253,
+      "rate_limit_token_headers": [
+        "250000"
+      ]
+    },
+    "Kimi": {
+      "logical_calls": 5,
+      "physical_attempts": 5,
+      "states": {
+        "field_local_validation_complete": 5
+      },
+      "reserved_usd": 1.1242492,
+      "input_tokens": 16483,
+      "output_tokens": 20901,
+      "rate_limit_token_headers": [
+        "3000000"
+      ]
+    },
+    "Astra": {
+      "logical_calls": 1,
+      "physical_attempts": 1,
+      "states": {
+        "field_local_validation_complete": 1
+      },
+      "reserved_usd": 0.8854,
+      "input_tokens": 4111,
+      "output_tokens": 933,
+      "rate_limit_token_headers": [
+        "1000000"
+      ]
+    }
+  },
+  "global_hold": null,
+  "pilot_reserved_usd": 2.2558168,
+  "first_request_unix": 1795020190.1537156,
+  "last_request_unix": 1795020866.4472814,
+  "invoice_verified": false
+}

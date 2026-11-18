@@ -1,0 +1,28 @@
+{
+  "status": "successor_prepared_no_model_calls",
+  "batch": "batch0002",
+  "physical_rows": 900,
+  "new_unique_contexts": 792,
+  "cumulative_physical_rows": 1000,
+  "cumulative_new_unique_contexts": 885,
+  "state_counts": {
+    "new_context_prepared": 792,
+    "not_reconciled": 10,
+    "old_context_unresolved": 88,
+    "saved_unverified": 10
+  },
+  "start_cursor": {
+    "row_offset": 52904,
+    "shard_ordinal": 0
+  },
+  "end_cursor_exclusive": {
+    "row_offset": 53804,
+    "shard_ordinal": 0
+  },
+  "manifest_sha256": "e4fb30ae960aaf2ddca7777a3df35a47dfa4f2de524ddeeb0378390e8b2e5a50",
+  "CPU_status": "completed",
+  "CPU_output_sha256": "3fc678a9aa1cd2293e2b6db2de8800b860475474b47efeecdcc47c610782eaf4",
+  "CPU_wall_seconds": 3.3458257478196174,
+  "CPU_records_per_second": 236.7128654312391,
+  "model_calls": 0
+}

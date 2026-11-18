@@ -1,0 +1,49 @@
+{
+  "at_utc": "2026-11-18T16:53:05.873619+00:00",
+  "change": {
+    "Luna_new_scheduled_tpm": 200000,
+    "Luna_old_scheduled_tpm": 80000,
+    "aggregate_tpm_unchanged": 800000,
+    "changed_database_fields": [
+      "meta.Luna:tpm",
+      "meta.scheduler_rate_amendment_v2_addition"
+    ],
+    "only_private_MODEL_view_difference": "Luna.tpm",
+    "original_method_bytecode_reused": true,
+    "required_saved_provider_tpm": 250000
+  },
+  "cloud_commands_by_agent": 0,
+  "files_sha256": {
+    "OFFLINE_TEST_RESULTS.txt": "c890b5a46bccfb0fc6e4ee08198810ab68a0e1c9d5df941d5d31bbc87c050121",
+    "ORIGINAL_RUNTIME_BEFORE_PUBLIC.json": "c4c54a8592d2c01d092ad65b2b3f710ebfd0133b659e2a5af55bae3a019d8cf0",
+    "README.md": "b97821cd25bbbce982feb70463725da3f43ad9ed28fe1271e0c54874a03c4548",
+    "pilot_worker_v2.py": "366b5337183c6823b040431e5d694e38fdc950c25197f5e722f384f120bd97af",
+    "rate_amendment.py": "5b46d58c9c363334edcbe77ba55c06823ac90dab703469b10f9524495b25b448",
+    "test_rate_amendment.py": "5a666708f77a90d1b76e2a6c28a91a0de2e9847b5ebf1991ca892589318e23b7"
+  },
+  "live_amendment_applied_by_agent": false,
+  "model_calls_by_agent": 0,
+  "preservation": {
+    "claims_reservations_attempts_timestamps_cooldowns_remaining_windows_and_outputs_unchanged": true,
+    "future_lower_quota_respected": true,
+    "no_budget_reset": true,
+    "no_unknown_retry": true,
+    "original_policy_and_carrier_policy_sha_unchanged": true,
+    "original_runtime_files_verified_unchanged": 8,
+    "postcommit_receipt_recovery_tested": true,
+    "repeat_apply_does_not_raise_lowered_quota": true
+  },
+  "root_must_verify_live_closed_ledger_evidence": true,
+  "scheduler_version": "economic-scheduler-rate-amendment-v2",
+  "status": "additive_rate_adapter_ready_offline_verified_not_applied_by_agent",
+  "tests": {
+    "failed": 0,
+    "network_forbidden": true,
+    "passed": 11,
+    "real_identity_not_imported": true,
+    "run": 11,
+    "same_batch_resume_fake_new_attempts": 8,
+    "same_batch_resume_fake_old_cache_hits": 2,
+    "skipped": 0
+  }
+}

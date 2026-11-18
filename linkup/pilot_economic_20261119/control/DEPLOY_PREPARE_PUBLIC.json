@@ -1,0 +1,41 @@
+{
+  "status": "pilot_prepared_no_model_calls",
+  "at_utc": "2026-11-18T16:42:01.981325+00:00",
+  "run_directory": "/home/linkup/migration/pilot_economic_20261119/run01",
+  "physical_rows": 100,
+  "new_unique_contexts": 93,
+  "state_counts": {
+    "new_context_prepared": 93,
+    "not_reconciled": 1,
+    "old_context_unresolved": 5,
+    "saved_unverified": 1
+  },
+  "source_read_statistics": {
+    "metadata_bytes_read": 104401637,
+    "network_bytes_read": 20799509,
+    "original_reference_metadata_artifact_whole_sha_recomputed": true,
+    "provenance": "verified_ledger_sha_size_stable_ETag_projected_ranges_and_actual_source_keys",
+    "range_events": 13,
+    "row_groups_selected": {
+      "base": 1,
+      "description": 1
+    },
+    "source_whole_content_sha_recomputed": false,
+    "storage_row_groups_decode_extra_rows_but_only_allowed_source_values_selected": true
+  },
+  "preparation_seconds": 11.619267086032778,
+  "manifest_sha256": "1cb635faf0ead79e434a7f62fc4a4ebf65673d20e5333445ded9f370e22d3ee7",
+  "policy_sha256": "1f02319e19ef5a0dfb30949916058ad14ee7ee35511bf2ed07f15ccb32d815a9",
+  "model_calls": 0,
+  "Astra_JSON_input_patch_deployed": true,
+  "CPU_status": "completed",
+  "CPU_output_sha256": "1982337b312c20c41c2405af9df5ea93b6e220f091cbbc9b2e5533892e8e70c8",
+  "CPU_receipt_path": "/home/linkup/migration/pilot_economic_20261119/run01/preparation/batch0001/CPU_RULE_RECEIPT_PUBLIC.json",
+  "Luna_request_bytes_min": 19836,
+  "Luna_request_bytes_max": 31890,
+  "Luna_first_attempt_reserved_usd": 0.7883159,
+  "end_cursor_exclusive": {
+    "row_offset": 52904,
+    "shard_ordinal": 0
+  }
+}

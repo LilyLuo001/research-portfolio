@@ -1,0 +1,573 @@
+{
+  "protocol_version": "economic-pilot-20261119-v1",
+  "authorization": "Human expressly authorized outcome Macro-F1 >= 0.80 after inspecting the fixed 135-case results, CPU rules and a <=10000-input pilot within $150.",
+  "selection_after_observing_results": true,
+  "not_a_new_independent_confirmation": true,
+  "not_human_gold_accuracy": true,
+  "population_error_rate_certified": false,
+  "original_confirmation_gate_unchanged": true,
+  "original_score_sha256": "58c659a42536855e09877972036e0f30376bd8c475d53dc7b9b86c6c41130529",
+  "released_measure_ids": [
+    "experience.occupation_task.mention",
+    "entry.explicit_junior_or_entry_label.mention",
+    "entry.explicit_junior_or_entry_label.conditionality",
+    "responsibility.client_ownership.mention",
+    "responsibility.client_ownership.strict_current_duty",
+    "responsibility.client_ownership.relations",
+    "responsibility.people_supervision.mention",
+    "responsibility.people_supervision.strict_current_duty",
+    "responsibility.people_supervision.relations",
+    "responsibility.training_mentoring.mention",
+    "responsibility.training_mentoring.strict_current_duty",
+    "responsibility.training_mentoring.relations",
+    "technology.mention",
+    "technology.family_role",
+    "technology.exact_named_relation"
+  ],
+  "released_measures": [
+    {
+      "id": "experience.occupation_task.mention",
+      "spec": {
+        "id": "experience.occupation_task.mention",
+        "field": "experience.occupation_task",
+        "kind": "mention",
+        "require_claim_agreement": false,
+        "description": "Explicit non-waived experience mention in the frozen broad family; full-document absence otherwise."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8105507631055077,
+      "known_reference_coverage": 0.8888888888888888,
+      "known_reference_cases": 120,
+      "support": {
+        "present": 68,
+        "not_mentioned": 52
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 72,
+        "fp": 32,
+        "fn": 45,
+        "precision": 0.6923076923076923,
+        "recall": 0.6153846153846154,
+        "f1": 0.6515837104072398
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "entry.explicit_junior_or_entry_label.mention",
+      "spec": {
+        "id": "entry.explicit_junior_or_entry_label.mention",
+        "field": "entry.explicit_junior_or_entry_label",
+        "kind": "mention",
+        "require_claim_agreement": false,
+        "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8209366391184573,
+      "known_reference_coverage": 0.9481481481481482,
+      "known_reference_cases": 128,
+      "support": {
+        "not_mentioned": 121,
+        "present": 7
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 4,
+        "fp": 1,
+        "fn": 3,
+        "precision": 0.8,
+        "recall": 0.5714285714285714,
+        "f1": 0.6666666666666666
+      },
+      "original_blocking_reasons_retained": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "entry.explicit_junior_or_entry_label.conditionality",
+      "spec": {
+        "id": "entry.explicit_junior_or_entry_label.conditionality",
+        "field": "entry.explicit_junior_or_entry_label",
+        "kind": "conditionality",
+        "require_claim_agreement": true,
+        "description": "Explicit advertisement eligibility expression; not an observed person entering a job or a reconstructed employment history."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8209366391184573,
+      "known_reference_coverage": 0.9481481481481482,
+      "known_reference_cases": 128,
+      "support": {
+        "not_mentioned": 121,
+        "present": 7
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 2,
+        "fp": 3,
+        "fn": 5,
+        "precision": 0.4,
+        "recall": 0.2857142857142857,
+        "f1": 0.3333333333333333
+      },
+      "original_blocking_reasons_retained": [
+        "insufficient_positive_cases",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.client_ownership.mention",
+      "spec": {
+        "id": "responsibility.client_ownership.mention",
+        "field": "responsibility.client_ownership",
+        "kind": "mention",
+        "require_claim_agreement": false,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8591434239701249,
+      "known_reference_coverage": 0.9555555555555556,
+      "known_reference_cases": 129,
+      "support": {
+        "not_mentioned": 106,
+        "present": 23
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 17,
+        "fp": 9,
+        "fn": 8,
+        "precision": 0.6538461538461539,
+        "recall": 0.68,
+        "f1": 0.6666666666666666
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.client_ownership.strict_current_duty",
+      "spec": {
+        "id": "responsibility.client_ownership.strict_current_duty",
+        "field": "responsibility.client_ownership",
+        "kind": "strict_current_duty",
+        "require_claim_agreement": true,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8591434239701249,
+      "known_reference_coverage": 0.9555555555555556,
+      "known_reference_cases": 129,
+      "support": {
+        "not_mentioned": 106,
+        "present": 23
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 17,
+        "fp": 6,
+        "fn": 7,
+        "precision": 0.7391304347826086,
+        "recall": 0.7083333333333334,
+        "f1": 0.723404255319149
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.client_ownership.relations",
+      "spec": {
+        "id": "responsibility.client_ownership.relations",
+        "field": "responsibility.client_ownership",
+        "kind": "relations",
+        "require_claim_agreement": true,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8591434239701249,
+      "known_reference_coverage": 0.9555555555555556,
+      "known_reference_cases": 129,
+      "support": {
+        "not_mentioned": 106,
+        "present": 23
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 17,
+        "fp": 9,
+        "fn": 8,
+        "precision": 0.6538461538461539,
+        "recall": 0.68,
+        "f1": 0.6666666666666666
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.people_supervision.mention",
+      "spec": {
+        "id": "responsibility.people_supervision.mention",
+        "field": "responsibility.people_supervision",
+        "kind": "mention",
+        "require_claim_agreement": false,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.9111584932480454,
+      "known_reference_coverage": 0.9407407407407408,
+      "known_reference_cases": 127,
+      "support": {
+        "not_mentioned": 102,
+        "present": 25
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 23,
+        "fp": 13,
+        "fn": 8,
+        "precision": 0.6388888888888888,
+        "recall": 0.7419354838709677,
+        "f1": 0.6865671641791045
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_precision_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.people_supervision.strict_current_duty",
+      "spec": {
+        "id": "responsibility.people_supervision.strict_current_duty",
+        "field": "responsibility.people_supervision",
+        "kind": "strict_current_duty",
+        "require_claim_agreement": true,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8569139194139194,
+      "known_reference_coverage": 0.9407407407407408,
+      "known_reference_cases": 127,
+      "support": {
+        "not_mentioned": 106,
+        "present": 21
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 15,
+        "fp": 11,
+        "fn": 6,
+        "precision": 0.5769230769230769,
+        "recall": 0.7142857142857143,
+        "f1": 0.6382978723404256
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_precision_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.people_supervision.relations",
+      "spec": {
+        "id": "responsibility.people_supervision.relations",
+        "field": "responsibility.people_supervision",
+        "kind": "relations",
+        "require_claim_agreement": true,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8966666666666667,
+      "known_reference_coverage": 0.9333333333333333,
+      "known_reference_cases": 126,
+      "support": {
+        "not_mentioned": 101,
+        "present": 25
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 18,
+        "fp": 16,
+        "fn": 11,
+        "precision": 0.5294117647058824,
+        "recall": 0.6206896551724138,
+        "f1": 0.5714285714285714
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_precision_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.training_mentoring.mention",
+      "spec": {
+        "id": "responsibility.training_mentoring.mention",
+        "field": "responsibility.training_mentoring",
+        "kind": "mention",
+        "require_claim_agreement": false,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.9083333333333334,
+      "known_reference_coverage": 0.9481481481481482,
+      "known_reference_cases": 128,
+      "support": {
+        "not_mentioned": 87,
+        "present": 41
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 34,
+        "fp": 5,
+        "fn": 17,
+        "precision": 0.8717948717948718,
+        "recall": 0.6666666666666666,
+        "f1": 0.7555555555555555
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_recall_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.training_mentoring.strict_current_duty",
+      "spec": {
+        "id": "responsibility.training_mentoring.strict_current_duty",
+        "field": "responsibility.training_mentoring",
+        "kind": "strict_current_duty",
+        "require_claim_agreement": true,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.9156569256355429,
+      "known_reference_coverage": 0.9481481481481482,
+      "known_reference_cases": 128,
+      "support": {
+        "not_mentioned": 89,
+        "present": 39
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 29,
+        "fp": 3,
+        "fn": 10,
+        "precision": 0.90625,
+        "recall": 0.7435897435897436,
+        "f1": 0.8169014084507042
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_recall_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "responsibility.training_mentoring.relations",
+      "spec": {
+        "id": "responsibility.training_mentoring.relations",
+        "field": "responsibility.training_mentoring",
+        "kind": "relations",
+        "require_claim_agreement": true,
+        "description": "Advertised worker applicable mention, strictly current duty, or represented subject/relation/conditionality respectively; those estimands are separate."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8355281591482209,
+      "known_reference_coverage": 0.9481481481481482,
+      "known_reference_cases": 128,
+      "support": {
+        "not_mentioned": 75,
+        "present": 53
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 32,
+        "fp": 9,
+        "fn": 32,
+        "precision": 0.7804878048780488,
+        "recall": 0.5,
+        "f1": 0.6095238095238096
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_macro_f1_below_gate",
+        "outcome_recall_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "technology.mention",
+      "spec": {
+        "id": "technology.mention",
+        "field": "technology",
+        "kind": "mention",
+        "require_claim_agreement": false,
+        "description": "Explicit inventory, represented technology family/role, or conservative exact recorded name/developed-object relation respectively; no new technology-name synonym taxonomy."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.809186505038703,
+      "known_reference_coverage": 0.9481481481481482,
+      "known_reference_cases": 128,
+      "support": {
+        "present": 88,
+        "not_mentioned": 40
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 159,
+        "fp": 44,
+        "fn": 85,
+        "precision": 0.7832512315270936,
+        "recall": 0.6516393442622951,
+        "f1": 0.7114093959731543
+      },
+      "original_blocking_reasons_retained": [
+        "outcome_macro_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "technology.family_role",
+      "spec": {
+        "id": "technology.family_role",
+        "field": "technology",
+        "kind": "family_role",
+        "require_claim_agreement": true,
+        "description": "Explicit inventory, represented technology family/role, or conservative exact recorded name/developed-object relation respectively; no new technology-name synonym taxonomy."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8384506376948512,
+      "known_reference_coverage": 0.5111111111111111,
+      "known_reference_cases": 69,
+      "support": {
+        "not_mentioned": 40,
+        "present": 29
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 52,
+        "fp": 25,
+        "fn": 21,
+        "precision": 0.6753246753246753,
+        "recall": 0.7123287671232876,
+        "f1": 0.6933333333333334
+      },
+      "original_blocking_reasons_retained": [
+        "known_reference_coverage_below_gate",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    },
+    {
+      "id": "technology.exact_named_relation",
+      "spec": {
+        "id": "technology.exact_named_relation",
+        "field": "technology",
+        "kind": "exact_named_relation",
+        "require_claim_agreement": true,
+        "description": "Explicit inventory, represented technology family/role, or conservative exact recorded name/developed-object relation respectively; no new technology-name synonym taxonomy."
+      },
+      "release": "provisional_economic_use_user_authorized",
+      "released_component": "binary_outcome_only",
+      "outcome_macro_f1": 0.8384506376948512,
+      "known_reference_coverage": 0.5111111111111111,
+      "known_reference_cases": 69,
+      "support": {
+        "not_mentioned": 40,
+        "present": 29
+      },
+      "relation_metrics_diagnostic_not_certification": {
+        "tp": 37,
+        "fp": 93,
+        "fn": 61,
+        "precision": 0.2846153846153846,
+        "recall": 0.37755102040816324,
+        "f1": 0.32456140350877194
+      },
+      "original_blocking_reasons_retained": [
+        "known_reference_coverage_below_gate",
+        "outcome_macro_f1_below_gate",
+        "outcome_precision_below_gate",
+        "supported_relation_precision_below_gate",
+        "supported_relation_recall_below_gate",
+        "supported_relation_f1_below_gate"
+      ],
+      "structured_atoms_release": "saved_unverified"
+    }
+  ],
+  "publication_rules": {
+    "candidate": "Luna; original Kimi is the independent machine reference, not truth.",
+    "requires_local_engineering_validity": true,
+    "unknown_never_zero": true,
+    "partial_or_invalid_field_does_not_erase_other_valid_fields": true,
+    "relation_named_outcome": "For .relations/.conditionality/.family_role/.exact_named_relation, release only the original binary presence outcome. The name is not certification of individual relation atoms, conditions, names or roles.",
+    "explicit_entry_low_support": "Only seven positive reference cases; retain low-support flag.",
+    "technology_relation_low_coverage": "Known reference coverage approximately 51.1%; retain coverage flags and unknowns.",
+    "numeric_education_keywords": "CPU source-evidenced candidates are separate versioned outputs. No rule hit is not absence. A duration is not an unconditional minimum and local proximity does not prove its experience object.",
+    "old_results": "Never modify prior accepted, saved, reviewed-unknown, unreconciled or protected outputs.",
+    "full_scope": "500 million is the requested approximate commercial physical-row target; current catalog and local cache ratios are not verification of that global denominator.",
+    "CREATED": "First observation time proxy; before/after changes do not automatically identify an AI causal effect."
+  },
+  "phase_prior_reserved_nano": 215331565700,
+  "prior_confirmation_reserved_nano": 37266419300,
+  "phase_infrastructure_reserved_nano": 50000000000,
+  "phase_cap_nano": 450000000000,
+  "pilot_cap_nano": 150000000000,
+  "pilot_legs_usd_caps": {
+    "Luna": 110,
+    "Kimi": 25,
+    "Astra": 15
+  },
+  "pilot_limits": {
+    "physical_rows": 10000,
+    "Luna_contexts": 10000,
+    "Kimi_audits": 100,
+    "Astra_diagnostics": 20
+  },
+  "aggregate_tpm_schedule": 800000,
+  "model_tpm_schedule": {
+    "Luna": 80000,
+    "Kimi": 720000,
+    "Astra": 800000
+  },
+  "Kimi_verified_deployment_tpm": 3000000,
+  "Astra_transport_amendment": "Prefix Responses input with Return JSON.; unchanged schema/instructions and old failed outputs retained."
+}

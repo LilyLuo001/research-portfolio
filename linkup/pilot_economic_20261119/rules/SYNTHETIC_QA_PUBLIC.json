@@ -1,0 +1,28 @@
+{
+  "kind": "synthetic_cpu_candidate_qa_only",
+  "timestamp_utc": "2026-11-18T16:42:25.026482+00:00",
+  "status": "passed",
+  "tests_run": 58,
+  "failures": 0,
+  "errors": 0,
+  "test_wall_seconds": 0.058106124997721054,
+  "python_version": "3.10.5",
+  "engine_version": "linkup-cpu-candidates-20261119-v1",
+  "engine_sha256": "97b1486aede20a9040842db5ec57a38d2b0ac6beb1a3e6e15dc1d8fae4bd0696",
+  "synthetic_benchmark": {
+    "records": 2000,
+    "wall_seconds": 0.5257120830065105,
+    "records_per_second": 3804.363766117264,
+    "text_characters_per_record": 209,
+    "scope": "Repeated public synthetic fixture on local host; not actual-corpus throughput."
+  },
+  "network_calls": 0,
+  "model_calls": 0,
+  "private_corpus_records_read": 0,
+  "claims_excluded": [
+    "semantic accuracy",
+    "high recall proven",
+    "actual corpus throughput",
+    "full-target completion"
+  ]
+}

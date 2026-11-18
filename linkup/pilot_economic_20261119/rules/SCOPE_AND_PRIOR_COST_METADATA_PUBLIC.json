@@ -1,0 +1,237 @@
+{
+  "kind": "metadata_only_scope_and_prior_cost_review",
+  "at_utc": "2026-11-18T16:44:57.133273+00:00",
+  "source_documents": [
+    {
+      "role": "scope_register",
+      "path": "/Users/lilyluo/Documents/LinkUp_Resume_Review_20261110/continuation_dispatch_20261117/SCOPE_REGISTER_PUBLIC.json",
+      "sha256": "706960401b9d1783093cef26e28751de39355c0812c9b71a85e6950a9f48dd9b"
+    },
+    {
+      "role": "latest_source_binding",
+      "path": "/Users/lilyluo/Documents/LinkUp_Resume_Review_20261110/continuation_dispatch_20261118/SOURCE_BINDING_V2_DISPATCH_PUBLIC.json",
+      "sha256": "3792630d5b234d7a40e58b1ff3b0b8a5133168bf12e1fede1c02be180767826d"
+    },
+    {
+      "role": "all_shard_accounting",
+      "path": "/Users/lilyluo/Documents/LinkUp_Resume_Review_20261110/execution_20261116/ALL_SHARD_ACCOUNTING_PUBLIC.json",
+      "sha256": "03d656512249bfb960ddaabd246ae321aaeb0a1007d10157ada62709bcc0ca93"
+    },
+    {
+      "role": "scope_catalog_preflight",
+      "path": "/Users/lilyluo/Documents/LinkUp_Resume_Review_20261110/azure_gpu_launch_20261115/FULL_SCOPE_CATALOG_PREFLIGHT_PUBLIC.json",
+      "sha256": "569a26a242eadc05e1b4f7776d85d525337a62b87da35b0b4e629ce9739ceb1e"
+    },
+    {
+      "role": "prior_stage5",
+      "path": "/Users/lilyluo/Documents/LinkUp_Resume_Review_20261110/confirmation_stage5_20261118/STAGE5_OUTCOME_PUBLIC.json",
+      "sha256": "94a82fafe675484ce7a708228c4dd649668c70953eda892aaf32df92b8ace555"
+    },
+    {
+      "role": "prior_workload",
+      "path": "/Users/lilyluo/Documents/LinkUp_Resume_Review_20261110/azure_gpu_launch_20261115/ACTUAL_WORKLOAD_COST_PUBLIC.json",
+      "sha256": "3991e42e269c047690d11b0fe0d3ac1f2eb7c0f5f13c8b7e526bb638e4e9984b"
+    },
+    {
+      "role": "scope_correction",
+      "path": "/Users/lilyluo/Documents/LinkUp_Resume_Review_20261110/research_policy_20261115_ai_review/FULL_SCOPE_CORRECTION_ZH.md",
+      "sha256": "8412c14e62864dc1cee105b09c19b86369711e43785a7ce760eef3a989d26a7c"
+    }
+  ],
+  "scope": {
+    "user_requested_approximate_commercial_physical_rows": 500000000,
+    "exact_full_requested_physical_row_denominator_verified": null,
+    "description_provider_files": 2464,
+    "description_raw_rows_from_existing_accounting": 298673078,
+    "description_bytes": 652027698428,
+    "records_provider_files": 269,
+    "records_footer_rows_once": 356449214,
+    "records_bytes_once": 63291244154,
+    "canonical_US_base_ads": 204774035,
+    "frozen_US_catalog_sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+    "latest_description_provider_to_US_base_shard_bindings": {
+      "source_provenance_bound": 2464
+    },
+    "global_unique_advertisements": null,
+    "global_unique_normalized_contexts": null,
+    "global_per_field_missing_inputs": null,
+    "units_not_additive": true,
+    "explanation": "Description source rows, Records source rows, US canonical ads, repeated derived indexes and normalized contexts use different units. No row/key union was performed. Neither 204774035 nor a sum of Description and Records rows establishes the requested full global denominator."
+  },
+  "available_existing_private_manifest_artifacts_as_reported": [
+    {
+      "file": "PROVIDER_SCOPE_REGISTER_PRIVATE.json",
+      "bytes": 2004197,
+      "sha256": "b2cc4f283c0bb9d96cdd21c8e61ffb61f7bd05c5d9798b34f494abd32eb34e54"
+    },
+    {
+      "file": "RECORDS_SOURCE_VERSION_REGISTER_PRIVATE.json",
+      "bytes": 1363668,
+      "sha256": "7fcfdb151db924d48b5af7ff449e9fec0e7282593f1ea882bb4d6d2f9379399d"
+    },
+    {
+      "file": "RECORDS_INDEX_VERSIONS_PRIVATE.json",
+      "bytes": 4538,
+      "sha256": "2c46ef9792fb426d9d9fe060358112af6c5843e3d54bb2954c8cebd5aa0aa2a8"
+    },
+    {
+      "file": "RECORDS_EXECUTION_INVENTORIES_PRIVATE.json",
+      "bytes": 1064379,
+      "sha256": "b8a3b347ca4c23e62e11f65be6144c4e61a70bc4b7d2324450a5f01f542a193a"
+    },
+    {
+      "file": "DESCRIPTION_ALLOCATION_METADATA_PRIVATE.json",
+      "bytes": 1119268,
+      "sha256": "787dedb148009098c40bf3f3ec7ad94cf46effba9f41f1986b4282f2753d924f"
+    },
+    {
+      "file": "BASE_SHARD_SCOPE_REGISTER_PRIVATE.json",
+      "bytes": 1931508,
+      "sha256": "4983ba1007ee81227094479acff3c07cd5bc7bd3b5cb21c811c6b2c69c0b4f6a"
+    },
+    {
+      "file": "INPUT_PINS_PRIVATE.json",
+      "bytes": 123039,
+      "sha256": "7b35c738bc7664cad0e4c76ea41b737141207618c7800b6dc8b555cedebd208b"
+    }
+  ],
+  "manifest_limits": [
+    "Artifacts are identified by existing public receipts; this review did not access or rehash private manifests or source bodies.",
+    "2026-11-18 v2 resolved all 2464 Description provider-file-to-US-base-shard provenance bindings; it did not establish advertisement-level identity joins or a global normalized-context hash index.",
+    "Records has four index-manifest versions and 1160 inventory files; those rows are not additive across versions."
+  ],
+  "prior_stage5_observations": {
+    "fixed_fresh_contexts": 135,
+    "model_legs": {
+      "Luna": {
+        "selected": 135,
+        "physical_attempts": 135,
+        "logical_calls": 135,
+        "outputs_accounted": 135,
+        "reserved_usd": 1.1428197,
+        "input_tokens": 596816,
+        "output_tokens": 119430,
+        "attempt_states": {
+          "response_saved": 135
+        },
+        "at_utc": "2026-11-18T13:31:18.861963+00:00",
+        "output_sha256": "73298346792b0343cdba21d1f502d07509d33363b36006b3724751490c4dea40",
+        "reported_usage_priced_at_inherited_rates_usd": 0.1193966
+      },
+      "Kimi": {
+        "selected": 135,
+        "physical_attempts": 135,
+        "logical_calls": 135,
+        "outputs_accounted": 135,
+        "reserved_usd": 30.6696996,
+        "input_tokens": 462650,
+        "output_tokens": 985864,
+        "attempt_states": {
+          "response_saved": 134,
+          "incomplete_output_preserved": 1
+        },
+        "at_utc": "2026-11-18T15:31:23.614682+00:00",
+        "output_sha256": "9c3454636902066a27ee955d1255c30f0cc7490013cd9eee621e3ec73c2af8fd",
+        "reported_usage_priced_at_inherited_rates_usd": 12.401531
+      },
+      "Astra": {
+        "selected": 6,
+        "physical_attempts": 6,
+        "logical_calls": 6,
+        "outputs_accounted": 6,
+        "reserved_usd": 5.4539,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "attempt_states": {
+          "http_error_terminal": 6
+        },
+        "at_utc": "2026-11-18T15:35:16.975969+00:00",
+        "output_sha256": "9b9dfbdce93aab7d9f2f8f6e07a884ddc84642eba223167ae268bfb9fe82fa53",
+        "reported_usage_priced_at_inherited_rates_usd": 0.0
+      }
+    },
+    "budget": {
+      "stage5_cap_usd": 50,
+      "conservative_reserved_usd": 37.2664193,
+      "reported_usage_priced_at_inherited_rates_usd": 12.5209276,
+      "historical_plus_this_run_reservation_usd": 215.3315657,
+      "old_step3_cap_usd": 250,
+      "phase_cap_usd": 450,
+      "pilot_cap_usd_not_spent": 150,
+      "invoice_verified": false,
+      "no_usage_not_treated_as_zero_actual_cost": true,
+      "reservation_and_priced_usage_not_added": true,
+      "infrastructure_and_Codex_session_cost_not_included": true
+    },
+    "duration": {
+      "direct_v4_seconds": 4382.539641,
+      "freeze_to_last_leg_terminal_seconds": 11711.71223
+    },
+    "direct_Kimi": {
+      "authentication": "existing_VM_managed_identity",
+      "verified_TPM": 3000000,
+      "scheduled_TPM_during_fixed_confirmation": 240000,
+      "prior_calls_reused_not_replayed": 11,
+      "new_direct_v4_calls": 124,
+      "OpenCode_used_for_v4": false
+    },
+    "derived_new_direct_Kimi_requests_per_hour": 101.85874779632141,
+    "throughput_interpretation": "124 new serial direct requests over 4382.539641 seconds is configuration-specific observed throughput. Totals for 135 contexts include 11 reused prior calls, so their token totals must not be divided by that direct-only wall time. TPM limits are capacity ceilings, not measured production throughput.",
+    "reported_priced_usage_is_not_invoice": true,
+    "reservation_and_usage_are_not_additive": true,
+    "prior_eligible_measures": [],
+    "prior_new_production_accepted": 0
+  },
+  "prior_1137_engineering_pass_workload": {
+    "model_alias": [
+      "linkup-kimi-k3-1-pro"
+    ],
+    "raw_token_statistics": {
+      "prompt_tokens": {
+        "n": 1137,
+        "sum": 4892145,
+        "mean": 4302.678100263853,
+        "p50": 4202,
+        "p90_nearest_rank": 4831,
+        "min": 3558,
+        "max": 10942
+      },
+      "completion_tokens": {
+        "n": 1137,
+        "sum": 6172046,
+        "mean": 5428.360598065084,
+        "p50": 5006,
+        "p90_nearest_rank": 9937,
+        "min": 481,
+        "max": 15814
+      },
+      "total_tokens": {
+        "n": 1137,
+        "sum": 11064191,
+        "mean": 9731.038698328935,
+        "p50": 9286,
+        "p90_nearest_rank": 14474,
+        "min": 4080,
+        "max": 25644
+      }
+    },
+    "mean_visible_output_tokens": 1114.8548812664908,
+    "mean_reasoning_tokens_already_in_completion": 4313.505716798592,
+    "assumed_user_price_input_output_per_million_usd": [
+      3.0,
+      15.0
+    ],
+    "price_status": "historical user-supplied assumptions, not an asserted current Azure invoice",
+    "mean_usd_per_context_assuming_no_cache": 0.09433344327176782,
+    "conditional_500m_identical_model_inputs_no_cache_usd": 47166721.63588391,
+    "interpretation": "Conditional arithmetic only, assuming one old-prompt model task per each of 500m physical rows. It is not a global quote, forecast, measured deduplication factor or projected rules-first pilot cost."
+  },
+  "review_actions": {
+    "new_model_calls": 0,
+    "new_network_calls": 0,
+    "source_advertisement_bodies_read": 0,
+    "private_manifests_read": 0,
+    "accepted_values_changed": 0,
+    "core_rules_code_changed": 0
+  }
+}

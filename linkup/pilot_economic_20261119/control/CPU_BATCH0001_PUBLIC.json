@@ -1,0 +1,133 @@
+{
+  "CPU": {
+    "cache_hits": 0,
+    "cache_misses": 93,
+    "candidate_count_before_limit": 484,
+    "candidate_kind_counts": {
+      "degree_mention": 122,
+      "experience_duration": 101,
+      "experience_mention": 182,
+      "experience_waiver": 4,
+      "technology_keyword": 75
+    },
+    "candidate_limited_records": 0,
+    "default_missing_fields": [
+      "experience.general_work",
+      "experience.occupation_task",
+      "experience.industry_domain",
+      "experience.tool_specific",
+      "education",
+      "technology",
+      "entry.explicit_no_experience"
+    ],
+    "engine_sha256": "97b1486aede20a9040842db5ec57a38d2b0ac6beb1a3e6e15dc1d8fae4bd0696",
+    "engine_version": "linkup-cpu-candidates-20261119-v1",
+    "failed_or_limited_rows": 0,
+    "failure_code": null,
+    "field_selection_counts": {
+      "declared_default_all_rule_fields": 93
+    },
+    "field_status_counts": [
+      {
+        "field": "education",
+        "records": 58,
+        "state": "candidates_present_unknown"
+      },
+      {
+        "field": "education",
+        "records": 35,
+        "state": "no_rule_hit_unknown"
+      },
+      {
+        "field": "entry.explicit_no_experience",
+        "records": 2,
+        "state": "candidates_present_unknown"
+      },
+      {
+        "field": "entry.explicit_no_experience",
+        "records": 91,
+        "state": "no_rule_hit_unknown"
+      },
+      {
+        "field": "experience.general_work",
+        "records": 81,
+        "state": "candidates_present_unknown"
+      },
+      {
+        "field": "experience.general_work",
+        "records": 12,
+        "state": "no_rule_hit_unknown"
+      },
+      {
+        "field": "experience.industry_domain",
+        "records": 81,
+        "state": "candidates_present_unknown"
+      },
+      {
+        "field": "experience.industry_domain",
+        "records": 12,
+        "state": "no_rule_hit_unknown"
+      },
+      {
+        "field": "experience.occupation_task",
+        "records": 81,
+        "state": "candidates_present_unknown"
+      },
+      {
+        "field": "experience.occupation_task",
+        "records": 12,
+        "state": "no_rule_hit_unknown"
+      },
+      {
+        "field": "experience.tool_specific",
+        "records": 81,
+        "state": "candidates_present_unknown"
+      },
+      {
+        "field": "experience.tool_specific",
+        "records": 12,
+        "state": "no_rule_hit_unknown"
+      },
+      {
+        "field": "technology",
+        "records": 28,
+        "state": "candidates_present_unknown"
+      },
+      {
+        "field": "technology",
+        "records": 65,
+        "state": "no_rule_hit_unknown"
+      }
+    ],
+    "finished_at_utc": "2026-11-18T16:42:01.801507+00:00",
+    "harness_sha256": "d15e8b188a0de68baba9eb7d4414d8141e63ec131cfda20761e955170f0e2b45",
+    "input_rows_processed": 93,
+    "input_sha256": "42fa081dc0d2c71216d9cc3d51d98c0224f2612ab4b04d23b1fdbb147d3ce627",
+    "invalid_cache_entries": 0,
+    "kind": "public_cpu_candidate_run_receipt",
+    "max_records": 10000,
+    "model_calls": 0,
+    "network_calls": 0,
+    "output_published": true,
+    "output_sha256": "1982337b312c20c41c2405af9df5ea93b6e220f091cbbc9b2e5533892e8e70c8",
+    "process_cpu_seconds": 0.359035344,
+    "python_version": "3.12.3",
+    "records_per_wall_second": 237.52294952665045,
+    "records_without_retained_candidates": 7,
+    "result_status_counts": {
+      "processed": 93
+    },
+    "retained_candidate_count": 484,
+    "scope": "Bounded CPU candidate extraction only; this run does not establish semantic accuracy, high recall, or whole-target completion.",
+    "started_at_utc": "2026-11-18T16:42:01.409944+00:00",
+    "status": "completed",
+    "wall_seconds": 0.3915411129128188
+  },
+  "physical_rows": 100,
+  "state_counts": {
+    "new_context_prepared": 93,
+    "not_reconciled": 1,
+    "old_context_unresolved": 5,
+    "saved_unverified": 1
+  }
+}
