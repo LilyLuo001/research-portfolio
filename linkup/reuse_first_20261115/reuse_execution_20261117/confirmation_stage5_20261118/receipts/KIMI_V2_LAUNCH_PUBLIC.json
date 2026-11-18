@@ -1,0 +1,38 @@
+{
+  "at_epoch": 1795009668.024548,
+  "cap_usd": 40,
+  "directory": "[private-runtime-path]",
+  "max_wall_seconds": 14400,
+  "physical_cap": 180,
+  "pid": 23702,
+  "roster_sha256": "f36abb72675c8ac7fa34b3b7bf72b5d3bdbe93338146e5e9655f2cf0d3bc9faa",
+  "route_metadata_preflight": {
+    "approved_upstream_base_url": "https://rg-linkup.openai.azure.com/openai/v1",
+    "cli_sha256": "2160e46e87e83561195271e69d0385440bbc91bc4b9c8dc38e0a3822190614a1",
+    "cli_version_path": "2.2.7-arm64",
+    "credential_values_printed": false,
+    "existing_azure_provider": true,
+    "legacy_route_provenance": {
+      "configuration_sha256": "11f4f1177b545399a9b4c5a0818b67a06662d7b7388abde35350700156ed3b29",
+      "gateway_public_sha256": "134c0d2d175f3bb31cfbc3c844e4f8a3024206caf6bc4212e775330c6f8ba00c",
+      "gateway_source_sha256": "6bdeed552edb42afdc9fa379fba0a08f9f26114fba15cd4c954b03dbc5970588",
+      "launch_public_sha256": "43df32324f32452a42fcb96cde04a24281e34e1ede26b35bd6bd3182ab09ee95"
+    },
+    "model": {
+      "id": "linkup-kimi-k3-1-pro",
+      "providerID": "azure-kimi"
+    },
+    "new_model_calls": 0,
+    "original_configuration_sha256": "11f4f1177b545399a9b4c5a0818b67a06662d7b7388abde35350700156ed3b29",
+    "original_endpoint_approved": true,
+    "original_endpoint_kind": "verified_legacy_loopback_to_existing_azure",
+    "pinned_cli_exists": true,
+    "real_ports_bound": 0,
+    "session_namespace": "confirmation_stage5_20261118/transport_v2/",
+    "status": "local_route_metadata_preflight_pass_no_call",
+    "transport_revision": "stage5-kimi-transport-v2"
+  },
+  "scheduled_TPM": 240000,
+  "selected": 135,
+  "status": "Kimi_transport_v2_launched_not_completion"
+}

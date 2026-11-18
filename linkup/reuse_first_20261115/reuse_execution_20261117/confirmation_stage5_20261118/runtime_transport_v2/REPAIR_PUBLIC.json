@@ -1,0 +1,148 @@
+{
+  "at_utc": "2026-11-18T13:47:17.692605+00:00",
+  "code_sha256": {
+    "stage5_cloud_worker.py": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common.py": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+    "stage5_kimi_gateway.py": "2b12dc3991091985a166e388a9c50587044838a73fe7486e6539a6f233931a3c",
+    "stage5_kimi_worker.py": "a016292eb8b437a54c93e661dad9cae608c267274c63240e0b9e6c1b27118dab",
+    "stage5_prepare.py": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+    "stage5_validate_kimi.py": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a"
+  },
+  "credential_values_printed": false,
+  "incident": {
+    "assistant_completed": true,
+    "assistant_content_count": 0,
+    "assistant_finish_error": true,
+    "assistant_message_count": 1,
+    "attempt_rows": 0,
+    "claim_rows": 0,
+    "credential_values_printed": false,
+    "exact_rejected_role": "unknown_not_retained",
+    "gateway_error_code": "conversation_history_forbidden",
+    "http_status": 400,
+    "new_model_calls": 0,
+    "new_sessions_created": 0,
+    "observed_at_utc": "2026-11-18T13:47:17.692179+00:00",
+    "original_final_at_utc": "2026-11-18T13:40:46.708712+00:00",
+    "original_final_terminal": true,
+    "processes_killed": 0,
+    "provider_error_type_known": true,
+    "read_only_opencode_get": true,
+    "rejected_request_envelope_retained_in_saved_metadata": false,
+    "retry_present": false,
+    "session_id_sha256": "dc74bd284730bb32cc62b51a670767f8018866558dd0aa825abc567e4ac55e85",
+    "session_idle": true,
+    "session_model_pinned": true,
+    "submission_uncertain": null,
+    "submitted_once_flag": true,
+    "user_message_count": 1,
+    "user_text_exact_frozen_prompt": true,
+    "worker_or_gateway_launches": 0
+  },
+  "limitations": [
+    "Saved OpenCode GET metadata does not retain exact rejected request envelope; no role-specific claim is made.",
+    "Live repaired transport has not been exercised against a provider.",
+    "A handler still active after 310 seconds prevents terminal handoff; daemon exit can leave a conservative durable hold requiring reconciliation."
+  ],
+  "new_model_calls": 0,
+  "new_sessions_created": 0,
+  "original_code_sha256": {
+    "stage5_cloud_worker.py": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common.py": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+    "stage5_kimi_gateway.py": "918d78b4369a266082d7aaa5779724945edd94f58e72488ee93d23c9f65ecd3c",
+    "stage5_kimi_worker.py": "576ff2ac7af1a4872cc056e8c1432e1c65cffa4accf0aabb6e09f025246034a7",
+    "stage5_prepare.py": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+    "stage5_validate_kimi.py": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a"
+  },
+  "original_files_edited": 0,
+  "original_runtime_directory": "[private-runtime-path]",
+  "preservation": {
+    "all_original_kimi_leg_files_unchanged": true,
+    "all_original_runtime_files_unchanged": true,
+    "baseline_sha256": "4fc112664eb789c3c030784395f3118731e36f049d2d2920a5e02e25a624355b",
+    "original_leg_file_count": 20,
+    "original_runtime_file_count": 17
+  },
+  "processes_killed": 0,
+  "repair": {
+    "blanket_nonuser_forwarding": false,
+    "connection_close_all_responses": true,
+    "daemon_handlers_after_bounded_drain": true,
+    "envelope_policy": "Projection, not arbitrary-history trust: require one exact frozen user; reject tools/functions; ignore all nonuser and noncontract fields; rebuild complete pinned scientific request; worker separately checks fresh isolated session before submitting.",
+    "exact_incoming_rejected_role_known": false,
+    "incoming_socket_idle_timeout_seconds": 10,
+    "new_admissions_blocked_during_shutdown": true,
+    "old_session_reuse_forbidden": true,
+    "only_changed_runtime_files": [
+      "stage5_kimi_gateway.py",
+      "stage5_kimi_worker.py"
+    ],
+    "provider_filters_refusals_and_quarantine_policy_unchanged": true,
+    "provider_socket_timeout_seconds": 300,
+    "session_namespace": "confirmation_stage5_20261118/transport_v2/",
+    "shutdown_wait_seconds": 310,
+    "terminal_false_if_any_handler_or_uncertain_admission_remains": true,
+    "uncertain_attempts_never_retried_by_shutdown": true,
+    "unchanged_runtime_files": [
+      "stage5_common.py",
+      "stage5_cloud_worker.py",
+      "stage5_prepare.py",
+      "stage5_validate_kimi.py"
+    ]
+  },
+  "repair_runtime_directory": "[private-runtime-path]",
+  "scientific_payload_equivalence": {
+    "aggregate_request_hash_manifest_sha256": "c0c6c6dab377f3c02baad82603165eec697704368e96ae999b499e5a14be69c6",
+    "all_user_prompt_utf8_bytes_identical": true,
+    "byte_equal_requests": 270,
+    "full_outbound_json_bytes_identical_to_v1_contract": true,
+    "metadata_only_blocked_slots": 0,
+    "models_rates_caps_schema_instructions_roster_validators_and_scoring_unchanged": true,
+    "original_frozen_input_sha256": {
+      "EXCLUSIONS_PRIVATE.json": "5254355f9d8d089eb3d0c19bc41c650d4426e3eac4f64d213fc2043e0ef6b7e7",
+      "FRAME_ROSTER_PRIVATE.json": "f36abb72675c8ac7fa34b3b7bf72b5d3bdbe93338146e5e9655f2cf0d3bc9faa",
+      "INPUTS_PRIVATE.jsonl": "9c8370481b9da8810b86c4950b1a12bf4315c4d8502f4c02966082acc3eb32d5",
+      "INSTRUCTIONS.md": "f13e1c431b4018fb7d1e2f1dc985dece69f092a8713c7ef673497a0fbd728d26",
+      "LUNA_FINAL_PUBLIC.json": "c8fab52985f6b95f97654bf81d29e8ad8afa1e31050fa3ab2f1939a8257b63d7",
+      "PREDECESSOR_EXCLUSIONS_PRIVATE.json": "c8fb5509155c315465d69d0e7c676a74c12a8270348a01d027d9680e9c59f1ca",
+      "SCHEMA.json": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e"
+    },
+    "roster_sha256": "f36abb72675c8ac7fa34b3b7bf72b5d3bdbe93338146e5e9655f2cf0d3bc9faa",
+    "selected_slots": 135,
+    "stream_variants_per_unblocked_case": 2,
+    "unblocked_prompts_compared": 135
+  },
+  "scientific_runtime_version": "stage5-bounded-serial-v1",
+  "scope": "separate Kimi transport-only runtime; originals preserved; no launch authorization implied",
+  "status": "transport_repair_offline_verified_not_launched",
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest test_stage5_runtime test_stage5_transport -v",
+    "errors": 0,
+    "failures": 0,
+    "passed": 32,
+    "real_ports_bound": 0,
+    "real_provider_calls": 0,
+    "test_output_sha256": "0b285b3bb560338c159e4a4d4ae57efe1440a2ad6309f55c5a8b409e5124ca81",
+    "test_stage5_transport_sha256": "feb0d39913a39c3b6f9418afc11136d83e8dfa455fd6dd8c42e17c7fa7af3201",
+    "tests_run": 32
+  },
+  "transport_revision": "stage5-kimi-transport-v2",
+  "worker_or_gateway_launches": 0,
+  "zero_provider_forwarding_proof": {
+    "ledger_attempt_rows": 0,
+    "ledger_claim_rows": 0,
+    "not_an_ambiguous_paid_call": true,
+    "original_final_reserved_nano": 0,
+    "original_final_sha256": "c88750164c98dd9e51e67f4f7913b157de813bfd500d66a5af5378b3038a4767",
+    "original_gate_source_lines": {
+      "provider_open": 94,
+      "reservation": 88,
+      "role_gate": 62,
+      "tools_gate": 58
+    },
+    "original_gateway_sha256": "918d78b4369a266082d7aaa5779724945edd94f58e72488ee93d23c9f65ecd3c",
+    "original_terminal_no_active_requests": true,
+    "role_gate_before_reservation_before_provider_open": true,
+    "tools_functions_falsy_implied_by_gate_order": true
+  }
+}

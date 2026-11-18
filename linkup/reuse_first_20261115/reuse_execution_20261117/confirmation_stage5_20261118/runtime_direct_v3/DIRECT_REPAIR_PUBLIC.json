@@ -1,0 +1,147 @@
+{
+  "at_utc": "2026-11-18T14:03:07.669224+00:00",
+  "auth_route": {
+    "OpenCode_API_CLI_config_or_gateway_used": false,
+    "audience": "https://cognitiveservices.azure.com/",
+    "auth_preflight_or_model_calls_by_this_repair": 0,
+    "endpoint": "https://rg-linkup.openai.azure.com/openai/v1/chat/completions",
+    "fallback_routes": false,
+    "helper": "~/migration/code/workflow.token",
+    "type": "existing_Azure_VM_managed_identity"
+  },
+  "budgets": {
+    "Kimi_cap_usd_including_prior": 40,
+    "Kimi_logical_cap_including_prior": 150,
+    "Kimi_physical_cap_including_prior": 180,
+    "combined_Kimi_totals_include_prior_do_not_double_count": true,
+    "frozen_Kimi_scheduled_TPM": 240000,
+    "frozen_aggregate_scheduled_TPM": 800000,
+    "historical_reservation_usd_unchanged": 178.0651464,
+    "observed_prior_response_quota_TPM_headers": [
+      "3000000"
+    ],
+    "serial_only": true,
+    "stage_new_aggregate_cap_usd": 50
+  },
+  "code_sha256": {
+    "stage5_cloud_worker.py": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common.py": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+    "stage5_kimi_gateway.py": "2b12dc3991091985a166e388a9c50587044838a73fe7486e6539a6f233931a3c",
+    "stage5_kimi_worker.py": "c031c3e8c1160a5a2525adf8a49e7ac33744d969155a9c6b8048f046f3e7c3df",
+    "stage5_prepare.py": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+    "stage5_validate_kimi.py": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a"
+  },
+  "credential_values_read_or_printed_by_this_repair": false,
+  "export_provenance": {
+    "messages_key_omitted_for_publication": true,
+    "original_receipt_sha256": "1d37bb6c83fc55194fe0e0b6d3f46e735d236e644d38e14c9f305197001b3e84",
+    "original_unchanged": true
+  },
+  "instructions_file_sha256": "cc77ba40151105398ab58f5aeeff37f89670bddba8826a5399f6796c4df5e9ee",
+  "launch_required_explicitly": true,
+  "limitations": [
+    "Live direct Azure inference is not exercised by this offline repair; root alone handles authorized launch.",
+    "The verified 3M deployment quota does not increase the frozen240k serial scheduler or any dollar/attempt limit.",
+    "Any unresolved prior or new admission holds all later-leg handoff."
+  ],
+  "new_model_calls": 0,
+  "only_changed_runtime_files": [
+    "stage5_kimi_worker.py"
+  ],
+  "prior_transition": {
+    "all_attempt_IDs_timestamps_reservations_claims_quarantine_quota_metadata_preserved": true,
+    "atomic_idempotent_import": true,
+    "changed_closure_rejected": true,
+    "closure_sha256": "9cc607760f2eb2024aa9aea4b2410ceb306bcc551400b99c26949a381b02c608",
+    "every_prior_admitted_context_permanently_skipped": true,
+    "filtered_prior_requires_metadata_only_preparation": true,
+    "imported_logical_calls": 10,
+    "imported_physical_attempts": 10,
+    "imported_reserved_nano": 2245487700,
+    "new_ledger_identity_not_prior_identity": true,
+    "source_snapshot_files_hash_unchanged_during_actual_import_test": true,
+    "source_snapshot_read_only": true,
+    "terminal_no_active_requests": true,
+    "uncertain_prior_blocks_new_admission": true,
+    "untouched_contexts_remaining": 125,
+    "visible_responses_reused": 10,
+    "worker_stopped": true
+  },
+  "prior_transport_code_sha256": {
+    "stage5_cloud_worker.py": "38bca82363482b8ed41dc54823aae68155ab94f5a4087d485e1b7275fe7ccaff",
+    "stage5_common.py": "0a60b9078459c8bf711025024b36b86acec78d9bea1afcb4e8f9181bd1b1e808",
+    "stage5_kimi_gateway.py": "2b12dc3991091985a166e388a9c50587044838a73fe7486e6539a6f233931a3c",
+    "stage5_kimi_worker.py": "a016292eb8b437a54c93e661dad9cae608c267274c63240e0b9e6c1b27118dab",
+    "stage5_prepare.py": "b267b052716e3ec8064071d458e8afb2cdf0c6db96b7075fd45520c6aab00c69",
+    "stage5_validate_kimi.py": "49ef1c307f72b47ada72c372e768fff0306886050def3283c9859c23ce4f7e9a"
+  },
+  "processes_killed": 0,
+  "provenance": {
+    "original_repair_receipt_restored_separately": "[private-runtime-path]",
+    "restored_original_sha256": "6bc66b0b4d7ba17b113453a29f3fe4b5f59cc294f7f9cc7e5c0a3c7154b1113d",
+    "v2_current_repair_sha256_unchanged": "cd654beaaec89f4327ea59765d10b06bde2eda30c4a90ebb8a068fcc189b1b82",
+    "v2_runtime_and_scientific_artifacts_not_edited_by_this_repair": true
+  },
+  "runtime_directory": "[private-runtime-path]",
+  "scientific_contract": {
+    "all_135_nonstream_request_bytes_equal_prior_frozen_contract": true,
+    "allowed_returned_model_ids": [
+      "Kimi-K3.1-Pro",
+      "linkup-kimi-k3-1-pro",
+      "Kimi-K3.1-Pro-2026-11-04"
+    ],
+    "no_parameters_added": true,
+    "payload": {
+      "max_tokens": 16000,
+      "model": "linkup-kimi-k3-1-pro",
+      "stream": false
+    },
+    "proof_sha256": "cb4155f0322d04dfe8d3127e830211ce0e0303059075936a6c154faa9fc681a6",
+    "roster_sha256": "f36abb72675c8ac7fa34b3b7bf72b5d3bdbe93338146e5e9655f2cf0d3bc9faa",
+    "schema_instructions_roster_source_validators_and_scoring_unchanged": true,
+    "selected_slots": 135
+  },
+  "scientific_runtime_version": "stage5-bounded-serial-v1",
+  "shutdown_and_errors": {
+    "401_403_404_stop_leg": true,
+    "SIGINT_SIGTERM_stop_new_admissions_and_drain_sync_request": true,
+    "only_confirmed_429_500_502_503_504_retry_once_same_uninterrupted_case": true,
+    "post_reservation_stop_never_forwards": true,
+    "provider_reasoning_not_saved": true,
+    "restart_never_replays_admitted_context": true,
+    "symbolic_error_code_only_no_raw_or_free_text": true,
+    "uncertain_reservations_never_terminal": true
+  },
+  "status": "direct_Azure_transport_v3_offline_verified_not_launched",
+  "tests": {
+    "actual_prior_import_proof": {
+      "direct_frozen_payloads_byte_equal": 135,
+      "import_idempotent": true,
+      "imported_logical_calls": 10,
+      "imported_physical_attempts": 10,
+      "imported_reserved_nano": 2245487700,
+      "imported_visible_files_byte_equal": 10,
+      "new_direct_candidate_contexts": 125,
+      "no_provider_calls": true,
+      "payload_hash_manifest_sha256": "d1f15784f4b1b7e6f1c7c568364ecc1c7ff2dc433833525c8ba06d63db4101a3",
+      "prior_closure_sha256": "9cc607760f2eb2024aa9aea4b2410ceb306bcc551400b99c26949a381b02c608",
+      "prior_scientific_snapshot_hashes_unchanged": true,
+      "selected": 135,
+      "status": "actual_prior_snapshot_offline_import_and_equivalence_pass",
+      "temporary_verification_ledger_disposed": true
+    },
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest test_stage5_runtime test_stage5_direct -v",
+    "direct_test_sha256": "863c92b9b65d9dc4671cef340e0c377147ecf805485cb110c1ee201f73dfb03c",
+    "direct_tests_passed": 16,
+    "errors": 0,
+    "failures": 0,
+    "passed": 33,
+    "real_provider_calls": 0,
+    "run": 36,
+    "skip_reason": "obsolete OpenCode-only route tests replaced by direct Azure tests",
+    "skipped": 3,
+    "test_log_sha256": "6647be56a05b0d207d67949b38e7caaad19e4c7d7870ae4eadf212de6385bb3c"
+  },
+  "transport_revision": "stage5-kimi-direct-azure-v3",
+  "worker_launches": 0
+}

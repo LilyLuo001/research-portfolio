@@ -1,0 +1,78 @@
+# Bounded Stage 5 runtime — prepared, not launched
+
+This directory contains a new finite runtime. Do not restart the old 500/350-case workers. These scripts do not provision Azure resources, change deployments, publish to Git, create automations, or promote research output into production. Importing a module never calls a model. Only the two worker entry points execute inference when root explicitly dispatches them.
+
+| Leg | Existing route | Distinct cases | Physical attempts including retries | Reservation cap | Scheduled TPM |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Luna | `linkup-gpt-6-luna-benchmark`, version `2026-09-22`, MI, Chat Completions | 150 | 180 | $2 | 80,000 |
+| Kimi | Existing OpenCode `azure-kimi/linkup-kimi-k3-1-pro` | 150 | 180 | $40 | 240,000 |
+| Astra | `linkup-gpt-6-astra`, MI, Responses API | 6 | 6 | $8 | 800,000 |
+
+The legs must run in this order, strictly serially. A successor requires its predecessor's terminal receipt and waits until 60.1 seconds after its last admission. There is no cloud gateway service or network opening. Kimi uses only a temporary loopback gateway inside its local worker. Every physical provider attempt passes the durable SQLite reservation and exclusive claim check. Ambiguous outcomes halt new admissions and prevent a terminal handoff. Only confirmed HTTP 429/500/502/503/504 responses can retry, at most twice per case. Provider filters and refusals are quarantined and never retried.
+
+The three disjoint caps sum to $50. They add at most $50 to the unchanged historical conservative reservation of $178.0651464, remaining below the existing $250 stage cap. The unchanged stage1/2 caps ($25 each), stage cap ($250) and stage4 cap ($150) total $450. Reservations use UTF-8 request bytes plus 1,024 input tokens and the full output-token allowance, without cache credit; this may stop a leg before all cases finish. These are reservation and public-price estimates, not verified invoices. Price identities remain separate: Luna $0.10/$0.50, Kimi $2.30/$11.50, Astra conservative existing bound $12.50/$50 per million input/output tokens.
+
+## Input contract
+
+Root must finish fresh-frame and protected-context exclusion checks before preparing a leg. `INPUTS_PRIVATE.jsonl` contains at most the leg's case limit, with unique case IDs, record IDs and complete-context hashes:
+
+```json
+{"case":"case0000","row":{"record_id":"...","context_sha256":"...","full_document":"..."},"task":"source task metadata"}
+```
+
+Optional existing `row.assignment` is retained for the unchanged Formal800 validator. When absent, `packet_for_validation` adds only trusted `packet_id`, `reviewer_role`, and provenance metadata to the validation packet. It does not change source text or output labels. Requests include only the three original identity/text fields. The separate scorer frame contains the frozen `confirmation`/`challenge` partition and `source_units_sha256` from `protocol/field_score.py`; the runtime does not select or tune cases.
+
+Each leg directory contains the original `SCHEMA.json`, `INSTRUCTIONS.md`, `EXCLUSIONS_PRIVATE.json`, `FRAME_ROSTER_PRIVATE.json`, and `INPUT_PINS_PUBLIC.json`. Exclusions support `tasks`, `record_ids`, `context_sha256`, `threads`, and `thread_ids`. The fixed protected thread and `batch035` are also checked in source metadata and assignment. A single canonical roster of `record_id`/`context_sha256` pairs is frozen for the whole confirmation: Luna and Kimi must cover that exact roster; Astra may take a subset only. Every output carrier and final receipt is bound to this roster SHA.
+
+Successor preparation requires the actual predecessor's final receipt and `EXCLUSIONS_EXPORT_PRIVATE.json`. Both files are SHA-pinned, the export must match the final receipt, and the final receipt's output roster must match the shared frame. Predecessor exclusions are automatically merged before source inputs are loaded. Protected/filter/refusal cases stay in the denominator as blocked slots with only `record_id` and `context_sha256` in `row`; their `full_document` is removed from the successor's frozen input file. The workers skip these slots before creating prompts, sessions or requests. A protected source body left in a frozen successor file causes rejection. Never replace or drop a blocked slot to obtain the requested case count.
+
+All six runtime `.py` files, source/schema/instruction/exclusion hashes, and both validator hashes are frozen by `stage5_prepare.py`. Copy all six runtime files to the host where they run. Schema and validators remain the existing Formal800 schema/validator and `measurement_protocol_20261117/code/field_validation.py`; the schema is not simplified.
+
+## Entry points
+
+Before local dispatch, root can run `stage5_kimi_worker.py --preflight-only`. This authentication-program check reads the configured route privately and returns only pinned CLI/configuration hashes and pass/fail metadata. It accepts the original Azure endpoint or the exact saved bulk1309 loopback configuration at `http://localhost:60735/bulk1309/openai/v1`, with matching configuration, gateway-public, launch-public and audited gateway-source hashes. That audited source forwards only the pinned Kimi route to the existing Azure endpoint. Other loopback hosts, ports, paths, query strings and changed provenance are rejected. The check binds no port, does not execute the CLI, and makes no model call. Stage 5 never connects to the old gateway; its private working copy still points to the new bounded loopback gateway. The worker repeats this route check before starting. Original files remain unchanged.
+
+1. `stage5_prepare.py --leg Luna|Kimi|Astra --directory LEG_DIR --inputs INPUTS --roster SHARED_FROZEN_FRAME --schema SCHEMA --instructions INSTRUCTIONS --exclusions EXCLUSIONS --field-validator FIELD_ADAPTER --frozen-validator FORMAL800_VALIDATOR [--predecessor-receipt RECEIPT --predecessor-exclusions EXPORT]` copies and pins inputs, validates trusted packets, and emits an offline preflight receipt. `--roster` accepts a metadata JSON array or JSONL scorer frame and canonicalizes only the two identity fields. Both predecessor arguments are required for Kimi/Astra. It never reads credentials or calls an endpoint.
+2. On the existing Azure VM, `stage5_cloud_worker.py --leg Luna|Astra --directory LEG_DIR --field-validator FIELD_ADAPTER --frozen-validator FORMAL800_VALIDATOR` uses only `~/migration/code/workflow.token`. It writes private visible responses, original raw HTTP evidence, field validation and carriers. It never reads another reader's answers.
+3. Locally, `stage5_kimi_worker.py --directory LEG_DIR` uses the pinned `2.2.7-arm64/opencode-cli`. Only this running authentication/transport program reads the existing private OpenCode configuration. It clones the configuration into `LEG_DIR/opencode.json` with a loopback URL and never modifies the original. **That cloned file contains credentials and must remain private, alongside all SQLite, input and output files.** It exports only visible model text and usage, not hidden reasoning. It creates one isolated session at a time, denies tools, posts each prompt once, and reconciles ambiguous POSTs without resubmission.
+4. Root transports Kimi's private bundle and public final receipt back to Azure with verified hashes. `stage5_validate_kimi.py --directory LEG_DIR --transport-outputs OUTPUTS_PRIVATE.jsonl --validated-outputs VALIDATED_OUTPUTS_PRIVATE.jsonl --field-validator FIELD_ADAPTER --frozen-validator FORMAL800_VALIDATOR` validates its complete transport-output identity/coverage against the frozen frame and final SHA, then performs offline field validation. This never calls a model.
+
+`LUNA_FINAL_PUBLIC.json`, `KIMI_FINAL_PUBLIC.json` and `ASTRA_FINAL_PUBLIC.json` contain only aggregate execution and reservation state. The successor must receive the preceding receipt, not a newly synthesized zero-cost receipt. Root must also verify no other old or unrelated inference worker is active before dispatch; the separate per-leg databases are not a distributed cloud lock. Serial execution and immutable disjoint subcaps provide the aggregate guarantee.
+
+`OUTPUTS_PRIVATE.jsonl` carriers contain `case`, `record_id`, `context_sha256`, `leg`, `status`, `payload` (the unchanged Formal800 object or null), and field validation. Kimi's transport carrier temporarily has `response_text`; its cloud validator removes that duplicate after preserving the original transport file. Root joins carriers into the scorer's `{record_id, context_sha256, packet, candidate, reference}` case shape and preserves every frozen frame row, including failed/unprocessed rows. Astra auditing must not replace reference labels.
+
+## Offline verification
+
+`python3 -m unittest -v test_stage5_runtime.py` exercises exclusive claim races, two-attempt retry limits, Astra's six-attempt cap, dollar reservations, restart holds, serial delay, observed quota reductions, frozen source/code hashes, protected identities, source-preserving prompts, distinct Responses/Chat envelopes, private route-preflight output filtering and a mocked Kimi gateway that strips injected side context. Shared-roster, predecessor SHA/quarantine, metadata-only blocked-slot, preparation and output-frame tests cover the serial binding contract. Tests use synthetic data and a mocked network server/opener. No real port is bound and no real credential file is read. See `RUNTIME_TEST_PUBLIC.json` for the last run and code hashes.
+
+## Separately versioned Kimi transport repair (2026-11-18)
+
+`stage5-kimi-transport-v2` changes only the Kimi transport implementation.
+The common scientific runtime version stays `stage5-bounded-serial-v1`, preserving
+compatibility with the completed Luna predecessor and all frozen caps/rosters.
+Original `runtime/` and `kimi_local/` are not edited or reused for a new launch.
+Prepare a new Kimi leg with this directory's unchanged `stage5_prepare.py`; its
+code pins will include the repaired gateway and worker. The explicit
+`confirmation_stage5_20261118/transport_v2/` session namespace prevents collision
+with the zero-admission original session.
+
+The original failure was a local HTTP400 `conversation_history_forbidden` before
+any ledger reservation or provider forwarding. Saved GET metadata does not retain
+the rejected request envelope, so the exact unexpected role is unknown. This
+repair does not claim an observed assistant/tool envelope or whitelist arbitrary
+history as trusted. Rather, it performs a one-way projection: exactly one user
+message must match the frozen complete prompt; tools/functions remain prohibited;
+all non-user entries and all other fields are never forwarded. The worker still
+requires an empty isolated session before its single persisted submission. The
+outbound model, NOTICE, exact user, output limit and usage-stream settings are
+rebuilt from the same scientific contract as v1.
+
+Every HTTP response closes its connection. Incoming sockets have a 10-second idle
+timeout. Shutdown closes admissions and waits up to 310 seconds (provider socket
+timeout 300 plus 10) for active handlers. If anything remains active, the final
+receipt is nonterminal and durable uncertain admissions continue to prohibit
+later legs; shutdown never marks a provider request complete or retries it.
+
+Verification: `python3 -m unittest test_stage5_runtime test_stage5_transport -v`
+uses only synthetic fixtures and mocked transport, with no real model calls.
+`REPAIR_PUBLIC.json` contains the sanitized incident and equivalence proof.
