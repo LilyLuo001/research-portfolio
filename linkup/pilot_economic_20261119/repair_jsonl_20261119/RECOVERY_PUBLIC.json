@@ -1,0 +1,36 @@
+{
+  "status": "batch0002_recovered_without_model_calls",
+  "at_utc": "2026-11-19T06:10:32.349089+00:00",
+  "cause": "unicode_U2028_splitlines_misframed_valid_jsonl",
+  "physical_rows": 1000,
+  "semantic_physical_states": {
+    "field_local_validation_complete": 884,
+    "not_reconciled": 11,
+    "saved_unverified": 11,
+    "old_context_unresolved": 93,
+    "unprocessed": 1
+  },
+  "projection_receipt": "/home/linkup/migration/pilot_economic_20261119/run01/projection/batch0002/PHYSICAL_PROJECTION_PUBLIC.json",
+  "projection_receipt_sha256": "2e0d8317f810afa9097b551cfa42a0d3fc9471d8451e62669ffb7214987dd79c",
+  "model_calls_during_recovery": 0,
+  "before": {
+    "attempts": 890,
+    "claims": 890,
+    "reserved_nano": 9520373400
+  },
+  "after": {
+    "attempts": 890,
+    "claims": 890,
+    "reserved_nano": 9520373400
+  },
+  "protected_file_count": 897,
+  "protected_file_sha_unchanged": true,
+  "deferred_oversize_inputs": 1,
+  "old_scientific_schema_unchanged": true,
+  "original_start_epoch": 1795020984.5299895,
+  "original_48h_deadline_preserved": true,
+  "code_sha256": {
+    "control/finite_pipeline_v2.py": "ccd3d030e13c2a07c2c1062fecf8e487a684014c52fbfbf0990b20d53f57bb4a",
+    "measurement/publish_physical_v3.py": "ebc136123084d161330c22290f7a6f27c25496cea7c0ac65a920bb2070da3b9d"
+  }
+}
